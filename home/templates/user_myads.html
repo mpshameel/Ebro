@@ -1,0 +1,168 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+	.active_user_page6{
+		background-color: #99c2ff;
+	}
+</style>
+
+
+		<div class="container_deals">
+		   <div class="col-md-12">
+		   	<br>
+			<h2 class="sub_headings">Deals</h2>
+			<br><br>
+				<div class="row">
+					{% for i in user_deals_list %}
+
+					<div class="col-md-3 room-wrap animate-box user_deal_box">
+						<center>
+						{% if i.picture != '' %}
+         				<img src="{{i.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
+         				{% else %}
+         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
+         				{% endif %}
+         				</center>
+         				
+         					<div class="col-md-10" style="margin-left: -30px;">
+								<h3 class="btn3 btn3-1">{{ i.deal_name }}</h3>
+								<a class="btn4 btn4-2 btn4-sep icon-cart" href="{% url 'detail_view_deals' i.id %}">Edit</a>
+								
+
+							</div>
+
+							<div class="col-md-2" style="margin-left: -30px;">
+								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
+								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
+								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
+								<h3 class="btn3 btn3-2">$&nbsp;{{ i.price }}</h3>
+								<form action="{% url 'delete_deal' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_delete">
+								<button class="btn4 btn4-1 btn4-sep icon">Delete</button>
+            					</form>
+
+							</div>
+						
+					</div>
+					{% endfor %}
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="container_deals">
+		   <div class="col-md-12">
+		   	<br>
+			<h2 class="sub_headings">Jobs</h2>
+			<br><br>
+				<div class="row">
+					{% for i in user_jobs_list %}
+
+					<div class="col-md-3 room-wrap animate-box user_deal_box">
+						<center>
+						{% if i.picture != '' %}
+         				<img src="{{i.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
+         				{% else %}
+         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
+         				{% endif %}
+         				</center>
+         				
+         					<div class="col-md-10" style="margin-left: -30px;">
+								<h3 class="btn3 btn3-1">{{ i.job_name }}</h3>
+								<a class="btn4 btn4-2 btn4-sep icon-cart" href="{% url 'detail_view_jobs' i.id %}">Edit</a>
+								
+
+							</div>
+
+							<div class="col-md-2" style="margin-left: -30px;">
+								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
+								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
+								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
+								<h3 class="btn3 btn3-2">$&nbsp;{{ i.price }}</h3>
+								<form action="{% url 'delete_job' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_delete">
+								<button class="btn4 btn4-1 btn4-sep icon">Delete</button>
+            					</form>
+
+							</div>
+						
+					</div>
+					{% endfor %}
+
+
+				</div>
+			</div>
+		</div>	
+
+ 
+
+		<div class="container_deals">
+		   <div class="col-md-12">
+		   	<br>
+			<h2 class="sub_headings">Products</h2>
+			<br><br>
+				<div class="row">
+					{% for i in user_products_list %}
+
+					<div class="col-md-3 room-wrap animate-box user_deal_box">
+						<center>
+						{% if i.picture != '' %}
+         				<img src="{{i.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
+         				{% else %}
+         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
+         				{% endif %}
+         				</center>
+         				
+         					<div class="col-md-10" style="margin-left: -30px;">
+								<h3 class="btn3 btn3-1">{{ i.product_name }}</h3>
+								<a class="btn4 btn4-2 btn4-sep icon-cart" href="{% url 'detail_view_products' i.id %}">Edit</a>
+								
+
+							</div>
+
+							<div class="col-md-2" style="margin-left: -30px;">
+								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
+								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
+								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
+								<h3 class="btn3 btn3-2">$&nbsp;{{ i.price }}</h3>
+								<form action="{% url 'delete_product' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_delete">
+								<button class="btn4 btn4-1 btn4-sep icon">Delete</button>
+            					</form>
+
+							</div>
+						
+					</div>
+					{% endfor %}
+
+
+				</div>
+			</div>
+		</div>	
+
+
+		
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,430 @@
+
+
+<script>
+	{% for i in messages %}
+	alert('{{ i }}');
+	{% endfor %}
+    
+</script>
+
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>E-BRO</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,700 '%}" rel="stylesheet">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700 '%}" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css '%}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css '%}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css '%}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css '%}">
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="{% static 'css/flexslider.css '%}">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css '%}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css '%}">
+	
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css '%}">
+	<!-- Flaticons  -->
+	<link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css '%}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css '%}">
+	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js '%}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+
+
+
+	
+<!-- {% if user.is_authenticated %} -->
+
+		
+	<div class="colorlib-loader"></div>
+
+	<nav class="colorlib-nav" role="navigation">
+		
+		<div class="top">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-4">
+						
+		  				<ul class="colorlib-social">
+		  					<li><p class="site">www.e-bro.com</p></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="###"><i class="icon-mail"></i></a></li>
+							
+						</ul>
+					</div>
+					<div class="col-xs-2">
+						<div><a href="/"><img src="{% static 'images/ebro2.png '%}" class="ebro" alt=""></a></div>
+					</div>
+					<div class="col-xs-6 text-right">
+						
+						<ul class="colorlib-social">
+								{% if admin_profile.image != '' %}
+                				<a href="admin_profile"><img src="{{admin_profile.image.url}}"  class="person"></a>
+                				{% else %} 
+                				<li class="active"><a href="admin_profile"><img src="{% static 'images/pers.png '%}" class="person"></a></li>
+                				{% endif %}
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<!-- {% endif %} -->
+      
+
+
+      		<div class="col-md-4 col-md-offset-1  login-form">
+			
+      <input type="submit" value="X" class="btn btn-primary close">
+			<form action="{% url 'admin_login' %}" method="POST">
+				{% csrf_token %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <h2 class="#drinks">Sign in</h2>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <br><br>
+				<div class="row form-group">
+					<div class="col-md-12">
+						
+						<input type="text" id="fname" name="name" class="form-control" placeholder="Username">
+					</div>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<div class="col-md-12">
+						
+						<input type="text" id="lname" name="password" class="form-control" placeholder="Password">
+					</div>
+				</div>
+
+				
+				<div class="form-group text-center">
+					<button type="submit" value="Sign in" class="btn btn-primary">Sign in</button>
+				</div>
+		<center>
+				<a>Forgot password..?</a>
+				<br>
+        
+          <p id="login2">Don't have an account?<a href="##">Sign up</a></p>
+        </center>
+
+			</form>		
+		</div>
+
+    
+    <div class="col-md-4 col-md-offset-1 signup-form">
+			
+      <input type="submit" value="X" class="btn btn-primary close2">
+			<form action="{% url 'admin_signup' %}" method="POST">
+				{% csrf_token %}
+       
+        <h3 class="#drinks">Sign up</h3>
+        &nbsp;
+
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <br>
+				    <div class="row form-group">
+                    &nbsp;&nbsp;
+					<div class="col-md-12">
+						<input type="text" name="first_name" id="fname" class="form-control" placeholder="Firstname">
+					</div>
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="text" name="last_name" id="fname" class="form-control" placeholder="Lastname">
+					</div>
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="text" name="email" id="fname" class="form-control" placeholder="Email">
+					</div>
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="number" name="phone" id="fname" class="form-control" placeholder="Phone">
+					</div>
+					
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="text" name="password1" id="fname" class="form-control" placeholder="Password">
+					</div>
+					&nbsp;&nbsp;
+					<div class="col-md-12">
+						
+						<input type="text" name="password2" id="lname" class="form-control" placeholder="Confirm Password">
+					</div>
+				</div>
+
+				
+				<div class="form-group text-center">
+					<input type="submit" id="otp" value="Sign up" class="btn btn-primary">
+          <center>
+            <p id="signup2"> already a member?<a href="#" >Sign in</a></p>
+          </center>
+				</div>
+        
+
+			</form>		
+	</div>
+
+
+	        <!-- <div class="col-md-2 col-md-offset-1  signup-otp">
+			
+		
+			    <form action="#">
+		       
+                <div class="otp">
+		        <h2 class="#drinks">O T P</h2>
+		 
+		        <br><br>
+				    <div class="row form-group">
+					  <div class="col-md-12">
+						  
+						  <input type="text" id="fname" class="form-control" placeholder="One Time Password">
+					  </div>
+					  
+					  
+				    </div>
+					<center>
+						<p id="signup2"> not getting otp?<a href="#" >Resend</a></p>
+					</center>
+  
+				  
+				    <div class="form-group text-center">
+					  <input type="submit" value="Validate" class="btn btn-primary">
+				    </div>
+		  
+                </div>
+			    </form>	
+			    	
+		    </div> -->
+  
+		
+
+	<div class="bglinks">
+	<div class="container">
+		<div class="col-xs-12 text-right menu-1 linksall">
+		<ul>
+			{% if user.is_authenticated %}
+			<li class="links_admin_all active_page1"><a href="/">Home</a></li>
+			<li class="links_admin_all active_page2"><a href="/admin_deals">Deals</a></li>
+			<li class="links_admin_all active_page3"><a href="/admin_jobs">Jobs</a></li>
+			<li class="links_admin_all active_page4"><a href="/admin_products">Products</a></li>
+			
+         	
+			
+			<li class="links_admin_all active_page5"><a href="/admin_userdata">User Data</a></li>
+			<li class="links_admin_all active_page6"><a href="/admin_myads">My Ads</a></li>
+			<li class="links_admin_all active_page7"><a href="/admin_assigns">Assigns</a></li>
+			<li class="links_admin_all active_page8"><a href="/admin_notifications">Notifications</a></li>
+			<li class="links_admin_all"><a href="/logout">Logout</a></li>
+
+			{% else %}
+			<li class="links_admin_all"><a href="#" id="login">Sign in</a></li>
+			<li class="links_admin_all"><a href="#" id="signup">Sign up</a></li>
+			
+			
+			{% endif %}
+		</ul>
+		
+
+		
+
+		</div>
+	</div>
+	</div>
+			
+</nav>
+
+
+	
+{% block content %}
+
+{% endblock content %}
+
+
+
+<!-- 
+		<footer id="colorlib-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-pb-md">
+					<div class="col-md-3 colorlib-widget">
+						<h4>E-BRO</h4>
+						<p>About ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebroAbout ebro</p>
+						<p>
+							<ul class="colorlib-social-icons">
+								<li><a href="#"><i class="icon-twitter"></i></a></li>
+								<li><a href="#"><i class="icon-facebook"></i></a></li>
+								<li><a href="#"><i class="icon-linkedin"></i></a></li>
+								<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3 colorlib-widget">
+						<h4>Quick Links</h4>
+						<p>
+							<ul class="colorlib-footer-links">
+								<li><a href="/" style="color: cornsilk;">Home</a></li>
+								<li><a href="/admin_deals">Deals</a></li>
+								<li><a href="/admin_jobs">Jobs</a></li>
+								<li><a href="/admin_products">Products</a></li>
+								<li><a href="/profile.html">Profile</a></li>
+								<li><a href="/admin_userdata">User Data </a></li>
+								<li><a href="/admin_myads">My Ads</a></li>
+								<li><a href="/admin_assigns">Assigns</a></li>
+								<li><a href="/admin_notifications">Notifications</a></li>
+								<li><a href="/logout">Logout</a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3">
+						<h4>Recents News & Updates</h4>
+						<ul class="colorlib-footer-links">
+							<li><a href="#">The Ultimate Packing List For Female Travelers</a></li>
+							<li><a href="#">How These 5 People Found The Path to Their Dream Trip</a></li>
+							<li><a href="#">A Definitive Guide to the Best Dining and Drinking Venues in the City</a></li>
+						</ul>
+					</div>
+
+					<div class="col-md-3 col-md-push-1">
+						<h4>Contact Information</h4>
+						<ul class="colorlib-footer-links">
+							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li><a href="http://luxehotel.com">luxehotel.com</a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</footer>
+	</div>
+	 -->
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
+
+
+       
+
+
+	
+	
+	<!-- jQuery -->
+	<script src="{% static 'js/jquery.min.js '%}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'js/jquery.easing.1.3.js '%}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'js/bootstrap.min.js '%}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'js/jquery.waypoints.min.js '%}"></script>
+	<!-- Flexslider -->
+	<script src="{% static 'js/jquery.flexslider-min.js '%}"></script>
+	<!-- Owl carousel -->
+	<script src="{% static 'js/owl.carousel.min.js '%}"></script>
+	<!-- Magnific Popup -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js '%}"></script>
+	<script src="{% static 'js/magnific-popup-options.js '%}"></script>
+	<!-- Date Picker -->
+	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
+	<!-- Main -->
+	<script src="{% static 'js/main.js '%}"></script>
+
+  <script>
+    document.getElementById("login").addEventListener("click",function(){
+      document.querySelector(".login-form").style.display = "flex";
+      document.querySelector(".signup-form").style.display = "none";
+    })
+    document.getElementById("signup").addEventListener("click",function(){
+      document.querySelector(".signup-form").style.display = "flex";
+      document.querySelector(".login-form").style.display = "none";
+    })
+    document.querySelector(".close").addEventListener("click",function(){
+      document.querySelector(".login-form").style.display = "none";
+    })
+    document.querySelector(".close2").addEventListener("click",function(){
+      document.querySelector(".signup-form").style.display = "none";
+    })
+
+
+    document.getElementById("login2").addEventListener("click",function(){
+      document.querySelector(".login-form").style.display = "none";
+      document.querySelector(".signup-form").style.display = "flex";
+    })
+    document.getElementById("signup2").addEventListener("click",function(){
+      document.querySelector(".signup-form").style.display = "none";
+      document.querySelector(".login-form").style.display = "flex";
+    })
+
+
+
+	document.getElementById("otp").addEventListener("click",function(){
+		document.querySelector(".signup-otp").style.display = "flex";
+		document.querySelector(".signup-form").style.display = "none";
+		
+	})
+
+    <script>
+      $('.message a').click(function(){
+        $('form').animate({height: "toggle",opacity:"toggle"},"slow")
+      })
+    </script>
+  </script>
+
+	</body>
+</html>
+

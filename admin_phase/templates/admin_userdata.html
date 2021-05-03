@@ -1,0 +1,350 @@
+
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+<style>
+  .active_page5{
+    background-color: #99c2ff;
+  }
+</style>
+<br><br>
+<div class="containter_user_box">
+
+  <div class="col-md-12">
+			<div class="aside animate-box">
+                
+                <form method="post" class="colorlib-form">
+                  <div class="row">
+                   
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="date"></label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                           	<div class="user_box1">
+								
+
+					<table class="table_userdata" cellspacing="0">
+      				<tr class="table_userdata_row">
+      								
+                      <th width="20%"></th>
+                      <th width="20%"></th>
+                      <th width="20%">Online</th>
+                      <th width="20%">Offline</th>
+                      <th width="20%">Total</th>
+
+                    </tr>
+
+                    <tr class="table_userdata_row">
+                      <th rowspan="2" width="20%">Admins</th>
+                      <td width="20%">Super</td>
+      				  <td width="20%"><center>###</center></td>
+      				  <td width="20%"><center>###</center></td>
+                      <td rowspan="2" width="20%"><center>{{ total_admins }}</center></td>
+			 	
+      				</tr>
+
+      				<tr class="table_userdata_row">
+      								
+
+      				<td width="20%">Normal</td>
+      				<td width="20%"><center>###</center></td>
+      				<td width="20%"><center>###</center></td>
+      				<td width="20%"><center></center></td>
+
+      				</tr>
+
+      				<tr class="table_userdata_row">
+      								
+      				<th rowspan="2" width="20%">Users</th>
+      				<td width="20%">Free</td>
+      				<td width="20%"><center>###</center></td>
+      				<td width="20%"><center>###</center></td>
+      				<td rowspan="2" width="20%"><center>{{ total_users }}</center></td>
+
+      				</tr>
+
+      				<tr class="table_userdata_row">
+      								
+      				<td width="20%">Premium</td>
+      				<td width="20%"><center>###</center></td>
+      				<td width="20%"><center>###</center></td>
+      				
+
+      				</tr>
+      				<tr class="table_userdata_row">
+      								
+      				<td colspan="4" width="20%"></td>
+      				<td width="20%"><center><b>{{ total_registrations }}</b></center></td>
+      				
+
+      				</tr>
+
+                    
+
+      			</table>
+							</div>
+                           </div>
+                        </div>
+                    </div>
+
+                   
+                   
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="date"></label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                           	<div class="user_box2">
+								
+
+				<table class="table_userdata" cellspacing="0">
+                      <tr class="table_userdata_row">
+                      
+                      <th width="10%"></th>
+                      <th width="10%"></th>
+                      <th width="20%">Deals</th>
+                      <th width="20%">Jobs</th>
+                      <th width="20%">Proucts</th>
+                      
+
+                      </tr>
+
+                      <tr class="table_userdata_row">
+                      	<th rowspan="2" width="10%"><h3><b>Admin</b></h3></th>
+                      	<th width="10%">Public</th>
+                      	<td width="20%">&nbsp;{{ public_admin_deals }}</td>
+                      	<td width="20%">&nbsp;{{ public_admin_jobs }}</td>
+                      	<td width="20%">&nbsp;{{ public_admin_products }}</td>
+                      	
+                      
+                      </tr>
+                      <tr class="table_userdata_row">
+                      	
+                      	<th width="10%">Private</th>
+                      	<td width="20%">&nbsp;{{ private_admin_deals }}</td>
+                      	<td width="20%">&nbsp;{{ private_admin_jobs }}</td>
+                      	<td width="20%">&nbsp;{{ private_admin_products }}</td>
+                      	
+                      
+                      </tr>
+
+                      <tr class="table_userdata_row">
+                      	<th rowspan="2" width="10%"><h3><b>User</b></h3></th>
+                      	<th width="10%">Public</th>
+                      	<td width="20%">&nbsp;{{ public_user_deals }}</td>
+                      	<td width="20%">&nbsp;{{ public_user_jobs }}</td>
+                      	<td width="20%">&nbsp;{{ public_user_products }}</td>
+                      	
+                      
+                      </tr>
+                      <tr class="table_userdata_row">
+                      	
+                      	<th width="10%">Private</th>
+                      	<td width="20%">&nbsp;{{ private_user_deals }}</td>
+                      	<td width="20%">&nbsp;{{ private_user_jobs }}</td>
+                      	<td width="20%">&nbsp;{{ private_user_products }}</td>
+                     
+                      
+                      </tr>
+                      <tr class="table_userdata_row">
+                      	
+                      	<th width="10%">Total</th>
+                      	<th width="10%"></th>
+                      	<th width="20%">&nbsp;{{ total_deals }}</th>
+                      	<th width="20%">&nbsp;{{ total_jobs }}</th>
+                      	<th width="20%">&nbsp;{{ total_products }}</th>
+                   
+                      
+                      </tr>
+
+                     
+
+                    </table>
+							       </div>
+                           </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="date"></label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                            <div class="user_box3">
+                
+
+        <table class="table_userdata" cellspacing="0">
+                      <tr class="table_userdata_row">
+                      
+                      
+                      <th width="40%"></th>
+                      <th width="30%">Deals</th>
+                      <th width="30%">Jobs</th>
+
+                      
+
+                      </tr>
+
+                      <tr class="table_userdata_row">
+                       
+                        <th width="40%">Admin</th>
+                        <td width="30%">&nbsp;{{ admin_assigned_deal }}</td>
+                        <td width="30%">&nbsp;{{ admin_assigned_job }}</td>
+                        
+                        
+                      
+                      </tr>
+                      <tr class="table_userdata_row">
+                        
+                        <th width="40%">User</th>
+                        <td width="30%">&nbsp;{{ user_assigned_deal }}</td>
+                        <td width="30%">&nbsp;{{ user_assigned_job }}</td>
+                        
+                        
+                      
+                      </tr>
+
+                     
+                      <tr class="table_userdata_row">
+                        
+                        <th width="40%">Total</th>
+                        <th width="30%">&nbsp;{{ total_assigned_deal }}</th>
+                        <th width="30%">&nbsp;{{ total_assigned_job }}</th>
+                        
+                   
+                      
+                      </tr>
+
+                     
+
+                    </table>
+                     </div>
+                           </div>
+                        </div>
+                    </div>
+
+
+
+
+                  </div>
+                </form>
+            </div>
+       </div>   
+</div>
+
+
+
+
+	
+      <div class="col-md-14  animate-box" style="margin-left: 10px;width: 98%; font-style:    font-family: 'Antonio', sans-serif;
+   font-family: 'Ubuntu', sans-serif;">
+			<div class="aside animate-box">
+           
+                <form class="colorlib-form">
+                  
+
+                  <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                          <label for="date">Who:</label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                            <input name="search" type="textfield" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="adults">Type:</label>
+                        <div class="form-field">
+                          <i class="icon icon-arrow-down3"></i>
+                          <select name="user_type" id="people" class="form-control">
+                            <option value="">------------</option>
+                            <option value="free">Free User</option>
+                            <option value="premium">Premium User</option>
+                            <option value="">Admin</option>
+                            <option value="">Super Admin</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="date">Where:</label>
+                          <div class="form-field">
+                            <i class="icon location"></i>
+                            <input type="textfield" name="location" id="date" class="form-control text" placeholder="city,state, or Country">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-2">
+                        <button type="submit" name="submit" id="submit"  class="btn btn-primary btn-block">Search</button>
+                      </div>        
+                    </div>
+                  </div>
+                </form>
+            </div>			
+		  </div>
+
+
+
+   <table class="table-users" cellspacing="0">
+    
+      <tr class="header">
+      	<center>
+      	 <th width="5%"><center>#</center></th>
+         <th width="5%"><center>Profile</center></th>
+         <th width="20%"><center>Email</center></th>
+         <th width="10%"><center>Phone</center></th>
+         <th width="15%"><center>Profession</center></th>
+         <th width="7%"><center>Location</center></th>
+         <th width="5%"><center>Type</center></th>
+
+
+         
+         </center>
+      </tr>
+
+     
+      {% for i in profile_list %}
+      <tr class="row_height">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.image != '' %}
+         	<img src="{{i.image.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% endif %}
+         </center></td>
+         <td><center>{{ i.username.username }}</center></td>
+         <td><center>{{ i.phone }}</center></td>
+         <td><center>{{ i.profession }}</center></td>
+         <td><center>{{ i.location }}</center></td>
+         <td><center>{% if i.username.is_superuser == True %}<font color="red"> Admin </font> {% elif i.usertype == "premium" %} Premium User {% else %} Free User {% endif %}</center></td>
+        
+        
+         
+      </tr>
+      {% endfor %}
+
+      
+   </table>
+
+
+
+
+
+
+
+		
+		
+{% endblock %}

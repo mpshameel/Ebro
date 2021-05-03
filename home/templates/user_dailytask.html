@@ -1,0 +1,167 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+	.active_user_page5{
+		background-color: #99c2ff;
+	}
+</style>
+  	
+
+		<div class="container_deals">
+		   <div class="col-md-12">
+			<h2 class="sub_headings">Deals</h2>
+			<br><br>
+				<div class="row">
+					{% for i in daily_deals_list %}
+
+					<div class="col-md-3 room-wrap animate-box user_deal_box">
+						<center>
+						{% if i.deal.picture != '' %}
+         				<img src="{{i.deal.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
+         				{% else %}
+         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
+         				{% endif %}
+         				</center>
+         				
+         					<div class="col-md-10" style="margin-left: -30px;">
+								<h3 class="btn3 btn3-1">{{ i.deal.deal_name }}</h3>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+								
+
+							</div>
+
+							<div class="col-md-2" style="margin-left: -30px;">
+								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
+								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
+								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
+								<h3 class="btn3 btn3-2">$&nbsp;{{ i.deal.price }}</h3>
+								<form action="{% url 'delete_assaigned_deal' %}" method="POST">
+								{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_delete">
+								<button class="btn4 btn4-1 btn4-sep icon">Delete</button>
+								</form>
+
+							</div>
+						
+					</div>
+					{% endfor %}
+
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="container_deals">
+		   <div class="col-md-12">
+		   	<br>
+			<h2 class="sub_headings">Jobs</h2>
+			<br><br>
+				<div class="row">
+					{% for i in daily_jobs_list %}
+
+					<div class="col-md-3 room-wrap animate-box user_deal_box">
+						<center>
+						{% if i.job.picture != '' %}
+         				<img src="{{i.job.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
+         				{% else %}
+         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
+         				{% endif %}
+         				</center>
+         				
+         					<div class="col-md-10" style="margin-left: -30px;">
+								<h3 class="btn3 btn3-1">{{ i.job.job_name }}</h3>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+								
+
+							</div>
+
+							<div class="col-md-2" style="margin-left: -30px;">
+								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
+								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
+								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
+								<h3 class="btn3 btn3-2">$&nbsp;{{ i.job.price }}</h3>
+								<form action="{% url 'delete_assaigned_job' %}" method="POST">
+								{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_delete">
+								<button class="btn4 btn4-1 btn4-sep icon">Delete</button>
+								</form>
+
+							</div>
+						
+					</div>
+					{% endfor %}
+
+
+				</div>
+			</div>
+		</div>	
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+			
+
+
+<!-- 
+
+		    <div class="container">
+		    	<h2>Products</h2>
+				<div class="row">
+					{% for i in user_products_list %}
+					<div class="col-md-2 room-wrap animate-box">
+						{% if i.picture != '' %}
+         				<img src="{{i.picture.url}}" alt="" width="150" height="150" class="image-popup-link"/>
+         				{% else %}
+         				<img src="{% static 'images/assign.png' %}" alt="" width="150" height="150" class="image-popup-link"/>
+         				{% endif %}
+						<div class="desc text-center">
+							<span class="share"><img src="{% static 'images/share.png' %}" alt="" width="25" height="25"></span>
+							<h5><a href="rooms-suites.html">{{ i.product_name }}</a></h5>
+							<p class="price">
+								<span class="currency currency-menu">$</span>
+								<span class="price-room price-menu">{{ i.price }}</span>
+							</p>
+							<p><a href="{% url 'detail_view_products' i.id %}">edit</a></p>
+
+							<form action="{% url 'delete_product' %}" method="POST">
+								{% csrf_token %}
+
+         					<input type="hidden" value="{{ i.id }}" name="id_delete">
+         					<button>Delete</button>
+            				</form>
+							<p><a class="btn btn-primary btn-book">Product</a></p>
+
+						</div>
+					</div>
+					{% endfor %}
+					
+					
+					
+					&nbsp;&nbsp;&nbsp;&nbsp;
+
+			    </div>
+		    </div>
+		
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ -->
+
+
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,81 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+	.active_user_page7{
+		background-color: #99c2ff;
+	}
+</style>
+  
+
+<div class="col-xs-4">
+      <div class=" animate-box ">
+         <form action="{% url 'feedback' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row form-group">
+               <div class="col-md-12">
+                  <br>
+                  <label for="message" class="sub_headings">Feedbacks</label>
+                  <br><br>
+                  <textarea  name="feedback" value="" id="message" cols="25" rows="4" class="form-control" placeholder="Feedbacks to the admin">
+                  </textarea>
+               </div>   
+               
+            </div>
+            
+            <div class="row form-group">
+               <div class="col-md-12">
+               <div class="form-group text-center">
+                  <input type="submit" value="Send" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               </div>
+               </div>
+            </div>
+         </form>
+
+      </div>
+</div>
+
+
+
+<div class="col-xs-8">
+		<div class=" animate-box ">
+			 <table class="table-users" cellspacing="0">
+      			<tr class="header">
+      			<center>
+      		 	<th width="5%"><center>#</center></th>
+         		<th width="85%"><center>Notifications</center></th>
+         		<th width="10%"><center>Date</center></th>
+         		</center>
+      			</tr>
+
+      			{% for i in notifications_list %}
+      			<tr class="row_height">
+      	 		<td><center>{{ forloop.counter }}</center></td></center></td>
+         		<td>{{ i.notification }}</td>
+         		<td><center>Date</center></td>
+        	
+      			</tr>
+      			{% endfor %}
+
+      
+   			</table>
+						
+
+		</div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+

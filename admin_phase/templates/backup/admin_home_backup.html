@@ -1,0 +1,240 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+
+
+
+
+<!-- 
+
+<script>
+	{% for i in messages %}
+	alert('{{ i }}');
+	{% endfor %}
+    
+</script>
+
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>E-BRO</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+ 
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,700 '%}" rel="stylesheet">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700 '%}" rel="stylesheet">
+	
+	
+	<link rel="stylesheet" href="{% static 'css/animate.css '%}">
+
+	<link rel="stylesheet" href="{% static 'css/icomoon.css '%}">
+
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css '%}">
+
+
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css '%}">
+
+
+	<link rel="stylesheet" href="{% static 'css/flexslider.css '%}">
+
+
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css '%}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css '%}">
+	
+
+	<link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css '%}">
+
+	<link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css '%}">
+
+
+	<link rel="stylesheet" href="{% static 'css/style.css '%}">
+	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
+
+	Modernizr JS
+	<script src="{% static 'js/modernizr-2.6.2.min.js '%}"></script>
+
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+<!-- 	</head>
+	<body>
+
+
+
+	
+
+
+		
+	<div class="colorlib-loader"></div>
+
+	<nav class="colorlib-nav" role="navigation">
+		
+		<div class="top">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-4">
+						<p class="site">www.e-bro.com</p>
+		  <ul class="colorlib-social">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="###"><i class="icon-linkedin"></i></a></li>
+							
+						</ul>
+					</div>
+					<div class="col-xs-2">
+						<div><a href="home.html" class="ebro"><img src="{% static 'images/ebro1.png '%}" alt="" width="300" height="70"></a></div>
+					</div>
+					<div class="col-xs-6 text-right">
+						
+						<ul class="colorlib-social">
+							{% if user.is_authenticated %}
+							<li class="active"><a href="admin_profile"><img src="{% static 'images/pers.png '%}" class="person"></a></li>
+							
+							{% else %}
+							<li><a href="#" id="login">Sign in</a></li>
+							<li><a href="#" id="signup">Sign up</a></li>
+							
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+        
+		
+  <div class="bglinks">
+	<div class="row">
+	<div class="container">
+		<div class="col-xs-12 text-right menu-1 linksall">
+		<ul>
+			{% if user.is_authenticated %}
+			<li class="active1"><a href="/" style="color: cornsilk;">Home</a></li>
+			<li><a href="admin_deals" style="color: cornsilk;">Deals</a></li>
+			<li><a href="admin_jobs" style="color: cornsilk;">Jobs</a></li>
+			<li><a href="admin_products" style="color: cornsilk;">Products</a></li>
+			
+         	
+			
+			<li><a href="userdata.html" style="color: cornsilk;">User Data </a></li>
+			<li><a href="admin_myads" style="color: cornsilk;">My Ads</a></li>
+			<li><a href="admin_assigns" style="color: cornsilk;">Assigns</a></li>
+			<li><a href="logout" style="color: cornsilk;">Logout</a></li>
+			
+			
+			{% endif %}
+		</ul>
+		
+
+		
+
+		</div>
+	</div>
+	</div>
+</div>
+</div>
+</div>			
+</nav>
+	
+ -->
+
+
+  <br><br> <br><br><br>
+
+  
+		<div id="colorlib-reservation">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 search-wrap">
+						<form method="post" class="colorlib-form">
+		              	<div class="row">
+		                <div class="col-md-3">
+		                  <div class="form-group">
+		                    <label for="date">What:</label>
+		                    <div class="form-field">
+		                      <i class="icon icon-text"></i>
+		                      <input type="textfield" id="date" class="form-control text" placeholder="Keyword,job,tittle,etc">
+		                    </div>
+		                  </div>
+		                </div>
+						<div class="col-md-2">
+							<div class="form-group">
+							  <label for="adults">Country:</label>
+							  <div class="form-field">
+								<i class="icon icon-arrow-down3"></i>
+								<select name="people" id="people" class="form-control">
+								  <option value="#">1</option>
+								  <option value="#">2</option>
+								  <option value="#">3</option>
+								  <option value="#">4</option>
+								  <option value="#">5+</option>
+								</select>
+							  </div>
+							</div>
+						  </div>
+						
+		                
+		                <div class="col-md-2">
+		                  <div class="form-group">
+		                    <label for="adults">State:</label>
+		                    <div class="form-field">
+		                      <i class="icon icon-arrow-down3"></i>
+		                      <select name="people" id="people" class="form-control">
+		                        <option value="#">1</option>
+		                        <option value="#">2</option>
+		                        <option value="#">3</option>
+		                        <option value="#">4</option>
+		                        <option value="#">5+</option>
+		                      </select>
+		                    </div>
+		                  </div>
+		                </div>
+						<div class="col-md-3">
+							<div class="form-group">
+							  <label for="date">Where:</label>
+							  <div class="form-field">
+								<i class="icon icon-text"></i>
+								<input type="textfield" id="date" class="form-control text" placeholder="Keyword,job,tittle,etc">
+							  </div>
+							</div>
+						</div>
+		                
+		                <div class="col-md-2">
+		                  <input type="submit" name="submit" id="submit" value="Search" class="btn btn-primary btn-block">
+		                </div>        
+		              </div>
+		            </form>
+					</div>
+				</div>
+			</div>
+		</div>
+  		
+<br>
+
+		
+{% endblock %}	
+	
+
+		
+		

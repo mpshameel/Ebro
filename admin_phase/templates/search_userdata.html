@@ -1,0 +1,47 @@
+{% load static %}
+
+adsfcs
+
+{% if searched %}
+<h1>You searched for {{ searched }}</h1>
+<br>
+
+{% for i in result %}
+{{ i.first_name }}<br>
+{% endfor %}
+
+{% else %}
+<h1>You forgot to search</h1>
+{% endif %}
+
+
+
+{% for i in result %}
+      <tr class="row_height">
+      	<td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.image != '' %}
+         	<img src="{{i.image.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% endif %}
+         </center></td>
+         <td><center>{{ i.username.username }}</center></td>
+         <td><center>{{ i.phone }}</center></td>
+         <td><center>{{ i.publish }}</center></td>
+         <td><center>{{ i.price }}</center></td>
+         <td><center>{% if i.username.is_superuser == True %}<font color="red"> Admin </font> {% elif i.usertype == "premium" %} Premium User {% else %} Free User {% endif %}</center></td>
+         <td><center><a href="{% url 'detail_view_admin_products' i.id %}">edit</a></center></td>
+         <td><center>
+         	<br>
+         	<form action="{% url 'delete_admin_products' %}" method="POST">
+				    {% csrf_token %}
+
+         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+         	<button>Delete</button>
+            </form>
+             </center>
+         </td>
+         
+      </tr>
+{% endfor %}

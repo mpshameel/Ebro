@@ -1,0 +1,370 @@
+
+
+<script>
+	{% for i in messages %}
+	alert('{{ i }}');
+	{% endfor %}
+    
+</script>
+
+{% load static %}
+
+
+
+<link rel="stylesheet" href="{% static 'css/login.css '%}">
+
+
+
+<div class="container2" id="container">
+<input type="submit" value="X" class="btn btn-primary closeall">
+	<div class="form-container sign-up-premium-container">
+		<form action="{% url 'premium_user_signup' %}" class="form_login" method="POST">
+			{% csrf_token %}
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			
+			<input type="text" name="first_name" placeholder="Firstname" / required>
+			<input type="text" name="last_name" placeholder="Lastname" />
+			<input type="email" name="email" placeholder="Email" / required>
+			<input type="number" name="phone" placeholder="Phone" / required>
+			<input type="text" name="refferalcode" placeholder="Refferal Code" />
+			<input type="password" name="password1" placeholder="Password" />
+			<input type="password" name="password2" placeholder="Confirm Password" />
+			<button class="button_login" type="submit">Premium Sign Up</button>
+		</form>
+	</div>
+
+
+	<div class="form-container sign-up-container">
+		<form action="{% url 'user_signup' %}" class="form_login" method="POST">
+			{% csrf_token %}
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<input type="text" name="first_name" placeholder="Firstname" / required>
+			<input type="text" name="last_name" placeholder="Lastname" />
+			<input type="email" name="email" placeholder="Email" / required>
+			<input type="number" name="phone" placeholder="Phone" / required>
+			<input type="text" name="refferalcode" placeholder="Refferal Code" />
+			<input type="password" name="password1" placeholder="Password" />
+			<input type="password" name="password2" placeholder="Confirm Password" />
+			<button class="button_login" type="submit">Sign Up</button>
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form action="{% url 'user_login' %}" class="form_login" method="POST">
+			{% csrf_token %}
+			<h1>Sign in</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input type="email" name="name" placeholder="Email" / required>
+			<input type="password" name="password" placeholder="Password" / required>
+			<br>
+			<a href="#">Forgot your password?</a>
+			<br>
+			<button class="button_login" type="submit">Sign In</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost button_login" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+				<p>Enter your personal details and start journey with Ebro</p>
+				<button class="ghost button_login" id="signUp">Sign Up</button>
+				<br><br><br>
+
+				<h1>Premium Users..!</h1>
+				<p>Enter your personal details and start journey with Ebro...
+				We will promote your buissness...</p>
+				<button class="ghost button_login" id="signUppremium">Premium Sign up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<script src="{% static 'js/login.js '%}"></script>
+
+
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>E-BRO</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,700 '%}" rel="stylesheet">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700 '%}" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css '%}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css '%}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css '%}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css '%}">
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="{% static 'css/flexslider.css '%}">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css '%}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css '%}">
+	
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css '%}">
+	<!-- Flaticons  -->
+	<link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css '%}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css '%}">
+	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+	
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+	
+
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js '%}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+
+
+
+
+
+		
+	<div class="colorlib-loader"></div>
+
+	<nav class="colorlib-nav" role="navigation">
+		
+		<div class="top">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-4">
+						<p class="site">www.e-bro.com</p>
+		  <ul class="colorlib-social">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="###"><i class="icon-linkedin"></i></a></li>
+							
+						</ul>
+					</div>
+					<div class="col-xs-2">
+						<div><a href="home.html"><img src="{% static 'images/ebro2.png '%}" class="ebro" alt=""></a></div>
+					</div>
+					<div class="col-xs-6 text-right">
+						
+						<ul class="colorlib-social">
+							{% if user.is_authenticated %}
+							  
+								{% if user_profile.image != '' %}
+         						<li class="active"><a href="profiles"><img src="{{user_profile.image.url}}"  class="person"/></a></li>
+         						{% else %}
+         						<li class="active"><a href="profiles"><img src="{% static 'images/pers.png '%}"  class="person"></a></li>
+         						{% endif %}
+         					 
+							
+							{% else %}
+							<li><a href="#" id="loginpopup" class="links_user_login" style="color: #fff;">Signin/Signup</a></li>
+							
+							
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+        
+		
+  <div class="bglinks">
+	<div class="container">
+		<div class="col-xs-12 text-right menu-1 linksall">
+		<ul>
+			
+			<li class="links_admin_all active_user_page1"><a href="/home">Home</a></li>
+			<li class="links_admin_all active_user_page2"><a href="/home/deal">Deals</a></li>
+			<li class="links_admin_all active_user_page3"><a href="/home/job">Jobs</a></li>
+			<li class="links_admin_all active_user_page4"><a href="/home/product">Products</a></li>
+			
+			{% if user.is_authenticated %}
+			<li class="links_admin_all active_user_page5"><a href="/home/daily_task">Daily Task<span class="count">2</span></a></li>
+			<li class="links_admin_all active_user_page6"><a href="/home/myads">My Ads</a></li>
+			<li class="links_admin_all active_user_page7"><a href="/home/chats">Chats</a></li>
+			<li class="links_admin_all"><a href="user_logout">Logout</a></li>
+			
+			{% endif %}
+		</ul>
+		
+
+		
+
+		</div>
+	</div>
+  </div>
+		
+</nav>
+	
+
+  
+{% block content %}
+
+{% endblock content %}
+		
+		
+		<footer id="colorlib-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-pb-md">
+					<div class="col-md-3 colorlib-widget">
+						<h4>E-BRO</h4>
+						<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
+						<p>
+							<ul class="colorlib-social-icons">
+								<li><a href="#"><i class="icon-twitter"></i></a></li>
+								<li><a href="#"><i class="icon-facebook"></i></a></li>
+								<li><a href="#"><i class="icon-linkedin"></i></a></li>
+								<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3 colorlib-widget">
+						<h4>Quick Links</h4>
+						<p>
+							<ul class="colorlib-footer-links">
+								<li><a href="home.html" style="color: cornsilk;">Home</a></li>
+								<li><a href="deals.html">Deals</a></li>
+								<li><a href="jobs.html">Jobs</a></li>
+								<li><a href="item.html">Item</a></li>
+								{% if user.is_authenticated %}
+								<li><a href="profile.html">Profile</a></li>
+								<li><a href="daily_task">Daily Task</a></li>
+								<li><a href="myads">My Ads</a></li>
+								<li><a href="chats">Chats</a></li>
+								<li><a href="login.html">Logout</a></li>
+								{% endif %}
+								
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3">
+						<h4>Recents News & Updates</h4>
+						<ul class="colorlib-footer-links">
+							<li><a href="#">The Ultimate Packing List For Female Travelers</a></li>
+							<li><a href="#">How These 5 People Found The Path to Their Dream Trip</a></li>
+							<li><a href="#">A Definitive Guide to the Best Dining and Drinking Venues in the City</a></li>
+						</ul>
+					</div>
+
+					<div class="col-md-3 col-md-push-1">
+						<h4>Contact Information</h4>
+						<ul class="colorlib-footer-links">
+							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li><a href="http://luxehotel.com">luxehotel.com</a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</footer>
+	</div>
+	
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
+
+
+       
+
+
+	
+	
+	<!-- jQuery -->
+	<script src="{% static 'js/jquery.min.js '%}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'js/jquery.easing.1.3.js '%}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'js/bootstrap.min.js '%}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'js/jquery.waypoints.min.js '%}"></script>
+	<!-- Flexslider -->
+	<script src="{% static 'js/jquery.flexslider-min.js '%}"></script>
+	<!-- Owl carousel -->
+	<script src="{% static 'js/owl.carousel.min.js '%}"></script>
+	<!-- Magnific Popup -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js '%}"></script>
+	<script src="{% static 'js/magnific-popup-options.js '%}"></script>
+	<!-- Date Picker -->
+	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
+	<!-- Main -->
+	<script src="{% static 'js/main.js '%}"></script>
+
+  <script>
+    document.getElementById("loginpopup").addEventListener("click",function(){
+      document.querySelector(".container2").style.display = "flex";
+    })
+  
+    document.querySelector(".closeall").addEventListener("click",function(){
+      document.querySelector(".container2").style.display = "none";
+    })
+ 
+
+
+    <script>
+      $('.message a').click(function(){
+        $('form').animate({height: "toggle",opacity:"toggle"},"slow")
+      })
+    </script>
+  </script>
+
+	</body>
+</html>

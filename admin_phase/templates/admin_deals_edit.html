@@ -1,0 +1,149 @@
+
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+<style>
+	.active_page2{
+		background-color: #99c2ff;
+	}
+</style>
+
+
+
+
+	
+		<div class=" animate-box deal_box">
+			<br>
+			<form action="{% url 'detail_view_admin_deals' admin_deals_list.id %}" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="row form-group">
+					
+					<div class="col-md-1">
+						<label for="subject">Publish</label><br>
+						<input type="radio" name="publish" value="public" {% if admin_deals_list.publish == "public" %} checked="checked" {% endif %}>Public<br>
+						<input type="radio" name="publish" value="private" {% if admin_deals_list.publish == "private" %} checked="checked" {% endif %}>Private 
+				    </div>
+					<div class="col-md-3">
+						<br>[your product or deal will handle by E-bro through private channel]
+				    </div>
+
+				    <div class="col-md-2">
+						<label for="fname">Deal Name</label>
+						<input type="text" name="deal_name" value="{{ admin_deals_list.deal_name }}" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+
+					<div class="col-md-1">
+						<label for="subject">Type</label><br>
+						<input type="radio" name="deal_type" value="Single" {% if admin_deals_list.deal_type == "Single" %} checked="checked" {% endif %}>Single<br>
+						<input type="radio" name="deal_type" value="Multiple" {% if admin_deals_list.deal_type == "Multiple" %} checked="checked" {% endif %}>Multiple
+					</div>
+					<div class="col-md-3">
+						<br>[your product can categorize based on brand name or individual]
+				    </div>
+					<div class="col-md-2">
+						<label for="subject">Brand Name</label>
+						<input type="text" name="brand_name" id="subject" value="{{ admin_deals_list.brand_name }}" class="form-control" placeholder="Your subject of this message">
+					</div>
+					
+				</div>
+
+			
+
+				<div class="row form-group">
+					
+					<div class="col-md-2">
+						<label for="lname">Price</label>
+						<input type="text" name="price" id="lname" value="{{ admin_deals_list.price }}" class="form-control" placeholder="Your lastname">
+					</div>
+					<div class="col-md-4">
+						<label for="email">Category/Keywords</label>
+						<input type="text" name="category" id="email" value="{{ admin_deals_list.category }}" class="form-control" placeholder="Your email address">
+					</div>
+
+					<div class="col-md-4">
+						<label for="subject">Email</label>
+						<input type="text" name="email" id="subject" value="{{ admin_deals_list.email }}" class="form-control" placeholder="Your subject of this message">
+				    </div>
+				    <div class="col-md-2">
+						<label for="subject">Contact</label>
+						<input type="text" name="contact" id="subject" value="{{ admin_deals_list.contact }}" class="form-control" placeholder="Your subject of this message">
+				    </div>
+					
+					
+				</div>
+
+				<div class="row form-group">
+					<div class="col-md-1">
+					<br>
+							{% if admin_deals_list.picture != '' %}
+         					<img src="{{admin_deals_list.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         					{% else %}
+         					<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         					{% endif %}
+						
+					</div>
+					<div class="col-md-2">
+						<label for="fname">Picture</label>
+						
+						<input type="file" name="picture" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+					<div class="col-md-2">
+						<label for="lname">Attachments</label>
+						<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
+					</div>
+					<div class="col-md-2">
+						<label for="subject">Sort by Location</label>
+						<input type="text" name="location" id="subject" value="{{ admin_deals_list.location }}" class="form-control" placeholder="Your subject of this message">
+					</div>
+
+					<div class="col-md-5">
+						<label for="message">Other Details</label>
+						<textarea  name="details" value="" id="message" value="{{ admin_deals_list.details }}" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ admin_deals_list.details }}
+						</textarea>
+					</div>	
+					
+				</div>
+				
+				<div class="row form-group">
+				<div class="form-group text-center">
+					<input type="submit" value="Update Deal" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+				</div>
+				</div>
+			</form>
+		</div>
+
+
+
+		<div class=" animate-box deal_attach_box">
+			
+				
+				<div class="row form-group">
+				<form action="{% url 'delete_deal_attach' %}" method="POST">
+				{% csrf_token %}
+				<input type="hidden" value="{{ admin_deals_list.id }}" name="attach_delete">
+					<div class="col-md-12">
+						{% for j in admin_deals_attach_list %}
+						<img src="{{ j.attachment.url }}" alt="" height="70" width="70" style="border-radius: 50%" />
+						{% endfor %}
+					</div>	
+					
+				</div>
+				<br><br><br>
+				<div class="row form-group">
+				<div class="form-group text-center">
+					<input type="submit" value="Delete Old Attachments" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+				</div>
+				</div>
+			</form>
+		</div>
+
+
+
+
+
+
+{% endblock %}

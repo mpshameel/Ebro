@@ -1,0 +1,549 @@
+
+
+<script>
+	{% for i in messages %}
+	alert('{{ i }}');
+	{% endfor %}
+    
+</script>
+
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>E-BRO</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,700 '%}" rel="stylesheet">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700 '%}" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css '%}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css '%}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css '%}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css '%}">
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="{% static 'css/flexslider.css '%}">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css '%}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css '%}">
+	
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css '%}">
+	<!-- Flaticons  -->
+	<link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css '%}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css '%}">
+	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js '%}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+
+
+
+	
+
+
+		
+	<div class="colorlib-loader"></div>
+
+	<nav class="colorlib-nav" role="navigation">
+		
+		<div class="top">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-4">
+						<p class="site">www.e-bro.com</p>
+		  <ul class="colorlib-social">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="###"><i class="icon-linkedin"></i></a></li>
+							
+						</ul>
+					</div>
+					<div class="col-xs-2">
+						<div><a href="home.html" class="ebro"><img src="{% static 'images/ebro1.png '%}" alt="" width="300" height="70"></a></div>
+					</div>
+					<div class="col-xs-6 text-right">
+						
+						<ul class="colorlib-social">
+							{% if user.is_authenticated %}
+							<li class="active"><a href="admin_profile"><img src="{% static 'images/pers.png '%}" class="person"></a></li>
+							
+							{% else %}
+							<li><a href="#" id="login">Sign in</a></li>
+							<li><a href="#" id="signup">Sign up</a></li>
+							
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+        
+		
+  <div class="bglinks">
+	<div class="row">
+	<div class="container">
+		<div class="col-xs-12 text-right menu-1 linksall">
+		<ul>
+			{% if user.is_authenticated %}
+			<li><a href="/" style="color: cornsilk;">Home</a></li>
+			<li><a href="admin_deals" style="color: cornsilk;">Deals</a></li>
+			<li><a href="admin_jobs" style="color: cornsilk;">Jobs</a></li>
+			<li class="active1"><a href="admin_products" style="color: cornsilk;">Products</a></li>
+			
+         	
+			
+			<li><a href="userdata.html" style="color: cornsilk;">User Data </a></li>
+			<li><a href="admin_myads" style="color: cornsilk;">My Ads</a></li>
+			<li><a href="logout" style="color: cornsilk;">Logout</a></li>
+			
+			
+			{% endif %}
+		</ul>
+		
+
+		
+
+		</div>
+	</div>
+	</div>
+</div>
+</div>
+</div>			
+</nav>
+	
+
+
+
+
+	
+		<div class=" animate-box product_box">
+			<br>
+			<form action="{% url 'admin_products' %}" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="row form-group">
+					
+					<div class="col-md-1">
+						<label for="subject">Publish</label><br>
+						<input type="radio" name="publish" value="public" checked="checked">Public<br>
+						<input type="radio" name="publish" value="private">Private 
+				    </div>
+					<div class="col-md-3">
+						<br>[your product or deal will handle by E-bro through private channel]
+				    </div>
+
+				    <div class="col-md-2">
+						<label for="fname">Product Name</label>
+						<input type="text" name="product_name" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+
+					<div class="col-md-1">
+						<label for="subject">Product Type</label><br>
+						<input type="radio" name="product_type" value="Single" checked="checked">Single<br>
+						<input type="radio" name="product_type" value="Multiple">Multiple
+					</div>
+					<div class="col-md-3">
+						<br>[your product can categorize based on brand name or individual]
+				    </div>
+					<div class="col-md-2">
+						<label for="subject">Brand Name</label>
+						<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+					
+				</div>
+
+			
+
+				<div class="row form-group">
+					
+					<div class="col-md-2">
+						<label for="lname">Price</label>
+						<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
+					</div>
+					<div class="col-md-4">
+						<label for="email">Category/Keywords</label>
+						<input type="text" name="category" id="email" class="form-control" placeholder="Your email address">
+					</div>
+
+					<div class="col-md-4">
+						<label for="subject">Email</label>
+						<input type="text" name="email" id="subject" class="form-control" placeholder="Your subject of this message">
+				    </div>
+				    <div class="col-md-2">
+						<label for="subject">Contact</label>
+						<input type="text" name="contact" id="subject" class="form-control" placeholder="Your subject of this message">
+				    </div>
+					
+					
+				</div>
+
+				<div class="row form-group">
+					<div class="col-md-2">
+						<label for="fname">Picture</label>
+						<input type="file" name="picture" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+					<div class="col-md-2">
+						<label for="lname">Attachments</label>
+						<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
+					</div>
+					<div class="col-md-2">
+						<label for="subject">Sort by Location</label>
+						<input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+
+					<div class="col-md-6">
+						<label for="message">Other Details</label>
+						<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
+						</textarea>
+					</div>	
+					
+				</div>
+				
+				<div class="row form-group">
+				<div class="form-group text-center">
+					<input type="submit" value="Add Product" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+				</div>
+				</div>
+			</form>
+		</div>
+
+
+ <div class="col-md-12  animate-box" style="margin-left: 10px;width: 98%;height: 25%; font-style:font-family: 'Antonio', sans-serif;
+   font-family: 'Ubuntu', sans-serif;background-color: rgb(43, 117, 237);">
+			<div class="aside animate-box">
+           <br>
+                <form class="colorlib-form">
+                  
+
+                  <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">What:</label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                            <input name="product_name" type="textfield" value="" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Publish Type:</label>
+                          <div class="form-field">
+                            <i class="icon icon-arrow-down3"></i>
+                          	<select name="publish" id="people" class="form-control">
+                            <option value="">------------</option>
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                          	</select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Product Type:</label>
+                          <div class="form-field">
+                            <i class="icon icon-arrow-down3"></i>
+                          	<select name="product_type" id="people" class="form-control">
+                            <option value="">------------</option>
+                            <option value="Single">Single</option>
+                            <option value="Multiple">Multiple</option>
+                          	</select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Brand Name:</label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                            <input name="brand_name" type="textfield" value="" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Where:</label>
+                          <div class="form-field">
+                            <i class="icon location"></i>
+                            <input type="textfield" name="location" value="" id="date" class="form-control text" placeholder="city,state, or Country">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-2">
+                        <button type="submit" name="submit" id="submit"  class="btn btn-primary btn-block">Search</button>
+                      </div>        
+                    </div>
+                  </div>
+                </form>
+            </div>			
+		  </div>
+
+
+
+   
+   <table class="table-users" cellspacing="0">
+      <tr class="header">
+      	<center>
+      	 <th width="5%"><center>#</center></th>
+         <th width="5%"><center>Picture</center></th>
+         <th width="15%"><center>Product Name</center></th>
+         <th width="20%"><center>Email</center></th>
+         <th width="10%"><center>Phone</center></th>
+         <th width="10%"><center>Publish</center></th>
+         <th width="7%"><center>Price</center></th>
+         <th width="10%"><center>Type</center></th>
+         <th width="5%"><center>Edit</center></th>
+         <th width="5%"><center>Delete</center></th>
+         
+         
+         </center>
+      </tr>
+
+      {% for i in admin_products_list %}
+      <tr class="row_height">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.picture != '' %}
+         	<img src="{{i.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% endif %}
+         </center></td>
+         <td><center>{{ i.product_name }}</center></td>
+         <td><center>{{ i.email }}</center></td>
+         <td><center>{{ i.contact }}</center></td>
+         <td><center>{{ i.publish }}</center></td>
+         <td><center>{{ i.price }}</center></td>
+         <td><center>{{ i.product_type }}</center></td>
+         <td><center><a href="{% url 'detail_view_admin_products' i.id %}">edit</a></center></td>
+         <td><center>
+         	<br>
+         	<form action="{% url 'delete_admin_products' %}" method="POST">
+				{% csrf_token %}
+
+         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+         	<button>Delete</button>
+            </form>
+             </center>
+         </td>
+         
+      </tr>
+      {% endfor %}
+
+      
+   </table>
+
+
+
+
+
+<div class="assaign_products_form">
+		<div class="col-md-12  animate-box">
+			<input type="submit" value="X" class="btn btn-primary close_assaign_product">
+			<br>
+			<form action="#">
+				<div class="row form-group">
+					<div class="col-md-6">
+						<label for="fname">Deal Name</label>
+						<input type="text" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+					<div class="col-md-6">
+						<label for="lname">Price</label>
+						<input type="text" id="lname" class="form-control" placeholder="Your lastname">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-md-6">
+						<label for="email">Keywords</label>
+						<input type="text" id="email" class="form-control" placeholder="Your email address">
+					</div>
+					<div class="col-md-6">
+						<label for="subject">Department</label>
+						<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					
+					<div class="col-md-6">
+						<label for="subject">Preference</label>
+						<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+				    </div>
+					<div class="col-md-6">
+						<label for="subject">Sort by Location</label>
+						<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+				</div>
+
+				
+
+				
+				<div class="form-group text-center">
+					<input type="submit" value="Assaign" class="btn btn-primary">
+				</div>
+
+			</form>		
+		</div>
+	</div>
+
+
+
+
+
+
+		
+		
+		<footer id="colorlib-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-pb-md">
+					<div class="col-md-3 colorlib-widget">
+						<h4>E-BRO</h4>
+						<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
+						<p>
+							<ul class="colorlib-social-icons">
+								<li><a href="#"><i class="icon-twitter"></i></a></li>
+								<li><a href="#"><i class="icon-facebook"></i></a></li>
+								<li><a href="#"><i class="icon-linkedin"></i></a></li>
+								<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3 colorlib-widget">
+						<h4>Quick Links</h4>
+						<p>
+							<ul class="colorlib-footer-links">
+								<li><a href="/" style="color: cornsilk;">Home</a></li>
+								<li><a href="admin_deals">Deals</a></li>
+								<li><a href="admin_jobs">Jobs</a></li>
+								<li><a href="admin_products">Products</a></li>
+								<li><a href="profile.html">Profile</a></li>
+								{% if user.is_superuser %}
+								<li><a href="userdata.html">User Data </a></li>
+								<li><a href="admin_myads">My Ads</a></li>
+								<li><a href="login.html">Logout</a></li>
+								{% else %}
+								<li><a href="dailytask.html">Daily Task</a></li>
+								<li><a href="admin_myads">My Ads</a></li>
+								<li><a href="login.html">Logout</a></li>
+								{% endif %}
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3">
+						<h4>Recents News & Updates</h4>
+						<ul class="colorlib-footer-links">
+							<li><a href="#">The Ultimate Packing List For Female Travelers</a></li>
+							<li><a href="#">How These 5 People Found The Path to Their Dream Trip</a></li>
+							<li><a href="#">A Definitive Guide to the Best Dining and Drinking Venues in the City</a></li>
+						</ul>
+					</div>
+
+					<div class="col-md-3 col-md-push-1">
+						<h4>Contact Information</h4>
+						<ul class="colorlib-footer-links">
+							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li><a href="http://luxehotel.com">luxehotel.com</a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</footer>
+	</div>
+	
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
+
+
+       
+
+
+	
+	
+	<!-- jQuery -->
+	<script src="{% static 'js/jquery.min.js '%}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'js/jquery.easing.1.3.js '%}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'js/bootstrap.min.js '%}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'js/jquery.waypoints.min.js '%}"></script>
+	<!-- Flexslider -->
+	<script src="{% static 'js/jquery.flexslider-min.js '%}"></script>
+	<!-- Owl carousel -->
+	<script src="{% static 'js/owl.carousel.min.js '%}"></script>
+	<!-- Magnific Popup -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js '%}"></script>
+	<script src="{% static 'js/magnific-popup-options.js '%}"></script>
+	<!-- Date Picker -->
+	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
+	<!-- Main -->
+	<script src="{% static 'js/main.js '%}"></script>
+
+	<script>
+		document.getElementById("assaign_product").addEventListener("click",function(){
+		  document.querySelector(".assaign_products_form").style.display = "flex";
+		})
+		document.querySelector(".close_assaign_product").addEventListener("click",function(){
+			document.querySelector(".assaign_products_form").style.display = "none";
+		  })
+		
+	
+	</script>
+
+	</body>
+</html>
+
+
+
+

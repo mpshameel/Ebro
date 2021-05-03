@@ -1,0 +1,441 @@
+{% load static %}
+
+
+<script>
+	{% for i in messages %}
+	alert('{{ i }}');
+	{% endfor %}
+    
+</script>
+
+
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>E-BRO</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,700 '%}" rel="stylesheet">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700 '%}" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css '%}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css '%}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css '%}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css '%}">
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="{% static 'css/flexslider.css '%}">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css '%}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css '%}">
+	
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css '%}">
+	<!-- Flaticons  -->
+	<link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css '%}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css '%}">
+	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
+    <link rel="stylesheet" href="{% static 'css/addb.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js '%}"></script>
+	<script src="{% static 'js/app.js '%}"></script>
+
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+    
+	
+	
+
+
+		
+	<div class="colorlib-loader"></div>
+    
+	
+		<nav class="colorlib-nav" role="navigation">
+			{% if user.is_authenticated %}
+            <div class="top">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-4">
+							<p class="site">www.e-bro.com</p>
+              <ul class="colorlib-social">
+								<li><a href="#"><i class="icon-twitter"></i></a></li>
+								<li><a href="#"><i class="icon-facebook"></i></a></li>
+								<li><a href="###"><i class="icon-linkedin"></i></a></li>
+								
+							</ul>
+						</div>
+						<div class="col-xs-2">
+							<div><a href="home.html" class="ebro"><img src="{% static 'images/ebro1.png '%}" alt="" width="300" height="70"></a></div>
+						</div>
+						<div class="col-xs-6 text-right">
+							
+							<ul class="colorlib-social">
+								<li class="active"><a href="profile.html"><img src="{% static 'images/pers.png '%}" class="person"></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+      {% endif %}
+	  <div class="bglinks">
+		<div class="row">
+		<div class="container">
+			<div class="col-xs-14 text-right menu-1 linksall">
+				<ul>
+			{% if user.is_authenticated %}
+			<li><a href="/" style="color: cornsilk;">Home</a></li>
+			<li><a href="admin_deals" style="color: cornsilk;">Deals</a></li>
+			<li><a href="admin_jobs" style="color: cornsilk;">Jobs</a></li>
+			<li><a href="item.html" style="color: cornsilk;">Item</a></li>
+			
+         	
+			
+			<li><a href="userdata.html" style="color: cornsilk;">User Data </a></li>
+			<li><a href="admin_myads" style="color: cornsilk;">My Ads</a></li>
+			<li><a href="logout" style="color: cornsilk;">Logout</a></li>
+			
+			
+			{% endif %}
+		</ul>
+				
+		
+				
+		
+				</div>
+		</div>
+		</div>
+	</div>
+	</div>
+	</div>			
+	</nav>
+
+
+
+
+        <div id="colorlib-blog">
+			<div class="container" style="margin-top: -50px;">
+				<div class="row">
+					<div class="col-md-7 col-md-push-3">
+                        <form action="{% url 'admin_profile' %}" method="POST">
+                        	{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="{{ user.email }}" value="{{ user.email }}" disabled>
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Phone</label>
+                                    <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ admin_profile.phone }}" value="{{ admin_profile.phone }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Alternative Phone</label>
+                                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ admin_profile.alternative_phone }}" value="{{ admin_profile.alternative_phone }}">
+                                </div>
+                            </div>
+
+							<div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Date of Birth</label>
+                                    <input type="text" id="fname" name="dob" class="form-control" placeholder="{{ admin_profile.dob }}" value="{{ admin_profile.dob }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Adhar/Id</label>
+                                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="{{ admin_profile.adhar_id }}" value="{{ admin_profile.adhar_id }}">
+                                </div>
+                            </div>
+
+							<div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Qualification</label>
+                                    <input type="text" id="fname" name="qualification" class="form-control" placeholder="{{ admin_profile.qualification }}" value="{{ admin_profile.qualification }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Hobbies</label>
+                                    <input type="text" id="lname" name="hobbies" class="form-control" placeholder="{{ admin_profile.hobbies }}" value="{{ admin_profile.hobbies }}">
+                                </div>
+                            </div>
+            
+                            
+            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="message">Summary/Bio</label>
+                                    <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="{{ admin_profile.summary }}" value="">{{ admin_profile.summary }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Update Profile" class="btn btn-primary">
+                            </div>
+						</form>
+                        
+					</div>
+
+					<div class="col-md-2 col-md-pull-7">
+						<div class="aside animate-box">
+							<div class="colorlib-form" >
+							<form action="{% url 'update_admin_profile_pic' %}" method="POST" enctype="multipart/form-data">
+								{% csrf_token %}
+			              	<div class="row">
+			                <div class="col-md-6">
+			                  <div class="form-group">
+			                    <div class="form-field profile-pic-circle">
+
+			                    	{% if admin_profile.image != '' %}
+                					<img src="{{admin_profile.image.url}}" id="photo">
+                					{% else %} 
+                					<img src="{% static 'images/menu-9.jpg '%}" id="photo">
+                					{% endif %}
+
+
+                                    <img src="{% static 'images/menu-9.jpg '%}" id="photo">
+
+			                    </div>
+			                    <br>
+			                    <input type="file" name="img" required>
+              					<button type="submit" class="btn btn-primary">Update Profile Pic</button><br>
+			                  </div>
+			                </div>
+                            </div>
+                            
+							
+			            </form>
+						</div>
+						  
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+       <br><br><br><br>
+
+		<div id="colorlib-reservation">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 search-wrap">
+						<form method="post" class="colorlib-form">
+		              	<div class="row">
+						<div class="col-md-3"><br>
+							<ul class="colorlib-social">
+								<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+								<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+								<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+									
+							</ul> 
+						</div>
+		                <div class="col-md-5">
+		                  <div class="form-group">
+		                    <label for="date">Invite Link:</label>
+		                    <div class="form-field">
+		                      <i class="icon icon-text"></i>
+		                      <input type="textfield" id="date" class="form-control text" placeholder="Keyword,job,tittle,etc">
+		                    </div>
+		                  </div>
+		                </div>
+						
+		                <div class="col-md-2">
+		                  <div class="form-group">
+		                    <label for="date">Refferal Code:</label>
+		                    <div class="form-field">
+		                      <i class="icon location"></i>
+		                      <input type="textfield" id="date" class="form-control text" placeholder="city,state, or pincode">
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		                
+		                <div class="col-md-2">
+		                  <input type="submit" name="submit"  value="Share" class="btn btn-primary btn-block">
+		                </div> 
+						      
+		              </div>
+		            </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+        <br><br><br><br><br>
+
+    
+		<footer id="colorlib-footer" role="contentinfo">
+			<div class="container">
+				<div class="row row-pb-md">
+					<div class="col-md-3 colorlib-widget">
+						<h4>E-BRO</h4>
+						<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
+						<p>
+							<ul class="colorlib-social-icons">
+								<li><a href="#"><i class="icon-twitter"></i></a></li>
+								<li><a href="#"><i class="icon-facebook"></i></a></li>
+								<li><a href="#"><i class="icon-linkedin"></i></a></li>
+								<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3 colorlib-widget">
+						<h4>Quick Links</h4>
+						<p>
+							<ul class="colorlib-footer-links">
+								<li><a href="/">Home</a></li>
+								<li><a href="admin_deals">Deals</a></li>
+								<li><a href="admin_jobs">Jobs</a></li>
+								<li><a href="item.html">Item</a></li>
+								<li><a href="profile.html" style="color: cornsilk;">Profile</a></li>
+								{% if user.is_superuser %}
+								<li><a href="userdata.html">User Data </a></li>
+								<li><a href="admin_myads">My Ads</a></li>
+								<li><a href="login.html">Logout</a></li>
+								{% else %}
+								<li><a href="dailytask.html">Daily Task</a></li>
+								<li><a href="admin_myads">My Ads</a></li>
+								<li><a href="login.html">Logout</a></li>
+								{% endif %}
+							</ul>
+						</p>
+					</div>
+					<div class="col-md-3">
+						<h4>Recents News & Updates</h4>
+						<ul class="colorlib-footer-links">
+							<li><a href="#">The Ultimate Packing List For Female Travelers</a></li>
+							<li><a href="#">How These 5 People Found The Path to Their Dream Trip</a></li>
+							<li><a href="#">A Definitive Guide to the Best Dining and Drinking Venues in the City</a></li>
+						</ul>
+					</div>
+
+					<div class="col-md-3 col-md-push-1">
+						<h4>Contact Information</h4>
+						<ul class="colorlib-footer-links">
+							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li><a href="http://luxehotel.com">luxehotel.com</a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</footer>
+	
+    	
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
+
+</div>
+	
+	
+	<!-- jQuery -->
+	<script src="{% static 'js/jquery.min.js '%}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'js/jquery.easing.1.3.js '%}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'js/bootstrap.min.js '%}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'js/jquery.waypoints.min.js '%}"></script>
+	<!-- Flexslider -->
+	<script src="{% static 'js/jquery.flexslider-min.js '%}"></script>
+	<!-- Owl carousel -->
+	<script src="{% static 'js/owl.carousel.min.js '%}"></script>
+	<!-- Magnific Popup -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js '%}"></script>
+	<script src="{% static 'js/magnific-popup-options.js '%}"></script>
+	<!-- Date Picker -->
+	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
+	<!-- Main -->
+	<script src="{% static 'js/main.js '%}"></script>
+	<!-- <script>
+		//declairing html elements
+
+const imgDiv = document.querySelector('.profile-pic-circle');
+const img = document.querySelector('#photo');
+const file = document.querySelector('#file');
+const uploadBtn = document.querySelector('#uploadBtn');
+
+// if user hover on profile pic
+imgDiv.addEventListner('mouseenter', function()
+{
+	uploadBtn.style.display = "block"
+});
+
+// if user hover out from profile pic
+imgDiv.addEventListner('mouseleave', function()
+{
+	uploadBtn.style.display = "none"
+});
+
+
+//image showing functionality
+//when we choose a aphoto to upload
+file.addEventListner('change', function(){
+	//this refer to file
+	const choosedFile = this.files[0];
+	if (choosedFile) {
+		const reader = new FileReader();//filereader is a predefined function of js
+		reader.addEventListner('load', function(){
+			img.setAttribute('src', reader.result);
+		});
+
+		reader.readAsDataURL(choosedFile);
+	}
+});
+
+
+	</script> -->
+
+  
+
+	</body>
+</html>
+

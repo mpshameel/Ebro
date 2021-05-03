@@ -1,0 +1,315 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+<style>
+	.active_page2{
+		background-color: #99c2ff;
+	}
+</style>
+
+	
+		<div class=" animate-box deal_box">
+			<br>
+			<form action="{% url 'admin_deals' %}" method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				<div class="row form-group">
+					
+					<div class="col-md-1">
+						<label for="subject">Publish</label><br>
+						<input type="radio" name="publish" value="public" checked="checked">Public<br>
+						<input type="radio" name="publish" value="private">Private 
+				    </div>
+					<div class="col-md-3">
+						<br>[your product or deal will handle by E-bro through private channel]
+				    </div>
+
+				    <div class="col-md-2">
+						<label for="fname">Deal Name</label>
+						<input type="text" name="deal_name" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+
+					<div class="col-md-1">
+						<label for="subject">Type</label><br>
+						<input type="radio" name="deal_type" value="Single" checked="checked">Single<br>
+						<input type="radio" name="deal_type" value="Multiple">Multiple
+					</div>
+					<div class="col-md-3">
+						<br>[your product can categorize based on brand name or individual]
+				    </div>
+					<div class="col-md-2">
+						<label for="subject">Brand Name</label>
+						<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+					
+				</div>
+
+			
+
+				<div class="row form-group">
+					
+					<div class="col-md-2">
+						<label for="lname">Price</label>
+						<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
+					</div>
+					<div class="col-md-4">
+						<label for="email">Category/Keywords</label>
+						<input type="text" name="category" id="email" class="form-control" placeholder="Your email address">
+					</div>
+
+					<div class="col-md-4">
+						<label for="subject">Email</label>
+						<input type="text" name="email" id="subject" class="form-control" placeholder="Your subject of this message">
+				    </div>
+				    <div class="col-md-2">
+						<label for="subject">Contact</label>
+						<input type="text" name="contact" id="subject" class="form-control" placeholder="Your subject of this message">
+				    </div>
+					
+					
+				</div>
+
+				<div class="row form-group">
+					<div class="col-md-2">
+						<label for="fname">Picture</label>
+						<input type="file" name="picture" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+					<div class="col-md-2">
+						<label for="lname">Attachments</label>
+						<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
+					</div>
+					<div class="col-md-2">
+						<label for="subject">Sort by Location</label>
+						<input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+
+					<div class="col-md-6">
+						<label for="message">Other Details</label>
+						<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
+						</textarea>
+					</div>	
+					
+				</div>
+				
+				<div class="row form-group">
+				<div class="form-group text-center">
+					<input type="submit" value="Add Deal" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+				</div>
+				</div>
+			</form>
+		</div>
+
+
+
+ <div class="col-md-12  animate-box" style="margin-left: 10px;width: 98%;height: 25%; font-style:font-family: 'Antonio', sans-serif;
+   font-family: 'Ubuntu', sans-serif;background-color: rgb(43, 117, 237);">
+			<div class="aside animate-box">
+           <br>
+                <form class="colorlib-form">
+                  
+
+                  <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">What:</label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                            <input name="deal_name" type="textfield" value="" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Publish Type:</label>
+                          <div class="form-field">
+                            <i class="icon icon-arrow-down3"></i>
+                          	<select name="publish" id="people" class="form-control">
+                            <option value="">------------</option>
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                          	</select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Deal Type:</label>
+                          <div class="form-field">
+                            <i class="icon icon-arrow-down3"></i>
+                          	<select name="deal_type" id="people" class="form-control">
+                            <option value="">------------</option>
+                            <option value="Single">Single</option>
+                            <option value="Multiple">Multiple</option>
+                          	</select>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Brand Name:</label>
+                          <div class="form-field">
+                            <i class="icon icon-text"></i>
+                            <input name="brand_name" type="textfield" value="" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <label for="date">Where:</label>
+                          <div class="form-field">
+                            <i class="icon location"></i>
+                            <input type="textfield" name="location" value="" id="date" class="form-control text" placeholder="city,state, or Country">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-2">
+                        <button type="submit" name="submit" id="submit"  class="btn btn-primary btn-block">Search</button>
+                      </div>        
+                    </div>
+                  </div>
+                </form>
+            </div>			
+		  </div>
+
+
+   
+   <table class="table-users" cellspacing="0">
+      <tr class="header">
+      	<center>
+      	 <th width="5%"><center>#</center></th>
+         <th width="5%"><center>Picture</center></th>
+         <th width="15%"><center>Deal Name</center></th>
+         <th width="20%"><center>Email</center></th>
+         <th width="10%"><center>Phone</center></th>
+         <th width="10%"><center>Publish</center></th>
+         <th width="7%"><center>Price</center></th>
+         <th width="10%"><center>Type</center></th>
+         <th width="5%"><center>Edit</center></th>
+         <th width="5%"><center>Delete</center></th>
+         <th width="5%"><center>Assaign</center></th>
+         
+         </center>
+      </tr>
+
+
+      {% for i in admin_deals_list %}
+      <tr class="row_height">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.picture != '' %}
+         	<img src="{{i.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% endif %}
+         </center></td>
+         <td><center>{{ i.deal_name }}</center></td>
+         <td><center>{{ i.email }}</center></td>
+         <td><center>{{ i.contact }}</center></td>
+         <td><center>{{ i.publish }}</center></td>
+         <td><center>{{ i.price }}</center></td>
+         <td><center>{{ i.deal_type }}</center></td>
+         <td><center><a href="{% url 'detail_view_admin_deals' i.id %}">edit</a></center></td>
+         <td><center>
+         	<br>
+         	<form action="{% url 'delete_admin_deals' %}" method="POST">
+				{% csrf_token %}
+
+         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+         	<button>Delete</button>
+            </form>
+             </center>
+         </td>
+         <td><center><a href="{% url 'assign_admin_deals' i.id %}"><img src="{% static 'images/assign.png '%}" alt="" width="20" height="20"></a></center>
+         
+         </td>
+
+
+      </tr>
+      {% endfor %}
+
+      
+   </table>
+
+
+
+
+
+<!-- <div class="assaign_deals_form">
+		<div class="col-md-12  animate-box">
+			<input type="submit" value="X" class="btn btn-primary close_assaign_deal">
+			<br>
+			<form action="#">
+				<div class="row form-group">
+					<div class="col-md-6">
+						<label for="fname">Deal Name</label>
+						<input type="text" id="fname" class="form-control" placeholder="Your firstname">
+					</div>
+					<div class="col-md-6">
+						<label for="lname">Price</label>
+						<input type="text" id="lname" class="form-control" placeholder="Your lastname">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					<div class="col-md-6">
+						<label for="email">Keywords</label>
+						<input type="text" id="email" class="form-control" placeholder="Your email address">
+					</div>
+					<div class="col-md-6">
+						<label for="subject">Department</label>
+						<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+				</div>
+
+				<div class="row form-group">
+					
+					<div class="col-md-6">
+						<label for="subject">Preference</label>
+						<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+				    </div>
+					<div class="col-md-6">
+						<label for="subject">Sort by Location</label>
+						<input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+					</div>
+				</div>
+
+				
+
+				
+				<div class="form-group text-center">
+					<input type="submit" value="Assaign" class="btn btn-primary">
+				</div>
+
+			</form>		
+		</div>
+	</div>
+
+ -->
+
+
+<!-- 	<script>
+
+		document.getElementById("assaign_deal").addEventListener("click",function(){
+		  document.querySelector(".assaign_deals_form").style.display = "flex";
+		})
+		document.querySelector(".close_assaign_deal").addEventListener("click",function(){
+			document.querySelector(".assaign_deals_form").style.display = "none";
+		})
+		
+	
+	</script>
+ -->
+
+		
+	{% endblock %}	
+
+
+
+
+

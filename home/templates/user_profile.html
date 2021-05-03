@@ -1,0 +1,225 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+
+
+
+
+        <div id="colorlib-blog">
+			<div class="container user_profile_form">
+				<div class="row">
+					<div class="col-md-7 col-md-push-3">
+                        <form action="{% url 'profiles' %}" method="POST">
+                        	{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" id="email" class="form-control" placeholder="{{ user.email }}" value="{{ user.email }}" disabled>
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Phone</label>
+                                    <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ user_profile.phone }}" value="{{ user_profile.phone }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Alternative Phone</label>
+                                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ user_profile.alternative_phone }}" value="{{ user_profile.alternative_phone }}">
+                                </div>
+                            </div>
+
+							<div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Date of Birth</label>
+                                    <input type="text" id="fname" name="dob" class="form-control" placeholder="{{ user_profile.dob }}" value="{{ user_profile.dob }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Adhar/Id</label>
+                                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="{{ user_profile.adhar_id }}" value="{{ user_profile.adhar_id }}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Profession</label>
+                                    <input type="text" id="fname" name="profession" class="form-control" placeholder="{{ user_profile.profession }}" value="{{ user_profile.profession }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Location</label>
+                                    <input type="text" id="lname" name="location" class="form-control" placeholder="{{ user_profile.location }}" value="{{ user_profile.location }}">
+                                </div>
+                            </div>
+
+							<div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Qualification</label>
+                                    <input type="text" id="fname" name="qualification" class="form-control" placeholder="{{ user_profile.qualification }}" value="{{ user_profile.qualification }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Hobbies</label>
+                                    <input type="text" id="lname" name="hobbies" class="form-control" placeholder="{{ user_profile.hobbies }}" value="{{ user_profile.hobbies }}">
+                                </div>
+                            </div>
+            
+                            
+            
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label for="message">Summary/Bio</label>
+                                    <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="{{ user_profile.summary }}" value="">{{ user_profile.summary }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Update Profile" class="btn btn-primary">
+                            </div>
+						</form>
+                        
+					</div>
+					<br>
+					<div class="col-md-2 col-md-pull-7">
+						<div class="aside animate-box">
+							<div class="colorlib-form" >
+							<form action="{% url 'update_user_profile_pic' %}" method="POST" enctype="multipart/form-data">
+								{% csrf_token %}
+			              	<div class="row">
+			                <div class="col-md-6">
+			                  <div class="form-group">
+			                    <div class="form-field profile-pic-circle">
+
+			                    	{% if user_profile.image != '' %}
+                					<img src="{{user_profile.image.url}}" id="photo">
+                					{% else %} 
+                					<img src="{% static 'images/menu-9.jpg '%}" id="photo">
+                					{% endif %}
+
+
+                                
+
+			                    </div>
+			                    <br>
+			                    <input type="file" name="img" required>
+              					<button type="submit" class="btn btn-primary">Update Profile Pic</button><br>
+			                  </div>
+			                </div>
+                            </div>
+                            
+							
+			            </form>
+						</div>
+						  
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+       <br><br><br><br>
+
+		<div id="colorlib-reservation">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 search-wrap">
+						<form method="post" class="colorlib-form">
+		              	<div class="row">
+						<div class="col-md-3"><br>
+							<ul class="colorlib-social">
+								<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+								<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+								<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+									
+							</ul> 
+						</div>
+		                <div class="col-md-5">
+		                  <div class="form-group">
+		                    <label for="date">Invite Link:</label>
+		                    <div class="form-field">
+		                      <i class="icon icon-text"></i>
+		                      <input type="textfield" id="date" class="form-control text" placeholder="Keyword,job,tittle,etc">
+		                    </div>
+		                  </div>
+		                </div>
+						
+		                <div class="col-md-2">
+		                  <div class="form-group">
+		                    <label for="date">Refferal Code:</label>
+		                    <div class="form-field">
+		                      <i class="icon location"></i>
+		                      <input type="textfield" id="date" class="form-control text" placeholder="city,state, or pincode">
+		                    </div>
+		                  </div>
+		                </div>
+		                
+		                
+		                <div class="col-md-2">
+		                  <input type="submit" name="submit"  value="Share" class="btn btn-primary btn-block">
+		                </div> 
+						      
+		              </div>
+		            </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+
+        <br><br><br><br><br>
+
+    
+
+	<!-- <script>
+		//declairing html elements
+
+const imgDiv = document.querySelector('.profile-pic-circle');
+const img = document.querySelector('#photo');
+const file = document.querySelector('#file');
+const uploadBtn = document.querySelector('#uploadBtn');
+
+// if user hover on profile pic
+imgDiv.addEventListner('mouseenter', function()
+{
+	uploadBtn.style.display = "block"
+});
+
+// if user hover out from profile pic
+imgDiv.addEventListner('mouseleave', function()
+{
+	uploadBtn.style.display = "none"
+});
+
+
+//image showing functionality
+//when we choose a aphoto to upload
+file.addEventListner('change', function(){
+	//this refer to file
+	const choosedFile = this.files[0];
+	if (choosedFile) {
+		const reader = new FileReader();//filereader is a predefined function of js
+		reader.addEventListner('load', function(){
+			img.setAttribute('src', reader.result);
+		});
+
+		reader.readAsDataURL(choosedFile);
+	}
+});
+
+
+	</script> -->
+
+{% endblock %}

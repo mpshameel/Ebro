@@ -1,0 +1,382 @@
+{% load static %}
+
+
+
+<script>
+	{% for i in messages %}
+	alert('{{ i }}');
+	{% endfor %}
+    
+</script>
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>E-BRO</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="" />
+
+  <!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,700 '%}" rel="stylesheet">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700 '%}" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css '%}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css '%}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css '%}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css '%}">
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="{% static 'css/flexslider.css '%}">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css '%}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css '%}">
+	
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css '%}">
+	<!-- Flaticons  -->
+	<link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css '%}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css '%}">
+	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
+	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js '%}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+
+
+
+
+
+
+
+    <!--fbvxb-->
+		<div class="col-md-4 col-md-offset-1  login-form">
+			
+      <input type="submit" value="X" class="btn btn-primary close">
+			<form action="{% url 'admin_login' %}" method="POST">
+				{% csrf_token %}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <h2 class="#drinks">Sign in</h2>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <br><br>
+				<div class="row form-group">
+					<div class="col-md-12">
+						
+						<input type="text" id="fname" name="name" class="form-control" placeholder="Username">
+					</div>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<div class="col-md-12">
+						
+						<input type="text" id="lname" name="password" class="form-control" placeholder="Password">
+					</div>
+				</div>
+
+				
+				<div class="form-group text-center">
+					<button type="submit" value="Sign in" class="btn btn-primary">Sign in</button>
+				</div>
+		<center>
+				<a>Forgot password..?</a>
+				<br>
+        
+          <p id="login2">Don't have an account?<a href="##">Sign up</a></p>
+        </center>
+
+			</form>		
+		</div>
+
+    
+    <div class="col-md-4 col-md-offset-1 signup-form">
+			
+      <input type="submit" value="X" class="btn btn-primary close2">
+			<form action="{% url 'admin_signup' %}" method="POST">
+				{% csrf_token %}
+       
+        <h3 class="#drinks">Sign up</h3>
+        &nbsp;
+
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+        <br>
+				    <div class="row form-group">
+                    &nbsp;&nbsp;
+					<div class="col-md-12">
+						<input type="text" name="first_name" id="fname" class="form-control" placeholder="Firstname">
+					</div>
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="text" name="last_name" id="fname" class="form-control" placeholder="Lastname">
+					</div>
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="text" name="email" id="fname" class="form-control" placeholder="Email">
+					</div>
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="number" name="phone" id="fname" class="form-control" placeholder="Phone">
+					</div>
+					
+					&nbsp;&nbsp;
+                    <div class="col-md-12">
+						
+						<input type="text" name="password1" id="fname" class="form-control" placeholder="Password">
+					</div>
+					&nbsp;&nbsp;
+					<div class="col-md-12">
+						
+						<input type="text" name="password2" id="lname" class="form-control" placeholder="Confirm Password">
+					</div>
+				</div>
+
+				
+				<div class="form-group text-center">
+					<input type="submit" id="otp" value="Sign up" class="btn btn-primary">
+          <center>
+            <p id="signup2"> already a member?<a href="#" >Sign in</a></p>
+          </center>
+				</div>
+        
+
+			</form>		
+	</div>
+
+
+	        <!-- <div class="col-md-2 col-md-offset-1  signup-otp">
+			
+		
+			    <form action="#">
+		       
+                <div class="otp">
+		        <h2 class="#drinks">O T P</h2>
+		 
+		        <br><br>
+				    <div class="row form-group">
+					  <div class="col-md-12">
+						  
+						  <input type="text" id="fname" class="form-control" placeholder="One Time Password">
+					  </div>
+					  
+					  
+				    </div>
+					<center>
+						<p id="signup2"> not getting otp?<a href="#" >Resend</a></p>
+					</center>
+  
+				  
+				    <div class="form-group text-center">
+					  <input type="submit" value="Validate" class="btn btn-primary">
+				    </div>
+		  
+                </div>
+			    </form>	
+			    	
+		    </div> -->
+
+	
+
+
+		
+		
+	<div class="colorlib-loader"></div>
+
+
+	<nav class="colorlib-nav" role="navigation">
+
+		
+  
+
+  <div class="bglinks">
+	<div class="container">
+		<div class="col-xs-14 text-right menu-1 linkslogin">
+		<ul><br>
+		
+			<li class="links_admin_all"><a href="#" id="login" style="color: cornsilk;">Sign in</a></li>
+			<li class="links_admin_all"><a href="#" id="signup" style="color: cornsilk;">Sign up</a></li>
+
+			
+			
+		</ul>
+		
+
+		
+
+		</div>
+	</div>
+	</div>
+</div>
+		
+</nav>
+	
+
+		<aside id="colorlib-hero">
+			<div class="flexslider">
+				<ul class="slides">
+			   	<li style="background-image: url({% static 'images/img_bg_5.jpg '%});">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+							<div><a href="home.html" class="ebro1">E-BRO</a></div>
+				   			<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+				   				<div class="slider-text-inner text-center">
+									<h1>E-BRO</h1>
+									<h2>The Complete Solutions...</h2>
+				   					
+										</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			   	<li style="background-image: url({% static 'images/img_bg_1.jpg '%});">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+							<div><a href="home.html" class="ebro1">E-BRO</a></div>
+				   			<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+				   				<div class="slider-text-inner text-center">
+				   					<h2>Discover &amp; Enjoy</h2>
+				   					<h1>Everything you need in E-BRO</h1>
+									</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			   	<li style="background-image: url({% static 'images/img_bg_3.jpg '%});">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluids">
+			   			<div class="row">
+							<div><a href="home.html" class="ebro1">E-BRO</a></div>
+				   			<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+				   				<div class="slider-text-inner text-center">
+				   					<h2>You are invited</h2>
+				   					<h1>We know how to please you</h1>
+									</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>
+			   	<li style="background-image: url({% static 'images/img_bg_4.jpg '%});">
+			   		<div class="overlay"></div>
+			   		<div class="container-fluid">
+			   			<div class="row">
+							<div><a href="home.html" class="ebro1">E-BRO</a></div>
+				   			<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+				   				<div class="slider-text-inner text-center">
+				   					<h2>Come &amp; enjoy the unforgetable things</h2>
+				   					<h1>In the heart of E-BRO</h1>
+									</div>
+				   			</div>
+				   		</div>
+			   		</div>
+			   	</li>	   	
+			  	</ul>
+		  	</div>
+		</aside>
+		
+  </div>
+
+
+
+	
+	
+	<!-- jQuery -->
+	<script src="{% static 'js/jquery.min.js '%}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'js/jquery.easing.1.3.js '%}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'js/bootstrap.min.js '%}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'js/jquery.waypoints.min.js '%}"></script>
+	<!-- Flexslider -->
+	<script src="{% static 'js/jquery.flexslider-min.js '%}"></script>
+	<!-- Owl carousel -->
+	<script src="{% static 'js/owl.carousel.min.js '%}"></script>
+	<!-- Magnific Popup -->
+	<script src="{% static 'js/jquery.magnific-popup.min.js '%}"></script>
+	<script src="{% static 'js/magnific-popup-options.js '%}"></script>
+	<!-- Date Picker -->
+	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
+	<!-- Main -->
+	<script src="{% static 'js/main.js '%}"></script>
+
+  <script>
+    document.getElementById("login").addEventListener("click",function(){
+      document.querySelector(".login-form").style.display = "flex";
+      document.querySelector(".signup-form").style.display = "none";
+    })
+    document.getElementById("signup").addEventListener("click",function(){
+      document.querySelector(".signup-form").style.display = "flex";
+      document.querySelector(".login-form").style.display = "none";
+    })
+    document.querySelector(".close").addEventListener("click",function(){
+      document.querySelector(".login-form").style.display = "none";
+    })
+    document.querySelector(".close2").addEventListener("click",function(){
+      document.querySelector(".signup-form").style.display = "none";
+    })
+
+
+    document.getElementById("login2").addEventListener("click",function(){
+      document.querySelector(".login-form").style.display = "none";
+      document.querySelector(".signup-form").style.display = "flex";
+    })
+    document.getElementById("signup2").addEventListener("click",function(){
+      document.querySelector(".signup-form").style.display = "none";
+      document.querySelector(".login-form").style.display = "flex";
+    })
+
+
+
+	document.getElementById("otp").addEventListener("click",function(){
+		document.querySelector(".signup-otp").style.display = "flex";
+		document.querySelector(".signup-form").style.display = "none";
+		
+	})
+
+    <script>
+      $('.message a').click(function(){
+        $('form').animate({height: "toggle",opacity:"toggle"},"slow")
+      })
+    </script>
+  </script>
+
+	</body>
+</html>
+

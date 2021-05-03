@@ -1,0 +1,192 @@
+
+
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+   .active_page6{
+      background-color: #99c2ff;
+   }
+</style>
+
+
+   <table class="table-users" cellspacing="0">
+      <tr class="header">
+      	<center>
+      	 <th width="5%"><center>#</center></th>
+         <th width="5%"><center>Picture</center></th>
+         <th width="15%"><center>Deal Name</center></th>
+         <th width="20%"><center>Email</center></th>
+         <th width="10%"><center>Phone</center></th>
+         <th width="10%"><center>Publish</center></th>
+         <th width="7%"><center>Price</center></th>
+         <th width="10%"><center>Type</center></th>
+         <th width="5%"><center>Edit</center></th>
+         <th width="5%"><center>Delete</center></th>
+         <th width="5%"><center>Assaign</center></th>
+         
+         </center>
+      </tr>
+
+      {% for i in admin_deals_list %}
+      <tr class="row_height">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.picture != '' %}
+         	<img src="{{i.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% endif %}
+         </center></td>
+         <td><center>{{ i.deal_name }}</center></td>
+         <td><center>{{ i.email }}</center></td>
+         <td><center>{{ i.contact }}</center></td>
+         <td><center>{{ i.publish }}</center></td>
+         <td><center>{{ i.price }}</center></td>
+         <td><center>{{ i.deal_type }}</center></td>
+         <td><center><a href="{% url 'detail_view_admin_deals' i.id %}">edit</a></center></td>
+         <td><center>
+         	<br>
+         	<form action="{% url 'delete_admin_deals' %}" method="POST">
+				{% csrf_token %}
+
+         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+         	<button>Delete</button>
+            </form>
+             </center>
+         </td>
+         <td><center><a href="{% url 'assign_admin_deals' i.id %}"><img src="{% static 'images/assign.png '%}" alt="" width="20" height="20"></a></center>
+         
+         </td>
+         
+      </tr>
+      {% endfor %}
+
+      
+   </table>
+
+
+
+
+
+
+  <table class="table-users" cellspacing="0">
+      <tr class="header">
+      	<center>
+      	 <th width="5%"><center>#</center></th>
+         <th width="5%"><center>Picture</center></th>
+         <th width="15%"><center>Job Name</center></th>
+         <th width="20%"><center>Email</center></th>
+         <th width="10%"><center>Phone</center></th>
+         <th width="10%"><center>Publish</center></th>
+         <th width="7%"><center>Price</center></th>
+         <th width="10%"><center>Type</center></th>
+         <th width="5%"><center>Edit</center></th>
+         <th width="5%"><center>Delete</center></th>
+         <th width="5%"><center>Assaign</center></th>
+         
+         </center>
+      </tr>
+
+      {% for i in admin_jobs_list %}
+      <tr class="row_height">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.picture != '' %}
+         	<img src="{{i.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% endif %}
+         </center></td>
+         <td><center>{{ i.job_name }}</center></td>
+         <td><center>{{ i.email }}</center></td>
+         <td><center>{{ i.contact }}</center></td>
+         <td><center>{{ i.publish }}</center></td>
+         <td><center>{{ i.price }}</center></td>
+         <td><center>{{ i.job_type }}</center></td>
+         <td><center><a href="{% url 'detail_view_admin_jobs' i.id %}">edit</a></center></td>
+         <td><center>
+         	<br>
+         	<form action="{% url 'delete_admin_jobs' %}" method="POST">
+				{% csrf_token %}
+
+         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+         	<button>Delete</button>
+            </form>
+             </center>
+         </td>
+          <td><center><a href="{% url 'assign_admin_jobs' i.id %}"><img src="{% static 'images/assign.png '%}" alt="" width="20" height="20"></a></center>
+         
+         </td>
+      </tr>
+      {% endfor %}
+
+      
+   </table>
+
+   
+
+
+
+   
+   <table class="table-users" cellspacing="0">
+      <tr class="header">
+      	<center>
+      	 <th width="5%"><center>#</center></th>
+         <th width="5%"><center>Picture</center></th>
+         <th width="15%"><center>Product Name</center></th>
+         <th width="20%"><center>Email</center></th>
+         <th width="10%"><center>Phone</center></th>
+         <th width="10%"><center>Publish</center></th>
+         <th width="7%"><center>Price</center></th>
+         <th width="10%"><center>Type</center></th>
+         <th width="5%"><center>Edit</center></th>
+         <th width="5%"><center>Delete</center></th>
+        
+         
+         </center>
+      </tr>
+
+      {% for i in admin_products_list %}
+      <tr class="row_height">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.picture != '' %}
+         	<img src="{{i.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
+         	{% endif %}
+         </center></td>
+         <td><center>{{ i.product_name }}</center></td>
+         <td><center>{{ i.email }}</center></td>
+         <td><center>{{ i.contact }}</center></td>
+         <td><center>{{ i.publish }}</center></td>
+         <td><center>{{ i.price }}</center></td>
+         <td><center>{{ i.product_type }}</center></td>
+         <td><center><a href="{% url 'detail_view_admin_products' i.id %}">edit</a></center></td>
+         <td><center>
+         	<br>
+         	<form action="{% url 'delete_admin_products' %}" method="POST">
+				{% csrf_token %}
+
+         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+         	<button>Delete</button>
+            </form>
+             </center>
+         </td>
+         
+      </tr>
+      {% endfor %}
+
+      
+   </table>
+
+
+
+{% endblock %}
+
+
+
