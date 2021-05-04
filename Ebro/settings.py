@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8u73gev_11mq$f(#ejmq-7w1l-#cpsmlx6v4uk*_484niuph4t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['ebrolive-test.herokuapp.com','127.0.0.1']
 
