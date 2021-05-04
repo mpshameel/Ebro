@@ -1,1 +1,1 @@
-web: gunicorn Ebro.wsgi --logfile -
+web:gunicorn Ebro.wsgi --logfile -
