@@ -26,7 +26,7 @@ SECRET_KEY = '8u73gev_11mq$f(#ejmq-7w1l-#cpsmlx6v4uk*_484niuph4t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ebrolive-test.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['live-app-ebro.herokuapp.com','127.0.0.1']
 
 
 #ebro-testing-webapp.herokuapp.com
@@ -146,10 +146,10 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS=[
-#    os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS=[
+   os.path.join(BASE_DIR, 'static')
 
-# ]
+]
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
