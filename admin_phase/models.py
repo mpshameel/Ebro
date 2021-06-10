@@ -44,7 +44,7 @@ class subcategory(models.Model):
 
 class categorys(models.Model):
     name                = models.CharField(max_length=200)
-    # slug                = models.SlugField(max_length=200, null=True, blank=True)
+    slug                = models.SlugField(max_length=200, null=True, blank=True)
     main_category       = models.BooleanField(default=True, blank=True, null=True)
     parent              = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='children')
     domain_name         = models.CharField(max_length=200, default='www.bichatravels.com')
