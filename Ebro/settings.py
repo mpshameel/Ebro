@@ -186,6 +186,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
+
 SITE_ID= 1
 
 LOGIN_REDIRECT_URL = "/home/register_social"
