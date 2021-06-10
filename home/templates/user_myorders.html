@@ -1,0 +1,117 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<!-- <style>
+	.active_user_page3{
+		background-color: #99c2ff;
+	}
+</style> -->
+  
+
+
+
+ 
+
+ 		<div class="col-xs-7">
+				<div class="row">
+					{% for i in my_orders %}
+
+					<div class="col-md-12 room-wrap animate-box user_cart_box" style="margin-left: 25px;">
+         					
+         					<div class="col-md-12" style="height: auto;margin-top: 1px;">
+         						{% if i.status == "delivered" %}
+         						<p style="word-break: break-all;">Delivered 
+         						{% else %}
+         						<p style="word-break: break-all;">Delivery expected in : {{ i.delivery_date }} Days</p>
+         						{% endif %}
+
+         						{% if i.status == "ordered" %}
+         						<img src="{% static 'images/delivery_recieved.jpg' %}" />
+         						{% elif i.status == "packing" %}
+         						<img src="{% static 'images/delivery_packing.jpg' %}" />
+         						{% elif i.status == "shipped" %}
+         						<img src="{% static 'images/delivery_shipped.jpg' %}" />
+         						{% elif i.status == "on_the_way" %}
+         						<img src="{% static 'images/delivery_on_the_way.jpg' %}" />
+         						{% elif i.status == "delivered" %}
+         						<img src="{% static 'images/delivery_delivered.jpg' %}" />
+         						{% endif %}
+         						
+         						
+							</div>
+
+         					<div class="col-md-2" style="height: auto;margin-top: 20px;">
+								{% if i.product.picture != '' %}
+         						<img src="{{i.product.picture.url}}" alt="" width="200" height="200"/>
+         						{% else %}
+         						<img src="{% static 'images/assign.png' %}" alt="" width="200" height="200"/>
+         						{% endif %}
+         											
+							</div>
+
+							<div class="col-md-8 detail_deal_names" style="margin-left: 100px;">
+								<b><font style="font-size: 25px;">{{ i.product.product_name }}</font></b><br>
+								<b><font style="font-size: 20px;">$&nbsp;&nbsp;{{ i.product.price }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								Qty&nbsp;&nbsp;:&nbsp;&nbsp;{{i.product_count}}
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total&nbsp;&nbsp;:$&nbsp;&nbsp;{% widthratio i.product_count 1 i.product.price %}
+								</font></b><br>
+
+								<b><font style="font-size: 15px;">
+									Type&nbsp;{% if i.product.product_type == "Single" %} 
+         							  {{ i.product.product_type }}
+         							  {% else %}
+         							  {{ i.product.product_type }}
+         							  <br>
+         							  <b>{{ i.product.brand_name }}</b>
+         							  {% endif %}
+
+	         					<br>
+	         					{{ i.product.category }}
+	         					<br>
+	         					{{ i.product.email }}
+	         					<br>
+	         					{{ i.product.contact }}
+	         					<br>
+	         					{{ i.product.location }}
+	         					<br></b>
+	         					<p style="word-break: break-all;">{{ i.product.details }}</p>
+	         					</font>
+
+								<!-- <form action="{% url 'delete_cart' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_delete">
+         						<input type="hidden" value="{{ i.product.id }}" name="id_product">
+								<button class="btn4 btn4-1 btn4-sep icon">Remove</button>
+            					</form> -->
+
+							</div>
+
+					
+						
+					</div>
+					{% endfor %}
+		</div>
+		<br>
+
+		<div class="col-xs-5 user_checkout_box" style="margin-left: 850px;margin-top: -1070px;width: 400px;">
+			<h2 class="sub_headings">Total</h2><br><br>
+				<div class="row col-md-10" style="margin-left: -25px;">
+					<h4 class="btn3 btn3-2">Items</h4><br><br>
+					<h3 class="btn3 btn3-2">Sub-Total</h3>
+				</div>
+				<div class="row col-md-2">
+					<h4 class="btn3 btn3-2">:{{order_count}}</h4><br><br>
+					<h3 class="btn3 btn3-2">:$&nbsp;&nbsp;{{total_order_price}}</h3><br><br>
+				</div>
+		</div> 
+
+</div>
+		
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+{% endblock %}

@@ -8,12 +8,302 @@
 
 
 
-        <div id="colorlib-blog">
-			<div class="container user_profile_form">
+			<div class="container">
 				<div class="row">
-					<div class="col-md-7 col-md-push-3">
+					<div class="col-md-2 col-md-pull-7 profile-pic-form">
+						<div class="aside animate-box">
+							<div class="colorlib-form" >
+							<form action="{% url 'update_user_profile_pic' %}" method="POST" enctype="multipart/form-data">
+								{% csrf_token %}
+			              	<div class="row">
+			                <div class="col-md-6">
+			                  <div class="form-group">
+			                    <div class="form-field profile-pic-div">
+
+			                    	{% if user_profile.image != '' %}
+                					<img src="{{user_profile.image.url}}" id="file-ip-1-preview">
+                					{% else %} 
+                					<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
+                					{% endif %}
+                					<input type="file" name="img" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
+			                    	<label for="file-ip-1" id="uploadBtn">Choose Photo</label>
+
+
+                                
+
+			                    </div>
+			                    <br>
+
+              					<button type="submit" class="btn btn-primary">Update Profile Pic</button><br>
+			                  </div>
+			                </div>
+                            </div>
+                            
+							
+			            </form>
+						</div>
+						  
+					</div>
+				</div>
+			</div>
+
+
+					
+					<div class="col-md-5 col-md-pull-7 profile-form">
+						<img src="{% static 'images/edits.png '%}" id="editprofile" class="edit_profile"><br>
+						<div class="col-md-4" style="color: grey;box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
+							<b>
+							First Name<br>
+							Last Name<br>
+							Email<br>
+							Phone<br>
+							Alternative Phone<br>
+							Date of Birth<br>
+							Adhar Id<br>
+							Profession<br>
+							Location<br>
+							Qualification<br>
+							Hobbies<br>
+							Summary/Bio
+							</b>
+						</div>
+						<div class="col-md-8" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
+							<b>
+							:&nbsp;&nbsp;{{ user.first_name }}<br>
+							:&nbsp;&nbsp;{{ user.last_name }}<br>
+							:&nbsp;&nbsp;{{ user.email }}<br>
+							:&nbsp;&nbsp;{{ user_profile.phone }}<br>
+							:&nbsp;&nbsp;{{ user_profile.alternative_phone }}<br>
+							:&nbsp;&nbsp;{{ user_profile.dob }}<br>
+							:&nbsp;&nbsp;{{ user_profile.adhar_id }}<br>
+							:&nbsp;&nbsp;{{ user_profile.profession }}<br>
+							:&nbsp;&nbsp;{{ user_profile.location}}<br>
+							:&nbsp;&nbsp;{{ user_profile.qualification }}<br>
+							:&nbsp;&nbsp;{{ user_profile.hobbies }}<br>
+							:&nbsp;&nbsp;{{ user_profile.summary }}<br>
+							</b>
+						</div>
+					</div>
+
+
+
+          <div class="col-md-5 wallet-form">
+            <br>
+            {% if user_profile.usertype == "free" %}
+            <form action="{% url 'premium_signup_payment' %}" method="POST">
+              {% csrf_token %}
+              <button class="btn2 btn2-2 btn2-sep" style="width: 98%;">Upgrade to Premium Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </form>
+            {% endif %}
+            <div class="col-md-14">
+              <div class="row col-md-7" style="margin-left: -25px;">
+                <h4 class="sub_headings">&nbsp;&nbsp;My Wallet</h4><br><br>
+                <h4 class="sub_headings">&nbsp;&nbsp;My Coins</h4><br><br>
+              </div>
+              <div class="row col-md-7">
+                <h3 class="sub_headings">&nbsp;&nbsp;:$&nbsp;&nbsp;{{user_profile.wallet}}</h3><br><br>
+                <h3 class="sub_headings">&nbsp;&nbsp;:&nbsp;&nbsp;{{user_profile.coins}}</h3><br><br>
+              </div>
+              {% if user_profile.coins >= 100 %}
+              <form action="{% url 'voucher_claim' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="coins" class="form-control" value="{{user_profile.coins}}">
+              <div class="row col-md-14">
+                <button class="btn5 btn5-1 btn5-sep" id="sendmoney" style="width: 98%;">Voucher Claim</button>
+              </div>
+              </form>
+              {% endif %}
+
+              <div class="row col-md-7" style="margin-left: -25px;">
+                <a href="#" id="topup" class="btn2 btn2-2 btn2-sep2" style="width: 100%;"><center>Top Up</center></a>
+              </div>
+              <div class="row col-md-7">
+                <a href="#" id="retrieve" class="btn2 btn2-2 btn2-sep2" style="width: 100%;"><center>Top Up</center></a>
+              </div>
+              
+              <div class="row col-md-14">
+                <button class="btn5 btn5-1 btn5-sep" id="sendmoney" style="width: 98%;">Send Money</button>
+              </div>
+              <div class="row topup_form">
+                <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closetopup">
+                <form action="{% url 'topup_payment' %}" method="POST">
+                  {% csrf_token %}
+                  <br><br>
+                <div class="col-md-12">
+                  Username:<input type="text" name="username" id="get_amount" class="form-control" value="{{request.user.username}}" required>
+                  Amount:<input type="text" name="amount" id="get_amount" class="form-control" value="" required>
+                </div>
+                <br><br>
+                <button class="btn2 btn2-2 btn2-sep" style="width: 98%;">Top-up</button>
+                </form>
+
+              </div>
+
+              <div class="row">
+                  <br><br>
+                <div class="col-md-12">
+                  <h4 class="sub_headings">&nbsp;&nbsp;My Refferals</h4><br><br>
+                      <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
+                        {% for i in my_refferals %}
+                          <tr style="font-size: 13px;">
+                           <td width="5%"><center>{{ forloop.counter }}</center></td>
+                           <td width="10%"><center>
+                            {% if i.image != '' %}
+                            <img src="{{i.image.url}}" alt="" height="50" width="50"/>
+                            {% else %}
+                            <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
+                            {% endif %}
+                           </center></td>
+                           <td width="85%">&nbsp;{{ i.username.username }}</td>
+                        {% endfor %}                       
+                     </table>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+
+
+
+      <div class="col-md-7 row sendmoney_form">
+        <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closesendmoney">
+        <form action="{% url 'sendmoney' %}" method="POST">
+          {% csrf_token %}
+          <br><br>
+        <div class="col-md-12">
+          Amount:<input type="number" name="amount" class="form-control" value="" required>
+        </div>
+          <br><br><br><br><br>
+        <div class="col-md-12" style="width: 100%;margin-left: -40px;">
+            <table cellspacing="0">
+              <tr>
+                <center>
+                 <th width="3%"><center></center></th>
+                 <th width="7%"><center></center></th>
+                 <th width="30%"><center>User Name</center></th>
+                 <th width="30%"><center>Email</center></th>
+                 <th width="20%"><center>Phone</center></th>
+                 <th width="10%"><center>Type</center></th> 
+                 </center>
+              </tr>
+
+              {% for i in all_profiles %}
+              <tr style="font-size: 15px;height: -10px;">
+                 <td><center><input type="radio" style="width: 20px;height: 20px;" id="vehicle1" name="user_id" value="{{ i.username.id }}"></center></td>
+                 <td><center>
+                  {% if i.image != '' %}
+                  <img src="{{i.image.url}}" alt="" height="35" width="35" style="border-radius: 50%" />
+                  {% else %}
+                  <img src="{% static 'images/assign.png' %}" alt="" height="35" width="35" style="border-radius: 50%" />
+                  {% endif %}
+                 </center></td>
+                 <td>&nbsp;{{ i.username.username }}</td>
+                 <td>&nbsp;{{ i.username.email }}</td>
+                 <td>&nbsp;{{ i.phone }}</td>
+                 <td><center>{{ i.usertype }}</center></td>
+
+              </tr>
+              {% endfor %}
+            </table>
+          
+        </div>
+        <div class="col-md-12">
+          <br>
+          <button class="btn2 btn2-2 btn2-sep" style="width: 98%;">Top-up</button>
+        </div>
+        </form>
+
+      </div>
+
+<!--           <div class="col-md-5 col-md-pull-7 topup_form">
+            <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closetopup">
+            <div class="col-md-12" style="height: auto;"><br><br>
+              <div class="row">
+                <form action="{% url 'topup_payment' %}" method="POST">
+                  {% csrf_token %}
+                <div class="col-md-2"></div>
+                <div class="col-md-7">
+                  Username:<input type="text" name="username" id="get_amount" class="form-control" value="{{request.user.username}}" required>
+                  Amount:<input type="text" name="amount" id="get_amount" class="form-control" value="" required><br>
+                </div>
+                <div class="col-md-3"></div>
+                <br><br>
+                
+                 <button class="btn2 btn2-2 btn2-sep" style="width: 100%;">Top-up&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                </form>
+
+              </div>
+           <br><br>
+              <div id="paypal-button-container" style="height: auto;"></div> 
+           </div>
+            
+          </div>  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+					<div class="col-md-3 col-md-pull-7 address-form">
+						<img src="{% static 'images/address1.png '%}" id="addaddress" class="add_address"><br>
+		  				<table  cellspacing="0" style="width: 100%">
+		  					{% for i in user_address %}
+		  					<tr>
+		  					<td><h2 class="sub_headings">Address&nbsp;&nbsp;&nbsp;{{ forloop.counter }}</h2><br><br></td>
+		  					</tr>
+		  					&nbsp;
+      						<tr style="height: 30px;">
+      	 					<td width="30%">First Name</td><td width="70%">&nbsp;&nbsp;<b>{{ i.first_name }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 30px;">
+      	 					<td width="30%">Last Name</td><td width="70%">&nbsp;&nbsp;<b>{{ i.last_name }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 30px;">
+      	 					<td width="30%">Country</td><td width="70%">&nbsp;&nbsp;<b>{{ i.country }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 30px;">
+      	 					<td width="30%">State</td><td width="70%">&nbsp;&nbsp;<b>{{ i.state }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 30px;">
+      	 					<td width="30%">District</td><td width="70%">&nbsp;&nbsp;<b>{{ i.district }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 30px;">
+      	 					<td width="30%">Postal Code</td><td width="70%">&nbsp;&nbsp;<b>{{ i.postalcode }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 30px;">
+      	 					<td width="30%">Phone</td><td width="70%">&nbsp;&nbsp;<b>{{ i.phone }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 30px;">
+      	 					<td width="30%">Alternative Phone</td><td width="70%">&nbsp;&nbsp;<b>{{ i.alternative_phone }}</b></td>
+      	 					</tr>
+      	 					<tr style="height: 60px;">
+         					<td width="30%">Address Line 1</td><td width="70%">&nbsp;&nbsp;<b>{{ i.address_line_1 }}</b></td>
+         					</tr>
+         					<tr style="height: 60px;">
+         					<td width="30%">Address Line 2</td><td width="70%">&nbsp;&nbsp;<b>{{ i.address_line_2 }}</b></td>
+         					</tr>
+      						
+      						{% endfor %}
+   						</table>
+
+						
+					</div>
+
+
+					<div class="col-md-12 col-md-push-3 user_profile_form">
+						<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeprofile">
                         <form action="{% url 'profiles' %}" method="POST">
                         	{% csrf_token %}
+                        	<br><br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="fname">First Name</label>
@@ -88,41 +378,80 @@
                                 <input type="submit" value="Update Profile" class="btn btn-primary">
                             </div>
 						</form>
+					</div>
+
+
+
+
+					<br><br><br><br><br><br><br><br><br>
+					<div class="col-md-9 col-md-push-3 user_address_form">
+						<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeaddress">
+						<form action="{% url 'add_address' %}" method="POST">
+                        	{% csrf_token %}
+                        	<br><br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Country</label>
+                                    <input type="text" id="fname" name="country" class="form-control" placeholder="" value="">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">State</label>
+                                    <input type="text" id="lname" name="state" class="form-control" placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">District</label>
+                                    <input type="text" id="fname" name="district" class="form-control" placeholder="" value="">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Postal Code</label>
+                                    <input type="text" id="lname" name="postalcode" class="form-control" placeholder="" value="">
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="fname">Phone</label>
+                                    <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ user_profile.phone }}" value="{{ user_profile.phone }}">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname">Alternative Phone</label>
+                                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ user_profile.alternative_phone }}" value="{{ user_profile.alternative_phone }}">
+                                </div>
+                            </div>
+
+							<div class="row">
+                                <div class="col-md-12">
+                                    <label for="fname">Address Line 1</label>
+                                    <input type="text" id="fname" name="address_line_1" class="form-control" placeholder="" value="">
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="lname">Address Line 2</label>
+                                    <input type="text" id="lname" name="address_line_2" class="form-control" placeholder="" value="">
+                                </div>
+                            </div>
+                            <br>
+                            
+                            <div class="form-group">
+                                <input type="submit" value="Add Address" class="btn btn-primary">
+                            </div>
+						</form>
                         
 					</div>
+
+
 					<br>
-					<div class="col-md-2 col-md-pull-7">
-						<div class="aside animate-box">
-							<div class="colorlib-form" >
-							<form action="{% url 'update_user_profile_pic' %}" method="POST" enctype="multipart/form-data">
-								{% csrf_token %}
-			              	<div class="row">
-			                <div class="col-md-6">
-			                  <div class="form-group">
-			                    <div class="form-field profile-pic-circle">
-
-			                    	{% if user_profile.image != '' %}
-                					<img src="{{user_profile.image.url}}" id="photo">
-                					{% else %} 
-                					<img src="{% static 'images/menu-9.jpg '%}" id="photo">
-                					{% endif %}
-
-
-                                
-
-			                    </div>
-			                    <br>
-			                    <input type="file" name="img" required>
-              					<button type="submit" class="btn btn-primary">Update Profile Pic</button><br>
-			                  </div>
-			                </div>
-                            </div>
-                            
-							
-			            </form>
-						</div>
-						  
-					</div>
 				</div>
 			</div>
 		</div>
@@ -181,6 +510,12 @@
 
         <br><br><br><br><br>
 
+
+
+
+
+
+<!-- <script src="{% static 'js/pro_pic.js '%}"></script> -->
     
 
 	<!-- <script>
@@ -221,5 +556,66 @@ file.addEventListner('change', function(){
 
 
 	</script> -->
+
+
+
+		<script>
+		document.getElementById("editprofile").addEventListener("click",function(){
+		  document.querySelector(".user_profile_form").style.display = "flex";
+		})
+		document.querySelector(".closeprofile").addEventListener("click",function(){
+			document.querySelector(".user_profile_form").style.display = "none";
+		 })
+		
+	
+		</script>
+
+
+		<script>
+		document.getElementById("addaddress").addEventListener("click",function(){
+		  document.querySelector(".user_address_form").style.display = "flex";
+		})
+		document.querySelector(".closeaddress").addEventListener("click",function(){
+			document.querySelector(".user_address_form").style.display = "none";
+		 })
+		
+	
+		</script>
+
+
+    <script>
+      document.getElementById("topup").addEventListener("click",function(){
+        document.querySelector(".topup_form").style.display = "flex";
+      })
+      document.querySelector(".closetopup").addEventListener("click",function(){
+        document.querySelector(".topup_form").style.display = "none";
+       })
+      
+    
+    </script>
+
+
+    <script>
+      document.getElementById("retrieve").addEventListener("click",function(){
+        document.querySelector(".retrieve_form").style.display = "flex";
+      })
+      document.querySelector(".closeretrieve").addEventListener("click",function(){
+        document.querySelector(".retrieve_form").style.display = "none";
+       })
+      
+    
+    </script>
+
+    <script>
+      document.getElementById("sendmoney").addEventListener("click",function(){
+        document.querySelector(".sendmoney_form").style.display = "flex";
+      })
+      document.querySelector(".closesendmoney").addEventListener("click",function(){
+        document.querySelector(".sendmoney_form").style.display = "none";
+       })
+      
+    
+    </script>
+
 
 {% endblock %}

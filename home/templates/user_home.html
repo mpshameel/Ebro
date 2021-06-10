@@ -4,6 +4,7 @@
 
 {% load static %}
 
+
 <style>
 	.active_user_page1{
 		background-color: #99c2ff;
@@ -11,9 +12,73 @@
 </style>
 
 
-   
 
-  <br><br> <br><br><br><br>
+
+
+
+<!-- <div style="position: absolute; left: 10px; top: 40px;">
+    <img id="img" src="paintbrush.png" class="clickme" width="200" height="200" alt="gimpybutt">
+    <input type="text" id="gimper" value="0"></input>
+</div> -->
+
+
+<div class="col-md-12 room-wrap">
+	<center>
+	{% for i in ad_xxxl %}
+	{% if i.image != '' %}
+		<img data-product={{i.id}} data-action="add" src="{{i.image.url}}" class="ad-count" alt="" width="1400" height="400" class="image-popup-link" style="margin-top: 10px;" />
+	{% endif %}
+	{% endfor %}
+	</center>
+</div>
+
+
+{% for i in ad_xxl %}
+<div class="col-md-6 room-wrap">
+<center>
+{% if i.image != '' %}
+	<img src="{{i.image.url}}" alt="" width="700" height="400" class="image-popup-link" style="margin-top: 10px;" />
+{% endif %}
+</center>
+</div>
+{% endfor %}
+
+
+{% for i in ad_xl %}
+<div class="col-md-4 room-wrap">
+<center>
+{% if i.image != '' %}
+	<img src="{{i.image.url}}" alt="" width="450" height="400" class="image-popup-link" style="margin-top: 10px;" />
+{% endif %}
+</center>
+</div>
+{% endfor %}
+
+{% for i in ad_l %}
+<div class="col-md-3 room-wrap">
+<center>
+{% if i.image != '' %}
+	<img src="{{i.image.url}}" alt="" width="320" height="400" class="image-popup-link" style="margin-top: 10px;" />
+{% endif %}
+</center>
+</div>
+{% endfor %}
+
+
+{% for i in ad_s %}
+<div class="col-md-1 room-wrap">
+
+{% if i.image != '' %}
+	<img src="{{i.image.url}}" alt="" width="120" height="180" class="image-popup-link" style="margin-top: 10px;" />
+{% endif %}
+</div>
+{% endfor %}
+
+
+
+
+<br><br><br><br><br><br>
+
 		<div id="colorlib-reservation">
 			<div class="container">
 				<div class="row">
@@ -82,6 +147,11 @@
 		</div>
   		
 
+
+
+
+
+
 		<div id="colorlib-rooms" class="colorlib-light-grey">
 			<div class="container">
 				
@@ -89,7 +159,7 @@
 					<div class="col-md-12 animate-box">
 						<div class="owl-carousel owl-carousel2">
 							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-1.jpg '%}" class="room image-popup-link"></a> 
+								<a href="#$#"><img src="{% static 'images/room-1.jpg' %}" class="room image-popup-link"></a> 
 								<div class="desc text-center">
 									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
 									<h3><a href="rooms-suites.html">Suite</a></h3>
@@ -107,7 +177,7 @@
 								</div>
 							</div>
 							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-2.jpg '%}" class="room image-popup-link"></a>
+								<a href="#$#"><img src="{% static 'images/room-2.jpg' %}" class="room image-popup-link"></a>
 								<div class="desc text-center">
 									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
 									<h3><a href="rooms-suites.html">Double Room</a></h3>
@@ -125,7 +195,7 @@
 								</div>
 							</div>
 							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-3.jpg '%}" class="room image-popup-link"></a>
+								<a href="#$#"><img src="{% static 'images/room-3.jpg' %}" class="room image-popup-link"></a>
 								<div class="desc text-center">
 									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
 									<h3><a href="rooms-suites.html">Family Room</a></h3>
@@ -143,7 +213,7 @@
 								</div>
 							</div>
 							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-4.jpg '%}" class="room image-popup-link"></a>
+								<a href="#$#"><img src="{% static 'images/room-4.jpg' %}" class="room image-popup-link"></a>
 								<div class="desc text-center">
 									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
 									<h3><a href="rooms-suites.html">Classic Double Room</a></h3>
@@ -161,7 +231,7 @@
 								</div>
 							</div>
 							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-5.jpg '%}" class="room image-popup-link"></a>
+								<a href="#$#"><img src="{% static 'images/room-5.jpg' %}" class="room image-popup-link"></a>
 								<div class="desc text-center">
 									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
 									<h3><a href="rooms-suites.html">Superior Double Room</a></h3>
@@ -179,7 +249,7 @@
 								</div>
 							</div>
 							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-6.jpg '%}" class="room image-popup-link"></a>
+								<a href="#$#"><img src="{% static 'images/room-6.jpg' %}" class="room image-popup-link"></a>
 								<div class="desc text-center">
 									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
 									<h3><a href="rooms-suites.html">Superior Family Room</a></h3>

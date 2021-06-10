@@ -8,7 +8,8 @@
 </script>
 
 {% load static %}
-
+{% load socialaccount %}
+{% providers_media_js %}
 
 
 <link rel="stylesheet" href="{% static 'css/login.css '%}">
@@ -21,9 +22,9 @@
 		<form action="{% url 'premium_user_signup' %}" class="form_login" method="POST">
 			{% csrf_token %}
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+				<a href="{% provider_login_url "google" %}" class="social"><i class="fa fa-google"></i></a>
+				<a href="{% provider_login_url "facebook" method="js_sdk" %}" class="social"><i class="fa fa-facebook"></i></a>
+				<a href="#" class="social"><i class="fa fa-twitter"></i></a>
 			</div>
 			
 			<input type="text" name="first_name" placeholder="Firstname" / required>
@@ -42,9 +43,9 @@
 		<form action="{% url 'user_signup' %}" class="form_login" method="POST">
 			{% csrf_token %}
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+				<a href="{% provider_login_url "google" %}" class="social"><i class="fa fa-google"></i></a>
+				<a href="{% provider_login_url "facebook" method="js_sdk" %}" class="social"><i class="fa fa-facebook"></i></a>
+				<a href="#" class="social"><i class="fa fa-twitter"></i></a>
 			</div>
 			<input type="text" name="first_name" placeholder="Firstname" / required>
 			<input type="text" name="last_name" placeholder="Lastname" />
@@ -61,12 +62,12 @@
 			{% csrf_token %}
 			<h1>Sign in</h1>
 			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+				<a href="{% provider_login_url "google" %}" class="social"><i class="fa fa-google"></i></a>
+				<a href="{% provider_login_url "facebook" method="js_sdk" %}" class="social"><i class="fa fa-facebook"></i></a>
+				<a href="#" class="social"><i class="fa fa-twitter"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="email" name="name" placeholder="Email" / required>
+			<input type="text" name="name" placeholder="Email" / required>
 			<input type="password" name="password" placeholder="Password" / required>
 			<br>
 			<a href="#">Forgot your password?</a>
@@ -106,6 +107,10 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+
+
+
+
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>E-BRO</title>
@@ -155,15 +160,45 @@
 	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
 	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
 	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
+	<link rel="stylesheet" href="{% static 'css/image_update.css '%}">
 
-	<link rel="stylesheet" href="{% static 'css/other.css '%}">
+
+	
+
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		var user = '{{request.user}}'
+		function getToken(name) {
+	    let cookieValue = null;
+	    if (document.cookie && document.cookie !== '') {
+	        const cookies = document.cookie.split(';');
+	        for (let i = 0; i < cookies.length; i++) {
+	            const cookie = cookies[i].trim();
+	            // Does this cookie string begin with the name we want?
+	            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+	                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                break;
+	            }
+	        }
+	    }
+	    return cookieValue;
+	}
+	const csrftoken = getToken('csrftoken');
+
+	</script>
+	
 	
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-	
+
+
+
 
 
 	<!-- Modernizr JS -->
@@ -175,8 +210,6 @@
 
 	</head>
 	<body>
-
-
 
 
 
@@ -197,23 +230,26 @@
 							
 						</ul>
 					</div>
-					<div class="col-xs-2">
-						<div><a href="home.html"><img src="{% static 'images/ebro2.png '%}" class="ebro" alt=""></a></div>
+					<div class="col-xs-2" class="ebro_bar">
+						<div><a href="home.html"><img src="{% static 'images/ebro3.png '%}" class="ebro" alt=""></a></div>
 					</div>
 					<div class="col-xs-6 text-right">
 						
 						<ul class="colorlib-social">
 							{% if user.is_authenticated %}
-							  
+							  	
+							  	<li class="active"><a href="wishlist"><img src="{% static 'images/like.png '%}"  class="wishlist"><span class="wishlist_count">2</span></a></li>
+							  	<li class="active"><a href="/home/cart"><img src="{% static 'images/cart6.png '%}"  class="cart"><span class="cart_count">{{cart_count}}</span></a></li>
+
 								{% if user_profile.image != '' %}
-         						<li class="active"><a href="profiles"><img src="{{user_profile.image.url}}"  class="person"/></a></li>
+         						<li class="active"><a href="profiles"><img src="{{user_profile.image.url}}"  class="person"/><span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span></a></li>
          						{% else %}
-         						<li class="active"><a href="profiles"><img src="{% static 'images/pers.png '%}"  class="person"></a></li>
+         						<li class="active"><a href="profiles"><img src="{% static 'images/pers1.png '%}"  class="person"><span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span></a></li>
          						{% endif %}
          					 
 							
 							{% else %}
-							<li><a href="#" id="loginpopup" class="links_user_login" style="color: #fff;">Signin/Signup</a></li>
+							<li><a href="#" id="loginpopup" class="" style="color: #fff;">Login</a></li>
 							
 							
 							{% endif %}
@@ -232,6 +268,7 @@
 		<ul>
 			
 			<li class="links_admin_all active_user_page1"><a href="/home">Home</a></li>
+			<li class="links_admin_all active_user_page1"><a href="/home/offers">offers</a></li>
 			<li class="links_admin_all active_user_page2"><a href="/home/deal">Deals</a></li>
 			<li class="links_admin_all active_user_page3"><a href="/home/job">Jobs</a></li>
 			<li class="links_admin_all active_user_page4"><a href="/home/product">Products</a></li>
@@ -239,7 +276,10 @@
 			{% if user.is_authenticated %}
 			<li class="links_admin_all active_user_page5"><a href="/home/daily_task">Daily Task<span class="count">2</span></a></li>
 			<li class="links_admin_all active_user_page6"><a href="/home/myads">My Ads</a></li>
-			<li class="links_admin_all active_user_page7"><a href="/home/chats">Chats</a></li>
+			<li class="links_admin_all active_user_page6"><a href="/home/myorders">My Orders</a></li>
+			<li class="links_admin_all active_user_page7"><a href="/home/wishlist">Wishlist</a></li>
+			<li class="links_admin_all active_user_page8"><a href="/home/chats">Chats</a></li>
+			<li class="links_admin_all active_user_page8"><a href="/home/about_us">About Us</a></li>
 			<li class="links_admin_all"><a href="user_logout">Logout</a></li>
 			
 			{% endif %}
@@ -349,6 +389,11 @@
 	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
 	<!-- Main -->
 	<script src="{% static 'js/main.js '%}"></script>
+	<script src="{% static 'js/pro_pic.js '%}"></script>
+
+
+
+	<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 
   <script>
     document.getElementById("loginpopup").addEventListener("click",function(){

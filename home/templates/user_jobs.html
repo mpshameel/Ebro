@@ -22,19 +22,12 @@
 			<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closejob">
 			<div class="col-md-4 left_form_deal">
 				<br>
-				<div class="form-field deals-pic-circle">
-			        {% if user_profile.image != '' %}
-                	<img src="{{user_profile.image.url}}" id="photo">
-                	{% else %} 
-                	<img src="{% static 'images/menu-9.jpg '%}" id="photo">
-                	{% endif %}             
-
+				<div class="form-field col-md-12 profile-pic-div deals-pic-circle">
+                	<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
+                	<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+			        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>        
 			    </div>
-			    <div class="col-md-12">
-					<label for="fname">Picture</label>
-					<input type="file" name="picture" id="fname" class="form-control" placeholder="Your firstname">
-				</div>
-				
+			    <br><br><br><br><br><br><br><br><br><br>
 
 				<div class="col-md-12">
 					<label for="fname">Job Name</label>
@@ -66,7 +59,7 @@
 					<br>[your product or deal will handle by E-bro through private channel]
 				</div>
 				<div class="col-md-1">
-					<label for="subject">Job Type</label><br>
+					<label for="subject">Type</label><br>
 					<input type="radio" name="job_type" value="Single" checked="checked">
 					<input type="radio" name="job_type" value="Multiple">
 				</div>
@@ -83,8 +76,16 @@
 					<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
 				</div>
 				<div class="col-md-12">
-					<label for="email">Category/Keywords</label>
-					<input type="text" name="category" id="email" class="form-control" placeholder="Your email address">
+					<div class="form-group">
+					<label>Select Job Category:</label>
+					<select id="jobcategory" name="category"
+					class="" multiple required="">
+
+					{% for i in category_details %}
+					<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
+					{% endfor %}
+					</select>
+					</div>
 				</div>
 				<div class="col-md-12">
 					<label for="subject">Location</label>
@@ -120,18 +121,28 @@
 				<div class="row">
 					{% for i in user_jobs_list %}
 
-					<div class="col-md-3 room-wrap animate-box user_deal_box">
+					<div class="col-md-3 room-wrap animate-box user_deal_box" onclick="location.href='{% url 'detail_job' i.id %}';">
 						<center>
 						{% if i.picture != '' %}
-         				<img src="{{i.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
+         				<a href="{% url 'detail_job' i.id %}"><img src="{{i.picture.url}}" alt="" width="200" height="100" style="margin-top: 10px;" /></a>
          				{% else %}
-         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
+         				<a href="{% url 'detail_job' i.id %}"><img src="{% static 'images/assign.png' %}" alt="" width="200" height="100"/></a>
          				{% endif %}
          				</center>
          				
          					<div class="col-md-10" style="margin-left: -30px;">
 								<h3 class="btn3 btn3-1">{{ i.job_name }}</h3>
+								{% if request.user.is_authenticated %}
+								<form action="{% url 'job_to_task' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_job">
 								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+            					</form>
+            					{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+            					</form>
+            					{% endif %}
 								
 
 							</div>
@@ -142,7 +153,18 @@
 								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
 								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
 								<h3 class="btn3 btn3-2">$&nbsp;{{ i.price}}</h3>
+								{% if request.user.is_authenticated %}
+								<form action="{% url 'job_to_wish' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_job">
 								<button class="btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% endif %}
+
 
 							</div>
 						

@@ -57,12 +57,22 @@
 						<label for="lname">Price</label>
 						<input type="text" name="price" id="lname" value="{{ admin_products_list.price }}" class="form-control" placeholder="Your lastname">
 					</div>
-					<div class="col-md-4">
-						<label for="email">Category/Keywords</label>
-						<input type="text" name="category" id="email" value="{{ admin_products_list.category }}" class="form-control" placeholder="Your email address">
+					<div class="col-md-2">
+						<label for="lname">Stock</label>
+						<input type="number" name="stock" id="lname" value="{{ admin_products_list.stock }}" class="form-control" placeholder="Stock">
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+						<label>Select Job Category:</label>
+						<select name="category" class="form-control" multiple="">
+						{% for i in category_details %}
+						    <option {% for j in trade %} {% if i.id == j.id %} selected {% endif %} {% endfor %} value="{{ i.id }}">{{ i.name }}</option>
+						{% endfor %}
+						</select>
+						</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<label for="subject">Email</label>
 						<input type="text" name="email" id="subject" value="{{ admin_products_list.email }}" class="form-control" placeholder="Your subject of this message">
 				    </div>
@@ -116,10 +126,32 @@
 		</div>
 
 
+		<div class=" animate-box product_attach_box">
+				<div class="row form-group">
+				<form action="{% url 'update_product_offer' admin_products_list.id %}" method="POST">
+				{% csrf_token %}
+					<div class="col-md-12">
+						<label for="subject">Offer</label>
+						<input type="text" name="offer" id="subject" value="{{ admin_products_list.offer }}" class="form-control" placeholder="Your subject of this message">
+					</div>
+
+					<div class="row form-group">
+					<div class="form-group text-center">
+						<input type="submit" value="Update" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+					</div>
+					</div>	
+					
+				</div>
+				<br><br><br>	
+				</form>
+		</div>
+
+
+
+
 
 		<div class=" animate-box product_attach_box">
-			
-				
 				<div class="row form-group">
 				<form action="{% url 'delete_product_attach' %}" method="POST">
 				{% csrf_token %}
@@ -128,18 +160,24 @@
 						{% for j in admin_products_attach_list %}
 						<img src="{{ j.attachment.url }}" alt="" height="70" width="70" style="border-radius: 50%" />
 						{% endfor %}
+					</div>
+
+					<div class="row form-group">
+					<div class="form-group text-center">
+						<input type="submit" value="Delete Old Attachments" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+					</div>
 					</div>	
 					
 				</div>
 				<br><br><br>
-				<div class="row form-group">
-				<div class="form-group text-center">
-					<input type="submit" value="Delete Old Attachments" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-				</div>
-				</div>
-			</form>
+				
+				</form>
 		</div>
+
+
+
+
 
 
 

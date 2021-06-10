@@ -58,8 +58,14 @@
 						<input type="text" name="price" id="lname" value="{{ admin_deals_list.price }}" class="form-control" placeholder="Your lastname">
 					</div>
 					<div class="col-md-4">
-						<label for="email">Category/Keywords</label>
-						<input type="text" name="category" id="email" value="{{ admin_deals_list.category }}" class="form-control" placeholder="Your email address">
+						<div class="form-group">
+						<label>Select Job Category:</label>
+	                    <select name="category" class="form-control" multiple="">
+	                    {% for i in category_details %}
+	                    	<option {% for j in trade %} {% if i.id == j.id %} selected {% endif %} {% endfor %} value="{{ i.id }}">{{ i.name }}</option>
+	                    {% endfor %}
+						</select>
+						</div>
 					</div>
 
 					<div class="col-md-4">

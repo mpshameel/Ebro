@@ -1,0 +1,92 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+<!-- <style>
+	.active_user_page3{
+		background-color: #99c2ff;
+	}
+</style> -->
+  
+
+
+
+ 
+
+ 		<div class="col-xs-7">
+		    <form action="{% url 'update_category' detail_category.id %}" method="POST" enctype="multipart/form-data">
+		      {% csrf_token %}
+		    <div class=" animate-box category-form">
+		      <br>
+		      <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closecategory">
+		      <div class="col-md-12">
+		        <br><br>
+		        <div class="col-md-12">
+		          <label for="fname">Category Name</label>
+		          <input type="text" name="category_name" id="fname" value="{{ detail_category.name }}" class="form-control" placeholder="category name">
+		          <input type="hidden" value="{{ detail_category.id }}" name="id_update">
+		        </div>
+		        <br>
+		        &nbsp;&nbsp;
+		        <div class="col-md-12">
+		        <div class="form-group text-center"><br>
+		          <button type="submit" value="Add Deal" class="btn btn-primary">Add User</button>
+		        </div>
+		        </div>
+		      </div>
+		    </div>
+		    </form>
+		</div>
+
+
+
+		<div class="col-md-5 wallet-form" style="margin-top: -50px;margin-left: 850px;">
+          <br>
+		  <div class="col-md-12">
+		    <table class="table-users" cellspacing="0">
+		      <tr>
+		      	<form action="{% url 'detail_category' detail_category.id %}" method="POST" enctype="multipart/form-data">
+		      		{% csrf_token %}
+			       	<div class="col-md-12">
+			          <label for="fname">Sub-Category Name</label>
+			          <input type="text" name="sub_category" id="fname" class="form-control" placeholder="category name">
+			        </div>
+			        <br><br><br>
+			        <div class="form-group text-center"><br>
+			          <button type="submit" value="Add Deal" class="btn btn-primary">Add User</button>
+			        </div>
+			    </form>
+		      </tr>
+		      <tr class="header" style="font-size: 15px;">
+		        <center>
+		         <th width="5%"><center>#</center></th>
+		         <th width="30%"><center>Category</center></th>
+		         <th width="50%"><center>Sub Category</center></th>
+		         <th width="15%"><center>Delete</center></th>
+		         </center>
+		      </tr>
+
+
+		      {% for i in subcategory_list %}
+		        <tr style="font-size: 13px;height: 30px;">
+		         <td><center>{{ forloop.counter }}</center></td>
+		          <td><center>{{ i.name }}</center></td>
+		          <td><center>{{ i.subcategory }}</center></td>
+	              <td><center>
+		         	<br>
+			         	<form action="{% url 'delete_subcategory' %}" method="POST">
+							{% csrf_token %}
+
+			         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+			         	<button>Delete</button>
+			            </form>
+		            </center>
+		         </td>
+		        </tr>
+		      {% endfor %}  
+		    </table>
+		  </div>
+        </div>
+
+{% endblock %}

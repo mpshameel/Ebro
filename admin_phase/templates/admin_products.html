@@ -55,12 +55,24 @@
 						<label for="lname">Price</label>
 						<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
 					</div>
-					<div class="col-md-4">
-						<label for="email">Category/Keywords</label>
-						<input type="text" name="category" id="email" class="form-control" placeholder="Your email address">
+					<div class="col-md-2">
+						<label for="lname">Stock</label>
+						<input type="number" name="stock" value="1" id="lname" class="form-control" placeholder="Stock">
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+						<label>Select Job Category:</label>
+						<select id="jobcategory" name="category"
+						class="" multiple required="">
+
+						{% for i in category_details %}
+						<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
+						{% endfor %}
+						</select>
+						</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<label for="subject">Email</label>
 						<input type="text" name="email" id="subject" class="form-control" placeholder="Your subject of this message">
 				    </div>
@@ -189,9 +201,10 @@
          <th width="15%"><center>Product Name</center></th>
          <th width="20%"><center>Email</center></th>
          <th width="10%"><center>Phone</center></th>
-         <th width="10%"><center>Publish</center></th>
+         <th width="7%"><center>Publish</center></th>
          <th width="7%"><center>Price</center></th>
-         <th width="10%"><center>Type</center></th>
+         <th width="7%"><center>offer</center></th>
+         <th width="7%"><center>Type</center></th>
          <th width="5%"><center>Edit</center></th>
          <th width="5%"><center>Delete</center></th>
          
@@ -214,6 +227,7 @@
          <td><center>{{ i.contact }}</center></td>
          <td><center>{{ i.publish }}</center></td>
          <td><center>{{ i.price }}</center></td>
+         <td><center>{{ i.offer }}%</center></td>
          <td><center>{{ i.product_type }}</center></td>
          <td><center><a href="{% url 'detail_view_admin_products' i.id %}">edit</a></center></td>
          <td><center>

@@ -1,0 +1,191 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+	.active_user_page3{
+		background-color: #99c2ff;
+	}
+</style>
+  
+
+
+		<div class="container_deals">
+		   <div class="col-md-12">
+				<div class="row">
+
+					<div class="col-md-8 room-wrap animate-box user_detail_deal_box">
+						<div class="col-md-5">
+							<center>
+							{% if user_job.picture != '' %}
+         					<img src="{{user_job.picture.url}}" alt="" width="300" height="250" style="margin-top: 25px;" />
+         					{% else %}
+         					<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100"/>
+         					{% endif %}
+         					</center>
+
+
+         					<br><br>
+
+         					
+         				</div>
+         				<div class="col-md-7 detail_deal_names">
+         					<b><font style="font-size: 35px;">{{ user_job.job_name }}</font></b>
+         					<br>
+         					Type&nbsp;{% if user_job.job_type == "Single" %} 
+         							  {{ user_job.job_type }}
+         							  {% else %}
+         							  {{ user_job.job_type }}
+         							  <br>
+         							  <b>{{ user_job.brand_name }}</b>
+         							  {% endif %}
+
+         					<br>
+         					[your product can categorize based on brand name or individual]
+         					<br>
+         					<b><font style="font-size: 35px;">$&nbsp;&nbsp;{{ user_job.price }}</font></b>
+         					<br>
+         					{% for i in category_details %}
+                           		{% for j in trade %} 
+                              		{% if i.id == j.id %} 
+                                 		{{ j.name }} ,
+                              		{% endif %}
+                           		{% endfor %}
+                        	{% endfor %}
+         					<br>
+         					{{ user_job.email }}
+         					<br>
+         					{{ user_job.contact }}
+         					<br>
+         					{{ user_job.location }}
+         					<br>
+         					{{ user_job.details }}
+
+         					<br>
+         					
+         				</div>
+         				
+         					<div class="col-md-10" style="margin-left: 10px;">
+         						{% if request.user.is_authenticated %}
+								<form action="{% url 'job_to_task' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ user_job.id }}" name="id_job">
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+            					</form>
+            					{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+            					</form>
+            					{% endif %}
+								
+
+							</div>
+
+							<div class="col-md-2" style="margin-left: -30px;">
+								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
+								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
+								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
+								{% if request.user.is_authenticated %}
+								<form action="{% url 'job_to_wish' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ user_job.id }}" name="id_job">
+								<button class="btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% endif %}
+
+							</div>
+						
+					</div>
+
+				</div>
+			</div>
+		</div>	
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<div class="container_deals">
+		   <div class="col-md-12">
+				<div class="row">
+					{% for i in user_jobs_list %}
+
+					<div class="col-md-3 room-wrap animate-box user_deal_box" onclick="location.href='{% url 'detail_job' i.id %}';">
+						<center>
+						{% if i.picture != '' %}
+         				<a href="{% url 'detail_job' i.id %}"><img src="{{i.picture.url}}" alt="" width="200" height="100" style="margin-top: 10px;" /></a>
+         				{% else %}
+         				<a href="{% url 'detail_job' i.id %}"><img src="{% static 'images/assign.png' %}" alt="" width="200" height="100"/></a>
+         				{% endif %}
+         				</center>
+         				
+         					<div class="col-md-10" style="margin-left: -30px;">
+								<h3 class="btn3 btn3-1">{{ i.job_name }}</h3>
+								{% if request.user.is_authenticated %}
+								<form action="{% url 'job_to_task' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_job">
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+            					</form>
+								{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+            					</form>
+            					{% endif %}
+
+							</div>
+
+							<div class="col-md-2" style="margin-left: -30px;">
+								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
+								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
+								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
+								<h3 class="btn3 btn3-2">$&nbsp;{{ i.price}}</h3>
+								{% if request.user.is_authenticated %}
+								<form action="{% url 'job_to_wish' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_job">
+								<button class="btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% endif %}
+
+							</div>
+						
+					</div>
+					{% endfor %}
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+	
+		
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+{% endblock %}

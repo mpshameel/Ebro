@@ -297,54 +297,314 @@
 
 
 
-   <table class="table-users" cellspacing="0">
-    
-      <tr class="header">
-      	<center>
-      	 <th width="5%"><center>#</center></th>
-         <th width="5%"><center>Profile</center></th>
-         <th width="20%"><center>Email</center></th>
-         <th width="10%"><center>Phone</center></th>
-         <th width="15%"><center>Profession</center></th>
-         <th width="7%"><center>Location</center></th>
-         <th width="5%"><center>Type</center></th>
 
 
-         
+<form class="text-center border border-light p-5" action="{% url 'add_category' %}" method="POST" onsubmit="return check()">
+  {% csrf_token %}
+    <p class="h4 mb-4">Add Job Category</p>
+
+  <!-- Main Categoy-->
+   <div class="d-flex justify-content-around">
+        
+    <!-- Default inline 1-->
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" checked="checked" value="True" onclick="checkRadio(name)" name="main_category" class="custom-control-input" id="defaultInline1" >
+      <label class="custom-control-label" for="defaultInline1">Main Category</label>
+    </div>
+
+    <!-- Default inline 2-->
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" class="custom-control-input" onclick="checkRadio(name)" value="False" id="defaultInline2" name="main_category_availabe">
+      <label class="custom-control-label" for="defaultInline2">Sub Category</label>
+    </div>
+        
+    </div><br>
+    <!-- Password -->
+    <input type="text" name="name"  class="form-control mb-4" placeholder="enter category name" required="" pattern="[A-Za-z ]{1,30}">
+    <select id="sub_selection" name="sub_category" class="form-control mb-4" >
+        <option value="">select main category</option>
+        {% for category in main_category_list %}
+          <option value="{{ category.id }}">{{ category.name }} &nbsp;&nbsp;&nbsp;{% if category.parent == null %}<p class="text-primary">(main category)</p>{% endif %}</option> 
+        {% endfor %}
+    </select>
+    <div id="error" style="color: red"></div>
+    <button style="background-color: #59698d;" class="btn btn-block my-4 text-light" type="submit">Save</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-3">
+    <table class="table-users" cellspacing="0">
+      <tr>
+        <a href="#"><h3 id="addbutton2" class="adduser">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;Add&nbsp;Category</h3></a><br>
+      </tr>
+      <tr class="header" style="font-size: 15px;">
+        <center>
+         <th width="5%"><center>#</center></th>
+         <th width="50%"><center>Category</center></th>
+         <th width="45%"><center>Sub Category</center></th>
          </center>
       </tr>
 
-     
-      {% for i in profile_list %}
-      <tr class="row_height">
-      	 <td><center>{{ forloop.counter }}</center></td>
-         <td><center>
-         	{% if i.image != '' %}
-         	<img src="{{i.image.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% else %}
-         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% endif %}
-         </center></td>
-         <td><center>{{ i.username.username }}</center></td>
-         <td><center>{{ i.phone }}</center></td>
-         <td><center>{{ i.profession }}</center></td>
-         <td><center>{{ i.location }}</center></td>
-         <td><center>{% if i.username.is_superuser == True %}<font color="red"> Admin </font> {% elif i.usertype == "premium" %} Premium User {% else %} Free User {% endif %}</center></td>
-        
-        
-         
+
+      {% for i in main_category_list %}
+        <tr style="font-size: 13px;height: 30px;cursor: pointer;" onclick="location.href='{% url 'detail_category' i.id %}';">
+         <td><center>{{ forloop.counter }}</center></td>
+          <td>&nbsp;{{ i.name }}</td>
+<!--           <td><center>{{ i.sub_category_count }}</center></td> -->
+          <td>
+            {% for j in sub_category_list %}
+              {% if j.parent_id == i.id %}
+              &nbsp;{{ j.name }}<br>
+              <!-- {{ sub_category_list_count|add:2 }} -->
+              {% endif %}
+            {% endfor %}
+          </td>
+        </tr>
+      {% endfor %}  
+    </table>
+  </div>
+
+
+  
+  <div class="col-md-9">
+    <table class="table-users" cellspacing="0">
+      <tr>
+        <a href="#"><h3 id="addbutton" class="adduser">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;Add&nbsp;User</h3></a><br>
       </tr>
-      {% endfor %}
+      <tr class="header" style="font-size: 15px;">
+        <center>
+         <th width="2%"><center>#</center></th>
+         <th width="2%"><center></center></th>
+         <th width="25%"><center>Username</center></th>
+         <th width="20%"><center>Phone</center></th>
+         <th width="15%"><center>Profession</center></th>
+         <th width="10%"><center>Location</center></th>
+         <th width="11%"><center>Type</center></th>
+         <th width="5%"><center>Refferals</center></th>
+         <th width="5%"><center>Wallet</center></th>
+         <th width="5%"><center>Coins</center></th>
+         </center>
+      </tr>
 
-      
-   </table>
+
+      {% for i in profile_list %}
+        <tr style="font-size: 13px;cursor: pointer;" onclick="location.href='{% url 'detail_user' i.id %}';">
+         <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+          {% if i.image != '' %}
+          <img src="{{i.image.url}}" alt="" height="30" width="30"/>
+          {% else %}
+          <img src="{% static 'images/assign.png' %}" alt="" height="30" width="30"/>
+          {% endif %}
+         </center></td>
+         <td>&nbsp;{{ i.username.username }}</td>
+         <td>&nbsp;{{ i.phone }}</td>
+         <td><center>{{ i.profession }}</center></td>
+         <td>&nbsp;{{ i.location }}</td>
+         <td><center>{% if i.username.is_superuser == True %}<font color="red"> Admin </font> {% elif i.usertype == "premium" %} Premium User {% else %} Free User {% endif %}</center></td>
+         <td><center>{{ i.myrefferalcount }}</center></td>
+          <td><center>{{ i.wallet }}</center></td>
+          <td><center>{{ i.coins }}</center></td>
+        </tr>
+      {% endfor %}  
+    </table>
+  </div>
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+   <form action="{% url 'add_user' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+    <div class=" animate-box adduser-form">
+      <br>
+      <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeuser">
+      <div class="col-md-6 left_form_deal">
+            <br>
+
+            <!-- <div class="image-update-div deals-pic-circle">
+              <img src="{% static 'images/menu-9.jpg '%}" id="photo">
+              <input type="file" name="picture" id="file">
+            </div> -->
+
+
+            <div class="form-field col-md-12 profile-pic-div2 deals-pic-circle2">
+              <img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
+              <input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+              <label for="file-ip-1" id="uploadBtn">Choose Photo</label>        
+            </div>
+            <br><br><br><br><br><br><br><br><br><br>
+
+            <div class="col-md-12">
+              <label for="fname">First Name</label>
+              <input type="text" name="first_name" id="fname" class="form-control" placeholder="Your firstname">
+            </div>
+            <div class="col-md-12">
+              <label for="lname">Last Name</label>
+              <input type="text" name="last_name" id="lname" class="form-control" placeholder="Your lastname">
+            </div>
+            <div class="col-md-12">
+              <label for="lname">Email</label>
+              <input type="text" name="email" id="lname" class="form-control" placeholder="Your lastname">
+            </div>
+            <div class="col-md-12">
+              <label for="lname">Phone number</label>
+              <input type="text" name="phone" id="lname" class="form-control" placeholder="Your lastname">
+            </div>
+            <div class="col-md-12">
+              <label for="lname">Refferal Code</label>
+              <input type="text" name="refferalcode" id="lname" class="form-control" placeholder="Your lastname">
+            </div>
+            <div class="col-md-12">
+              <label for="lname">Password</label>
+              <input type="text" name="password1" id="lname" class="form-control" placeholder="Your lastname">
+            </div>
+            <div class="col-md-12">
+              <label for="lname">Confirm Passwordr</label>
+              <input type="text" name="password2" id="lname" class="form-control" placeholder="Your lastname">
+            </div>
+
+          </div>
+      <div class="col-md-6 right_form_deal">
+          <br>
+          <div class="col-md-12">
+            <label for="subject">Type</label>
+          </div>
+          <div class="col-md-12">
+            <input type="radio" name="user_type" value="free" checked="checked">Free User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="user_type" value="premium">Premium User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="user_type" value="admin">Admin
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Alternative Phone</label>
+            <input type="text" name="alternative_phone" id="subject" class="form-control" placeholder="Your subject of this message">
+          </div>
+          <div class="col-md-12">
+            <label for="email">Date of Birth</label>
+            <input type="text" name="dob" id="email" class="form-control" placeholder="Your email address">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Adhar Id</label>
+            <input type="text" name="adhar_id" id="subject" class="form-control" placeholder="Your subject of this message">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Profession</label>
+            <input type="text" name="profession" id="subject" class="form-control" placeholder="Your subject of this message">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Location</label>
+            <input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Qualification</label>
+            <input type="text" name="qualification" id="subject" class="form-control" placeholder="Your subject of this message">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Hobbies</label>
+            <input type="text" name="hobbies" id="subject" class="form-control" placeholder="Your subject of this message">
+          </div>
+
+          <div class="col-md-12">
+            <label for="message">Summary/Bio</label>
+            <textarea  name="summary" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
+            </textarea>
+          </div>
+          &nbsp;&nbsp;
+          <div class="row form-group">
+          <div class="form-group text-center"><br><br>
+            <button type="submit" value="Add Deal" class="btn btn-primary">Add User</button>
+        
+          </div>
+          </div>
+      </div>
+    </div>
+  </form>
 
 		
-		
+
+
+
+    <script>
+    document.getElementById("addbutton").addEventListener("click",function(){
+      document.querySelector(".adduser-form").style.display = "flex";
+    })
+    document.querySelector(".closeuser").addEventListener("click",function(){
+      document.querySelector(".adduser-form").style.display = "none";
+     })
+    </script>
+
+
+
+		<script type="text/javascript">
+      document.getElementById("sub_selection").style.visibility = "hidden";
+      var ch;
+    function checkRadio(name) {
+        if(name == "main_category_availabe"){
+            document.getElementById("defaultInline2").checked = true;
+            document.getElementById("defaultInline1").checked = false;
+            console.log(document.getElementById("defaultInline1").value)
+            console.log('Yes')
+            document.getElementById("sub_selection").style.visibility = "visible";
+            ch=1;
+
+
+
+        } else if (name == "main_category"){
+            document.getElementById("defaultInline1").checked = true;
+            document.getElementById("defaultInline2").checked = false;
+            document.getElementById("sub_selection").style.visibility = "hidden";
+        }
+    }
+
+    function check()
+    {     z=document.getElementById("defaultInline2").value;
+            x=document.getElementById("sub_selection").value;
+    // alert(ch)
+    if(ch)
+    {
+      // alert("rad")
+      if(x == "")
+    {
+      // alert("not ")
+      document.getElementById("error").innerHTML="choose sub category"; 
+      return false;
+    }else{
+      // alet("sc")
+      return true;
+
+    }
+    }else{
+      // alert("else part")
+      console.log("sdf")
+    }
+
+    }
+    </script>
+
+
+
 {% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+<style>
+	.active_page2{
+		background-color: #99c2ff;
+	}
+</style>
+
+
+
+
+   
+   <table class="table-users" cellspacing="0">
+      <tr class="header" style="font-size: 15px;">
+      	<center>
+      	 <th width="2%"><center>#</center></th>
+      	 <th width="2%"><center></center></th>
+         <th width="20%"><center>Product Name</center></th>
+         <th width="20%"><center>Buyer</center></th>
+         <th width="5%"><center>Status</center></th>
+         <th width="20%"><center>Dealer</center></th>
+         <th width="7%"><center>Payment Status</center></th>
+         <th width="5%"><center>Action</center></th>
+         <th width="3%"><center>X</center></th>
+         <th width="5%"><center>Price</center></th>
+         <th width="5%"><center>Total</center></th>
+         <th width="7%"><center>Cart Total</center></th>
+         <!-- 3% -->
+         </center>
+      </tr>
+
+
+      {% for i in all_orders %}
+      <form action="{% url 'admin_payments' %}" method="POST">
+         {% csrf_token %}
+      <tr style="font-size: 13px;cursor: pointer;" onclick="location.href='{% url 'admin_orders_edit' i.id %}';">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.product.picture != '' %}
+         	<img src="{{i.product.picture.url}}" alt="" height="30" width="30"/>
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="30" width="30"/>
+         	{% endif %}
+         </center></td>
+         <td>{{ i.product.product_name }}</td>
+         <td>{{ i.username.username }}</td>
+         <td style="color: red;"><center>{{ i.status }}</center></td>
+         <td>{{ i.product.username.username }}</td>
+         <td style="color: red;"><center>{{ i.payment_status }}</center></td>
+         <td><center>
+            <input type="hidden" value="{{ i.id }}" name="approve_payment_id">
+            <input type="hidden" value="{{ i.product.username_id }}" name="approve_dealer_id">
+            <input type="hidden" value="{% widthratio i.product_count 1 i.product.price %}" name="approve_payment">
+            {% if i.payment_status == "pending" %}
+            <button class="btn4 btn4-1">Approve</button>
+            {% endif %}
+         </center></td>
+         <td class="text-right">{{ i.product_count }}</td>
+         <td class="text-right">{{ i.product.price }}</td>
+         <td class="text-right">{% widthratio i.product_count 1 i.product.price %}</td>
+         <td class="text-right">{{ i.amount }}</td>
+
+      </tr>
+      </form>
+      {% endfor %}
+
+      
+   </table>
+
+
+
+
+		
+	{% endblock %}	
+
+
+

@@ -29,14 +29,8 @@
     
 }
 
-.deals-pic-circle{
-    margin-left: 50px;
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid grey;
-}
+
+
 
 .left_form_deal{
     background:#a8b1e3;
@@ -49,19 +43,35 @@
 
 
 
-/*.deals-form-edit{
-    width: 900px;
-    height: 940px;
-    position: absolute;
+
+
+.deals-form-edit{
+    width: 95%;
+    height: auto;
+
     z-index: 99;
-    background: #ffffff;
-    max-width: 1000px;
     margin-top:  -100px;
-    margin-left: 200px;
-    padding: 10px;
-   
+    margin-left: 40px;
+    padding: 5px 5px;
     
-}*/
+}
+
+.left_form_deal_edit{
+    background:#a8b1e3;
+    height: 620px;
+}
+
+.right_form_deal_edit{
+    background:whitesmoke;
+    height: 620px;
+}
+
+
+
+
+
+
+
 
 .closedeal{
     cursor: pointer;
@@ -73,17 +83,104 @@
 
 
 .person{
-    margin-top: -5px;
-    margin-left: 50px;
-	width: 45px;
-    height: 45px;
+    margin-top: -7px;
+    margin-left: 15px;
+	width: 50px;
+    height: 50px;
     position: absolute;
     border-radius: 50px;
     border-image-width: 10px;
-    border: 1px solid grey;
+    border: 2px solid grey;
 
 }
 
+.username{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 0px;
+    margin-top: -10px;
+    font-size: 15px;
+    font-family: 'Antonio', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    line-height: 24px;
+    display: block;
+    text-align: right;
+    color: #000;
+    -webkit-transition: .2s all ease-in-out;
+    -o-transition: .2s all ease-in-out;
+    transition: .2s all ease-in-out;
+}
+
+
+
+
+
+
+.cart{
+
+    margin-top: 20px;
+    margin-left: 80px;
+/*    width: 55px;
+    height: 40px;*/
+    position: absolute;
+
+
+}
+
+
+.cart_count{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: -107px;
+    margin-top: 10px;
+    font-size: 13px;
+    width: 20px;
+    height: 20px;
+    line-height: 24px;
+    border-radius: 50%;
+    display: block;
+    text-align: center;
+    background: #7971ea;
+    color: #fff;
+    -webkit-transition: .2s all ease-in-out;
+    -o-transition: .2s all ease-in-out;
+    transition: .2s all ease-in-out;
+}
+
+
+
+
+.wishlist{
+    margin-top: 20px;
+    margin-left: 55px;
+/*    width: 30px;
+    height: 25px;*/
+    position: absolute;
+
+}
+
+
+.wishlist_count{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: -75px;
+    margin-top: 10px;
+    font-size: 13px;
+    width: 18px;
+    height: 18px;
+    line-height: 24px;
+    border-radius: 50%;
+    display: block;
+    text-align: center;
+    background: #7971ea;
+    color: #fff;
+    -webkit-transition: .2s all ease-in-out;
+    -o-transition: .2s all ease-in-out;
+    transition: .2s all ease-in-out;
+}
 
 
 .job-form{
@@ -229,14 +326,14 @@
 
 
 
-.profile-pic-circle{
+/*.profile-pic-circle{
     height: 200px;
     width: 200px;
 
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid grey;
-}
+}*/
 
 #photo{
     height: 100%;

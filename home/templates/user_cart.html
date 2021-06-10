@@ -1,0 +1,134 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<!-- <style>
+	.active_user_page3{
+		background-color: #99c2ff;
+	}
+</style> -->
+  
+
+
+
+ 
+
+ 		<div class="col-xs-6">
+			<h2 class="sub_headings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My Bag</h2>
+			<br><br>
+				<div class="row">
+					{% for i in user_product_cart %}
+
+					<div class="col-md-12 room-wrap animate-box user_cart_box" style="margin-left: 35px;">
+         				
+         					<div class="col-md-1">
+								<center>
+								{% if i.product.picture != '' %}
+         						<img src="{{i.product.picture.url}}" alt="" width="100" height="100" style="margin-top: 20px;margin-left: -10px;" />
+         						{% else %}
+         						<img src="{% static 'images/assign.png' %}" alt="" width="100" height="100" style="margin-top: 20px;margin-left: -10px;"/>
+         						{% endif %}
+         						</center>
+								
+
+         											
+							</div>
+							<div class="col-md-10" style="margin-left: 40px;">
+								<h3 class="btn3 btn3-1">{{ i.product.product_name }}</h3><br>
+								<h3 class="btn3 btn3-2"><b>$&nbsp;{{ i.product.price }}</b></h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<h4 class="btn3 btn3-2">Qty&nbsp;&nbsp;:&nbsp;&nbsp;{{i.quantity}}</h4>
+								<img data-product={{i.product.id}} data-action="add" src="{% static 'images/up-arrow.png' %}"class="update-cart" style="margin-top: -15px;" />
+								<img data-product={{i.product.id}} data-action="remove" src="{% static 'images/down-arrow.png' %}" class="update-cart" style="margin-left: -14px;margin-top: 10px;" />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+								<h4 class="btn3 btn3-2">Total&nbsp;&nbsp;:{% widthratio i.quantity 1 i.product.price %}</h4>
+    						
+
+								<br><br>
+								<form action="{% url 'delete_cart' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_delete">
+         						<input type="hidden" value="{{ i.product.id }}" name="id_product">
+								<button class="btn4 btn4-1 btn4-sep icon">Remove</button>
+            					</form>
+								
+
+							</div>
+
+					
+						
+					</div>
+					{% endfor %}
+
+
+				</div>
+
+		</div>
+
+		<br><br><br>
+		<div class="col-xs-5 user_checkout_box" style="margin-left: 70px;">
+		  	<h2 class="sub_headings">My Bag</h2><br><br>
+		  	<table  cellspacing="0" style="width: 100%">
+      			<tr class="">
+      			<center>
+      			<th width="5%"><center>#</center></th>
+      	 		<th width="10%"><center></center></th>
+         		<th width="40%"><center>Product Name</center></th>
+         		<th width="15%"><center>Price</center></th>
+        		<th width="10%"><center>x</center></th>
+         		<th width="20%"><center>Total</center></th>
+         		</center>
+      			</tr>
+      			<br>
+      			{% for i in user_product_cart %}
+      			<tr class="">
+      	 		<td><center>{{ forloop.counter }}</center></td>
+         		<td><center>
+         			{% if i.product.picture != '' %}
+         			<img src="{{i.product.picture.url}}" alt="" width="50" height="50" />
+         			{% else %}
+         			<img src="{% static 'images/assign.png' %}" alt="" width="50" height="50"/>
+         			{% endif %}
+         			</center>
+         		</td>
+         		<td>&nbsp;&nbsp;{{ i.product.product_name }}</td>
+         		<td><center>{{ i.product.price }}</center></td>
+         		<td><center>{{i.quantity}}</center></td>
+         		<td><center>{% widthratio i.quantity 1 i.product.price %}</center></td>
+      			</tr>
+      			{% endfor %}
+   			</table>
+
+
+			<br><br>
+
+			<h2 class="sub_headings">Total</h2><br><br>
+				<div class="row col-md-10" style="margin-left: -25px;">
+					<h4 class="btn3 btn3-2">Items</h4><br><br>
+					<h3 class="btn3 btn3-2">Sub-Total</h3>
+
+
+				</div>
+
+				<div class="row col-md-2">
+					<h4 class="btn3 btn3-2">:{{cart_count}}</h4><br><br>
+					<h3 class="btn3 btn3-2">:$&nbsp;&nbsp;{{total_price}}</h3><br><br>
+					
+
+				</div>
+				<form action="#" method="POST">
+					{% csrf_token %}
+         			<input type="hidden" value="{{ i.id }}" name="id_delete">
+					<a href="checkout" class="btn2 btn2-2 btn2-sep" style="width: 100%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checkout</a>
+            	</form>
+
+			</div>
+
+		</div> 
+		
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+{% endblock %}

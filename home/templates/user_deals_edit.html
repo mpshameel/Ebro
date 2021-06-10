@@ -12,110 +12,137 @@
 </style>		
 			
 
-	
-		<div class=" animate-box">
+
+
+
+	<form action="{% url 'detail_view_deals' user_deals_list.id %}" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class=" animate-box deals-form-edit">
 			<br>
-			
-			<form action="{% url 'detail_view_deals' user_deals_list.id %}" method="POST" enctype="multipart/form-data">
-				{% csrf_token %}
-				<div class="row form-group">
-					
-					<div class="col-md-1">
-						<label for="subject">Publish</label><br>
-						<input type="radio" name="publish" value="public" {% if user_deals_list.publish == "public" %} checked="checked" {% endif %}>Public<br>
-						<input type="radio" name="publish" value="private" {% if user_deals_list.publish == "private" %} checked="checked" {% endif %}>Private 
-				    </div>
-					<div class="col-md-3">
-						<br>[your product or deal will handle by E-bro through private channel]
-				    </div>
+			<div class="col-md-4 left_form_deal_edit">
+				<br>
 
-				    <div class="col-md-2">
-						<label for="fname">Deal Name</label>
-						<input type="text" name="deal_name" id="fname" value="{{ user_deals_list.deal_name }} class="form-control" placeholder="Your firstname">
-					</div>
 
-					<div class="col-md-1">
-						<label for="subject">Type</label><br>
-						<input type="radio" name="deal_type" value="Single" {% if user_deals_list.deal_type == "Single" %} checked="checked" {% endif %}>Single<br>
-						<input type="radio" name="deal_type" value="Multiple" {% if user_deals_list.deal_type == "Multiple" %} checked="checked" {% endif %}>Multiple
-					</div>
-					<div class="col-md-3">
-						<br>[your product can categorize based on brand name or individual]
-				    </div>
-					<div class="col-md-2">
-						<label for="subject">Brand Name</label>
-						<input type="text" name="brand_name" id="subject" value="{{ user_deals_list.brand_name }}"  class="form-control" placeholder="Your subject of this message">
-					</div>
-					
+				<div class="form-field col-md-12 profile-pic-div deals-pic-circle" style="margin-left: 100px;">
+					{% if user_deals_list.picture != '' %}
+         			<img src="{{user_deals_list.picture.url}}" id="file-ip-1-preview"/>
+         			{% else %}
+         			<img src="{% static 'images/assign.png' %}"id="file-ip-1-preview" />
+         			{% endif %}
+         			<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
+			        <label for="file-ip-1" id="uploadBtn">Choose Photo</label> 
+ 
+                	       
+			    </div>
+			    <br><br><br><br><br><br><br><br><br><br>
+
+				 <div class="col-md-12">
+					<label for="fname">Deal Name</label>
+					<input type="text" name="deal_name" id="fname" value="{{ user_deals_list.deal_name }}" class="form-control" placeholder="Your firstname">
 				</div>
 
-			
-
-				<div class="row form-group">
-					
-					<div class="col-md-2">
-						<label for="lname">Price</label>
-						<input type="text" name="price" id="lname"  value="{{ user_deals_list.price }}" class="form-control" placeholder="Your lastname">
-					</div>
-					<div class="col-md-4">
-						<label for="email">Category/Keywords</label>
-						<input type="text" name="category" id="email" value="{{ user_deals_list.category }}" class="form-control" placeholder="Your email address">
-					</div>
-
-					
-					
-					
+				<div class="col-md-12">
+					<label for="lname">Price</label>
+					<input type="text" name="price" id="lname"  value="{{ user_deals_list.price }}" class="form-control" placeholder="Your lastname">
+				</div>
+				<div class="col-md-12">
+					<label for="lname">Attachments</label>
+					<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
 				</div>
 
-				<div class="row form-group">
-					<div class="col-md-1">
+			</div>
+			<div class="col-md-8 right_form_deal_edit">
+				<br>
+				<div class="col-md-1">
+					<label for="subject">Publish</label><br>
+					<input type="radio" name="publish" value="public" {% if user_deals_list.publish == "public" %} checked="checked" {% endif %}>
+					<input type="radio" name="publish" value="private" {% if user_deals_list.publish == "private" %} checked="checked" {% endif %}>
+				</div>
+
+				<div class="col-md-2">
 					<br>
-							{% if user_deals_list.picture != '' %}
-         					<img src="{{user_deals_list.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
-         					{% else %}
-         					<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         					{% endif %}
-						
+					Public
+					<br>Private
+				</div>
+				<div class="col-md-9">
+					<br>[your product or deal will handle by E-bro through private channel]<br><br>
+				</div>
+				<div class="col-md-1">
+						<label for="subject">Type</label><br>
+						<input type="radio" name="deal_type" value="Single" {% if user_deals_list.deal_type == "Single" %} checked="checked" {% endif %}>
+						<input type="radio" name="deal_type" value="Multiple" {% if user_deals_list.deal_type == "Multiple" %} checked="checked" {% endif %}>
 					</div>
-					<div class="col-md-2">
-						<label for="fname">Picture</label>
-						<input type="file" name="picture" id="fname" class="form-control" placeholder="Your firstname">
-					</div>
-					<div class="col-md-2">
-						<label for="lname">Attachments</label>
-						<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
-					</div>
-					<div class="col-md-2">
-						<label for="subject">Sort by Location</label>
-						<input type="text" name="location" id="subject" value="{{ user_deals_list.location }}" class="form-control" placeholder="Your subject of this message">
-					</div>
+				<div class="col-md-2">
+					<br>
+					Single<br>
+					Multiple
+				</div>
+				<div class="col-md-9">
+					<br>[your product can categorize based on brand name or individual]
+				</div>
+				<div class="col-md-12">
+					<label for="subject">Brand Name</label>
+					<input type="text" name="brand_name" id="subject" value="{{ user_deals_list.brand_name }}"  class="form-control" placeholder="Your subject of this message">
+				</div>
 
-					<div class="col-md-5">
-						<label for="message">Other Details</label>
-						<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ user_deals_list.details }}
+				<div class="col-md-12">
+					<div class="form-group">
+					<label>Select Job Category:</label>
+					<select name="category" class="form-control" multiple="">
+					{% for i in category_details %}
+					    <option {% for j in trade %} {% if i.id == j.id %} selected {% endif %} {% endfor %} value="{{ i.id }}">{{ i.name }}</option>
+					{% endfor %}
+					</select>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<label for="subject">Sort by Location</label>
+					<input type="text" name="location" id="subject" value="{{ user_deals_list.location }}" class="form-control" placeholder="Your subject of this message">
+				</div>
+
+				<div class="col-md-12">
+					<label for="message">Other Details</label>
+					<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ user_deals_list.details }}
 						</textarea>
+				</div>
+
+				&nbsp;&nbsp;
+				<div class="row form-group col-md-12">
+				<div class="form-group text-center"><br><br>
+					<button type="submit" value="Update Deal" class="btn btn-primary">Update Deal</button>
+			
+				</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+		<div class=" animate-box deal_attach_box">
+				
+				<div class="row form-group">
+				<form action="{% url 'delete_deal_attachments' %}" method="POST">
+				{% csrf_token %}
+				<input type="hidden" value="{{ user_deals_list.id }}" name="attach_delete">
+					<div class="col-md-12">
+						{% for j in user_deals_attach_list %}
+						<img src="{{ j.attachment.url }}" alt="" height="70" width="70" style="border-radius: 50%" />
+						{% endfor %}
 					</div>	
 					
 				</div>
-				
+				<br><br><br>
 				<div class="row form-group">
 				<div class="form-group text-center">
-					<input type="submit" value="Update Deal" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="submit" value="Delete Old Attachments" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			
 				</div>
 				</div>
 			</form>
 		</div>
-
-
-
-
-
-
-
-
-
-
 
 
 

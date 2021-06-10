@@ -6,10 +6,7 @@
 
 
 
-        <div id="colorlib-blog">
-			<div class="container" style="margin-top: -50px;">
-				<div class="row">
-					<div class="col-md-7 col-md-push-3">
+					<div class="col-md-5 col-md-push-3" style="margin-left: -50px;">
                         <form action="{% url 'admin_profile' %}" method="POST">
                         	{% csrf_token %}
                             <div class="row">
@@ -78,7 +75,7 @@
                         
 					</div>
 
-					<div class="col-md-2 col-md-pull-7">
+					<div class="col-md-2 col-md-pull-7" style="margin-left: 300px;">
 						<div class="aside animate-box">
 							<div class="colorlib-form" >
 							<form action="{% url 'update_admin_profile_pic' %}" method="POST" enctype="multipart/form-data">
@@ -86,12 +83,12 @@
 			              	<div class="row">
 			                <div class="col-md-6">
 			                  <div class="form-group">
-			                    <div class="form-field profile-pic-circle">
+			                    <div class="form-field profile-pic-div">
 
 			                    	{% if admin_profile.image != '' %}
-                					<img src="{{admin_profile.image.url}}" id="photo">
+                					<img src="{{admin_profile.image.url}}" id="file-ip-1-preview">
                 					{% else %} 
-                					<img src="{% static 'images/menu-9.jpg '%}" id="photo">
+                					<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
                 					{% endif %}
 
 
@@ -103,16 +100,46 @@
               					<button type="submit" class="btn btn-primary">Update Profile Pic</button><br>
 			                  </div>
 			                </div>
-                            </div>
+                         	</div>
                             
 							
 			            </form>
 						</div>
-						  
+						</div>
 					</div>
-				</div>
-			</div>
-		</div>
+
+
+
+		
+					<div class="col-md-4 wallet-form" style="margin-top: -350px;margin-left: 350px;">
+			            <br>
+			              <div class="row">
+			                <div class="col-md-12">
+			                  <h4 class="sub_headings">&nbsp;&nbsp;My Refferals</h4><br><br>
+			                      <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
+			                        {% for i in my_refferals %}
+			                          <tr style="font-size: 13px;">
+			                           <td width="5%"><center>{{ forloop.counter }}</center></td>
+			                           <td width="10%"><center>
+			                            {% if i.image != '' %}
+			                            <img src="{{i.image.url}}" alt="" height="50" width="50"/>
+			                            {% else %}
+			                            <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
+			                            {% endif %}
+			                           </center></td>
+			                           <td width="85%">&nbsp;{{ i.username.username }}</td>
+			                        {% endfor %}                       
+			                     </table>
+			                </div>
+
+			              </div>
+
+
+			            </div>
+			        </div>
+
+
+
 		<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 

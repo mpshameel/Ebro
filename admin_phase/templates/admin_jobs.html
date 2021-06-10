@@ -55,8 +55,16 @@
 						<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
 					</div>
 					<div class="col-md-4">
-						<label for="email">Category/Keywords</label>
-						<input type="text" name="category" id="email" class="form-control" placeholder="Your email address">
+						<div class="form-group">
+						<label>Select Job Category:</label>
+						<select id="jobcategory" name="category"
+						class="" multiple required="">
+
+						{% for i in category_details %}
+						<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
+						{% endfor %}
+						</select>
+						</div>
 					</div>
 
 					<div class="col-md-4">

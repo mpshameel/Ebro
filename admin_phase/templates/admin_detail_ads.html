@@ -1,0 +1,61 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+<!-- <style>
+	.active_user_page3{
+		background-color: #99c2ff;
+	}
+</style> -->
+  
+
+
+
+ 
+
+ 		<div class="col-xs-7">
+				<div class="row">
+					<div class="col-md-12 room-wrap animate-box user_cart_box" style="margin-left: 35px;">
+         				
+         					<div class="col-md-4" style="height: auto;margin-top: 20px;">
+								{% if detail_ad.image != '' %}
+         						<img src="{{detail_ad.image.url}}" alt="" width="250" height="250"/>
+         						{% else %}
+         						<img src="{% static 'images/assign.png' %}" alt="" width="250" height="250"/>
+         						{% endif %}<br>
+         											
+							</div>
+							<div class="col-md-8 detail_deal_names" style="margin-left: 270px;margin-top: -340px;">
+								<form action="{% url 'admin_ads_edit' detail_ad.id %}" method="POST"  enctype="multipart/form-data">
+									{% csrf_token %}
+								<b><font style="font-size: 15px;">
+									Delivery Status :
+								<select name="ad_size">
+									<option value="xxxl" {% if detail_ad.adsize == "xxxl" %} selected="" {% else %} selected="" {% endif %}>XXX-Large Wide(1)</option>
+									<option value="xxl" {% if detail_ad.adsize == "xxl" %} selected="" {% endif %}>XX-Large Square(2)</option>
+									<option value="xl" {% if detail_ad.adsize == "xl" %} selected="" {% endif %}>X-Large Poster(3)</option>
+									<option value="l" {% if detail_ad.adsize == "l" %} selected="" {% endif %}>Large Poster(4)</option>
+									<option value="s" {% if detail_ad.adsize == "s" %} selected="" {% endif %}>Small(6)</option>
+								</select>
+								</font></b>
+								<br>
+
+								<div class="col-md-6">
+									<label for="fname">Ad Name</label>
+									<input type="text" name="ad_name" id="fname" class="form-control" value="{{ detail_ad.adname }}" placeholder="{{ detail_ad.adname }}">
+								</div>
+         						<div class="col-md-6">
+									<label for="fname">Media File</label>
+									<input type="file" name="image" id="fname" class="form-control" placeholder="Your firstname">
+								</div>
+								<button class="btn4 btn4-1 btn4-sep icon">Update</button>
+            					</form>
+							</div>
+
+					
+						
+					</div>
+		</div>
+
+{% endblock %}

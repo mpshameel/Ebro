@@ -1,0 +1,72 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+<style>
+	.active_page2{
+		background-color: #99c2ff;
+	}
+</style>
+
+
+
+
+   
+   <table class="table-users" cellspacing="0">
+      <tr class="header" style="font-size: 15px;">
+      	<center>
+      	 <th width="2%"><center>#</center></th>
+      	 <th width="2%"><center></center></th>
+         <th width="20%"><center>Product Name</center></th>
+         <th width="20%"><center>Buyer</center></th>
+         <th width="20%"><center>Dealer</center></th>
+         <th width="5%"><center>Status</center></th>
+         <th width="5%"><center>Type</center></th>
+         <th width="8%"><center>Brand Name</center></th>
+         <th width="3%"><center>X</center></th>
+         <th width="5%"><center>Price</center></th>
+         <th width="5%"><center>Total</center></th>
+         <th width="7%"><center>Cart Total</center></th>
+         
+         </center>
+      </tr>
+
+
+      {% for i in all_orders %}
+      <tr style="font-size: 13px;cursor: pointer;" onclick="location.href='{% url 'admin_orders_edit' i.id %}';">
+      	 <td><center>{{ forloop.counter }}</center></td>
+         <td><center>
+         	{% if i.product.picture != '' %}
+         	<img src="{{i.product.picture.url}}" alt="" height="25" width="25"/>
+         	{% else %}
+         	<img src="{% static 'images/assign.png' %}" alt="" height="25" width="25"/>
+         	{% endif %}
+         </center></td>
+         <td>{{ i.product.product_name }}</td>
+         <td>{{ i.username.username }}</td>
+         <td>{{ i.product.username.username }}</td>
+         <td style="color: red;"><center>{{ i.status }}</center></td>
+         <td><center>{{ i.product.product_type }}</center></td>
+         <td>{{ i.product.brand_name }}</td>
+         <td class="text-right">{{ i.product_count }}</td>
+         <td class="text-right">{{ i.product.price }}</td>
+         <td class="text-right">{% widthratio i.product_count 1 i.product.price %}</td>
+         <td class="text-right">{{ i.amount }}</td>
+
+      </tr>
+      {% endfor %}
+
+      
+   </table>
+
+
+
+
+		
+	{% endblock %}	
+
+
+
+
+

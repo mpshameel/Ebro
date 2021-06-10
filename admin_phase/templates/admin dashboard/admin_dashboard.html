@@ -63,6 +63,7 @@
 	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
 
 	<link rel="stylesheet" href="{% static 'css/other.css '%}">
+	<link rel="stylesheet" href="{% static 'css/image_update.css '%}">
 
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
@@ -261,6 +262,7 @@
 		<ul>
 			{% if user.is_authenticated %}
 			<li class="links_admin_all active_page1"><a href="/">Home</a></li>
+			<li class="links_admin_all active_page1"><a href="/admin_ads">Ads</a></li>
 			<li class="links_admin_all active_page2"><a href="/admin_deals">Deals</a></li>
 			<li class="links_admin_all active_page3"><a href="/admin_jobs">Jobs</a></li>
 			<li class="links_admin_all active_page4"><a href="/admin_products">Products</a></li>
@@ -269,6 +271,8 @@
 			
 			<li class="links_admin_all active_page5"><a href="/admin_userdata">User Data</a></li>
 			<li class="links_admin_all active_page6"><a href="/admin_myads">My Ads</a></li>
+<!-- 			<li class="links_admin_all active_page6"><a href="/admin_orders">Orders</a></li> -->
+			<li class="links_admin_all active_page6"><a href="/admin_payments">Payments</a></li>
 			<li class="links_admin_all active_page7"><a href="/admin_assigns">Assigns</a></li>
 			<li class="links_admin_all active_page8"><a href="/admin_notifications">Notifications</a></li>
 			<li class="links_admin_all"><a href="/logout">Logout</a></li>
@@ -385,6 +389,7 @@
 	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
 	<!-- Main -->
 	<script src="{% static 'js/main.js '%}"></script>
+	<script src="{% static 'js/pro_pic.js '%}"></script>
 
   <script>
     document.getElementById("login").addEventListener("click",function(){
