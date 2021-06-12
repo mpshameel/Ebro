@@ -55,7 +55,10 @@ INSTALLED_APPS = [
 
     #providers
     'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.google',  
+    'django.contrib.admindocs',
+
+    'core',
     # 'django_filters',
 ]
 
@@ -95,12 +98,12 @@ TEMPLATES = [
 
 
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.request',
-    'django.contrib.auth.context_processors.auth',
-    'allauth.account.context_processors.account',
-    'allauth.socialaccount.context_processors.socialaccount'
-)
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     'django.core.context_processors.request',
+#     'django.contrib.auth.context_processors.auth',
+#     'allauth.account.context_processors.account',
+#     'allauth.socialaccount.context_processors.socialaccount'
+# )
 
 
 AUTHENTICATION_BACKENDS = [
