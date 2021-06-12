@@ -213,12 +213,12 @@ SOCIALACCOUNT_PROVIDERS = {
                 'facebook':{    'SCOPE':['email'],
                                 'AUTH_PARAMS':{'auth_type':'reauthenticate'},
                                 'METHOD':'js_sdk',
-                                'LOCALE_FUNC':'en-US'
+                                'LOCALE_FUNC':  lambda request: 'en-US'
                                 },
                 'google':{    'SCOPE':['email'],
                                 'AUTH_PARAMS':{'auth_type':'reauthenticate'},
                                 'METHOD':'js_sdk',
-                                'LOCALE_FUNC':'en-US'
+                                'LOCALE_FUNC':  lambda request: 'en-US'
                                 }
 
                            }
