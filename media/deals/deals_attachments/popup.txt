@@ -1,6 +1,0 @@
-$('#box,#popup').mouseenter(function(){
-  $('#popup').show(); 
-});
-$('#box,#popup').mouseleave(function(){
-  $('#popup').hide();
-});
