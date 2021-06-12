@@ -23,7 +23,7 @@
 			{% csrf_token %}
 			<div class="social-container">
 				<a href="{% provider_login_url "google" %}" class="social"><i class="fa fa-google"></i></a>
-				<a href="{% provider_login_url "facebook" method="js_sdk" %}" class="social"><i class="fa fa-facebook"></i></a>
+				<a href="{% provider_login_url "facebook" method="oauth2" %}" class="social"><i class="fa fa-facebook"></i></a>
 				<a href="#" class="social"><i class="fa fa-twitter"></i></a>
 			</div>
 			
