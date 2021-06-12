@@ -204,3 +204,21 @@ LOGIN_REDIRECT_URL = "/home/register_social"
 #         }
 #     }
 # }
+
+
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+                'facebook':{    'SCOPE':['email'],
+                                'AUTH_PARAMS':{'auth_type':'reauthenticate'},
+                                'METHOD':'js_sdk',
+                                'LOCALE_FUNC':'en-US'
+                                },
+                'google':{    'SCOPE':['email'],
+                                'AUTH_PARAMS':{'auth_type':'reauthenticate'},
+                                'METHOD':'js_sdk',
+                                'LOCALE_FUNC':'en-US'
+                                }
+
+                           }
