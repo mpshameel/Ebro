@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',  
     'django.contrib.admindocs',
 
-    # 'core',
+    'core',
     # 'django_filters',
 ]
 
