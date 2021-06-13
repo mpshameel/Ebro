@@ -44,8 +44,82 @@
 
 .ebro{
     margin-top: -5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 
 }
+
+.ebrosmall{
+    margin-top: -5px;
+    display: none;
+    height: 25px;
+    width: 250px;
+
+}
+
+@media screen and (max-width: 768px) {
+    .colorlib-nav .top .ebro {
+      display: none; } }
+
+
+@media screen and (max-width: 768px) {
+    .colorlib-nav .top .colorlib-social {
+      display: flex;
+    }.colorlib-nav .top .person {
+        position: absolute;
+        top: -10;
+        left: 70;
+        display: block;
+        width: 50px;
+        height: 50px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        border: 2px solid #fff;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        border-radius: 50%; 
+    }.colorlib-nav .top .profile_link {
+      display: none; }
+    .colorlib-nav span {
+        display: flex;
+        position: absolute;
+        top: 0;
+        right: 60;
+        margin-right: 0px;
+        margin-top: -10px;
+        font-size: 12px;
+        font-family: 'Antonio', sans-serif;
+        font-family: 'Ubuntu', sans-serif;
+        line-height: 24px;
+        display: block;
+        text-align: right;
+        color: #000;
+        -webkit-transition: .2s all ease-in-out;
+        -o-transition: .2s all ease-in-out;
+        transition: .2s all ease-in-out;
+    }}
+
+
+
+
+@media screen and (max-width: 768px) {
+    .top-menu .ebrosmall {
+      display: flex;
+      width: 200px; } }
+
+
+
+.linktext{
+    font-size: 5px;
+   font-family: 'Antonio', sans-serif;
+   font-family: 'Ubuntu', sans-serif;
+}
+
+
+
 
 
 
@@ -707,13 +781,22 @@ td{
 
 
 .links_admin_all{
-    border:1px solid #3498db;
+/*    border:1px solid #000;*/
     background: none;
-    padding: 10px 20px;
-    font-size: 30px;
-    font-family: "montserrat";
+    padding: 0px 2px;
+    font-size: 25px;
+
+    font-family: 'Abril Fatface', cursive;
+    font-family: 'Do Hyeon', sans-serif;
+    font-family: 'Staatliches', cursive;
+    /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 20px;*/
+/*    font-family: "montserrat";*/
+/*    font-weight: 1000;
+    font-family: 'Courier New', bold monospace;*/
+/*    font-family: Georgia, 'Times New Roman', Times, serif;"*/
+
     cursor: pointer;
-    margin: 10px;
+    margin: 1px;
     transition: 0.8s;
     position: relative;
     overflow: hidden;

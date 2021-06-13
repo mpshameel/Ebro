@@ -80,10 +80,15 @@ h1, h2, h3, h4, h5, h6, figure {
       margin: 0; } }
   .colorlib-nav .top {
     display: block;
-    background: linear-gradient(to right, #478af5 0%, #ed4758 80%);;
+    background: linear-gradient(to right, #478af5 0%, #ed4758 80%);
     padding: .8em 0; }
+    @media screen and (max-width: 768px) {
+    .colorlib-nav .top {
+      height: 55px; }
+    .colorlib-nav i {
+      display: none; }}
     .colorlib-nav .top p {
-      color: gray;
+      color: #fff;
       margin: 0; }
     .colorlib-nav .top .num {
       display: inline-block; }
@@ -93,12 +98,17 @@ h1, h2, h3, h4, h5, h6, figure {
     .colorlib-nav .top .colorlib-social {
       display: inline-block;
       padding: 0;
-      margin: 0 0 0 20px; }
+      margin: 0 0 0 -10px; }
+      @media screen and (max-width: 768px) {
+        .colorlib-nav .top .colorlib-social {
+          display: none; } }
       .colorlib-nav .top .colorlib-social li a {
-        color: #4586FF;
+        color: #000;
         padding: 4px 7px; }
   .colorlib-nav .top-menu {
-    padding: 40px 30px; }
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 20px;
+    background: whitesmoke;
+    padding: 0px 30px; }
     @media screen and (max-width: 768px) {
       .colorlib-nav .top-menu {
         padding: 28px 1em; } }
@@ -129,9 +139,10 @@ h1, h2, h3, h4, h5, h6, figure {
       display: inline;
       font-weight: 400; }
       .colorlib-nav ul li a {
+        color: #fff;
         position: relative;
         font-size: 20px;
-        padding: 30px 12px;
+        padding: 30px 6px;
         color: rgba(0, 0, 0, 0.7);
         -webkit-transition: 0.5s;
         -o-transition: 0.5s;
@@ -151,7 +162,7 @@ h1, h2, h3, h4, h5, h6, figure {
           position: absolute;
           top: 40px;
           left: 0;
-          text-align: left;
+          text-align: right;
           background: #000;
           padding: 20px;
           -webkit-border-radius: 4px;
@@ -862,7 +873,6 @@ article {
       padding: 4em 1em; } }
 
 .blog-post {
-  margin-bottom: 2.5em;
   display: block;
   position: relative; }
   .blog-post .desc {
