@@ -1,3 +1,4 @@
+
 {% extends 'user dashboard/user_dashboard.html'%}
 
 {% block content %}
@@ -5,111 +6,85 @@
 {% load static %}
 
 <style>
-	.active_user_page3{
-		background-color: #99c2ff;
-	}
-</style>
-  
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
+   .active_user_smallpage6{
+      color: white;
+      background-color: #000;
+   }
+</style> 
+   
 
 
-		<div class="container_deals">
-		   <div class="col-md-12">
-				<div class="row">
+      <div id="colorlib-about">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="about animate-box">
+                     <b><font style="font-size: 30px;">{{ user_job.job_name }}</font></b><br>
+                     Type&nbsp;{% if user_job.job_type == "Single" %} 
+                                {{ user_job.job_type }}
+                                {% else %}
+                                {{ user_job.job_type }}
+                                <br>
+                                <b>Brand Name&nbsp;:{{ user_job.brand_name }}</b>
+                                {% endif %}
+                        [your product can categorize based on brand name or individual]<br>
+                        <b><font style="font-size: 35px;">$&nbsp;&nbsp;{{ user_job.price }}</font></b>
+                        <br>
+                           {% for i in category_details %}
+                                 {% for j in trade %} 
+                                    {% if i.id == j.id %} 
+                                       {{ j.name }} ,
+                                    {% endif %}
+                                 {% endfor %}
+                           {% endfor %}
+                        <br>
+                        <b><font style="font-size: 20px;">{{ user_job.email }}</font></b><br>
+                        <b><font style="font-size: 15px;">{{ user_job.contact }}</font></b><br>
+                        <b><font style="font-size: 15px;">{{ user_job.location }}</font></b><br>
+                     <p style="word-break: break-all;">Details :<br>{{ user_job.details }}</p>
 
-					<div class="col-md-8 room-wrap animate-box user_detail_deal_box">
-						<div class="col-md-5">
-							<center>
-							{% if user_job.picture != '' %}
-         					<img src="{{user_job.picture.url}}" alt="" width="300" height="250" style="margin-top: 25px;" />
-         					{% else %}
-         					<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100"/>
-         					{% endif %}
-         					</center>
-
-
-         					<br><br>
-
-         					
-         				</div>
-         				<div class="col-md-7 detail_deal_names">
-         					<b><font style="font-size: 35px;">{{ user_job.job_name }}</font></b>
-         					<br>
-         					Type&nbsp;{% if user_job.job_type == "Single" %} 
-         							  {{ user_job.job_type }}
-         							  {% else %}
-         							  {{ user_job.job_type }}
-         							  <br>
-         							  <b>{{ user_job.brand_name }}</b>
-         							  {% endif %}
-
-         					<br>
-         					[your product can categorize based on brand name or individual]
-         					<br>
-         					<b><font style="font-size: 35px;">$&nbsp;&nbsp;{{ user_job.price }}</font></b>
-         					<br>
-         					{% for i in category_details %}
-                           		{% for j in trade %} 
-                              		{% if i.id == j.id %} 
-                                 		{{ j.name }} ,
-                              		{% endif %}
-                           		{% endfor %}
-                        	{% endfor %}
-         					<br>
-         					{{ user_job.email }}
-         					<br>
-         					{{ user_job.contact }}
-         					<br>
-         					{{ user_job.location }}
-         					<br>
-         					{{ user_job.details }}
-
-         					<br>
-         					
-         				</div>
-         				
-         					<div class="col-md-10" style="margin-left: 10px;">
-         						{% if request.user.is_authenticated %}
-								<form action="{% url 'job_to_task' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ user_job.id }}" name="id_job">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-            					{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-            					{% endif %}
-								
-
-							</div>
-
-							<div class="col-md-2" style="margin-left: -30px;">
-								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
-								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
-								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
-								{% if request.user.is_authenticated %}
-								<form action="{% url 'job_to_wish' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ user_job.id }}" name="id_job">
-								<button class="btn2 btn2-1 btn2-sep icon-heart">Like</button>
-            					</form>
-            					{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
-            					</form>
-            					{% endif %}
-
-							</div>
-						
-					</div>
-
-				</div>
-			</div>
-		</div>	
-
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <br><br>
+                     <div class="col-md-9">
+                        {% if request.user.is_authenticated %}
+                        <form action="{% url 'job_to_task' %}" method="POST">
+                           {% csrf_token %}
+                        <input type="hidden" value="{{ user_job.id }}" name="id_job">
+                        <button class="update-cart btn2 btn2-2 btn2-sep icon-cart details_cart">Add To Task</button>
+                        </form>
+                        {% else %}
+                        <form action="#">
+                        <button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart details_cart">Add To Task</button>
+                        </form>
+                        {% endif %}
+                     </div>
+                     <div class="col-md-3">
+                        {% if request.user.is_authenticated %}
+                        <form action="{% url 'job_to_wish' %}" method="POST">
+                           {% csrf_token %}
+                        <input type="hidden" value="{{ user_job.id }}" name="id_job">
+                        <button class="update-cart btn2 btn2-1 btn2-sep2 icon-heart details_like">Like</button>
+                        </form>
+                        {% else %}
+                        <form action="#">
+                        <button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart details_like">Like</button>
+                        </form>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  {% if user_job.picture != '' %}
+                  <img class="img-responsive" src="{{user_job.picture.url}}" alt="ebro-world.com">
+                  {% else %}
+                  <img class="img-responsive" src="{% static 'images/img_bg_5.jpg' %}" alt="ebro-world.com">
+                  {% endif %}
+               </div>
+            </div>
+         </div>
+      </div>
 
 
 
@@ -119,73 +94,68 @@
 
 
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
 
-		<div class="container_deals">
-		   <div class="col-md-12">
-				<div class="row">
-					{% for i in user_jobs_list %}
 
-					<div class="col-md-3 room-wrap animate-box user_deal_box" onclick="location.href='{% url 'detail_job' i.id %}';">
-						<center>
-						{% if i.picture != '' %}
-         				<a href="{% url 'detail_job' i.id %}"><img src="{{i.picture.url}}" alt="" width="200" height="100" style="margin-top: 10px;" /></a>
-         				{% else %}
-         				<a href="{% url 'detail_job' i.id %}"><img src="{% static 'images/assign.png' %}" alt="" width="200" height="100"/></a>
-         				{% endif %}
-         				</center>
-         				
-         					<div class="col-md-10" style="margin-left: -30px;">
-								<h3 class="btn3 btn3-1">{{ i.job_name }}</h3>
-								{% if request.user.is_authenticated %}
-								<form action="{% url 'job_to_task' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_job">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-								{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-            					{% endif %}
+            <div class="container_wideboxes">
+               {% for i in user_jobs_list %}
+               <div class="col-md-4 widebox">
+                  <a href="{% url 'detail_job' i.id %}" class="blog-post">
+                     {% if i.picture != '' %}
+                        <span class="img" style="background-image: url({{i.picture.url}});"></span>
+                        {% else %}
+                           <span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
+                        {% endif %}
+                     <div class="desc">
+                        <h5 class="h5_style">{{ i.job_name }}</h5><br>
+                        <h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
+                        <span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
+                        <span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
+                        <span class="cat" style="line-height: 15px;">{{ i.location }}</span>
+                     </div>
+                  </a>
+                  <div class="col-12 col-md-8 text-left down">
+                     {% if request.user.is_authenticated %}
+                        <form action="{% url 'job_to_task' %}" method="POST">
+                           {% csrf_token %}
+                        <input type="hidden" value="{{ i.id }}" name="id_job">
+                        <button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+                        </form>
+                        {% else %}
+                        <form action="#">
+                        <button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+                        </form>
+                     {% endif %}
+                  </div>
+                  <div class="col-12 col-md-4 text-right">
+                     {% if request.user.is_authenticated %}
+                        <form action="{% url 'job_to_wish' %}" method="POST">
+                           {% csrf_token %}
+                           <input type="hidden" value="{{ i.id }}" name="id_job">
+                        <button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
+                           </form>
+                           {% else %}
+                           <form action="#">
+                        <button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
+                           </form>
+                        {% endif %}
+                  </div>
+               </div>
+               {% endfor %}
 
-							</div>
+            </div>                  
+      
+<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   
+      
 
-							<div class="col-md-2" style="margin-left: -30px;">
-								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
-								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
-								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
-								<h3 class="btn3 btn3-2">$&nbsp;{{ i.price}}</h3>
-								{% if request.user.is_authenticated %}
-								<form action="{% url 'job_to_wish' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_job">
-								<button class="btn2 btn2-1 btn2-sep icon-heart">Like</button>
-            					</form>
-            					{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
-            					</form>
-            					{% endif %}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-							</div>
-						
-					</div>
-					{% endfor %}
-
-
-				</div>
-			</div>
-		</div>
-
-
-
-	
-		
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 {% endblock %}
+

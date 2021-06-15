@@ -5,9 +5,13 @@
 {% load static %}
 
 <style>
-	.active_user_page3{
-		background-color: #99c2ff;
-	}
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
+   .active_user_smallpage6{
+      color: white;
+      background-color: #000;
+   }
 </style>
   
 
@@ -111,78 +115,62 @@
 
 
 
-		
 
 
-
-
-		<div class="container_deals">
-		   <div class="col-md-12">
-				<div class="row">
+				<div class="container_wideboxes">
 					{% for i in user_jobs_list %}
-
-					<div class="col-md-3 room-wrap animate-box user_deal_box" onclick="location.href='{% url 'detail_job' i.id %}';">
-						<center>
-						{% if i.picture != '' %}
-         				<a href="{% url 'detail_job' i.id %}"><img src="{{i.picture.url}}" alt="" width="200" height="100" style="margin-top: 10px;" /></a>
-         				{% else %}
-         				<a href="{% url 'detail_job' i.id %}"><img src="{% static 'images/assign.png' %}" alt="" width="200" height="100"/></a>
-         				{% endif %}
-         				</center>
-         				
-         					<div class="col-md-10" style="margin-left: -30px;">
-								<h3 class="btn3 btn3-1">{{ i.job_name }}</h3>
-								{% if request.user.is_authenticated %}
-								<form action="{% url 'job_to_task' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_job">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-            					{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-            					{% endif %}
-								
-
+					<div class="col-md-4 widebox">
+						<a href="{% url 'detail_job' i.id %}" class="blog-post">
+							{% if i.picture != '' %}
+								<span class="img" style="background-image: url({{i.picture.url}});"></span>
+		         			{% else %}
+		         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
+		         			{% endif %}
+							<div class="desc">
+								<h5 class="h5_style">{{ i.job_name }}</h5><br>
+								<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
+								<span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
+								<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
+								<span class="cat" style="line-height: 15px;">{{ i.location }}</span>
 							</div>
-
-							<div class="col-md-2" style="margin-left: -30px;">
-								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
-								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
-								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
-								<h3 class="btn3 btn3-2">$&nbsp;{{ i.price}}</h3>
-								{% if request.user.is_authenticated %}
+						</a>
+						<div class="col-12 col-md-8 text-left down">
+							{% if request.user.is_authenticated %}
+		 						<form action="{% url 'job_to_task' %}" method="POST">
+									{% csrf_token %}
+		 						<input type="hidden" value="{{ i.id }}" name="id_job">
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+								</form>
+								{% else %}
+		    					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+		    					</form>
+							{% endif %}
+						</div>
+						<div class="col-12 col-md-4 text-right">
+							{% if request.user.is_authenticated %}
 								<form action="{% url 'job_to_wish' %}" method="POST">
 									{% csrf_token %}
          						<input type="hidden" value="{{ i.id }}" name="id_job">
-								<button class="btn2 btn2-1 btn2-sep icon-heart">Like</button>
+								<button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
             					</form>
             					{% else %}
             					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
             					</form>
-            					{% endif %}
-
-
-							</div>
-						
+            				{% endif %}
+						</div>
 					</div>
 					{% endfor %}
 
+				</div>					
+		
 
-				</div>
-			</div>
-		</div>
-
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	
 		
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 

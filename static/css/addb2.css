@@ -1209,7 +1209,8 @@ td{
 
 
 .btn4 {
-    border: none;
+
+    border: double;
     font-family: 'Lato';
     font-size: inherit;
     color: inherit;
@@ -1228,9 +1229,30 @@ td{
     transition: all 0.3s;
 }
 
+
+.btn4-sep {
+    padding: 10px 10px 10px 45px;
+    margin-left: -20px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .btn4-sep {
+        margin-top: -50px;
+        margin-left: -20px;
+        padding: 5px 5px 5px 25px; }
+    .down {
+        margin-top: 5px; } 
+    .btn4-1:before {
+        margin-top: -7px;
+        width: 10px; } }
+
+
+
+
 .btn4-1 {
-    width: 80px;
-    height: 35px;
+    width: 120px;
+/*    height: 35px;*/
     background: #e74c3c;
     color: #fff;
 }
