@@ -131,9 +131,7 @@
     transition: .2s all ease-in-out;
 }
 
-@media screen and (max-width: 768px) {
-    .username {
-    left: -70; } }
+
 
 
 
