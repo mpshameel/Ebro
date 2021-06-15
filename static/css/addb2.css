@@ -974,9 +974,7 @@ td{
 }
 
 
-.btn2-sep2 {
-    padding: 10px 10px 10px 10px;
-}
+
 
 
 
@@ -985,20 +983,42 @@ td{
 /* Icon separator */
 .btn2-sep {
     padding: 10px 10px 10px 45px;
+    margin-left: -20px;
 }
 
 
 @media screen and (max-width: 768px) {
     .btn2-sep {
-        margin-top: -60px;
-        padding: 10px 10px 10px 45px; }
+        margin-top: -50px;
+        margin-left: -20px;
+        padding: 5px 5px 5px 25px; }
     .down {
         margin-top: 80px; } }
 
 
-.btn2-sep:before {
-    background: rgba(0,0,0,0.15);
+
+.btn2-sep2 {
+    /*padding: 10px 10px 10px 10px;*/
+    padding: 10px 10px 10px 45px;
 }
+
+
+@media screen and (max-width: 768px) {
+    .btn2-sep2 {
+        margin-top: -50px;
+        padding: 5px 5px 5px 25px; }
+    .down {
+        margin-top: 80px; } }
+
+
+
+
+
+
+
+/*.btn2-sep:before {
+    background: rgba(0,0,0,0.15);
+}*/
 
 /* Button 1 */
 .btn2-1 {
@@ -1025,6 +1045,15 @@ td{
     width: 40px;
 }
 
+@media screen and (max-width: 768px) {
+    .btn2-1:before {
+        margin-top: -7px;
+        width: 20px; } }
+
+
+
+
+
 /* Button 2 */
 .btn2-2 {
     background: #2ecc71;
@@ -1049,6 +1078,15 @@ td{
     font-size: 100%;
     width: 40px;
 }
+
+@media screen and (max-width: 768px) {
+    .btn2-2:before {
+        margin-top: -7px;
+        width: 20px;
+        font-size: 100%; } }
+
+
+
 
 /* Button 3 */
 .btn2-3 {
