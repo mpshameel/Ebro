@@ -116,7 +116,7 @@
 .username{
     position: absolute;
     top: -70;
-    right: 20;
+    right: 40;
     margin-right: 0px;
     margin-top: -10px;
     font-size: 15px;
@@ -131,10 +131,10 @@
     transition: .2s all ease-in-out;
 }
 
-/*@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .username {
-    right: 70; } }
-*/
+    left: -70; } }
+
 
 
 

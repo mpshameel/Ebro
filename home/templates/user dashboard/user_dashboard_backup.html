@@ -242,9 +242,9 @@
 							  	<li class="active"><a href="/home/cart"><img src="{% static 'images/cart6.png '%}"  class="cart"><span class="cart_count">{{cart_count}}</span></a></li>
 
 								{% if user_profile.image != '' %}
-         						<li class="active"><a href="profiles"><img src="{{user_profile.image.url}}"  class="person"/><span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span></a></li>
+         						<li class="active"><a href="/home/profiles"><img src="{{user_profile.image.url}}"  class="person"/><span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span></a></li>
          						{% else %}
-         						<li class="active"><a href="profiles"><img src="{% static 'images/pers1.png '%}"  class="person"><span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span></a></li>
+         						<li class="active"><a href="/home/profiles"><img src="{% static 'images/pers1.png '%}"  class="person"><span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span></a></li>
          						{% endif %}
          					 
 							
