@@ -131,9 +131,10 @@
 		         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
 		         			{% endif %}
 							<div class="desc">
-								<h5 class="h5_style">{{ i.deal_name }}</h5>
-								<h4><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
-								<span class="cat">{{ i.brand_name }}</span>
+								<h5 class="h5_style">{{ i.deal_name }}</h5><br>
+								<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
+								<span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
+								<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span>
 							</div>
 						</a>
 						<div class="col-12 col-md-8 text-left down">
