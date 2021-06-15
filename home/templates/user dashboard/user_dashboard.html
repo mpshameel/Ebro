@@ -157,6 +157,10 @@
 
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="{% static 'css/style.css '%}">
+
+	<link rel="stylesheet" href="{% static 'css/boxes.css '%}">
+
+
 	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
 	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
 	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
@@ -239,7 +243,7 @@
 						</ul>
 					</div>
 					<div class="col-xs-6 align-center">
-						<a href="home.html"><img src="{% static 'images/ebro3.png '%}" class="ebro" alt=""></a>
+						<a href="/home"><img src="{% static 'images/ebro3.png '%}" class="ebro" alt=""></a>
 						
 					</div>
 					<div class="col-xs-4 text-right">
@@ -262,11 +266,26 @@
 								</li>
          						</div>
          						<div class="col-xs-8">
-         						<span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span>
+         						<span class="username"><b>{{user_profile.username.username}}
+         							<font style="color: whitesmoke;">Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user_profile.coins}}</font><br>
+         							<font style="color: whitesmoke;">Wallet&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span>
          						</div>
 
          						{% else %}
-         						<li class="active"><a href="profiles"><img src="{% static 'images/pers1.png '%}"  class="person"><span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span></a></li>
+         						<div class="col-xs-4">
+         						<li class="active"><a href="profiles"><img src="{% static 'images/pers1.png '%}"  class="person"></a></li>
+
+         						<li class="has-dropdown active"><a href="profiles"><img src="{% static 'images/profile_link.png '%}"  class="profile_link"/></a>
+         							<ul class="dropdown">
+										<li><a href="#">Profile</a></li>
+										<li><a href="#">Logout</a></li>
+
+									</ul>
+								</li>
+         						</div>
+         						<div class="col-xs-8">
+         						<span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span>
+         						</div>
          						{% endif %}
          					 
 							
@@ -290,18 +309,21 @@
 					<div class="col-xs-14 text-center menu-1">
 						<ul>
 							<li class="links_admin_all active_user_page1"><a href="/home">Home</a></li>
-							<li class="links_admin_all active_user_page1"><a href="/home/offers">offers</a></li>
-							<li class="links_admin_all active_user_page2"><a href="/home/deal">Deals</a></li>
-							<li class="links_admin_all active_user_page3"><a href="/home/job">Jobs</a></li>
-							<li class="links_admin_all active_user_page4"><a href="/home/product">Products</a></li>
-							
+							<li class="links_admin_all active_user_page2"><a href="/home/offers">offers</a></li>
+							<li class="links_admin_all active_user_page3"><a href="/home/deal">Deals</a></li>
+							<li class="links_admin_all active_user_page4"><a href="/home/product">Products</a></li>	
+	
 							{% if user.is_authenticated %}
 							<li class="links_admin_all active_user_page5"><a href="/home/daily_task">Daily Task<span class="count">2</span></a></li>
-							<li class="links_admin_all active_user_page6"><a href="/home/myads">My Ads</a></li>
-							<li class="links_admin_all active_user_page6"><a href="/home/myorders">My Orders</a></li>
-							<li class="links_admin_all active_user_page7"><a href="/home/wishlist">Wishlist</a></li>
-							<li class="links_admin_all active_user_page8"><a href="/home/chats">Chats</a></li>
-							<li class="links_admin_all active_user_page8"><a href="/home/about_us">About Us</a></li>
+							{% endif %}
+							{% if user.is_authenticated %}
+							<li class="links_admin_all active_user_page6"><a href="/home/job">Jobs</a></li>	
+							<li class="links_admin_all active_user_page7"><a href="/home/myads">My Ads</a></li>
+							<li class="links_admin_all active_user_page8"><a href="/home/myorders">My Orders</a></li>
+							<li class="links_admin_all active_user_page9"><a href="/home/wishlist">Wishlist</a></li>
+							<li class="links_admin_all active_user_page10"><a href="/home/cart">Cart</a></li>
+							<li class="links_admin_all active_user_page11"><a href="/home/chats">Chats</a></li>
+							<li class="links_admin_all active_user_page12"><a href="/home/about_us">About Us</a></li>
 <!-- 							<li class="links_admin_all"><a href="user_logout">Logout</a></li> -->
 							
 							{% endif %}
@@ -322,7 +344,7 @@
 			<div class="container">
 				<div class="row row-pb-md">
 					<div class="col-md-3 colorlib-widget">
-						<h4>E-BRO</h4>
+						<h4>E-BRO World</h4>
 						<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
 						<p>
 							<ul class="colorlib-social-icons">
@@ -337,16 +359,23 @@
 						<h4>Quick Links</h4>
 						<p>
 							<ul class="colorlib-footer-links">
-								<li><a href="home.html" style="color: cornsilk;">Home</a></li>
-								<li><a href="deals.html">Deals</a></li>
-								<li><a href="jobs.html">Jobs</a></li>
-								<li><a href="item.html">Item</a></li>
+								<li class="active_user_smallpage1"><a href="/home">Home</a></li>
+								<li class="active_user_smallpage2"><a href="/home/offers">Offers</a></li>
+								<li class="active_user_smallpage3"><a href="/home/deal">Deal</a></li>
+								<li class="active_user_smallpage4"><a href="/home/product">Products</a></li>
 								{% if user.is_authenticated %}
-								<li><a href="profile.html">Profile</a></li>
-								<li><a href="daily_task">Daily Task</a></li>
-								<li><a href="myads">My Ads</a></li>
-								<li><a href="chats">Chats</a></li>
-								<li><a href="login.html">Logout</a></li>
+								<li class="active_user_smallpage5"><a href="/home/daily_task">Daily Task</a></li>
+								{% endif %}
+								{% if user.is_authenticated %}
+								<li class="active_user_smallpage6"><a href="/home/job">Jobs</a></li>
+								<li class="active_user_smallpage7"><a href="/home/myads">My Ads</a></li>
+								<li class="active_user_smallpage8"><a href="/home/myorders">My Orders</a></li>
+								<li class="active_user_smallpage9"><a href="/home/wishlist">Wishlist</a></li>
+								<li class="active_user_smallpage10"><a href="/home/cart">Cart</a></li>
+								<li class="active_user_smallpage11"><a href="/home/chats">Chats</a></li>
+								<li class="active_user_smallpage13"><a href="/home/profiles">Profiles</a></li>
+								<li class="active_user_smallpage12"><a href="/home/about_us">About Us</a></li>
+								<li><a href="user_logout">Logout</a></li>
 								{% endif %}
 								
 							</ul>
@@ -365,9 +394,9 @@
 						<h4>Contact Information</h4>
 						<ul class="colorlib-footer-links">
 							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-							<li><a href="http://luxehotel.com">luxehotel.com</a></li>
+							<li><a href="tel://1234567920">+91 8891 503 603</a></li>
+							<li><a href="mailto:info@yoursite.com">ebro-world@ymysite.com</a></li>
+							<li><a href="http://luxehotel.com">ebro-world.com</a></li>
 						</ul>
 					</div>
 				</div>

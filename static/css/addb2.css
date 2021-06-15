@@ -69,7 +69,7 @@
     }.colorlib-nav .top .person {
         position: absolute;
         top: -10;
-        left: 70;
+        left: 50;
         display: block;
         width: 50px;
         height: 50px;
@@ -86,14 +86,14 @@
     .colorlib-nav span {
         display: flex;
         position: absolute;
-        top: 0;
-        right: 60;
+        top: 5;
+        right: 80;
         margin-right: 0px;
         margin-top: -10px;
-        font-size: 12px;
+        font-size: 10px;
         font-family: 'Antonio', sans-serif;
         font-family: 'Ubuntu', sans-serif;
-        line-height: 24px;
+        line-height: 12px;
         display: block;
         text-align: right;
         color: #000;
@@ -986,6 +986,15 @@ td{
 .btn2-sep {
     padding: 10px 10px 10px 45px;
 }
+
+
+@media screen and (max-width: 768px) {
+    .btn2-sep {
+        margin-top: -60px;
+        padding: 10px 10px 10px 45px; }
+    .down {
+        margin-top: 80px; } }
+
 
 .btn2-sep:before {
     background: rgba(0,0,0,0.15);

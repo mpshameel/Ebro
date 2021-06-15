@@ -12,110 +12,8 @@
   
 
 		
-			
 
-<!-- 		<div class=" animate-box">
-			<br>
-
-			<form action="{% url 'detail_view_products' user_products_list.id %}" method="POST" enctype="multipart/form-data">
-				{% csrf_token %}
-				<div class="row form-group">
-					
-					<div class="col-md-1">
-						<label for="subject">Publish</label><br>
-						<input type="radio" name="publish" value="public" {% if user_products_list.publish == "public" %} checked="checked" {% endif %}>Public<br>
-						<input type="radio" name="publish" value="private" {% if user_products_list.publish == "private" %} checked="checked" {% endif %}>Private 
-				    </div>
-					<div class="col-md-3">
-						<br>[your product or deal will handle by E-bro through private channel]
-				    </div>
-
-				    <div class="col-md-2">
-						<label for="fname">Product Name</label>
-						<input type="text" name="product_name" id="fname" value="{{ user_products_list.product_name }}" class="form-control" placeholder="Your firstname">
-					</div>
-
-					<div class="col-md-1">
-						<label for="subject">Job Type</label><br>
-						<input type="radio" name="product_type" value="Single" {% if user_products_list.product_type == "Single" %} checked="checked" {% endif %}>Single<br>
-						<input type="radio" name="product_type" value="Multiple" {% if user_products_list.product_type == "Multiple" %} checked="checked" {% endif %}>Multiple
-					</div>
-					<div class="col-md-3">
-						<br>[your product can categorize based on brand name or individual]
-				    </div>
-					<div class="col-md-2">
-						<label for="subject">Brand Name</label>
-						<input type="text" name="brand_name" id="subject" value="{{ user_products_list.brand_name }}" class="form-control" placeholder="Your subject of this message">
-					</div>
-					
-				</div>
-
-			
-
-				<div class="row form-group">
-					
-					<div class="col-md-2">
-						<label for="lname">Price</label>
-						<input type="text" name="price" id="lname" value="{{ user_products_list.price }}" class="form-control" placeholder="Your lastname">
-					</div>
-					<div class="col-md-4">
-						<label for="email">Category/Keywords</label>
-						<input type="text" name="category" id="email" value="{{ user_products_list.category }}" class="form-control" placeholder="Your email address">
-					</div>
-					<div class="col-md-2">
-						<label for="email">Stock</label>
-						<input type="number" name="stock" id="email" value="{{ user_products_list.stock }}" class="form-control" placeholder="Stock">
-					</div>
-
-					
-					
-					
-				</div>
-
-				<div class="row form-group">
-					<div class="col-md-1">
-					<br>
-						{% if user_products_list.picture != '' %}
-         				<img src="{{user_products_list.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
-         				{% else %}
-         				<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         				{% endif %}
-						
-					</div>
-					<div class="col-md-2">
-						<label for="fname">Picture</label>
-						<input type="file" name="picture" id="fname" class="form-control" placeholder="Your firstname">
-					</div>
-					<div class="col-md-2">
-						<label for="lname">Attachments</label>
-						<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
-					</div>
-					<div class="col-md-2">
-						<label for="subject">Sort by Location</label>
-						<input type="text" name="location" id="subject" value="{{ user_products_list.location }}" class="form-control" placeholder="Your subject of this message">
-					</div>
-
-					<div class="col-md-5">
-						<label for="message">Other Details</label>
-						<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ user_products_list.details }}
-						</textarea>
-					</div>	
-					
-				</div>
-				
-				<div class="row form-group">
-				<div class="form-group text-center">
-					<input type="submit" value="Update Product" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-				</div>
-				</div>
-			</form>
-		</div>
- -->
-
-
-
-	<form action="{% url 'detail_view_products' user_products_list.id %}" method="POST" enctype="multipart/form-data">
+<!-- 	<form action="{% url 'detail_view_products' user_products_list.id %}" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
 		<div class=" animate-box deals-form-edit">
 			<br>
@@ -253,7 +151,7 @@
 
 
 
-
+ -->
 
 		<div class=" animate-box deal_attach_box">
 				

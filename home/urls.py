@@ -51,7 +51,7 @@ urlpatterns = [
 	
 	
 	path('offers', offers, name='offers'),
-
+	path('detail_offers<int:id>/', detail_offers, name='detail_offers'),
 
 	#user deals
 	path('deal', deal, name='deal'),

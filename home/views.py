@@ -466,11 +466,11 @@ def offers(request):
         # user = User.objects.get(id=request.user.id)
         user_products_list = products.objects.filter(publish="public").exclude(offer="0")
         context = {'user_products_list':user_products_list,'user_profile':user_profile,'cart_count':cart_count}
-        return render(request, 'user_products.html',context)
+        return render(request, 'user_offers.html',context)
     else:
         user_products_list = products.objects.filter(publish="public").exclude(offer="0")
         context = {'user_products_list':user_products_list}
-        return render(request, 'user_products.html',context)
+        return render(request, 'user_offers.html',context)
 
 
 
@@ -484,12 +484,12 @@ def detail_offers(request,id):
         user_product =  products.objects.get(id=id)
         user_products_list = products.objects.filter(publish="public").exclude(offer="0")
         context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'cart_count':cart_count}
-        return render(request, 'user_detail_products.html',context)
+        return render(request, 'user_detail_offers.html',context)
     else:
         user_product =  products.objects.get(id=id)
         user_products_list = products.objects.filter(publish="public").exclude(offer="0")
         context = {'user_products_list':user_products_list,'user_product':user_product}
-        return render(request, 'user_detail_products.html',context)
+        return render(request, 'user_detail_offers.html',context)
         
 
 
@@ -704,7 +704,7 @@ def product(request):
         email = user.email
         contact = pr.phone
         
-        user_products_add = products(username=user,publish=publish,product_name=product_name,price=price,location=location,product_type=product_type,brand_name=brand_name,stock=stock,email=email,contact=contact,picture=picture,details=details)
+        user_products_add = products(username=user,publish=publish,product_name=product_name,price=price,oldprice=price,location=location,product_type=product_type,brand_name=brand_name,stock=stock,email=email,contact=contact,picture=picture,details=details)
         user_products_add.save()
 
         for i in category:
@@ -1159,7 +1159,6 @@ def user_update_product_offer(request,id):
         user_products_list.offer = offer
 
         oldprice = user_products_list.oldprice
-        oldprice = float(oldprice)
         offer = float(offer)
         percentage = oldprice * offer / 100
         price = oldprice-percentage

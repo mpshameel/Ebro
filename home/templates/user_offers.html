@@ -1,0 +1,137 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+	.active_user_page2{
+		background-color: #99c2ff;
+	}
+</style>
+
+				<div class="container_wideboxes">
+					{% for i in user_products_list %}
+					<div class="col-md-4 widebox">
+						<a href="blog.html" class="blog-post">
+							{% if i.picture != '' %}
+								<span class="img" style="background-image: url({{i.picture.url}});"></span>
+		         			{% else %}
+		         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
+		         			{% endif %}
+							<div class="desc">
+								<h5 class="btn3" style="margin-top: -10px;margin-left: -10px;">{{ i.product_name }}</h5>
+								<h5><font style="color: #8e9416;">{{ i.offer }}&nbsp;%offer</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;&nbsp;<b style="text-decoration: line-through;">{{ i.oldprice }}</b></h5>
+								<h4><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
+								<span class="cat">{{ i.brand_name }}</span>
+								<span class="date" style="color: red;">{% if i.stock <= 0 %}Out of stock{% else %}&nbsp;{% endif %}</span>
+								
+							</div>
+						</a>
+						<div class="col-12 col-md-8 text-left down">
+							{% if request.user.is_authenticated %}
+		 						<form action="{% url 'product_to_cart' %}" method="POST">
+									{% csrf_token %}
+		 						<input type="hidden" value="{{ i.id }}" name="id_product">
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+								</form>
+								{% else %}
+		    					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+		    					</form>
+							{% endif %}
+						</div>
+						<div class="col-12 col-md-4 text-right">
+							{% if request.user.is_authenticated %}
+								<form action="{% url 'product_to_wish' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_product">
+								<button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            				{% endif %}
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>					
+		
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<!-- 					<a href="blog.html" class="blog-post">
+
+						<span class="img" style="background-image: url({% static 'images/blog-3.jpg' %});"></span>
+						<div class="desc">
+							<h5>Our Secret Island Boat Tour Is just for You</h5>
+							<h4>Our Secret</h4>
+							<span class="date">January</span><span class="date">January 2018</span>
+							<span class="cat">Activities</span>
+						</div> -->
+
+
+
+
+  
+				<div class="container">
+					{% for i in user_products_list %}
+					<div class="col-md-4 widebox">
+						<div class="col-md-4">
+							<center>
+							{% if i.picture != '' %}
+	         				<a href="{% url 'detail_offers' i.id %}"><img src="{{i.picture.url}}" alt="" width="200" height="100"/></a>
+	         				{% else %}
+	         				<a href="{% url 'detail_offers' i.id %}"><img src="{% static 'images/assign.png' %}" alt="" width="200" height="100"/></a>
+	         				{% endif %}
+	         				</center>
+	         				<br>
+	         				{% if request.user.is_authenticated %}
+	     						<form action="{% url 'product_to_cart' %}" method="POST">
+									{% csrf_token %}
+	     						<input type="hidden" value="{{ i.id }}" name="id_product">
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+								</form>
+								{% else %}
+	        					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+	        					</form>
+        					{% endif %}
+						</div>
+						<div class="col-md-8">
+							<h3 class="btn3 btn3-1">{{ i.product_name }}</h3>
+								<p style="color: red;">{% if i.stock <= 0 %}Out of stock{% endif %}</p>
+							<h3 class="btn3 btn3-2">$&nbsp;{{ i.price }}</h3>
+							<br>
+							{% if request.user.is_authenticated %}
+								<form action="{% url 'product_to_wish' %}" method="POST">
+									{% csrf_token %}
+         						<input type="hidden" value="{{ i.id }}" name="id_product">
+								<button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            					{% else %}
+            					<form action="#">
+								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep icon-heart">Like</button>
+            					</form>
+            				{% endif %}
+
+						</div>					
+					</div>
+					{% endfor %}
+
+				</div>					
+		
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+{% endblock %}
+
