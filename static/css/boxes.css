@@ -21,7 +21,9 @@
     width: 370px; } }
 
 
-
+@media screen and (max-width: 768px) {
+    .img {
+    	margin-top: 20px; }}
 
 .detail_widebox{
 	width: 900px;
