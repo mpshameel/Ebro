@@ -12,6 +12,15 @@
 }
 
 
+
+@media screen and (max-width: 768px) {
+    .container_wideboxes {
+    margin-left: 30px;
+    width: 80%; } }
+
+
+
+
 .desc h4{
 	line-height: 0.1px;
 }
