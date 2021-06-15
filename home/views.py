@@ -483,12 +483,18 @@ def detail_offers(request,id):
         # user = User.objects.get(id=request.user.id)
         user_product =  products.objects.get(id=id)
         user_products_list = products.objects.filter(publish="public").exclude(offer="0")
-        context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'cart_count':cart_count}
+
+        category_details = categorys.objects.filter(is_deleted=False)
+        trade = user_product.category.all()
+        context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'cart_count':cart_count,'category_details':category_details,'trade':trade}
         return render(request, 'user_detail_offers.html',context)
     else:
         user_product =  products.objects.get(id=id)
         user_products_list = products.objects.filter(publish="public").exclude(offer="0")
-        context = {'user_products_list':user_products_list,'user_product':user_product}
+
+        category_details = categorys.objects.filter(is_deleted=False)
+        trade = user_product.category.all()
+        context = {'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
         return render(request, 'user_detail_offers.html',context)
         
 

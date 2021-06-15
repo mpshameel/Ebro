@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     # 'hitcount',
-
+    # 'facebook'
 
     #providers
     'allauth.socialaccount.providers.facebook',
