@@ -4,50 +4,78 @@
 
 {% load static %}
 
-<!-- <style>
-	.active_user_page3{
-		background-color: #99c2ff;
-	}
-</style> -->
+
+
+
+<style>
+   .active_user_page10{
+      background-color: #99c2ff;
+   }
+   .active_user_smallpage10{
+      color: white;
+      background-color: #000;
+   }
+</style>
   
 
-		<div class="col-xs-4">
-			<h2 class="sub_headings">&nbsp;Delivery Address</h2>
-			<br><br>
-				{% csrf_token %}
-			<table  cellspacing="0" style="margin-left: 10px;width: 100%;font-size: 13px;font-family: 'Antonio', sans-serif;font-family: 'Ubuntu', sans-serif;">
-      			<tr style="height: 30px;">
-      	 		<td width="30%">First Name</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.first_name }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Last Name</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.last_name }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Country</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.country }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">State</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.state }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">District</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.district }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Postal Code</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.postalcode }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Phone</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.phone }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Alternative Phone</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.alternative_phone }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 60px;">
-         		<td width="30%">Address Line 1</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.address_line_1 }}</b></td>
-         		</tr>
-         		<tr style="height: 60px;">
-         		<td width="30%">Address Line 2</td><td width="70%">&nbsp;&nbsp;<b>{{ user_delivery_address.address_line_2 }}</b></td>
-         		</tr>
-   			</table>
-		</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+  <div class="col-md-7">
+    <div class="container_wideboxes">
+        <div class="col-md-4 cartwidebox">
+          <br>
+          <h2 class="h5_style">Delivery Address&nbsp;</h2><br><br>
+          <h4 class="h5_profile_style">First Name&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.first_name }}</h4><br>
+          <h4 class="h5_profile_style">Last Name&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.last_name }}</h4><br>
+          <h3 class="h5_profile_style">Country&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.country }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.state }}</h3><br>
+          <h3 class="h5_profile_style">District&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.district }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.postalcode }}</h3><br>
+          <h3 class="h5_profile_style">Phone&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.phone }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone 2&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.alternative_phone }}</h3><br>
+          <h3 class="h5_profile_style">Address Line 1&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.address_line_1 }}</h3><br>
+          <h3 class="h5_profile_style">Address Line 2&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.address_line_2 }}</h3><br><br>
+        </div>
+    </div>          
+  </div>  
+
+
+
+  <div class="container_wideboxes">
+      <div class="col-xs-5 user_payment_box">
+       <h2 class="sub_headings">Select Payment Methode:</h2><br><br>
+       <h2 class="sub_headings">Total</h2><br><br>
+            <div class="row col-md-10" style="margin-left: -25px;">
+                <h2 class="btn3 btn3-2">&nbsp;&nbsp;Items
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                :&nbsp;&nbsp;{{cart_count}}</h2>
+                <h2 class="btn3 btn3-2">&nbsp;&nbsp;Sub-Total
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                :&nbsp;&nbsp;$&nbsp;&nbsp;{{total_price}}</h2>
+                <h2 class="btn3 btn3-2">&nbsp;&nbsp;Wallet
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                :&nbsp;&nbsp;$&nbsp;&nbsp;{{user_profile.wallet}}</h2><br><br>
+            </div>
+          <br>
+          <form action="{% url 'ordercomplete_wallet' %}" method="POST">
+           {% csrf_token %}
+           <button href="checkout" class="btn2 btn2-2 btn2-sep3" style="width: 100%;">Pay From Wallet</button>
+          </form>
+          <br>
+          <div id="paypal-button-container" style="height: auto;"></div>
+      </div>
+  </div>
+
+
+
+
+    
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
@@ -55,36 +83,39 @@
 
 
 
-		<div class="col-xs-5 user_checkout_box" style="margin-left: 450px;margin-top: -400px;">
-         <h2 class="sub_headings">Select Payment Methode:</h2><br><br>
-			<h2 class="sub_headings">Total</h2><br><br>
-				<div class="row col-md-10" style="margin-left: -25px;">
-					<h2 class="btn3 btn3-2">Items</h2><br>
-					<h2 class="btn3 btn3-2">Sub-Total</h2><br><br>
-               <h2 class="btn3 btn3-2">Wallet</h2>
-
-
-				</div>
-
-				<div class="row col-md-2">
-					<h4 class="btn3 btn3-2">:{{cart_count}}</h4><br>
-					<h3 class="btn3 btn3-2">:$&nbsp;&nbsp;{{total_price}}</h3><br><br>
-               <h3 class="btn3 btn3-2">:$&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</h3>
-				</div>
-
-            <form action="{% url 'ordercomplete_wallet' %}" method="POST">
-               {% csrf_token %}
-               <button href="checkout" class="btn2 btn2-2 btn2-sep" style="width: 100%;">Pay From Wallet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-            </form>
-            <br>
-            <div id="paypal-button-container" style="height: auto;"></div>
 
 
 
 
-			</div>
 
-		</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

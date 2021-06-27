@@ -5,151 +5,140 @@
 {% load static %}
 
 <style>
-	.active_user_page3{
+	.active_user_page6{
 		background-color: #99c2ff;
 	}
+	.active_user_smallpage6{
+		color: white;
+		background-color: #000;
+	}
 </style>
-  
-
-		
 
 
 
 
 
-	<form action="{% url 'detail_view_jobs' user_jobs_list.id %}" method="POST" enctype="multipart/form-data">
+<div class="container_wideboxes">
+  	<div class="col-md-8 edititem_container">
+
+		<form action="{% url 'detail_view_jobs' user_jobs_list.id %}" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
-		<div class=" animate-box deals-form-edit">
-			<br>
-			<div class="col-md-4 left_form_deal_edit">
-				<br>
+		<div class="col-md-4">
 
+			<div class="form-field col-md-12 deals-pic-circle">
+				{% if user_jobs_list.picture != '' %}
+     			<img src="{{user_jobs_list.picture.url}}" id="file-ip-1-preview"/>
+     			{% else %}
+     			<img src="{% static 'images/assign.png' %}"id="file-ip-1-preview" />
+     			{% endif %}
+     			<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
+		        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>     
+		    </div>
+		    <br><br><br><br><br><br><br><br><br>
 
-				<div class="form-field col-md-12 profile-pic-div deals-pic-circle" style="margin-left: 100px;">
-
-					{% if user_jobs_list.picture != '' %}
-         			<img src="{{user_jobs_list.picture.url}}" id="file-ip-1-preview"/>
-         			{% else %}
-         			<img src="{% static 'images/assign.png' %}"id="file-ip-1-preview" />
-         			{% endif %}
-         			<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
-			        <label for="file-ip-1" id="uploadBtn">Choose Photo</label> 
- 
-                	       
-			    </div>
-			    <br><br><br><br><br><br><br><br><br><br>
-
-				 <div class="col-md-12">
-					<label for="fname">Job Name</label>
-					<input type="text" name="job_name" id="fname" value="{{ user_jobs_list.job_name }}" class="form-control" placeholder="Your firstname">
-				</div>
-
-				<div class="col-md-12">
-					<label for="lname">Price</label>
-					<input type="text" name="price" id="lname" value="{{ user_jobs_list.price }}" class="form-control" placeholder="Your lastname">
-				</div>
-				<div class="col-md-12">
-					<label for="lname">Attachments</label>
-					<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
-				</div>
-
+			<div class="col-md-12">
+				<label for="fname">Job Name</label>
+				<input type="text" name="job_name" id="fname" value="{{ user_jobs_list.job_name }}" class="form-control" placeholder="Your firstname">
 			</div>
-			<div class="col-md-8 right_form_deal_edit">
+
+			<div class="col-md-12">
+				<label for="lname">Price</label>
+				<input type="text" name="price" id="lname" value="{{ user_jobs_list.price }}" class="form-control" placeholder="Your lastname">
+			</div>
+			<div class="col-md-12">
+				<label for="lname">Attachments</label>
+				<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
+			</div>
+			
+		</div>
+		<div class="col-md-8">
+			
+			<div class="col-md-4 wrapper-class">
+				<label for="subject">Publish</label>
 				<br>
-				<div class="col-md-1">
-						<label for="subject">Publish</label><br>
-						<input type="radio" name="publish" value="public" {% if user_jobs_list.publish == "public" %} checked="checked" {% endif %}>
-						<input type="radio" name="publish" value="private" {% if user_jobs_list.publish == "private" %} checked="checked" {% endif %}>  
-				    </div>
+					<input type="radio" id="radio1" name="publish" value="public" {% if user_jobs_list.publish == "public" %} checked="checked" {% endif %}>
+  					<label for="radio1">Public</label>
+					<input type="radio" id="radio2" name="publish" value="private" {% if user_jobs_list.publish == "private" %} checked="checked" {% endif %}>
+					<label for="radio2">Private</label>
+			</div>
+			<div class="col-md-8">
+				<br>
+				[your product or Job will handle by E-bro through private channel]
+			</div>
 
-				<div class="col-md-2">
-					<br>
-					Public
-					<br>Private
-				</div>
-				<div class="col-md-9">
-					<br>[your product or deal will handle by E-bro through private channel]<br><br>
-				</div>
-				<div class="col-md-1">
-					<label for="subject">Type</label><br>
-					<input type="radio" name="job_type" value="Single" {% if user_jobs_list.job_type == "Single" %} checked="checked" {% endif %}>
-					<input type="radio" name="job_type" value="Multiple" {% if user_jobs_list.job_type == "Multiple" %} checked="checked" {% endif %}>
-				</div>
-				<div class="col-md-2">
-					<br>
-					Single<br>
-					Multiple
-				</div>
-				<div class="col-md-9">
-					<br>[your product can categorize based on brand name or individual]
-				</div>
-				<div class="col-md-12">
-					<label for="subject">Brand Name</label>
-					<input type="text" name="brand_name" id="subject" value="{{ user_jobs_list.brand_name }}" class="form-control" placeholder="Your subject of this message">
-				</div>
+			<div class="col-md-4 wrapper-class">
+				<label for="subject">Type</label>
+				<br>
+					<input type="radio" id="radio3" name="job_type" value="Single" {% if user_jobs_list.job_type == "Single" %} checked="checked" {% endif %}>
+  					<label for="radio3">Single</label>
+					<input type="radio" id="radio4" name="job_type" value="Multiple" {% if user_jobs_list.job_type == "Multiple" %} checked="checked" {% endif %}>
+					<label for="radio4">Multiple</label>
+			</div>
+			<div class="col-md-8">
+				<br>
+				[your product or Job can categorize based on brand name or individual]
+			</div>
 
+			<div class="col-md-12">
+				<label for="subject">Brand Name</label>
+				<input type="text" name="brand_name" id="subject" value="{{ user_jobs_list.brand_name }}" class="form-control" placeholder="Your subject of this message">
+			</div>
+
+			<div class="col-md-12">
+				<div class="form-group">
+				<label>Select Job Category:</label>
+				<select name="category" class="form-control" multiple="">
+				{% for i in category_details %}
+				    <option {% for j in trade %} {% if i.id == j.id %} selected {% endif %} {% endfor %} value="{{ i.id }}">{{ i.name }}</option>
+				{% endfor %}
+				</select>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<label for="subject">Sort by Location</label>
+				<input type="text" name="location" id="subject"  value="{{ user_jobs_list.location }}" class="form-control" placeholder="Your subject of this message">
+			</div>
+
+			<div class="col-md-12">
+				<label for="message">Other Details</label>
+				<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ user_jobs_list.details }}
+					</textarea>
+			</div>
+
+			&nbsp;&nbsp;
+			<div class="row form-group col-md-12">
+			<div class="form-group text-center"><br><br>
+				<button type="submit" value="Update Deal" class="btn btn-primary">Update Job</button>
+		
+			</div>
+			</div>
+		</div>
+		</form>
+  	</div>
+
+
+  	<div class="col-md-4 attachment_form">
+		<form action="{% url 'delete_job_attachments' %}" method="POST">
+			{% csrf_token %}
+			<input type="hidden" value="{{ user_jobs_list.id }}" name="attach_delete">
 				<div class="col-md-12">
-					<div class="form-group">
-					<label>Select Job Category:</label>
-					<select name="category" class="form-control" multiple="">
-					{% for i in category_details %}
-					    <option {% for j in trade %} {% if i.id == j.id %} selected {% endif %} {% endfor %} value="{{ i.id }}">{{ i.name }}</option>
+					<br><br>
+					{% for j in user_jobs_attach_list %}
+					<img src="{{ j.attachment.url }}" alt="" height="70" width="70"/>
 					{% endfor %}
-					</select>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<label for="subject">Sort by Location</label>
-					<input type="text" name="location" id="subject"  value="{{ user_jobs_list.location }}" class="form-control" placeholder="Your subject of this message">
-				</div>
-
-				<div class="col-md-12">
-					<label for="message">Other Details</label>
-					<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ user_jobs_list.details }}
-						</textarea>
-				</div>
-
-				&nbsp;&nbsp;
-				<div class="row form-group col-md-12">
-				<div class="form-group text-center"><br><br>
-					<button type="submit" value="Update Deal" class="btn btn-primary">Update Job</button>
-			
-				</div>
-				</div>
+					<br><br><br>
+				</div>	
+			<div class="row form-group">
+			<div class="form-group text-center">
+				<input type="submit" value="Delete Old Attachments" class="btn btn-primary">
 			</div>
-		</div>
-	</form>
-
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-		<div class=" animate-box deal_attach_box">
-				
-				<div class="row form-group">
-				<form action="{% url 'delete_job_attachments' %}" method="POST">
-				{% csrf_token %}
-				<input type="hidden" value="{{ user_jobs_list.id }}" name="attach_delete">
-					<div class="col-md-12">
-						{% for j in user_jobs_attach_list %}
-						<img src="{{ j.attachment.url }}" alt="" height="70" width="70" style="border-radius: 50%" />
-						{% endfor %}
-					</div>	
-					
-				</div>
-				<br><br><br>
-				<div class="row form-group">
-				<div class="form-group text-center">
-					<input type="submit" value="Delete Old Attachments" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-				</div>
-				</div>
-			</form>
-		</div>
-
-
+			</div>
+		</form>
+	</div>
+</div>
 
 
 
 
 {% endblock %}
+

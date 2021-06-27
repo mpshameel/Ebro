@@ -13,7 +13,14 @@ from datetime import timedelta
 def admin_home(request):
     if request.user.is_authenticated:
         admin_profile = profile.objects.get(username_id=request.user.id)
-        context = {'admin_profile':admin_profile}
+
+        allads = ads.objects.all()
+        ad_xxxl = ads.objects.filter(adsize="xxxl")
+        ad_xxl = ads.objects.filter(adsize="xxl")
+        ad_xl = ads.objects.filter(adsize="xl")
+        ad_l = ads.objects.filter(adsize="l")
+        ad_s = ads.objects.filter(adsize="s")
+        context = {'admin_profile':admin_profile,'allads':allads,'ad_xxxl':ad_xxxl,'ad_xxl':ad_xxl,'ad_xl':ad_xl,'ad_l':ad_l,'ad_s':ad_s}
         if request.user.is_superuser:
             return render(request, 'admin_home.html',context)
         else:
@@ -158,6 +165,8 @@ def admin_profile(request):
         alternative_phone = request.POST['alternative_phone']
         dob = request.POST['dob']
         adhar_id = request.POST['adhar_id']
+        profession = request.POST['profession']
+        location = request.POST['location']
         qualification = request.POST['qualification']
         hobbies = request.POST['hobbies']
         summary = request.POST['summary']
@@ -174,6 +183,8 @@ def admin_profile(request):
         admin_update_profile.alternative_phone = alternative_phone
         admin_update_profile.dob = dob
         admin_update_profile.adhar_id = adhar_id
+        admin_update_profile.profession = profession
+        admin_update_profile.location = location
         admin_update_profile.qualification = qualification
         admin_update_profile.hobbies = hobbies
         admin_update_profile.summary = summary
@@ -354,7 +365,8 @@ def assign_admin_deals(request,id):
         user = User.objects.get(id=request.user.id)
 
         for i in assigns:
-            assign_deal(deal=deals.objects.get(id=int(id)),username=user,assigns=i).save()
+            assigned_profile_id = profile.objects.get(id=i)
+            assign_deal(deal=deals.objects.get(id=int(id)),username=user,assigns=assigned_profile_id).save()
 
         messages.info(request,"Deal Assigned")
         return redirect('admin_deals')
@@ -513,7 +525,8 @@ def assign_admin_jobs(request,id):
         user = User.objects.get(id=request.user.id)
 
         for i in assigns:
-            assign_job(job=jobs.objects.get(id=int(id)),username=user,assigns=i).save()
+            assigned_profile_id = profile.objects.get(id=i)
+            assign_job(job=jobs.objects.get(id=int(id)),username=user,assigns=assigned_profile_id).save()
 
         messages.info(request,"Job Assigned")
         return redirect('admin_jobs')

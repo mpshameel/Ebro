@@ -53,8 +53,6 @@
 .ebrosmall{
     margin-top: -5px;
     display: none;
-    height: 25px;
-    width: 250px;
 
 }
 
@@ -398,7 +396,7 @@
 
 
 
-.table-users{
+/*.table-users{
     margin-left: 10px;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -411,14 +409,13 @@
 }
 
 td{
-/*    border-radius: 10px;*/
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
+*/
 
 
 
-
-.header{
+/*.header{
    background-color: rgb(43, 117, 237); 
    color: #fff;
    height: 40px;
@@ -428,14 +425,16 @@ td{
    text-align: center;
    align-items: center;
    padding: 10px;
-   
 
-}
-.row_height{
+}*/
+
+
+
+/*.row_height{
     align-items: center;
     height: 50px;
 }
-
+*/
 
 
 
@@ -613,7 +612,7 @@ td{
 
 
 
-.address-form{
+/*.address-form{
     fill: all;
     height: all;
     margin-left: 800px;
@@ -649,23 +648,23 @@ td{
     margin-left: -5px;
     margin-top: 5px;
 }
+*/
 
-
-.wallet-form{
+/*.wallet-form{
     height: auto;
     width: 35%;
     margin-left: 830px;
     margin-top: -380px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
+}*/
 
 
 
-.topup_form{
+/*.topup_form{
     margin-left: 5px;
     height: auto;
     display: none;
-}
+}*/
 
 
 
@@ -708,10 +707,10 @@ td{
 
 
 
-.sendmoney_form{
+/*.sendmoney_form{
     background: #fff;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin-top: -400px;
+    margin-top: -450px;
     margin-left: 150px;
     height: auto;
     display: none;
@@ -723,7 +722,7 @@ td{
     margin-top: 5px;
 
 }
-
+*/
 
 
 
@@ -1014,6 +1013,33 @@ td{
 
 
 
+.btn2-sep3 {
+    /*padding: 10px 10px 10px 10px;*/
+    padding: 10px 175px 10px 175px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .btn2-sep3 {
+        margin-top: -10px;
+        padding: 5px 135px 5px 135px; } }
+
+
+.btn2-sep4 {
+    /*padding: 10px 10px 10px 10px;*/
+    padding: 5px 20px 5px 20px;
+}
+
+
+
+
+.btn2-sep5 {
+    /*padding: 10px 10px 10px 10px;*/
+    padding: 5px 60px 5px 60px;
+}
+
+
+
 
 
 
@@ -1242,7 +1268,12 @@ td{
         margin-left: -20px;
         padding: 5px 5px 5px 25px; }
     .down {
-        margin-top: 5px; } 
+        margin-top: 80px; } 
+    .down_delete{
+        margin-top: 10px; }
+    .down_remove{
+        margin-top: -50px;
+    }
     .btn4-1:before {
         margin-top: -7px;
         width: 10px; } }
@@ -1369,7 +1400,7 @@ td{
 }
 
 
-
+/*
 .adduser{
     width: 50px;
     height: 60px;
@@ -1381,10 +1412,10 @@ td{
     font-weight: 1000;
     position: absolute;
 }
+*/
 
 
-
-.adduser-form{
+/*.adduser-form{
     width: 900px;
     height: 940px;
     position: absolute;
@@ -1405,7 +1436,7 @@ td{
     position: relative;
     z-index: 99;
 }
-
+*/
 
 
 

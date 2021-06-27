@@ -1,122 +1,100 @@
 
-
 {% extends 'admin dashboard/admin_dashboard.html'%}
 
 {% block content %}
 
 {% load static %}
 
+
 <style>
-	.active_page8{
-		background-color: #99c2ff;
-	}
+   .active_user_page11{
+      background-color: #99c2ff;
+   }
+
 </style>
-	
-	
 
-   	<div class="col-xs-4">
-		<div class=" animate-box notification_box">
-			<br>
+ 
 
-				<form action="{% url 'admin_notifications' %}" method="POST">
-				{% csrf_token %}
-        		
 
-				<div class="row form-group">
-					
-					<div class="col-md-12">
 
-						<!-- <div class="input-icons">
-            				<i type="submit" class="fa fa-search icon"></i>
-            				<input class="input-field" type="text">
-            				
-        				</div> -->
 
-        				
+<div class="container_wideboxes">
+	<div class="col-md-5">
+	    <div class="col-md-12 notifications_box">
+		 	<form action="{% url 'admin_notifications' %}" method="POST">
+		      {% csrf_token %}
+		        <div class="col-md-12">
+		        	<br>
+		        	<h5 class="headings_small">Add Notifications :</h5>
+		        	<br><br><br>
+		          <textarea id="message" cols="25" rows="4" class="form-control" name="notification" placeholder="Send notification to users" value=""></textarea>
+		        </div>
+		        <br>
+		        <div class="col-md-12">
+			        <div class="form-group text-center"><br>
+			          <button type="submit" value="Send" class="btn btn-primary">Send</button>
+			        </div>
+			        </div>
+		    	</div>
+		    </form>
+			   <table class="notifications_list_table" cellspacing="0">
+				<tr class="header" style="font-size: 15px;">
+					<center>
+				 	<th width="5%"><center>#</center></th>
+				 	<th width="85%"><center>Notifications</center></th>
+					<th width="10%"><center>Date</center></th>
+					</center>
+				</tr>
 
-						<label for="lname"><div class="fonts_style">Add Notifications</div></label>
-						<br><br>
-						
-      					
-							<textarea id="message" cols="25" rows="4" class="form-control" name="notification" placeholder="Send notification to users" value=""></textarea>
+				{% for i in notifications_list %}
+				<tr style="font-size: 13px;">
+			 		<td><center>{{ forloop.counter }}</center></td></center></td>
+					<td style="word-break: break-all;">&nbsp;{{ i.notification }}</td>
+					<td>&nbsp;Date</td>
 
-					</div>		
-					
-					
-				</div>
-
-				
-				
-				<div class="row form-group">
-				<div class="form-group text-center">
-					<input type="submit" value="Send" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-				</div>
-					<div class="col-md-12">
-						<div class="col-md-1">
-							<label style="width=10%;" for="vehicle1">#</label>&nbsp;&nbsp;&nbsp;
-						</div>
-						<div class="col-md-11">
-							<label style="width=50%;" for="vehicle1">Notifications</label>&nbsp;&nbsp;&nbsp;<br><br>
-						</div>
-
-						{% for i in notifications_list %}
-						<div class="col-md-1">
-							<label style="width=10%;" for="vehicle1">{{ forloop.counter }}</label>&nbsp;&nbsp;&nbsp;
-						</div>
-						<div class="col-md-11">
-							<label style="width=50%;" for="vehicle1">{{ i.notification }}</label>&nbsp;&nbsp;&nbsp;<br><br>
-						</div>
-						{% endfor %}
-						
-							
-					</div>
-
-				</div>
-			</form>
-		</div>
+				</tr>
+				{% endfor %}  
+		      </table>
+	    </div>
 	</div>
 
+	<div class="col-md-6">
+		<div class="col-md-12 feedbackslist_box">
+		  <div class="scrollit">
+		    <table cellspacing="0">
+		      <tr class="header" style="font-size: 15px;">
+		        <center>
+	      		 	<th width="5%"><center>#</center></th>
+	      		 	<th width="5%"><center>Photo</center></th>
+	      		 	<th width="25%"><center>Name</center></th>
+	         		<th width="55%"><center>Feedbacks</center></th>
+	         		<th width="10%"><center>Date</center></th>
+		         </center>
+		      </tr>
 
-	<div class="col-xs-8">
-		<div class=" animate-box ">
-			 <table class="table-users" cellspacing="0">
-      			<tr class="header">
-      			<center>
-      		 	<th width="5%"><center>#</center></th>
-      		 	<th width="5%"><center>Photo</center></th>
-      		 	<th width="25%"><center>Name</center></th>
-         		<th width="55%"><center>Feedbacks</center></th>
-         		<th width="10%"><center>Date</center></th>
-         		</center>
-      			</tr>
 
-      			{% for i in feedbacks_list %}
-      			<tr class="row_height">
-      	 		<td><center>{{ forloop.counter }}</center></td></center></td>
-         		<td><center>
-         			{% if i.username.image != '' %}
+		      {% for i in feedbacks_list %}
+		        <tr style="font-size: 13px;">
+		         <td><center>{{ forloop.counter }}</center></td>
+		         <td><center>
+			        {% if i.username.image != '' %}
          			<a href=""><img src="{{i.username.image.url}}" alt="" height="40" width="40" style="border-radius: 50%" /></a>
          			{% else %}
          			<img src="{% static 'images/assign.png' %}" alt="" height="40" width="40" style="border-radius: 50%" />
          			{% endif %}
-         		</center></td>
-         		<td>{{ i.username.username.first_name }}</td>
-         		<td>&nbsp;{{ i.feedback }}</td>
-         		<td><center>Date</center></td>
-        	
-      			</tr>
-      			{% endfor %}
-
-      
-   			</table>
-						
-
+		         </center></td>
+		         <td>&nbsp;{{ i.username.username.first_name }}</td>
+		         <td style="word-break: break-all;">&nbsp;{{ i.feedback }}</td>
+		         <td><center>Date</center></td>
+		        </tr>
+		      {% endfor %}  
+		    </table>
+		  </div>
 		</div>
 	</div>
+</div>
 
-	
 
 
-	
+
 {% endblock %}

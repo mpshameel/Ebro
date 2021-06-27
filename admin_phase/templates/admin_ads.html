@@ -1,109 +1,104 @@
 
-
 {% extends 'admin dashboard/admin_dashboard.html'%}
 
 {% block content %}
 
 {% load static %}
+
 <style>
-   .active_page7{
+   .active_user_page2{
       background-color: #99c2ff;
    }
+
 </style>
 
 
 
 
-		<div class=" animate-box job_box">
-			<br>
-			<form action="{% url 'admin_ads' %}" method="POST" enctype="multipart/form-data">
-				{% csrf_token %}
-				<div class="row form-group">
-					
-				    <div class="col-md-2">
-						<label for="fname">Ad Name</label>
-						<input type="text" name="ad_name" id="fname" class="form-control" placeholder="Your firstname">
-					</div>
-					<div class="col-md-2">
-						<b><font style="font-size: 15px;">
-							Select Ad Size :
-						<select name="ad_size">
-							<option value="xxxl" selected="">XXX-Large Wide(1)</option>
-							<option value="xxl">XX-Large Square(2)</option>
-							<option value="xl">X-Large Poster(3)</option>
-							<option value="l" >Large Poster(4)</option>
-							<option value="s">Small(6)</option>
-						</select>
-						</font></b>
-					</div>
-					
-				</div>
-				<div class="row form-group">
-					<div class="col-md-2">
-						<label for="fname">Media File</label>
-						<input type="file" name="image" id="fname" class="form-control" placeholder="Your firstname">
-					</div>
-					
-				</div>
-				
-				<div class="row form-group">
-				<div class="form-group text-center">
-					<input type="submit" value="Add Ad" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-				</div>
-				</div>
-			</form>
-		</div>
+
+<div class="container_wideboxes">
+   <div class="col-md-12 add_ad_form">
+      <br>
+      <form action="{% url 'admin_ads' %}" method="POST" enctype="multipart/form-data">
+         {% csrf_token %}   
+            <div class="col-md-5">
+               <label for="fname">Ad Name</label>
+               <input type="text" name="ad_name" id="fname" class="form-control" placeholder="Your firstname">
+            </div>
+            <div class="col-md-2">
+               <label for="fname">Select Ad Size :</label>
+               <select name="ad_size">
+                  <option value="xxxl" selected="">XXX-Large Wide(1)</option>
+                  <option value="xxl">XX-Large Square(2)</option>
+                  <option value="xl">X-Large Poster(3)</option>
+                  <option value="l" >Large Poster(4)</option>
+                  <option value="s">Small(6)</option>
+               </select>
+               </font></b>
+            </div>
+            <div class="col-md-3">
+               <label for="fname">Media File</label>
+               <input type="file" name="image" id="fname" class="form-control" placeholder="Your firstname">
+            </div>
+            <div class="col-md-2">
+               <br>
+               <input type="submit" value="Add Ad" class="btn btn-primary">
+            </div>
+      </form>
+
+      <div class="col-md-12 ad_list_form">
+         <table cellspacing="0">
+            <tr class="header">
+               <center>
+                <th width="5%"><center>#</center></th>
+               <th width="5%"><center>Picture</center></th>
+               <th width="25%"><center>Ad Name</center></th>
+               <th width="30%" class="none"><center>Email</center></th>
+               <th width="15%" class="none"><center>Phone</center></th>
+               <th width="5%"><center>Ad Clicks</center></th>
+               <th width="5%"><center>Ad Size</center></th>
+               <th width="5%" class="none"><center>User</center></th>
+               <th width="5%"><center>Delete</center></th>
+
+               
+               </center>
+            </tr>
+
+            {% for i in admin_ads_all %}
+            <tr class="row_height" style="font-size: 13px;cursor: pointer;" onclick="location.href='{% url 'admin_ads_edit' i.id %}';">
+                <td><center>{{ forloop.counter }}</center></td>
+               <td><center>
+                  {% if i.image != '' %}
+                  <img src="{{i.image.url}}" alt="" height="50" width="50"/>
+                  {% else %}
+                  <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
+                  {% endif %}
+               </center></td>
+               <td><center>{{ i.adname }}</center></td>
+               <td class="none"><center>{{ i.username.email }}</center></td>
+               <td class="none"><center>{{ i.profile.phone }}</center></td>
+               <td><center>{{ i.clicksall }}</center></td>
+               <td><center>{{ i.adsize }}</center></td>
+               <td class="none"><center>{{ i.profile.usertype }}</center></td>
+               <td><center>
+                  <form action="{% url 'delete_admin_ads' %}" method="POST">
+                  {% csrf_token %}
+
+                  <input type="hidden" value="{{ i.id }}" name="id_delete">
+                  <br>
+                  <button>Delete</button>
+                  </form>
+              </center></td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   </div>
+</div>
 
 
 
-
-   <table class="table-users" cellspacing="0">
-      <tr class="header">
-      	<center>
-      	 <th width="5%"><center>#</center></th>
-         <th width="5%"><center>Picture</center></th>
-         <th width="25%"><center>Ad Name</center></th>
-         <th width="30%"><center>Email</center></th>
-         <th width="15%"><center>Phone</center></th>
-         <th width="5%"><center>Ad Clicks</center></th>
-         <th width="5%"><center>Ad Size</center></th>
-         <th width="5%"><center>User</center></th>
-         <th width="5%"><center>Delete</center></th>
-
-         
-         </center>
-      </tr>
-
-      {% for i in admin_ads_all %}
-      <tr class="row_height" style="font-size: 13px;cursor: pointer;" onclick="location.href='{% url 'admin_ads_edit' i.id %}';">
-      	 <td><center>{{ forloop.counter }}</center></td>
-         <td><center>
-         	{% if i.image != '' %}
-         	<img src="{{i.image.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% else %}
-         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% endif %}
-         </center></td>
-         <td><center>{{ i.adname }}</center></td>
-         <td><center>{{ i.username.email }}</center></td>
-         <td><center>{{ i.profile.phone }}</center></td>
-         <td><center>{{ i.clicksall }}</center></td>
-         <td><center>{{ i.adsize }}</center></td>
-         <td><center>{{ i.profile.usertype }}</center></td>
-         <td><center>
-         	<form action="{% url 'delete_admin_ads' %}" method="POST">
-				{% csrf_token %}
-
-         	<input type="hidden" value="{{ i.id }}" name="id_delete">
-         	<button>Delete</button>
-            </form>
-        </center></td>
-      </tr>
-      {% endfor %}
-
-      
-   </table>
 
 
 

@@ -1,132 +1,122 @@
 
-
 {% extends 'admin dashboard/admin_dashboard.html'%}
 
 {% block content %}
 
 {% load static %}
+
+
 <style>
-   .active_page7{
+   .active_user_page10{
       background-color: #99c2ff;
    }
+
 </style>
 
 
-   <table class="table-users" cellspacing="0">
-   	 <tr class="header"><th colspan="9"><center>Assaigned Deals</center></th></tr>
-      <tr class="header">
-      	<center>
-      	 <th width="5%"><center>#</center></th>
-         <th width="5%"><center>Picture</center></th>
-         <th width="15%"><center>Deal Name</center></th>
-         <th width="20%"><center>Email</center></th>
-         <th width="10%"><center>Phone</center></th>
-         <th width="10%"><center>Publish</center></th>
-         <th width="7%"><center>Price</center></th>
-         <th width="10%"><center>Type</center></th>
-         
-         <th width="5%"><center>Delete</center></th>
-         
-         </center>
-      </tr>
 
-      {% for i in admin_assigned_deals_list %}
-      <tr class="row_height">
-      	 <td><center>{{ forloop.counter }}</center></td>
-         <td><center>
-         	{% if i.deal.picture != '' %}
-         	<img src="{{i.deal.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% else %}
-         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% endif %}
-         </center></td>
-         <td><center>{{ i.deal.deal_name }}</center></td>
-         <td><center>{{ i.assigns }}</center></td>
-         <td><center>{{ i.deal.contact }}</center></td>
-         <td><center>{{ i.deal.publish }}</center></td>
-         <td><center>{{ i.deal.price }}</center></td>
-         <td><center>{{ i.deal.deal_type }}</center></td>
-         
-         <td><center>
-         	<br>
-         	<form action="{% url 'delete_assigned_deal' %}" method="POST">
-				{% csrf_token %}
 
-         	<input type="hidden" value="{{ i.id }}" name="id_delete">
-         	<button>Delete</button>
-            </form>
+<div class="container_wideboxes">
+   <div class="col-md-6 myads_list_box">
+      <div class="scrollit_payments">
+        <table cellspacing="0" class="myads_list_table">
+          <tr class="header"><th colspan="9"><center>Assaigned Deals</center></th></tr>
+          <tr class="header" style="font-size: 15px;">
+            <center>
+             <th width="5%"><center>#</center></th>
+             <th width="5%"><center></center></th>
+             <th width="30%"><center>Deal Name</center></th>
+             <th width="20%" class="none"><center>Email</center></th>
+             <th width="10%" class="none"><center>Phone</center></th>
+             <th width="5%" class="none"><center>Publish</center></th>
+             <th width="10%" class="none"><center>Price</center></th>
+             <th width="5%" class="none"><center>Type</center></th>
+             <th width="5%"><center>Delete</center></th>
              </center>
-         </td>
-         
-      </tr>
-      {% endfor %}
-
-      
-   </table>
+          </tr>
 
 
+          {% for i in admin_assigned_deals_list %}
+            <tr style="font-size: 13px;">
+                <td><center>{{ forloop.counter }}</center></td>
+                <td><center>
+                 {% if i.deal.picture != '' %}
+                 <img src="{{i.deal.picture.url}}" alt="" height="30" width="30"/>
+                 {% else %}
+                 <img src="{% static 'images/assign.png' %}" alt="" height="30" width="30"/>
+                 {% endif %}
+                </center></td>
+                <td>&nbsp;{{ i.deal.deal_name }}</td>
+                <td class="none">&nbsp;{{ i.assigns.username.username }}</td>
+                <td class="none">&nbsp;{{ i.deal.contact }}</td>
+                <td class="none"><center>{{ i.deal.publish }}</center></td>
+                <td class="none"><center>{{ i.deal.price }}</center></td>
+                <td class="none"><center>{{ i.deal.deal_type }}</center></td>
+                <td><center>
+                        <form action="{% url 'delete_assigned_deal' %}" method="POST">
+                        {% csrf_token %}
 
+                        <input type="hidden" value="{{ i.id }}" name="id_delete">
+                        <button>Delete</button>
+                        </form>
+                     </center>
+                </td>
+            </tr>
+          {% endfor %}  
+        </table>
+      </div>
+   </div>
 
-
-  <table class="table-users" cellspacing="0">
-  	<tr class="header"><th colspan="9"><center>Assaigned Jobs</center></th></tr>
-      <tr class="header">
-      	<center>
-      	 <th width="5%"><center>#</center></th>
-         <th width="5%"><center>Picture</center></th>
-         <th width="15%"><center>Deal Name</center></th>
-         <th width="20%"><center>Email</center></th>
-         <th width="10%"><center>Phone</center></th>
-         <th width="10%"><center>Publish</center></th>
-         <th width="7%"><center>Price</center></th>
-         <th width="10%"><center>Type</center></th>
-
-         <th width="5%"><center>Delete</center></th>
-
-         
-         </center>
-      </tr>
-
-      {% for i in admin_assigned_jobs_list %}
-      <tr class="row_height">
-      	 <td><center>{{ forloop.counter }}</center></td>
-         <td><center>
-         	{% if i.job.picture != '' %}
-         	<img src="{{i.job.picture.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% else %}
-         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% endif %}
-         </center></td>
-         <td><center>{{ i.job.job_name }}</center></td>
-         <td><center>{{ i.assigns }}</center></td>
-         <td><center>{{ i.job.contact }}</center></td>
-         <td><center>{{ i.job.publish }}</center></td>
-         <td><center>{{ i.job.price }}</center></td>
-         <td><center>{{ i.job.job_type }}</center></td>
- 
-         <td><center>
-         	<br>
-         	<form action="{% url 'delete_assigned_job' %}" method="POST">
-				{% csrf_token %}
-
-         	<input type="hidden" value="{{ i.id }}" name="id_delete">
-         	<button>Delete</button>
-            </form>
+   <div class="col-md-6 myads_list_box">
+      <div class="scrollit_payments">
+        <table cellspacing="0" class="myads_list_table">
+          <tr class="header"><th colspan="9"><center>Assaigned Jobs</center></th></tr>
+          <tr class="header" style="font-size: 15px;">
+            <center>
+             <th width="5%"><center>#</center></th>
+             <th width="5%"><center></center></th>
+             <th width="30%"><center>Job Name</center></th>
+             <th width="20%" class="none"><center>Email</center></th>
+             <th width="10%" class="none"><center>Phone</center></th>
+             <th width="5%" class="none"><center>Publish</center></th>
+             <th width="10%" class="none"><center>Price</center></th>
+             <th width="5%" class="none"><center>Type</center></th>
+             <th width="5%"><center>Delete</center></th>
              </center>
-         </td>
-     
-      </tr>
-      {% endfor %}
-
-      
-   </table>
+          </tr>
 
 
+          {% for i in admin_assigned_jobs_list %}
+            <tr style="font-size: 13px;">
+                <td><center>{{ forloop.counter }}</center></td>
+                <td><center>
+                 {% if i.job.picture != '' %}
+                 <img src="{{i.job.picture.url}}" alt="" height="30" width="30"/>
+                 {% else %}
+                 <img src="{% static 'images/assign.png' %}" alt="" height="30" width="30"/>
+                 {% endif %}
+                </center></td>
+                <td>&nbsp;{{ i.job.job_name }}</td>
+                <td class="none">&nbsp;{{ i.assigns.username.username }}</td>
+                <td class="none">&nbsp;{{ i.job.contact }}</td>
+                <td class="none"><center>{{ i.job.publish }}</center></td>
+                <td class="none"><center>{{ i.job.price }}</center></td>
+                <td class="none"><center>{{ i.job.job_type }}</center></td>
+                <td><center>
+                        <form action="{% url 'delete_assigned_job' %}" method="POST">
+                        {% csrf_token %}
 
-
-
-
-
+                        <input type="hidden" value="{{ i.id }}" name="id_delete">
+                        <button>Delete</button>
+                        </form>
+                     </center>
+                </td>
+            </tr>
+          {% endfor %}  
+        </table>
+      </div>
+   </div>
+</div>
 
 
 {% endblock %}

@@ -52,11 +52,11 @@
                         <form action="{% url 'deal_to_task' %}" method="POST">
                            {% csrf_token %}
                         <input type="hidden" value="{{ user_deal.id }}" name="id_deal">
-                        <button class="update-cart btn2 btn2-2 btn2-sep icon-cart details_cart">Add To Cart</button>
+                        <button class="update-cart btn2 btn2-2 btn2-sep icon-cart details_cart">Add To Task</button>
                         </form>
                         {% else %}
                         <form action="#">
-                        <button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart details_cart">Add To Cart</button>
+                        <button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart details_cart">Add To Task</button>
                         </form>
                         {% endif %}
                      </div>
@@ -122,11 +122,11 @@
                         <form action="{% url 'deal_to_task' %}" method="POST">
                            {% csrf_token %}
                         <input type="hidden" value="{{ i.id }}" name="id_deal">
-                        <button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+                        <button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
                         </form>
                         {% else %}
                         <form action="#">
-                        <button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+                        <button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
                         </form>
                      {% endif %}
                   </div>

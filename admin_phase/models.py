@@ -13,7 +13,7 @@ class profile(models.Model):
     adhar_id = models.CharField(max_length=100,null=True,blank=True)
     qualification = models.CharField(max_length=100,null=True,blank=True)
     hobbies = models.CharField(max_length=100,null=True,blank=True)
-    summary = models.CharField(max_length=100,null=True,blank=True)
+    summary = models.CharField(max_length=500,null=True,blank=True)
     image = models.ImageField(upload_to='profile-pic',null=True,blank=True)
     refferalcode = models.CharField(max_length=100,null=True,blank=True)
     usertype = models.CharField(max_length=100,null=False,blank=True)
@@ -136,7 +136,8 @@ class deal_attachments(models.Model):
 class assign_deal(models.Model):
     deal = models.ForeignKey(deals,on_delete=models.CASCADE)
     username = models.ForeignKey(User,on_delete=models.CASCADE)
-    assigns = models.CharField(max_length=100,null=True,blank=True)
+    assigns = models.ForeignKey(profile,on_delete=models.CASCADE)
+
 
 
 
@@ -174,7 +175,7 @@ class job_attachments(models.Model):
 class assign_job(models.Model):
     job = models.ForeignKey(jobs,on_delete=models.CASCADE)
     username = models.ForeignKey(User,on_delete=models.CASCADE)
-    assigns = models.CharField(max_length=100,null=True,blank=True)
+    assigns = models.ForeignKey(profile,on_delete=models.CASCADE)
 
 
 class job_wish(models.Model):
@@ -246,12 +247,12 @@ class product_cart(models.Model):
 
 class notifications(models.Model):
     username = models.ForeignKey(User,on_delete=models.CASCADE)
-    notification = models.CharField(max_length=100,null=True,blank=True)
+    notification = models.CharField(max_length=500,null=True,blank=True)
 
 
 class feedbacks(models.Model):
     username = models.ForeignKey(profile,on_delete=models.CASCADE)
-    feedback = models.CharField(max_length=100,null=True,blank=True)
+    feedback = models.CharField(max_length=500,null=True,blank=True)
 
 
 

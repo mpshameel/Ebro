@@ -6,137 +6,159 @@
 
 
 
-					<div class="col-md-5 col-md-push-3" style="margin-left: -50px;">
-                        <form action="{% url 'admin_profile' %}" method="POST">
-                        	{% csrf_token %}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="fname">First Name</label>
-                                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="lname">Last Name</label>
-                                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
-                                </div>
-                            </div>
-            
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="email">Email</label>
-                                    <input type="text" name="email" id="email" class="form-control" placeholder="{{ user.email }}" value="{{ user.email }}" disabled>
-                                </div>
-                            </div>
-            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="fname">Phone</label>
-                                    <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ admin_profile.phone }}" value="{{ admin_profile.phone }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="lname">Alternative Phone</label>
-                                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ admin_profile.alternative_phone }}" value="{{ admin_profile.alternative_phone }}">
-                                </div>
-                            </div>
-
-							<div class="row">
-                                <div class="col-md-6">
-                                    <label for="fname">Date of Birth</label>
-                                    <input type="text" id="fname" name="dob" class="form-control" placeholder="{{ admin_profile.dob }}" value="{{ admin_profile.dob }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="lname">Adhar/Id</label>
-                                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="{{ admin_profile.adhar_id }}" value="{{ admin_profile.adhar_id }}">
-                                </div>
-                            </div>
-
-							<div class="row">
-                                <div class="col-md-6">
-                                    <label for="fname">Qualification</label>
-                                    <input type="text" id="fname" name="qualification" class="form-control" placeholder="{{ admin_profile.qualification }}" value="{{ admin_profile.qualification }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="lname">Hobbies</label>
-                                    <input type="text" id="lname" name="hobbies" class="form-control" placeholder="{{ admin_profile.hobbies }}" value="{{ admin_profile.hobbies }}">
-                                </div>
-                            </div>
-            
-                            
-            
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <label for="message">Summary/Bio</label>
-                                    <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="{{ admin_profile.summary }}" value="">{{ admin_profile.summary }}</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Update Profile" class="btn btn-primary">
-                            </div>
-						</form>
-                        
-					</div>
-
-					<div class="col-md-2 col-md-pull-7" style="margin-left: 300px;">
-						<div class="aside animate-box">
-							<div class="colorlib-form" >
-							<form action="{% url 'update_admin_profile_pic' %}" method="POST" enctype="multipart/form-data">
-								{% csrf_token %}
-			              	<div class="row">
-			                <div class="col-md-6">
-			                  <div class="form-group">
-			                    <div class="form-field profile-pic-div">
-
-			                    	{% if admin_profile.image != '' %}
-                					<img src="{{admin_profile.image.url}}" id="file-ip-1-preview">
-                					{% else %} 
-                					<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
-                					{% endif %}
 
 
-                                    <img src="{% static 'images/menu-9.jpg '%}" id="photo">
+    <div class="container_wideboxes">
+      <div class="col-md-8 profile_widebox">
 
-			                    </div>
-			                    <br>
-			                    <input type="file" name="img" required>
-              					<button type="submit" class="btn btn-primary">Update Profile Pic</button><br>
-			                  </div>
-			                </div>
-                         	</div>
-                            
-							
-			            </form>
-						</div>
-						</div>
-					</div>
+        <div class="col-md-4">
+            <form action="{% url 'update_admin_profile_pic' %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="profilepic_box">
+            	{% if admin_profile.image != '' %}
+				<img src="{{admin_profile.image.url}}" id="file-ip-1-preview">
+				{% else %} 
+				<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
+				{% endif %}
+                  <input type="file" name="img" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
+                  <label type="submit" for="file-ip-1" id="uploadBtn">Choose Photo</label>
+              </div><br><br><br><br><br><br><br><br><br><br><br><br>
+              <div class="col-md-12 uploadBtn_mobile" style="margin-left: -25px;">
+                  <button type="submit" class="btn btn-primary btn-block">Update Profile Pic</button><br>
+              </div>
+            </form>
+        </div>
+
+        <div class="col-md-8">
+          <img src="{% static 'images/edits.png '%}" id="editprofile" class="edit_profile_button">
+            <div class="desc" style="margin-top: 20px;margin-left: -40px;">
+              <h5 class="h5_style_big">First Name &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user.first_name }}</h5><br>
+              <h5 class="h5_style_big">Last Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user.last_name }}</h5><br>
+              <h5 class="h5_style_big">Email Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user.email }}</h5><br>
+              <br>
+                <div class="col-md-6 h5_profile_style_mobile1">
+                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ admin_profile.phone }}</h5><br>
+                  <h5 class="h5_profile_style">Date of Birth&nbsp;:&nbsp;{{ admin_profile.dob }}</h5><br>
+                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ admin_profile.profession }}</h5><br>
+                  <h5 class="h5_profile_style">Qualification&nbsp;:&nbsp;{{ admin_profile.qualification }}</h5><br>
+                </div>
+                <div class="col-md-6 h5_profile_style_mobile2">
+                  <h5 class="h5_profile_style">Phone 2&nbsp;&nbsp;:&nbsp;{{ admin_profile.alternative_phone }}</h5><br>
+                  <h5 class="h5_profile_style">Adhar Id&nbsp;:&nbsp;{{ admin_profile.adhar_id }}</h5><br>
+                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ admin_profile.location}}</h5><br>
+                  <h5 class="h5_profile_style">Hobbies&nbsp;&nbsp;:&nbsp;{{ admin_profile.hobbies }}</h5><br>
+                  <br>
+                </div>
+              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 15px;">{{ admin_profile.summary }}</p><br>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-4 wallet-form">
+        <div class="row">
+            <br>
+          <div class="col-md-12">
+            <h4 class="sub_headings">&nbsp;&nbsp;My Refferals</h4><br><br>
+                <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
+                  {% for i in my_refferals %}
+                    <tr style="font-size: 13px;">
+                     <td width="5%"><center>{{ forloop.counter }}</center></td>
+                     <td width="10%"><center>
+                      {% if i.image != '' %}
+                      <img src="{{i.image.url}}" alt="" height="50" width="50"/>
+                      {% else %}
+                      <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
+                      {% endif %}
+                     </center></td>
+                     <td width="85%">&nbsp;{{ i.username.username }}</td>
+                  {% endfor %}                       
+               </table>
+          </div>
+        </div>
+    </div>
 
 
 
-		
-					<div class="col-md-4 wallet-form" style="margin-top: -350px;margin-left: 350px;">
-			            <br>
-			              <div class="row">
-			                <div class="col-md-12">
-			                  <h4 class="sub_headings">&nbsp;&nbsp;My Refferals</h4><br><br>
-			                      <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
-			                        {% for i in my_refferals %}
-			                          <tr style="font-size: 13px;">
-			                           <td width="5%"><center>{{ forloop.counter }}</center></td>
-			                           <td width="10%"><center>
-			                            {% if i.image != '' %}
-			                            <img src="{{i.image.url}}" alt="" height="50" width="50"/>
-			                            {% else %}
-			                            <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
-			                            {% endif %}
-			                           </center></td>
-			                           <td width="85%">&nbsp;{{ i.username.username }}</td>
-			                        {% endfor %}                       
-			                     </table>
-			                </div>
 
-			              </div>
+	<div class="col-md-12 col-md-push-3 user_profileedit_form">
+      <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeprofile">
+        <form action="{% url 'admin_profile' %}" method="POST">
+          {% csrf_token %}
+          <br><br>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">First Name</label>
+                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Last Name</label>
+                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
+                </div>
+            </div>
+      
+            <div class="row col-md-12">
+                <div class="col-md-12">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" placeholder="{{ user.email }}" value="{{ user.email }}" disabled>
+                </div>
+            </div>
+      
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">Phone</label>
+                    <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ admin_profile.phone }}" value="{{ admin_profile.phone }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Alternative Phone</label>
+                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ admin_profile.alternative_phone }}" value="{{ admin_profile.alternative_phone }}">
+                </div>
+            </div>
 
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">Date of Birth</label>
+                    <input type="text" id="fname" name="dob" class="form-control" placeholder="{{ admin_profile.dob }}" value="{{ admin_profile.dob }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Adhar/Id</label>
+                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="{{ admin_profile.adhar_id }}" value="{{ admin_profile.adhar_id }}">
+                </div>
+            </div>
 
-			            </div>
-			        </div>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">Profession</label>
+                    <input type="text" id="fname" name="profession" class="form-control" placeholder="{{ admin_profile.profession }}" value="{{ admin_profile.profession }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Location</label>
+                    <input type="text" id="lname" name="location" class="form-control" placeholder="{{ admin_profile.location }}" value="{{ admin_profile.location }}">
+                </div>
+            </div>
+
+            <div class="row col-md-12">
+              <div class="col-md-6">
+                  <label for="fname">Qualification</label>
+                  <input type="text" id="fname" name="qualification" class="form-control" placeholder="{{ admin_profile.qualification }}" value="{{ admin_profile.qualification }}">
+              </div>
+              <div class="col-md-6">
+                  <label for="lname">Hobbies</label>
+                  <input type="text" id="lname" name="hobbies" class="form-control" placeholder="{{ admin_profile.hobbies }}" value="{{ admin_profile.hobbies }}">
+              </div>
+          </div>
+          <div class="row col-md-12">
+              <div class="col-md-12">
+                  <label for="message">Summary/Bio</label>
+                  <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="{{ admin_profile.summary }}" value="">{{ admin_profile.summary }}</textarea>
+              </div>
+          </div>
+          <div class="form-group">
+              <input type="submit" value="Update Profile" class="btn btn-primary">
+          </div>
+        </form>
+    </div>
+
 
 
 
@@ -146,7 +168,7 @@
 
        <br><br><br><br>
 
-		<div id="colorlib-reservation">
+<!-- 		<div id="colorlib-reservation">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 search-wrap">
@@ -190,10 +212,15 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	
 
-<br><br><br><br>
+
+
+
+
+
+
 
 
 	<!-- <script>
@@ -234,6 +261,21 @@ file.addEventListner('change', function(){
 
 
 	</script> -->
+
+
+
+
+
+	<script>
+	document.getElementById("editprofile").addEventListener("click",function(){
+	  document.querySelector(".user_profileedit_form").style.display = "flex";
+	})
+	document.querySelector(".closeprofile").addEventListener("click",function(){
+		document.querySelector(".user_profileedit_form").style.display = "none";
+	 })
+	
+
+	</script>
 
   
 {% endblock %}

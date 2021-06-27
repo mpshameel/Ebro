@@ -18,319 +18,109 @@
 
 
 
+<aside id="colorlib-hero">
+	<div class="flexslider">
+		<ul class="slides">
+			{% for i in ad_xxxl %}
+			{% if i.image != '' %}
+		   	<li style="background-image: url({{i.image.url}});">
+		   		<div class="overlay"></div>
+		   		<div class="container-fluid">
+		   			<div class="row">
+			   			<div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+			   			</div>
+			   		</div>
+		   		</div>
+		   	</li>
+		   	{% endif %}
+			{% endfor %}	   	
+	  	</ul>
+  	</div>
+</aside>
 
 
-<!-- <div style="position: absolute; left: 10px; top: 40px;">
-    <img id="img" src="paintbrush.png" class="clickme" width="200" height="200" alt="gimpybutt">
-    <input type="text" id="gimper" value="0"></input>
-</div> -->
 
-
-<div class="col-md-12 room-wrap">
-	<center>
-	{% for i in ad_xxxl %}
+<div class="col-md-12">
+	{% for i in ad_xxl %}
 	{% if i.image != '' %}
-		<img data-product={{i.id}} data-action="add" src="{{i.image.url}}" class="ad-count" alt="" width="1400" height="400" class="image-popup-link" style="margin-top: 10px;" />
+		<div class="col-md-6">
+			<img src="{{i.image.url}}" alt="" class="image-popup-link xxlimage" style="margin-top: 10px;" />
+		</div>
 	{% endif %}
 	{% endfor %}
-	</center>
 </div>
 
 
-{% for i in ad_xxl %}
-<div class="col-md-6 room-wrap">
-<center>
-{% if i.image != '' %}
-	<img src="{{i.image.url}}" alt="" width="700" height="400" class="image-popup-link" style="margin-top: 10px;" />
-{% endif %}
-</center>
-</div>
-{% endfor %}
 
 
-{% for i in ad_xl %}
-<div class="col-md-4 room-wrap">
-<center>
-{% if i.image != '' %}
-	<img src="{{i.image.url}}" alt="" width="450" height="400" class="image-popup-link" style="margin-top: 10px;" />
-{% endif %}
-</center>
-</div>
-{% endfor %}
-
-{% for i in ad_l %}
-<div class="col-md-3 room-wrap">
-<center>
-{% if i.image != '' %}
-	<img src="{{i.image.url}}" alt="" width="320" height="400" class="image-popup-link" style="margin-top: 10px;" />
-{% endif %}
-</center>
-</div>
-{% endfor %}
-
-
-{% for i in ad_s %}
-<div class="col-md-1 room-wrap">
-
-{% if i.image != '' %}
-	<img src="{{i.image.url}}" alt="" width="120" height="180" class="image-popup-link" style="margin-top: 10px;" />
-{% endif %}
-</div>
-{% endfor %}
-
-
-
-
-<br><br><br><br><br><br>
-
-		<div id="colorlib-reservation">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 search-wrap">
-						<form method="post" class="colorlib-form">
-		              	<div class="row">
-		                <div class="col-md-3">
-		                  <div class="form-group">
-		                    <label for="date">What:</label>
-		                    <div class="form-field">
-		                      <i class="icon icon-text"></i>
-		                      <input type="textfield" id="date" class="form-control text" placeholder="Keyword,job,tittle,etc">
-		                    </div>
-		                  </div>
-		                </div>
-						<div class="col-md-2">
-							<div class="form-group">
-							  <label for="adults">Country:</label>
-							  <div class="form-field">
-								<i class="icon icon-arrow-down3"></i>
-								<select name="people" id="people" class="form-control">
-								  <option value="#">1</option>
-								  <option value="#">2</option>
-								  <option value="#">3</option>
-								  <option value="#">4</option>
-								  <option value="#">5+</option>
-								</select>
-							  </div>
-							</div>
-						  </div>
-						
-		                
-		                <div class="col-md-2">
-		                  <div class="form-group">
-		                    <label for="adults">State:</label>
-		                    <div class="form-field">
-		                      <i class="icon icon-arrow-down3"></i>
-		                      <select name="people" id="people" class="form-control">
-		                        <option value="#">1</option>
-		                        <option value="#">2</option>
-		                        <option value="#">3</option>
-		                        <option value="#">4</option>
-		                        <option value="#">5+</option>
-		                      </select>
-		                    </div>
-		                  </div>
-		                </div>
-						<div class="col-md-3">
-							<div class="form-group">
-							  <label for="date">Where:</label>
-							  <div class="form-field">
-								<i class="icon icon-text"></i>
-								<input type="textfield" id="date" class="form-control text" placeholder="Keyword,job,tittle,etc">
-							  </div>
-							</div>
-						</div>
-		                
-		                <div class="col-md-2">
-		                  <input type="submit" name="submit" id="submit" value="Search" class="btn btn-primary btn-block">
-		                </div>        
-		              </div>
-		            </form>
-					</div>
-				</div>
-			</div>
+<div class="col-md-12">
+	{% for i in ad_xl %}
+	{% if i.image != '' %}
+		<div class="col-md-4">
+			<img src="{{i.image.url}}" alt="" class="image-popup-link xlimage" style="margin-top: 10px;" />
 		</div>
-  		
+	{% endif %}
+	{% endfor %}
+</div>
 
 
 
 
-
-
-		<div id="colorlib-rooms" class="colorlib-light-grey">
-			<div class="container">
-				
-				<div class="row">
-					<div class="col-md-12 animate-box">
-						<div class="owl-carousel owl-carousel2">
-							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-1.jpg' %}" class="room image-popup-link"></a> 
-								<div class="desc text-center">
-									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span>
-									<h3><a href="rooms-suites.html">Suite</a></h3>
-									<p class="price">
-										<span class="currency">$</span>
-										<span class="price-room">99</span>
-										<span class="per">/ per night</span>
-									</p>
-									<ul>
-										<li><i class="icon-check"></i> Only 10 rooms are available</li>
-										<li><i class="icon-check"></i> Breakfast included</li>
-										<li><i class="icon-check"></i> Price does not include VAT &amp; services fee</li>
-									</ul>
-									<p><a class="btn btn-primary btn-book">Book now!</a></p>
-								</div>
-							</div>
-							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-2.jpg' %}" class="room image-popup-link"></a>
-								<div class="desc text-center">
-									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
-									<h3><a href="rooms-suites.html">Double Room</a></h3>
-									<p class="price">
-										<span class="currency">$</span>
-										<span class="price-room">199</span>
-										<span class="per">/ per night</span>
-									</p>
-									<ul>
-										<li><i class="icon-check"></i> Perfect for traveling couples</li>
-										<li><i class="icon-check"></i> Breakfast included</li>
-										<li><i class="icon-check"></i> Price does not include VAT &amp; services fee</li>
-									</ul>
-									<p><a class="btn btn-primary btn-book">Book now!</a></p>
-								</div>
-							</div>
-							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-3.jpg' %}" class="room image-popup-link"></a>
-								<div class="desc text-center">
-									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
-									<h3><a href="rooms-suites.html">Family Room</a></h3>
-									<p class="price">
-										<span class="currency">$</span>
-										<span class="price-room">249</span>
-										<span class="per">/ per night</span>
-									</p>
-									<ul>
-										<li><i class="icon-check"></i> Two double beds</li>
-										<li><i class="icon-check"></i> Babysitting facilities</li>
-										<li><i class="icon-check"></i> 1 free bed available on request</li>
-									</ul>
-									<p><a class="btn btn-primary btn-book">Book now!</a></p>
-								</div>
-							</div>
-							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-4.jpg' %}" class="room image-popup-link"></a>
-								<div class="desc text-center">
-									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
-									<h3><a href="rooms-suites.html">Classic Double Room</a></h3>
-									<p class="price">
-										<span class="currency">$</span>
-										<span class="price-room">150</span>
-										<span class="per">/ per night</span>
-									</p>
-									<ul>
-										<li><i class="icon-check"></i> Only 10 rooms are available</li>
-										<li><i class="icon-check"></i> Breakfast included</li>
-										<li><i class="icon-check"></i> Price does not include VAT &amp; services fee</li>
-									</ul>
-									<p><a class="btn btn-primary btn-book">Book now!</a></p>
-								</div>
-							</div>
-							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-5.jpg' %}" class="room image-popup-link"></a>
-								<div class="desc text-center">
-									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
-									<h3><a href="rooms-suites.html">Superior Double Room</a></h3>
-									<p class="price">
-										<span class="currency">$</span>
-										<span class="price-room">200</span>
-										<span class="per">/ per night</span>
-									</p>
-									<ul>
-										<li><i class="icon-check"></i> Perfect for traveling couples</li>
-										<li><i class="icon-check"></i> Breakfast included</li>
-										<li><i class="icon-check"></i> Price does not include VAT &amp; services fee</li>
-									</ul>
-									<p><a class="btn btn-primary btn-book">Book now!</a></p>
-								</div>
-							</div>
-							<div class="item">
-								<a href="#$#"><img src="{% static 'images/room-6.jpg' %}" class="room image-popup-link"></a>
-								<div class="desc text-center">
-									<span class="rate-star"><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full full"></i><i class="icon-star-full"></i></span>
-									<h3><a href="rooms-suites.html">Superior Family Room</a></h3>
-									<p class="price">
-										<span class="currency"><small>$</small></span>
-										<span class="price-room">299</span>
-										<span class="per">/ per night</span>
-									</p>
-									<ul>
-										<li><i class="icon-check"></i> Perfect for traveling couples</li>
-										<li><i class="icon-check"></i> Breakfast included</li>
-										<li><i class="icon-check"></i> Price does not include VAT &amp; services fee</li>
-									</ul>
-									<p><a class="btn btn-primary btn-book">Book now!</a></p>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		
-
-
-
-			<div id="colorlib-services">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-3 animate-box text-center">
-							<div class="services">
-								<span class="icon">
-									<i class="flaticon-reception"></i>
-								</span>
-								<h3>24/7 Front Desk</h3>
-								<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies</p>
-							</div>
-						</div>
-						<div class="col-md-3 animate-box text-center">
-							<div class="services">
-								<span class="icon">
-									<i class="flaticon-herbs"></i>
-								</span>
-								<h3>Spa Suites</h3>
-								<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies</p>
-							</div>
-						</div>
-						<div class="col-md-3 animate-box text-center">
-							<div class="services">
-								<span class="icon">
-									<i class="flaticon-car"></i>
-								</span>
-								<h3>Transfer Services</h3>
-								<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies</p>
-							</div>
-						</div>
-						<div class="col-md-3 animate-box text-center">
-							<div class="services">
-								<span class="icon">
-									<i class="flaticon-cheers"></i>
-								</span>
-								<h3>Restaurant &amp; Bar</h3>
-								<p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
+<div class="col-md-12">
+	{% for i in ad_l %}
+	{% if i.image != '' %}
+		<div class="col-xs-6 col-md-3">
+			<img src="{{i.image.url}}" alt="" class="image-popup-link limage" style="margin-top: 10px;" />
 		</div>
-	
-		
-       
+	{% endif %}
+	{% endfor %}
+</div>
 
-		
-	{% endblock %}	
+
+
+
+
+<div class="col-md-12">
+	{% for i in ad_s %}
+	{% if i.image != '' %}
+		<div class="col-xs-6 col-md-1">
+			<img src="{{i.image.url}}" alt="" width="120" height="180" class="image-popup-link" style="margin-top: 10px;" />
+		</div>
+	{% endif %}
+	{% endfor %}
+</div>
+
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+<!-- 
+<div class="slideshow-container">
+
+  {% for i in ad_xxxl %}
+  {% if i.image != '' %}
+  <div class="mySlides fade">
+    <img src="{{i.image.url}}" style="width:50%">
+  </div>
+  {% endif %}
+  {% endfor %}
+
+
+</div>
+<br> -->
+
+
+
+
+
+
+
+
+
+{% endblock %}	
 
 		
 	

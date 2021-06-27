@@ -4,189 +4,201 @@
 
 {% load static %}
 
-<!-- <style>
-	.active_user_page3{
-		background-color: #99c2ff;
-	}
-</style> -->
+
+<style>
+   .active_user_page10{
+      background-color: #99c2ff;
+   }
+   .active_user_smallpage10{
+      color: white;
+      background-color: #000;
+   }
+</style>
   
 
-		<div class="col-xs-3">
-			<h2 class="sub_headings">&nbsp;Select Address</h2>
-			<br>
-			<form action="{% url 'checkout' %}" method="POST">
-				{% csrf_token %}
-			<table  cellspacing="0" style="margin-left: 10px;width: 100%;font-size: 13px;font-family: 'Antonio', sans-serif;font-family: 'Ubuntu', sans-serif;">
-		  		{% for i in user_address %}
-		  		<tr>
-		  		<td><b>Address&nbsp;&nbsp;&nbsp;{{ forloop.counter }}</b>&nbsp;&nbsp;&nbsp;<br><br></td>
-		  		<td><button type="submit" name="address_id" value="{{i.id}}" class="btn2 btn2-2 btn2-sep">Select&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button></td>
-		  		</tr>
-		  		&nbsp;
-      			<tr style="height: 30px;">
-      	 		<td width="30%">First Name</td><td width="70%">&nbsp;&nbsp;<b>{{ i.first_name }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Last Name</td><td width="70%">&nbsp;&nbsp;<b>{{ i.last_name }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Country</td><td width="70%">&nbsp;&nbsp;<b>{{ i.country }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">State</td><td width="70%">&nbsp;&nbsp;<b>{{ i.state }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">District</td><td width="70%">&nbsp;&nbsp;<b>{{ i.district }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Postal Code</td><td width="70%">&nbsp;&nbsp;<b>{{ i.postalcode }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Phone</td><td width="70%">&nbsp;&nbsp;<b>{{ i.phone }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 30px;">
-      	 		<td width="30%">Alternative Phone</td><td width="70%">&nbsp;&nbsp;<b>{{ i.alternative_phone }}</b></td>
-      	 		</tr>
-      	 		<tr style="height: 60px;">
-         		<td width="30%">Address Line 1</td><td width="70%">&nbsp;&nbsp;<b>{{ i.address_line_1 }}</b></td>
-         		</tr>
-         		<tr style="height: 60px;">
-         		<td width="30%">Address Line 2</td><td width="70%">&nbsp;&nbsp;<b>{{ i.address_line_2 }}</b></td>
-         		</tr>
-      			{% endfor %}
-   			</table>
-   			</form>
-		</div>
 
- 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
- 		<div class="col-md-4 col-md-push-3" style="margin-left: -300px;width: 33%;font-size: 13px;font-family: 'Antonio', sans-serif;font-family: 'Ubuntu', sans-serif;">
- 			<h2 class="sub_headings">Add Address</h2>
- 			<br><br>
-			<form action="{% url 'add_address2' %}" method="POST">
-                {% csrf_token %}
-            <div class="row">
-                <div class="col-md-6">
-                   	<label for="fname">First Name</label>
-                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
+
+
+
+
+
+  <div class="col-md-7">
+    <div class="container_wideboxes">
+        <div class="col-md-4 cartwidebox">
+
+          <div class="col-md-12 col-md-push-3 user_address_form">
+            <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeaddress">
+            <form action="{% url 'add_address2' %}" method="POST">
+              {% csrf_token %}
+              <br><br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="fname">First Name</label>
+                        <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
                     </div>
-      			<div class="col-md-6">
-                    <label for="lname">Last Name</label>
-                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
-                </div>                
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                <label for="fname">Country</label>
-                <input type="text" id="fname" name="country" class="form-control" placeholder="" value="">
+                    <div class="col-md-6">
+                        <label for="lname">Last Name</label>
+                        <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                <label for="lname">State</label>
-                <input type="text" id="lname" name="state" class="form-control" placeholder="" value="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="fname">Country</label>
+                        <input type="text" id="fname" name="country" class="form-control" placeholder="" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lname">State</label>
+                        <input type="text" id="lname" name="state" class="form-control" placeholder="" value="">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                <label for="fname">District</label>
-                <input type="text" id="fname" name="district" class="form-control" placeholder="" value="">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="fname">District</label>
+                        <input type="text" id="fname" name="district" class="form-control" placeholder="" value="">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lname">Postal Code</label>
+                        <input type="text" id="lname" name="postalcode" class="form-control" placeholder="" value="">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                <label for="lname">Postal Code</label>
-                <input type="text" id="lname" name="postalcode" class="form-control" placeholder="" value="">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="fname">Phone</label>
+                        <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ user_profile.phone }}" value="{{ user_profile.phone }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lname">Alternative Phone</label>
+                        <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ user_profile.alternative_phone }}" value="{{ user_profile.alternative_phone }}">
+                    </div>
                 </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-6">
-                <label for="fname">Phone</label>
-                <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ user_profile.phone }}" value="{{ user_profile.phone }}">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="fname">Address Line 1</label>
+                        <input type="text" id="fname" name="address_line_1" class="form-control" placeholder="" value="">
+                    </div>
+                    <div class="col-md-12">
+                        <label for="lname">Address Line 2</label>
+                        <input type="text" id="lname" name="address_line_2" class="form-control" placeholder="" value="">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                <label for="lname">Alternative Phone</label>
-                <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ user_profile.alternative_phone }}" value="{{ user_profile.alternative_phone }}">
+                <br>
+                
+                <div class="form-group">
+                    <input type="submit" value="Add Address" class="btn btn-primary">
                 </div>
-            </div>
-
-			<div class="row">
-                <div class="col-md-12">
-                <label for="fname">Address Line 1</label>
-                <input type="text" id="fname" name="address_line_1" class="form-control" placeholder="" value="">
-                </div>
-                <div class="col-md-12">
-                <label for="lname">Address Line 2</label>
-                <input type="text" id="lname" name="address_line_2" class="form-control" placeholder="" value="">
-                </div>
-            </div>
- 			<br>
-                            
-            <div class="form-group">
-                <input type="submit" value="Add Address" class="btn btn-primary">
-           	</div>
-			</form>
-                        
-		</div>
+            </form>              
+          </div>
 
 
-		<div class="col-xs-4 user_checkout_box" style="margin-left: 400px;">
-		  	<h2 class="sub_headings">My Bag</h2><br><br>
-		  	<table  cellspacing="0" style="width: 100%">
-      			<tr class="">
-      			<center>
-      			<th width="5%"><center>#</center></th>
-      	 		<th width="10%"><center></center></th>
-         		<th width="40%"><center>Product Name</center></th>
-         		<th width="15%"><center>Price</center></th>
-        		<th width="10%"><center>x</center></th>
-         		<th width="20%"><center>Total</center></th>
-         		</center>
-      			</tr>
-      			<br>
-      			{% for i in user_product_cart %}
-      			<tr class="">
-      	 		<td><center>{{ forloop.counter }}</center></td>
-         		<td><center>
-         			{% if i.product.picture != '' %}
-         			<img src="{{i.product.picture.url}}" alt="" width="50" height="50" />
-         			{% else %}
-         			<img src="{% static 'images/assign.png' %}" alt="" width="50" height="50"/>
-         			{% endif %}
-         			</center>
-         		</td>
-         		<td>&nbsp;&nbsp;{{ i.product.product_name }}</td>
-         		<td><center>{{ i.product.price }}</center></td>
-         		<td><center>{{i.quantity}}</center></td>
-         		<td><center>{% widthratio i.quantity 1 i.product.price %}</center></td>
-      			</tr>
-      			{% endfor %}
-   			</table>
+          <br>
+          <img src="{% static 'images/address1.png '%}" id="addaddress" class="add_address">
+          <br><br>
+
+          <h2 class="headings_small">Select Address</h2><br><br>
+            <form action="{% url 'checkout' %}" method="POST">
+              {% csrf_token %}
+                {% for i in user_address %}
+                <button type="submit" name="address_id" value="{{i.id}}" class="btn btn-primary">Select</button><br>
+
+                <h2 class="h5_style">Address&nbsp;{{ forloop.counter }}</h2><br>
+                  <h4 class="h5_profile_style">First Name&nbsp;&nbsp;:&nbsp;{{ i.first_name }}</h4><br>
+                  <h4 class="h5_profile_style">Last Name&nbsp;&nbsp;:&nbsp;{{ i.last_name }}</h4><br>
+                  <h3 class="h5_profile_style">Country&nbsp;&nbsp;:&nbsp;{{ i.country }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State&nbsp;&nbsp;:&nbsp;{{ i.state }}</h3><br>
+                  <h3 class="h5_profile_style">District&nbsp;&nbsp;:&nbsp;{{ i.district }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin&nbsp;&nbsp;:&nbsp;{{ i.postalcode }}</h3><br>
+                  <h3 class="h5_profile_style">Phone&nbsp;&nbsp;:&nbsp;{{ i.phone }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone 2&nbsp;&nbsp;:&nbsp;{{ i.alternative_phone }}</h3><br>
+                  <h3 class="h5_profile_style">Address Line 1&nbsp;&nbsp;:&nbsp;{{ i.address_line_1 }}</h3><br>
+                  <h3 class="h5_profile_style">Address Line 2&nbsp;&nbsp;:&nbsp;{{ i.address_line_2 }}</h3><br><br>
+                {% endfor %}
+            </form>
+        </div>
+    </div>          
+  </div>  
 
 
-			<br><br>
-
-			<h2 class="sub_headings">Total</h2><br><br>
-				<div class="row col-md-10" style="margin-left: -25px;">
-					<h4 class="btn3 btn3-2">Items</h4><br><br>
-					<h3 class="btn3 btn3-2">Sub-Total</h3>
 
 
-				</div>
+<div class="col-xs-4">
+  <div class="container_wideboxes">
+    <div class="mybag_boxes">
+        <h2 class="headings_small">My Bag</h2><br><br>
+        <table  cellspacing="0">
+            <tr>
+            <center>
+            <th width="5%"><center>#</center></th>
+            <th width="10%"><center></center></th>
+            <th width="40%"><center>Product Name</center></th>
+            <th width="15%"><center>Price</center></th>
+            <th width="10%"><center>x</center></th>
+            <th width="20%"><center>Total</center></th>
+            </center>
+            </tr>
+            <br>
+            {% for i in user_product_cart %}
+            <tr class="">
+            <td><center>{{ forloop.counter }}</center></td>
+            <td><center>
+              {% if i.product.picture != '' %}
+              <img src="{{i.product.picture.url}}" alt="" width="50" height="50" />
+              {% else %}
+              <img src="{% static 'images/assign.png' %}" alt="" width="50" height="50"/>
+              {% endif %}
+              </center>
+            </td>
+            <td>&nbsp;&nbsp;{{ i.product.product_name }}</td>
+            <td><center>{{ i.product.price }}</center></td>
+            <td><center>{{i.quantity}}</center></td>
+            <td><center>{% widthratio i.quantity 1 i.product.price %}</center></td>
+            </tr>
+            {% endfor %}
+        </table>
 
-				<div class="row col-md-2">
-					<h4 class="btn3 btn3-2">:{{cart_count}}</h4><br><br>
-					<h3 class="btn3 btn3-2">:$&nbsp;&nbsp;{{total_price}}</h3><br><br>
 
-				</div>
-				<!-- <form action="{% url 'checkout' %}" method="POST">
-					{% csrf_token %}
-         			<input type="hidden" value="{{ i.id }}" name="id_delete">
-					<button href="checkout" class="btn2 btn2-2 btn2-sep" style="width: 100%;">Payment</button>
-            	</form> -->
+      <br><br>
 
-			</div>
+      <h2 class="headings_small">Total</h2><br><br>
+        <div class="col-md-12">
+          <h4 class="btn3 btn3-2">Items
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          :&nbsp;&nbsp;{{cart_count}}</h4><br><br>
+          <h3 class="btn3 btn3-2">Sub-Total
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          :&nbsp;&nbsp;$&nbsp;&nbsp;{{total_price}}</h3><br><br>
+        </div>
+        <br><br><br><br>
+    </div> 
+  </div>  
+</div>
 
-		</div> 
+
 		
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+
+
+
+
+
+    <script>
+    document.getElementById("addaddress").addEventListener("click",function(){
+      document.querySelector(".user_address_form").style.display = "flex";
+    })
+    document.querySelector(".closeaddress").addEventListener("click",function(){
+      document.querySelector(".user_address_form").style.display = "none";
+     })
+      document.querySelector(".addaddress").addEventListener("click",function(){
+      document.querySelector(".addaddress").style.display = "none";
+     })
+      document.querySelector(".closeaddress").addEventListener("click",function(){
+      document.querySelector(".addaddress").style.display = "flex";
+     })
+  
+    </script>
 
 
 {% endblock %}

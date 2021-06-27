@@ -16,29 +16,23 @@
 
 
 
-	{% if user.is_authenticated %}
-	<a href="#"><h3 id="addbutton" class="addbutton">+&nbsp;ADD&nbsp;DEALS</h3></a>
-	{% endif %}
-	<form action="{% url 'deal' %}" method="POST" enctype="multipart/form-data">
-		{% csrf_token %}
-		<div class=" animate-box deals-form">
-			<br>
-			<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closedeal">
-			<div class="col-md-4 left_form_deal">
-				<br>
 
-				<!-- <div class="image-update-div deals-pic-circle">
-					<img src="{% static 'images/menu-9.jpg '%}" id="photo">
-					<input type="file" name="picture" id="file">
-				</div> -->
+	<div class="container_wideboxes">
+		{% if user.is_authenticated %}
+		<a href="#"><h3 id="addbutton" class="addbutton">+&nbsp;ADD&nbsp;DEAL</h3></a>
+		{% endif %}	
+		<div class="col-md-12 additem-form">
+			<form action="{% url 'deal' %}" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="col-md-4">
+				<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeitem-form">
 
-
-				<div class="form-field col-md-12 profile-pic-div deals-pic-circle">
+				<div class="form-field col-md-12 deals-pic-circle">
                 	<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
                 	<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
 			        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>        
 			    </div>
-			    <br><br><br><br><br><br><br><br><br><br>
+			    <br><br><br><br><br><br><br><br><br>
 
 				<div class="col-md-12">
 					<label for="fname">Deal Name</label>
@@ -52,36 +46,36 @@
 					<label for="lname">Attachments</label>
 					<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
 				</div>
-
+				
 			</div>
-			<div class="col-md-8 right_form_deal">
-				<br>
-				<div class="col-md-1">
-					<label for="subject">Publish</label><br>
-					<input type="radio" name="publish" value="public" checked="checked">
-					<input type="radio" name="publish" value="private">
-				</div>
-				<div class="col-md-2">
+			<div class="col-md-8">
+				
+				<div class="col-md-4 wrapper-class">
+					<label for="subject">Publish</label>
 					<br>
-					Public
-					<br>Private
+						<input type="radio" id="radio1" name="publish" value="public" checked="checked">
+	  					<label for="radio1">Public</label>
+						<input type="radio" id="radio2" name="publish" value="private">
+						<label for="radio2">Private</label>
 				</div>
-				<div class="col-md-9">
-					<br>[your product or deal will handle by E-bro through private channel]
-				</div>
-				<div class="col-md-1">
-					<label for="subject">Type</label><br>
-					<input type="radio" name="deal_type" value="Single" checked="checked">
-					<input type="radio" name="deal_type" value="Multiple">
-				</div>
-				<div class="col-md-2">
+				<div class="col-md-8">
 					<br>
-					Single<br>
-					Multiple
+					[your product or deal will handle by E-bro through private channel]
 				</div>
-				<div class="col-md-9">
-					<br>[your product can categorize based on brand name or individual]
+
+				<div class="col-md-4 wrapper-class">
+					<label for="subject">Type</label>
+					<br>
+						<input type="radio" id="radio3" name="deal_type" value="Single" checked="checked">
+	  					<label for="radio3">Single</label>
+						<input type="radio" id="radio4" name="deal_type" value="Multiple">
+						<label for="radio4">Multiple</label>
 				</div>
+				<div class="col-md-8">
+					<br>
+					[your product can categorize based on brand name or individual]
+				</div>
+
 				<div class="col-md-12">
 					<label for="subject">Brand Name</label>
 					<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
@@ -116,10 +110,10 @@
 				</div>
 				</div>
 			</div>
+			</form>
 		</div>
-	</form>
-
-			
+	</div>
+	
 
 
 
@@ -147,11 +141,11 @@
 		 						<form action="{% url 'deal_to_task' %}" method="POST">
 									{% csrf_token %}
 		 						<input type="hidden" value="{{ i.id }}" name="id_deal">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
 								</form>
 								{% else %}
 		    					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
 		    					</form>
 							{% endif %}
 						</div>
@@ -250,10 +244,10 @@
 
 	<script>
 		document.getElementById("addbutton").addEventListener("click",function(){
-		  document.querySelector(".deals-form").style.display = "flex";
+		  document.querySelector(".additem-form").style.display = "flex";
 		})
-		document.querySelector(".closedeal").addEventListener("click",function(){
-			document.querySelector(".deals-form").style.display = "none";
+		document.querySelector(".closeitem-form").addEventListener("click",function(){
+			document.querySelector(".additem-form").style.display = "none";
 		  })
 		
 	

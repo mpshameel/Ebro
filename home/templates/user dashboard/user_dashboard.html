@@ -243,7 +243,7 @@
 						</ul>
 					</div>
 					<div class="col-xs-6 align-center">
-						<a href="/home"><img src="{% static 'images/ebro3.png '%}" class="ebro" alt=""></a>
+						<a href="/home"><img src="{% static 'images/ebro4.png '%}" class="ebro" alt=""></a>
 						
 					</div>
 					<div class="col-xs-4 text-right">
@@ -254,7 +254,7 @@
 							  	<li class="active"><a href="/home/cart"><img src="{% static 'images/cart6.png '%}"  class="cart"><span class="cart_count">{{cart_count}}</span></a></li> -->
 
 								{% if user_profile.image != '' %}
-								<div class="col-xs-1">
+								<div class="col-xs-4">
          						<li class="active"><a href="/home/profiles"><img src="{{user_profile.image.url}}"  class="person"/></a></li>
 
          						<li class="has-dropdown active"><a href="/home/profiles"><img src="{% static 'images/profile_link.png '%}"  class="profile_link"/></a>
@@ -283,8 +283,10 @@
 									</ul>
 								</li>
          						</div>
-         						<div class="col-xs-8">
-         						<span class="username"><b>{{user_profile.username.username}}<br><font style="color: whitesmoke;">Wallet&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span>
+         						<div class="col-xs-8 username_mobile">
+     							<span class="username"><b>{{user_profile.username.username}}
+     							<font style="color: whitesmoke;">Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user_profile.coins}}</font><br>
+     							<font style="color: whitesmoke;">Wallet&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span>
          						</div>
          						{% endif %}
          					 
@@ -304,7 +306,7 @@
 				<div class="row">
 					<div class="col-xs-2">
 
-						<a href="home.html"><img src="{% static 'images/ebro_small.jpg '%}" class="ebrosmall" alt=""></a>
+						<a href="home.html"><img src="{% static 'images/ebro_small.png '%}" class="ebrosmall" alt=""></a>
 					</div>
 					<div class="col-xs-14 text-center menu-1">
 						<ul>
@@ -316,15 +318,15 @@
 							{% if user.is_authenticated %}
 							<li class="links_admin_all active_user_page5"><a href="/home/daily_task">Daily Task<span class="count">2</span></a></li>
 							{% endif %}
-							{% if user.is_authenticated %}
 							<li class="links_admin_all active_user_page6"><a href="/home/job">Jobs</a></li>	
+							{% if user.is_authenticated %}
 							<li class="links_admin_all active_user_page7"><a href="/home/myads">My Ads</a></li>
 							<li class="links_admin_all active_user_page8"><a href="/home/myorders">My Orders</a></li>
 							<li class="links_admin_all active_user_page9"><a href="/home/wishlist">Wishlist</a></li>
 							<li class="links_admin_all active_user_page10"><a href="/home/cart">Cart</a></li>
 							<li class="links_admin_all active_user_page11"><a href="/home/chats">Chats</a></li>
 							<li class="links_admin_all active_user_page12"><a href="/home/about_us">About Us</a></li>
-<!-- 							<li class="links_admin_all"><a href="user_logout">Logout</a></li> -->
+							<li class="links_admin_all"><a href="/home/user_logout">Logout</a></li>
 							
 							{% endif %}
 						</ul>

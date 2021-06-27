@@ -242,7 +242,8 @@ def premium_user_signup(request):
 
 
                 if user is not None:
-                    auth.login(request,user)
+                    # auth.login(request,user)
+                    auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                     messages.info(request,"Registered Successfully")
                     return redirect('premium_signup_payment')
                 
@@ -830,8 +831,8 @@ def daily_task(request):
     cart_count = sum(items.values_list('quantity', flat=True))
 
     user = User.objects.get(id=request.user.id)
-    daily_deals_list = assign_deal.objects.filter(assigns=request.user.id)
-    daily_jobs_list = assign_job.objects.filter(assigns=request.user.id)
+    daily_deals_list = assign_deal.objects.filter(username=request.user.id)
+    daily_jobs_list = assign_job.objects.filter(username=request.user.id)
     # user_products_list = products.objects.filter(username_id=request.user.id)
     user_profile = profile.objects.get(username_id=request.user.id)
     context = {'user':user,'daily_deals_list':daily_deals_list,'daily_jobs_list':daily_jobs_list,'user_profile':user_profile,'cart_count':cart_count}
@@ -1587,14 +1588,13 @@ def deal_to_task(request):
         id_deal = request.POST.get('id_deal')
         dealtotask = deals.objects.get(id=id_deal)
         user = User.objects.get(id=request.user.id)
-        assign_deal(deal=dealtotask,username=user,assigns=user.id).save()
+        profile_id = profile.objects.get(username_id=request.user.id)
+        assign_deal(deal=dealtotask,username=user,assigns=profile_id).save()
         messages.info(request,"Deal added to DailyTask")
         return redirect('deal')
     else:
         messages.info(request,"Not added to DailyTask")
         return redirect('deal')
-
-
 
 
 
@@ -1619,15 +1619,13 @@ def job_to_task(request):
         id_job = request.POST.get('id_job')
         jobtotask = jobs.objects.get(id=id_job)
         user = User.objects.get(id=request.user.id)
-        assign_job(job=jobtotask,username=user,assigns=user.id).save()
+        profile_id = profile.objects.get(username_id=request.user.id)
+        assign_job(job=jobtotask,username=user,assigns=profile_id).save()
         messages.info(request,"Job added to DailyTask")
         return redirect('job')
     else:
         messages.info(request,"Not added to DailyTask")
         return redirect('job')
-
-
-
 
 
 

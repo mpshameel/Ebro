@@ -4,17 +4,137 @@
 
 {% load static %}
 
-<!-- <style>
-	.active_user_page3{
+<style>
+	.active_user_page8{
 		background-color: #99c2ff;
 	}
-</style> -->
-  
+	.active_user_smallpage8{
+      color: white;
+      background-color: #000;
+   }
+</style>
 
 
 
- 
+		<div class="container_wideboxes">
+			<div class="col-md-8">
+				{% for i in my_orders %}
+				<div class="col-md-4 orderwidebox">
+					<div class="col-md-3">
+						{% if i.product.picture != '' %}
+	 					<img class="img-responsive order_image" src="{{i.product.picture.url}}" alt="ebro-world.com">
+	 					{% else %}
+	 					<img class="img-responsive order_image" src="{% static 'images/img_bg_5.jpg' %}" alt="ebro-world.com">
+	 					{% endif %}
+	 					<br>
+			         	{% if i.status == "delivered" %}
+						<p style="word-break: break-all;">Delivered 
+						{% else %}
+						<p style="word-break: break-all;">Delivery expected in : {{ i.delivery_date }} Days</p>
+						{% endif %}
+					</div>
+					<div class="col-md-7">
+						<div class="desc">
+							<h5 class="h5_style">{{ i.product.product_name }}</h5>
+							<h5><font style="color: #8e9416;">items &nbsp;&nbsp;:&nbsp;{{i.product_count}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price &nbsp;&nbsp;:$&nbsp;&nbsp;{{ i.product.price }}</font></h5>
+							<h4><b>Total &nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{% widthratio i.product_count 1 i.product.price %}</b></h4>
+							Type&nbsp;{% if i.product.product_type == "Single" %} 
+							  {{ i.product.product_type }}
+							  {% else %}
+							  {{ i.product.product_type }}
+							  <br>
+							  <b>{{ i.product.brand_name }}</b>
+							  {% endif %}
+							 <br>
+							{{ i.product.email }}<br>
+							{{ i.product.contact }}<br>
+							{{ i.product.location }}<br>
+							<b>Details :</b><br>
+							<p style="word-break: break-all;line-height: 15px;">{{ i.product.details }}</p><br>
+						</div>
+					</div>
+					<div class="col-md-2">
+						{% if i.status == "ordered" %}
+						<img class="img-responsive order_imagestatus" src="{% static 'images/delivery_recieved.jpg' %}" alt="ebro-world.com">
+						<img class="img-responsive order_imagestatus_mobile" src="{% static 'images/delivery_recieved_mobile.jpg' %}" alt="ebro-world.com">
+						{% elif i.status == "packing" %}
+						<img class="img-responsive order_imagestatus" src="{% static 'images/delivery_packing.jpg' %}" alt="ebro-world.com">
+						<img class="img-responsive order_imagestatus_mobile" src="{% static 'images/delivery_packing_mobile.jpg' %}" alt="ebro-world.com">
+						{% elif i.status == "shipped" %}
+						<img class="img-responsive order_imagestatus" src="{% static 'images/delivery_shipped.jpg' %}" alt="ebro-world.com">
+						<img class="img-responsive order_imagestatus_mobile" src="{% static 'images/delivery_shipped_mobile.jpg' %}" alt="ebro-world.com">
+						{% elif i.status == "on_the_way" %}
+						<img class="img-responsive order_imagestatus" src="{% static 'images/delivery_on_the_way.jpg' %}" alt="ebro-world.com">
+						<img class="img-responsive order_imagestatus_mobile" src="{% static 'images/delivery_on_the_way_mobile.jpg' %}" alt="ebro-world.com">
+						{% elif i.status == "delivered" %}
+						<img class="img-responsive order_imagestatus" src="{% static 'images/delivery_delivered.jpg' %}" alt="ebro-world.com">
+						<img class="img-responsive order_imagestatus_mobile" src="{% static 'images/delivery_delivered_mobile.jpg' %}" alt="ebro-world.com">
+						{% endif %}
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="col-md-4 widebox">
+				<br>
+				<h2 class="headings">Total</h2><br><br><br>
+				<div class="col-md-12">
+					<h4 class="btn3 btn3-2">Items&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{order_count}}</h4><br><br>
+					<h3 class="btn3 btn3-2">Sub-Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;$&nbsp;&nbsp;{{total_order_price}}</h3><br><br>
+				</div>
 
+			</div>
+		</div>	
+
+
+<!-- 		<div id="colorlib-about">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						{% for i in my_orders %}
+					    <div class="col-md-12">
+	 						{% if i.status == "delivered" %}
+	 						<p style="word-break: break-all;">Delivered 
+	 						{% else %}
+	 						<p style="word-break: break-all;">Delivery expected in : {{ i.delivery_date }} Days</p>
+	 						{% endif %}
+
+	 						{% if i.status == "ordered" %}
+	 						<img src="{% static 'images/delivery_recieved.jpg' %}" />
+	 						{% elif i.status == "packing" %}
+	 						<img src="{% static 'images/delivery_packing.jpg' %}" />
+	 						{% elif i.status == "shipped" %}
+	 						<img src="{% static 'images/delivery_shipped.jpg' %}" />
+	 						{% elif i.status == "on_the_way" %}
+	 						<img src="{% static 'images/delivery_on_the_way.jpg' %}" />
+	 						{% elif i.status == "delivered" %}
+	 						<img src="{% static 'images/delivery_delivered.jpg' %}" />
+	 						{% endif %}
+						</div>
+
+
+
+         					<br>
+         					{{ i.product.category }}
+         					<br>
+         					{{ i.product.email }}
+         					<br>
+         					{{ i.product.contact }}
+         					<br>
+         					{{ i.product.location }}
+         					<br></b>
+         					<p style="word-break: break-all;">{{ i.product.details }}</p>
+         					</font>
+						</div>
+						{% endfor %}
+					</div>
+
+				</div>
+			</div>
+		</div>
+ -->
+<!-- <br>
+ ---------------------------------------------------------------------------------------------------------------------------- -->
+<!-- 
  		<div class="col-xs-7">
 				<div class="row">
 					{% for i in my_orders %}
@@ -81,13 +201,6 @@
 	         					<p style="word-break: break-all;">{{ i.product.details }}</p>
 	         					</font>
 
-								<!-- <form action="{% url 'delete_cart' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_delete">
-         						<input type="hidden" value="{{ i.product.id }}" name="id_product">
-								<button class="btn4 btn4-1 btn4-sep icon">Remove</button>
-            					</form> -->
-
 							</div>
 
 					
@@ -96,8 +209,8 @@
 					{% endfor %}
 		</div>
 		<br>
-
-		<div class="col-xs-5 user_checkout_box" style="margin-left: 850px;margin-top: -1070px;width: 400px;">
+ -->
+<!-- 		<div class="col-xs-5 user_checkout_box" style="margin-left: 850px;margin-top: -1070px;width: 400px;">
 			<h2 class="sub_headings">Total</h2><br><br>
 				<div class="row col-md-10" style="margin-left: -25px;">
 					<h4 class="btn3 btn3-2">Items</h4><br><br>
@@ -109,7 +222,7 @@
 				</div>
 		</div> 
 
-</div>
+</div> -->
 		
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 

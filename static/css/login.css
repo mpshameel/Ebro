@@ -106,6 +106,14 @@ input {
 	min-height: 590px;
 }
 
+@media screen and (max-width: 768px) {
+    .container2 {
+    margin-left: 10px;
+    height: auto; } }
+
+
+
+
 .form-container {
 	position: absolute;
 	top: 0;

@@ -15,8 +15,12 @@
 </style>
   	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<div class="col-md-12">
+	<h2 class="headings">Deals</h2><br><br>
+</div>
 		<div class="container_wideboxes">
-			<h2>Deals</h2>
 			{% for i in daily_deals_list %}
 			<div class="col-md-4 widebox">
 				<a href="#" class="blog-post">
@@ -37,7 +41,7 @@
 						<form action="{% url 'delete_assaigned_deal' %}" method="POST">
 							{% csrf_token %}
  						<input type="hidden" value="{{ i.id }}" name="id_delete">
-						<button class="btn4 btn4-1 btn4-sep icon-cross down">Delete</button>
+						<button class="btn4 btn4-1 btn4-sep icon-cross down_delete">Delete</button>
     					</form>
 				</div>
 			</div>
@@ -52,9 +56,10 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-
+<div class="col-md-12">
+	<h2 class="headings">Jobs</h2><br><br>
+</div>
 		<div class="container_wideboxes">
-			<h2>Jobs</h2>
 			{% for i in daily_jobs_list %}
 			<div class="col-md-4 widebox">
 				<a href="#" class="blog-post">
@@ -75,7 +80,7 @@
 						<form action="{% url 'delete_assaigned_job' %}" method="POST">
 							{% csrf_token %}
  						<input type="hidden" value="{{ i.id }}" name="id_delete">
-						<button class="btn4 btn4-1 btn4-sep icon-cross down">Delete</button>
+						<button class="btn4 btn4-1 btn4-sep icon-cross down_delete">Delete</button>
     					</form>
 				</div>
 			</div>

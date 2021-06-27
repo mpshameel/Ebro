@@ -3,120 +3,108 @@
 {% block content %}
 
 {% load static %}
-<!-- <style>
-	.active_user_page3{
-		background-color: #99c2ff;
-	}
-</style> -->
+
+
+<style>
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
+
+</style>
   
 
 
+    <div class="container_wideboxes">
+      	<div class="col-md-8 profile_widebox">
 
- 
+	        <div class="col-md-4">
+	              <div class="profilepic_box">
+	                {% if detail_user.image != '' %}
+	                   <img src="{{detail_user.image.url}}" id="file-ip-1-preview">
+	                {% else %} 
+	                   <img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
+	                {% endif %}
+	              </div><br><br><br><br><br><br><br><br><br><br><br><br>
+	        </div>
 
- 		<div class="col-xs-7">
-				<div class="row">
-					<div class="col-md-12 room-wrap animate-box user_cart_box" style="margin-left: 35px;">
-         				
-         					<div class="col-md-4" style="height: auto;margin-top: 20px;">
-								{% if detail_user.image != '' %}
-         						<img src="{{detail_user.image.url}}" alt="" width="250" height="250"/>
-         						{% else %}
-         						<img src="{% static 'images/assign.png' %}" alt="" width="250" height="250"/>
-         						{% endif %}<br>
-         											
-							</div>
-							<div class="col-md-8 detail_deal_names" style="margin-left: 270px;margin-top: -340px;">
-								{% if detail_user.usertype == "admin" %}
+	        <div class="col-md-8">
+	            <div class="desc" style="margin-top: 20px;margin-left: -40px;">
+	            	<div class="col-md-12">
+						{% if detail_user.usertype == "admin" %}
+						{% else %}
+							<form action="{% url 'detail_user' detail_user.id %}" method="POST">
+								{% csrf_token %}
+							<b><font style="font-size: 15px;">
+							User type :
+							<select name="user_type">
+								<option value="free" {% if detail_user.usertype == "free" %} selected="" {% else %} selected="" {% endif %}>Free</option>
+								<option value="premium" {% if detail_user.usertype == "premium" %} selected="" {% endif %}>Premium</option>
 
-								{% else %}
-
-
-								<form action="{% url 'detail_user' detail_user.id %}" method="POST">
-									{% csrf_token %}
-								<b><font style="font-size: 15px;">
-									User type :
-								<select name="user_type">
-									<option value="free" {% if detail_user.usertype == "free" %} selected="" {% else %} selected="" {% endif %}>Free</option>
-									<option value="premium" {% if detail_user.usertype == "premium" %} selected="" {% endif %}>Premium</option>
-
-								</select>
-								</font></b>
-         						<br>
-         						
-								<button class="btn4 btn4-1 btn4-sep icon">Update</button>
-            					</form>
-            					{% endif %}
-								<div class="col-md-5 detail_deal_names">
-									<b><font style="font-size: 15px;">Username</font></b><br>
-									<b><font style="font-size: 15px;">Wallet</font></b><br>
-									<b><font style="font-size: 15px;">First_name</font></b><br>
-									<b><font style="font-size: 15px;">Last_name</font></b><br>
-									<b><font style="font-size: 15px;">Email Id</font></b><br>
-									<b><font style="font-size: 15px;">Phone</font></b><br>
-									<b><font style="font-size: 15px;">Alternative Phone</font></b><br>
-									<b><font style="font-size: 15px;">Date of Birth</font></b><br>
-									<b><font style="font-size: 15px;">Adhar Id</font></b><br>
-									<b><font style="font-size: 15px;">Profession</font></b><br>
-									<b><font style="font-size: 15px;">Location</font></b><br>
-									<b><font style="font-size: 15px;">Qualification</font></b><br>
-									<b><font style="font-size: 15px;">Hobbies</font></b><br>
-									<b><font style="font-size: 15px;">Summary/bio</font></b><br>
-								</div>
-								<div class="col-md-5 detail_deal_names">
-									<b><font style="font-size: 15px;">{{ detail_user.username.username }}</font></b><br>
-									<b><font style="font-size: 15px;">$&nbsp;&nbsp;{{ detail_user.wallet }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.username.first_name }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.username.last_name }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.username.email }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.phone }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.alternative_phone }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.dob }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.adhar_id }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.profession }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.location }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.qualification }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.hobbies }}</font></b><br>
-									<b><font style="font-size: 15px;">{{ detail_user.summary }}</font></b><br>
-
-							</div>
-
-					
-						
+							</select>
+							</font></b>
+								<br>
+								
+							<button class="btn btn-primary">Update</button>
+							</form>
+						{% endif %}
 					</div>
-		</div>
 
 
+				  <h5 class="h5_style_big">Username &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.username }}</h5><br>
+	              <h5 class="h5_style_big">First Name &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.first_name }}</h5><br>
+	              <h5 class="h5_style_big">Last Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.last_name }}</h5><br>
+	              <h5 class="h5_style_big">Email Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.email }}</h5><br>
+	              <br>
+	                <div class="col-md-6 h5_profile_style_mobile1">
+	                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.phone }}</h5><br>
+	                  <h5 class="h5_profile_style">Date of Birth&nbsp;:&nbsp;{{ detail_user.dob }}</h5><br>
+	                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.profession }}</h5><br>
+	                  <h5 class="h5_profile_style">Qualification&nbsp;:&nbsp;{{ detail_user.qualification }}</h5><br>
+	                </div>
+	                <div class="col-md-6 h5_profile_style_mobile2">
+	                  <h5 class="h5_profile_style">Phone 2&nbsp;&nbsp;:&nbsp;{{ detail_user.alternative_phone }}</h5><br>
+	                  <h5 class="h5_profile_style">Adhar Id&nbsp;:&nbsp;{{ detail_user.adhar_id }}</h5><br>
+	                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ detail_user.location}}</h5><br>
+	                  <h5 class="h5_profile_style">Hobbies&nbsp;&nbsp;:&nbsp;{{ detail_user.hobbies }}</h5><br>
+	                  <br>
+	                </div>
+	              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 15px;">{{ detail_user.summary }}</p><br>
+	        </div>
 
-		<div class="col-md-5 wallet-form" style="margin-top: -350px;margin-left: 850px;">
-            <br>
-              <div class="row">
-                <div class="col-md-12">
-                	<h4 class="sub_headings">&nbsp;&nbsp;User Wallet</h4><br><br>
-                	<div class="col-md-6">Balance<br>Coins</div>
-                	<div class="col-md-6">:&nbsp;&nbsp;$&nbsp;&nbsp;{{ detail_user.wallet }}<br>:&nbsp;&nbsp;{{ detail_user.wallet }}</div>
-                	<br><br>
-                  	<h4 class="sub_headings">&nbsp;&nbsp;User Refferals</h4><br>
-                      <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
-                        {% for i in user_refferals %}
-                          <tr style="font-size: 13px;">
-                           <td width="5%"><center>{{ forloop.counter }}</center></td>
-                           <td width="10%"><center>
-                            {% if i.image != '' %}
-                            <img src="{{i.image.url}}" alt="" height="50" width="50"/>
-                            {% else %}
-                            <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
-                            {% endif %}
-                           </center></td>
-                           <td width="85%">&nbsp;{{ i.username.username }}</td>
-                        {% endfor %}                       
-                     </table>
-                </div>
+      	</div>
+    </div>
 
-              </div>
+    <div class="col-md-4 wallet-form">
+    	<br><br>
+      	<div class="col-md-12">
+          <h4 class="btn3 btn3-2">User Wallet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{{detail_user.wallet}}</h4><br><br>
+          <h4 class="btn3 btn3-2">User Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{detail_user.coins}}</h4><br><br>
+      	</div>
 
-
-            </div>
+        <div class="row">
+            <br><br>
+          <div class="col-md-12">
+            <h4 class="sub_headings">&nbsp;&nbsp;User Refferals</h4><br><br>
+                <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
+                  {% for i in user_refferals %}
+                    <tr style="font-size: 13px;">
+                     <td width="5%"><center>{{ forloop.counter }}</center></td>
+                     <td width="10%"><center>
+                      {% if i.image != '' %}
+                      <img src="{{i.image.url}}" alt="" height="50" width="50"/>
+                      {% else %}
+                      <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
+                      {% endif %}
+                     </center></td>
+                     <td width="85%">&nbsp;{{ i.username.username }}</td>
+                  {% endfor %}                       
+               </table>
+        	</div>
         </div>
+
+    </div>
+
+
+
 
 {% endblock %}

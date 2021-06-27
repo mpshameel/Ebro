@@ -5,28 +5,21 @@
 {% load static %}
 
 
+<div class="container_wideboxes">
+    <div class="col-xs-5 user_payment_box">
+     <h2 class="sub_headings">Select Payment Methode:</h2><br><br>
+            <div class="row col-md-10" style="margin-left: -25px;">
+                <h2 class="sub_headings">&nbsp;&nbsp;Wallet
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                :&nbsp;&nbsp;$&nbsp;&nbsp;{{user_profile.wallet}}</h2><br>
+                <h2 class="sub_headings">&nbsp;&nbsp;Top-up Amout
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;$&nbsp;&nbsp;{{amount}}</h2><br><br><br><br>
 
-    <div class="col-xs-5 user_checkout_box" style="margin-left: 50px;">
-         <h2 class="sub_headings">Select Payment Methode:</h2><br><br>
-        <div class="row col-md-10" style="margin-left: -25px;">
-          <h2 class="sub_headings">&nbsp;&nbsp;Wallet</h2><br>
-          <h2 class="sub_headings">&nbsp;&nbsp;Top-up Amout</h2><br>
-
-        </div>
-        <div class="row col-md-2">
-          <h4 class="sub_headings">:$&nbsp;&nbsp;&nbsp;{{user_profile.wallet}}</h4><br>
-          <h4 class="sub_headings">:$&nbsp;&nbsp;&nbsp;{{amount}}</h4><br>
-        </div><br><br><br>
-
-            <br>
-            <div id="paypal-button-container" style="height: auto;"></div>
-
-
-
-
-      </div>
-
-    </div> 
+            </div>
+        <br>
+        <div id="paypal-button-container" style="height: auto;"></div>
+    </div>
+</div>
 
 
 

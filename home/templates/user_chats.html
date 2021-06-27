@@ -5,69 +5,73 @@
 {% load static %}
 
 <style>
-	.active_user_page8{
-		background-color: #99c2ff;
-	}
+   .active_user_page11{
+      background-color: #99c2ff;
+   }
+   .active_user_smallpage11{
+      color: white;
+      background-color: #000;
+   }
 </style>
   
 
-<div class="col-xs-4">
-      <div class=" animate-box ">
-         <form action="{% url 'feedback' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row form-group">
-               <div class="col-md-12">
-                  <br>
-                  <label for="message" class="sub_headings">Feedbacks</label>
-                  <br><br>
-                  <textarea  name="feedback" value="" id="message" cols="25" rows="4" class="form-control" placeholder="Feedbacks to the admin">
-                  </textarea>
-               </div>   
+
+
+<div class="container_wideboxes">
+   <div class="col-md-3 mobile_feedback">
+         <div class=" animate-box ">
+            <form action="{% url 'feedback' %}" method="POST" enctype="multipart/form-data">
+               {% csrf_token %}
+               <div class="row form-group">
+                  <div class="col-md-12">
+                     <br>
+                     <label for="message" class="sub_headings">Feedbacks</label>
+                     <br><br>
+                     <textarea  name="feedback" value="" id="message" cols="25" rows="4" class="form-control" placeholder="Feedbacks to the admin">
+                     </textarea>
+                  </div>   
+                  
+               </div>
                
-            </div>
-            
-            <div class="row form-group">
-               <div class="col-md-12">
-               <div class="form-group text-center">
-                  <input type="submit" value="Send" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <div class="row form-group">
+                  <div class="col-md-12">
+                  <div class="form-group text-center">
+                     <input type="submit" value="Send" class="btn btn-primary">
+                  </div>
+                  </div>
                </div>
-               </div>
-            </div>
-         </form>
+            </form>
 
-      </div>
+         </div>
+   </div>
 </div>
 
 
 
-<div class="col-xs-8">
-		<div class=" animate-box ">
-			 <table class="table-users" cellspacing="0">
-      			<tr class="header">
-      			<center>
-      		 	<th width="5%"><center>#</center></th>
-         		<th width="85%"><center>Notifications</center></th>
-         		<th width="10%"><center>Date</center></th>
-         		</center>
-      			</tr>
+<div class="container_wideboxes">
+   <div class="col-md-9 mobile_notifications">
+   		<div class=" animate-box ">
+   			 <table class="table-users" cellspacing="0">
+         			<tr class="header">
+         			<center>
+         		 	<th width="5%"><center>#</center></th>
+            		<th width="85%"><center>Notifications</center></th>
+            		<th width="10%"><center>Date</center></th>
+            		</center>
+         			</tr>
 
-      			{% for i in notifications_list %}
-      			<tr class="row_height">
-      	 		<td><center>{{ forloop.counter }}</center></td></center></td>
-         		<td>{{ i.notification }}</td>
-         		<td><center>Date</center></td>
-        	
-      			</tr>
-      			{% endfor %}
-
-      
-   			</table>
-						
-
-		</div>
+         			{% for i in notifications_list %}
+         			<tr class="row_height">
+         	 		<td><center>{{ forloop.counter }}</center></td></center></td>
+            		<td><p style="word-break: break-all;">{{ i.notification }}</p></td>
+            		<td><center>Date</center></td>
+           	
+         			</tr>
+         			{% endfor %}
+      			</table>
+   		</div>
+   </div>
 </div>
-
-
 
 
 

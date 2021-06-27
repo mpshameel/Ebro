@@ -13,6 +13,16 @@
     
 }
 
+
+@media screen and (max-width: 768px) {
+    .login-form {
+    margin-left: 40px;
+    width: 370px;
+    height: 450px; } }
+
+
+
+
 .social{
     border: 1px solid #ddd;
     border-radius: 50%;
@@ -37,6 +47,13 @@
     text-align: center;
     display: none;
 }
+
+@media screen and (max-width: 768px) {
+    .signup-form {
+    margin-left: 40px;
+    width: 370px;
+    height: 650px; } }
+
 
 .signup-otp{
     width: 350px;

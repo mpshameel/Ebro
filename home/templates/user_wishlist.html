@@ -5,168 +5,150 @@
 {% load static %}
 
 <style>
-	.active_user_page7{
-		background-color: #99c2ff;
-	}
+   .active_user_page9{
+      background-color: #99c2ff;
+   }
+   .active_user_smallpage9{
+      color: white;
+      background-color: #000;
+   }
 </style>
-  
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-  <div class="container_deals">
-		   <div class="col-md-12">
-		   	<br>
-			<h2 class="sub_headings">Deals</h2>
-			<br><br>
-				<div class="row">
-					{% for i in user_deal_wishlist %}
-
-					<div class="col-md-3 room-wrap animate-box user_deal_box">
-						<center>
-						{% if i.deal.picture != '' %}
-         				<img src="{{i.deal.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
-         				{% else %}
-         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
-         				{% endif %}
-         				</center>
-         				
-         					<div class="col-md-10" style="margin-left: -30px;">
-								<h3 class="btn3 btn3-1">{{ i.deal.deal_name }}</h3>
-								<form action="{% url 'deal_to_task' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.deal.id }}" name="id_deal">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-								
-
-							</div>
-
-							<div class="col-md-2" style="margin-left: -30px;">
-								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
-								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
-								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
-								<h3 class="btn3 btn3-2">$&nbsp;{{ i.deal.price }}</h3>
-								<form action="{% url 'delete_wish_deal' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_delete">
-								<button class="btn4 btn4-1 btn4-sep icon">Remove</button>
-            					</form>
-
-							</div>
-						
+<div class="col-md-12">
+	<h2 class="headings">Deals</h2><br><br>
+</div>
+		<div class="container_wideboxes">
+			{% for i in user_deal_wishlist %}
+			<div class="col-md-4 widebox">
+				<a href="#" class="blog-post">
+					{% if i.deal.picture != '' %}
+						<span class="img" style="background-image: url({{i.deal.picture.url}});"></span>
+         			{% else %}
+         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
+         			{% endif %}
+					<div class="desc">
+						<h5 class="h5_style">{{ i.deal.deal_name }}</h5><br>
+						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.deal.price }}</b></h4>
+						<span class="cat" style="line-height: 15px;">{{ i.deal.brand_name }}</span><br>
+						<span class="cat" style="line-height: 15px;">{{ i.deal.username.email }}</span><br>
+						<span class="cat" style="line-height: 15px;">{{ i.deal.location }}</span>
 					</div>
-					{% endfor %}
-
-
+				</a>
+				<div class="col-12 col-md-8 text-left down">
+					<form action="{% url 'deal_to_task' %}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" value="{{ i.deal.id }}" name="id_deal">
+					<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+					</form>
+				</div>
+				<div class="col-12 col-md-4 text-right">
+					<form action="{% url 'delete_wish_deal' %}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" value="{{ i.id }}" name="id_delete">
+					<button class="btn4 btn4-1 btn4-sep icon-cross down_remove">Remove</button>
+					</form>
 				</div>
 			</div>
-		</div>
+			{% endfor %}
 
-
-
-		<div class="container_deals">
-		   <div class="col-md-12">
-		   	<br>
-			<h2 class="sub_headings">Jobs</h2>
-			<br><br>
-				<div class="row">
-					{% for i in user_job_wishlist %}
-
-					<div class="col-md-3 room-wrap animate-box user_deal_box">
-						<center>
-						{% if i.job.picture != '' %}
-         				<img src="{{i.job.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
-         				{% else %}
-         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
-         				{% endif %}
-         				</center>
-         				
-         					<div class="col-md-10" style="margin-left: -30px;">
-								<h3 class="btn3 btn3-1">{{ i.job.job_name }}</h3>
-								<form action="{% url 'job_to_task' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.job.id }}" name="id_job">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-            					</form>
-								
-
-							</div>
-
-							<div class="col-md-2" style="margin-left: -30px;">
-								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
-								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
-								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
-								<h3 class="btn3 btn3-2">$&nbsp;{{ i.job.price }}</h3>
-								<form action="{% url 'delete_wish_job' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_delete">
-								<button class="btn4 btn4-1 btn4-sep icon">Remove</button>
-            					</form>
-
-							</div>
-						
-					</div>
-					{% endfor %}
-
-
-				</div>
-			</div>
-		</div>	
-
- 
-
-		<div class="container_deals">
-		   <div class="col-md-12">
-		   	<br>
-			<h2 class="sub_headings">Products</h2>
-			<br><br>
-				<div class="row">
-					{% for i in user_product_wishlist %}
-
-					<div class="col-md-3 room-wrap animate-box user_deal_box">
-						<center>
-						{% if i.product.picture != '' %}
-         				<img src="{{i.product.picture.url}}" alt="" width="200" height="100" class="image-popup-link" style="margin-top: 10px;" />
-         				{% else %}
-         				<img src="{% static 'images/assign.png' %}" alt="" width="200" height="100" class="image-popup-link"/>
-         				{% endif %}
-         				</center>
-         				
-         					<div class="col-md-10" style="margin-left: -30px;">
-								<h3 class="btn3 btn3-1">{{ i.product.product_name }}</h3>
-         						<input type="hidden" value="{{ i.product.id }}" name="id_product">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
-
-								
-
-							</div>
-
-							<div class="col-md-2" style="margin-left: -30px;">
-								<!-- <button class="btn2 btn2-1 btn2-sep icon-info">Button</button>
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Button</button>
-								<button class="btn2 btn2-3 btn2-sep icon-heart">Button</button>
-								<button class="btn2 btn2-4 btn2-sep icon-send">Button</button> -->
-								<h3 class="btn3 btn3-2">$&nbsp;{{ i.product.price }}</h3>
-								<form action="{% url 'delete_wish_product' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_delete">
-								<button class="btn4 btn4-1 btn4-sep icon">Remove</button>
-            					</form>
-
-							</div>
-						
-					</div>
-					{% endfor %}
-
-
-				</div>
-			</div>
-		</div>	
-
-
+		</div>					
 		
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<div class="col-md-12">
+	<h2 class="headings">Jobs</h2><br><br>
+</div>
+		<div class="container_wideboxes">
+			{% for i in user_job_wishlist %}
+			<div class="col-md-4 widebox">
+				<a href="#" class="blog-post">
+					{% if i.job.picture != '' %}
+						<span class="img" style="background-image: url({{i.job.picture.url}});"></span>
+         			{% else %}
+         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
+         			{% endif %}
+					<div class="desc">
+						<h5 class="h5_style">{{ i.job.job_name }}</h5><br>
+						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.job.price }}</b></h4>
+						<span class="cat" style="line-height: 15px;">{{ i.job.brand_name }}</span><br>
+						<span class="cat" style="line-height: 15px;">{{ i.job.username.email }}</span><br>
+						<span class="cat" style="line-height: 15px;">{{ i.job.location }}</span>
+					</div>
+				</a>
+				<div class="col-12 col-md-8 text-left down">
+					<form action="{% url 'job_to_task' %}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" value="{{ i.job.id }}" name="id_job">
+					<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
+					</form>
+				</div>
+				<div class="col-12 col-md-4 text-right">
+					<form action="{% url 'delete_wish_job' %}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" value="{{ i.id }}" name="id_delete">
+					<button class="btn4 btn4-1 btn4-sep icon-cross down_remove">Remove</button>
+					</form>
+				</div>
+			</div>
+			{% endfor %}
+
+		</div>					
+		
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<div class="col-md-12">
+	<h2 class="headings">Products</h2><br><br>
+</div>
+		<div class="container_wideboxes">
+			{% for i in user_product_wishlist %}
+			<div class="col-md-4 widebox">
+				<a href="#" class="blog-post">
+					{% if i.product.picture != '' %}
+						<span class="img" style="background-image: url({{i.product.picture.url}});"></span>
+         			{% else %}
+         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
+         			{% endif %}
+					<div class="desc">
+						<h5 class="h5_style">{{ i.product.product_name }}</h5><br>
+						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.product.price }}</b></h4>
+						<span class="cat" style="line-height: 15px;">{{ i.product.brand_name }}</span><br>
+						<span class="cat" style="line-height: 15px;">{{ i.product.username.email }}</span><br>
+						<span class="cat" style="line-height: 15px;">{{ i.product.location }}</span>
+					</div>
+				</a>
+				<div class="col-12 col-md-8 text-left down">
+					<form action="{% url 'product_to_cart' %}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" value="{{ i.product.id }}" name="id_product">
+					<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
+					</form>
+				</div>
+				<div class="col-12 col-md-4 text-right">
+					<form action="{% url 'delete_wish_product' %}" method="POST">
+						{% csrf_token %}
+						<input type="hidden" value="{{ i.id }}" name="id_delete">
+					<button class="btn4 btn4-1 btn4-sep icon-cross down_remove">Remove</button>
+					</form>
+				</div>
+			</div>
+			{% endfor %}
+
+		</div>					
+		
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ 
 
 
 

@@ -441,19 +441,26 @@ h1, h2, h3, h4, h5, h6, figure {
 #colorlib-reservation {
   clear: both; }
   #colorlib-reservation .search-wrap {
-    width: 100%;
+    /*width: 100%;*/
+    width: 98%;
     display: block;
     margin-top: -6.66em;
     z-index: 9;
+    margin: 20px 0px;
     background: #302939;
-    padding: 35px; }
+    padding: 0px 10px 0px 10px; }
+
+    @media screen and (max-width: 768px) {
+    #colorlib-reservation .search-wrap {
+      margin: 20px 0px;
+      width: 370px; } }
 
 .colorlib-form label {
   font-weight: normal;
   color: white; }
 
 .colorlib-form .form-control {
-  height: 50px;
+  height: 30px;
   -webkit-box-shadow: none;
   box-shadow: none;
   font-size: 16px;
@@ -1080,12 +1087,12 @@ article {
   -o-box-shadow: none;
   box-shadow: none;
   border: none;
-  font-size: 13px !important;
+  font-size: 15px !important;
   font-weight: 300;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  border-radius: 0px; }
+  border-radius: 50px; }
   .form-control:focus, .form-control:active {
     -webkit-box-shadow: none;
     box-shadow: none;

@@ -3,127 +3,114 @@
 {% block content %}
 
 {% load static %}
+
 <style>
-	.active_page2{
-		background-color: #99c2ff;
-	}
+   .active_user_page3{
+      background-color: #99c2ff;
+   }
+
 </style>
 
 
 
 
+    <div id="colorlib-about">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="about animate-box">
+                     <b><font style="font-size: 30px;">{{ admin_deals_list.deal_name }}</font></b><br>
+                     Type&nbsp;{% if admin_deals_list.deal_type == "Single" %} 
+                                :{{ admin_deals_list.deal_type }}
+                                {% else %}
+                                :{{ admin_deals_list.deal_type }}
+                                <br>
+                                <b>Brand Name&nbsp;:{{ admin_deals_list.brand_name }}</b>
+                                {% endif %}
+                                <br>
+                        [your product can categorize based on brand name or individual]<br>
+                        <b><font style="font-size: 35px;">$&nbsp;&nbsp;{{ admin_deals_list.price }}</font></b>
+                        <br>
+                           {% for i in category_details %}
+                                 {% for j in trade %} 
+                                    {% if i.id == j.id %} 
+                                       {{ j.name }} ,
+                                    {% endif %}
+                                 {% endfor %}
+                           {% endfor %}
+                        <br>
+                        <b><font style="font-size: 20px;">{{ admin_deals_list.email }}</font></b><br>
+                        <b><font style="font-size: 15px;">{{ admin_deals_list.contact }}</font></b><br>
+                        <b><font style="font-size: 15px;">{{ admin_deals_list.location }}</font></b><br>
+                     <p style="word-break: break-all;">Details :<br>{{ admin_deals_list.details }}</p>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  {% if admin_deals_list.picture != '' %}
+                  <img class="img-responsive" src="{{admin_deals_list.picture.url}}" alt="ebro-world.com">
+                  {% else %}
+                  <img class="img-responsive" src="{% static 'images/img_bg_5.jpg' %}" alt="ebro-world.com">
+                  {% endif %}
+               </div>
+            </div>
 
-	
+            <br>
 
-   	<div class="col-xs-7">
-		<div class=" animate-box assign_deal_box">
+
+        	<div class="col-md-12">
+				<form class="colorlib-form">
+					<input type="text" name="user_search" placeholder="Search" style="border-radius: 20px;width: 80%;">
+					<a href="" type="submit"><img src="{% static 'images/search.jpg' %}" alt="" height="40" width="40" style="border-radius: 50%;position: relative;" /></a>
+				</form>
+			</div>
+		
+			<form action="{% url 'assign_admin_deals' admin_deals_list.id %}" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+				
+				<div class="col-md-12">
+    				
+
+					<label for="lname"><div class="fonts_style">Users</div></label>
+					<br><br>
+  					
+						{% for i in profile_list %}
+
+						<input type="checkbox" id="vehicle1" name="assigns" value="{{ i.id }}">
+						{% if i.image != '' %}
+     					
+     					<img src="{{i.image.url}}" alt="" height="20" width="20" style="border-radius: 50%" />
+     					{% else %}
+     					<img src="{% static 'images/assign.png' %}" alt="" height="20" width="20" style="border-radius: 50%" />
+     					{% endif %}
+						<label for="vehicle1">{{ i.username.first_name }}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label for="vehicle1">{{ i.username.username }}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label for="vehicle1">{{ i.phone }}</label><br>
+	                   
+						{% endfor %}
+					
+					</table>
+				</div>		
 			
-				<div class="row form-group">
-				<div class="row">
-					<div class="col-md-2">
-						{% if admin_deals_list.picture != '' %}
-         				<img src="{{admin_deals_list.picture.url}}" alt="" height="120" width="120" style="border-radius: 50%" />
-         				{% else %}
-         				<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         				{% endif %}
-						
-					</div>
-					
-					<div class="col-md-3">    Deal Name
-										  <br>Email     
-										  <br>Contact   
-										  <br>Publish   
-										  <br>Price     
-										  <br>Type      
-					</div>
-					<div class="col-md-7">: {{ admin_deals_list.deal_name }}
-										  <br>: {{ admin_deals_list.email }}
-										  <br>: {{ admin_deals_list.contact }}
-										  <br>: {{ admin_deals_list.publish }}
-										  <br>: {{ admin_deals_list.price }}
-										  <br>: {{ admin_deals_list.deal_type }}
-					</div>
-					
-					
-
-			    </div>
-			    </div>
-			    
-
-		</div>
-	</div>
-
-	<div class="col-xs-5">
-		<div class=" animate-box assign_deal_box_search">
-			<br>
-
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<div class="row form-group">
-					
-					<div class="col-md-12">
-						<form class="colorlib-form">
-							<input type="text" name="user_search" placeholder="Search" style="border-radius: 20px;width: 430px;">
-        					<a href="" type="submit"><img src="{% static 'images/search.jpg' %}" alt="" height="40" width="40" style="border-radius: 50%;position: relative;" /></a>
-        				</form>
-        			</div>
-        		</div>
-			
-				<form action="{% url 'assign_admin_deals' admin_deals_list.id %}" method="POST" enctype="multipart/form-data">
-				{% csrf_token %}
-        		
-
-				<div class="row form-group">
-					
-					<div class="col-md-12">
-
-						<!-- <div class="input-icons">
-            				<i type="submit" class="fa fa-search icon"></i>
-            				<input class="input-field" type="text">
-            				
-        				</div> -->
-
-        				
-
-						<label for="lname"><div class="fonts_style">Users</div></label>
-						<br><br>
-						
-      					
-							{% for i in profile_list %}
-
-							<input type="checkbox" id="vehicle1" name="assigns" value="{{ i.username.id }}">
-							{% if i.image != '' %}
-         					
-         					<img src="{{i.image.url}}" alt="" height="20" width="20" style="border-radius: 50%" />
-         					{% else %}
-         					<img src="{% static 'images/assign.png' %}" alt="" height="20" width="20" style="border-radius: 50%" />
-         					{% endif %}
-							<label for="vehicle1">{{ i.username.first_name }}</label>&nbsp;&nbsp;&nbsp;
-							<label for="vehicle1">{{ i.username.username }}</label>&nbsp;&nbsp;&nbsp;
-							<label for="vehicle1">{{ i.phone }}</label><br>
-		                       
-		                     
-		                	
-							{% endfor %}
-						
-						</table>
-					</div>
-					
-
-					
-					
-					
-				</div>
-
-				
-				
-				<div class="row form-group">
-				<div class="form-group text-center">
-					<input type="submit" value="Assaign Deals" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-				</div>
-				</div>
+			<div class="form-group text-center">
+				<input type="submit" value="Assaign Deals" class="btn btn-primary">
+		
+			</div>
+			</div>
 			</form>
-		</div>
-	</div>
+
+         </div>
+    </div>
+
+
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
 
 
 {% endblock %}

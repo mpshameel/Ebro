@@ -15,106 +15,106 @@
 </style>
   
 
-
+<div class="container_wideboxes">
 	{% if user.is_authenticated %}
 	<a href="#"><h3 id="addbutton" class="addbutton">+&nbsp;ADD&nbsp;PRODUCT</h3></a>
 	{% endif %}
+	<div class="col-md-12 additem-form">
 		<form action="{% url 'product' %}" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
-		<div class=" animate-box product-form">
-			<br>
-			<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeproduct">
-			<div class="col-md-4 left_form_deal">
-				<br>
-				<div class="form-field col-md-12 profile-pic-div deals-pic-circle">
-                	<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
-                	<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
-			        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>        
-			    </div>
-			    <br><br><br><br><br><br><br><br><br><br>
+		<div class="col-md-4">
+			<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeitem-form">
 
-				<div class="col-md-12">
-					<label for="fname">Product Name</label>
-					<input type="text" name="product_name" id="fname" class="form-control" placeholder="Your firstname">
-				</div>
-				<div class="col-md-12">
-					<label for="lname">Price</label>
-					<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
-				</div>
-				<div class="col-md-12">
-					<label for="lname">Attachments</label>
-					<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
-				</div>
+			<div class="form-field col-md-12 deals-pic-circle">
+            	<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
+            	<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
+		        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>      
+		    </div>
+		    <br><br><br><br><br><br><br><br><br>
 
+			<div class="col-md-12">
+				<label for="fname">Product Name</label>
+				<input type="text" name="product_name" id="fname" class="form-control" placeholder="Your firstname">
 			</div>
-			<div class="col-md-8 right_form_deal">
-				<br>
-				<div class="col-md-1">
-					<label for="subject">Publish</label><br>
-					<input type="radio" name="publish" value="public" checked="checked">
-					<input type="radio" name="publish" value="private">
-				</div>
-				<div class="col-md-2">
-					<br>
-					Public
-					<br>Private
-				</div>
-				<div class="col-md-9">
-					<br>[your product or deal will handle by E-bro through private channel]
-				</div>
-				<div class="col-md-1">
-					<label for="subject">Type</label><br>
-					<input type="radio" name="product_type" value="Single" checked="checked">
-					<input type="radio" name="product_type" value="Multiple">
-				</div>
-				<div class="col-md-2">
-					<br>
-					Single<br>
-					Multiple
-				</div>
-				<div class="col-md-9">
-					<br>[your product can categorize based on brand name or individual]
-				</div>
-				<div class="col-md-8">
-					<label for="subject">Brand Name</label>
-					<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
-				</div>
-				<div class="col-md-4">
-					<label for="subject">Stock</label>
-					<input type="number" name="stock" value="1" id="subject" class="form-control" placeholder="stock">
-				</div>
-				<div class="col-md-12">
-					<div class="form-group">
-					<label>Select Job Category:</label>
-					<select id="jobcategory" name="category"
-					class="" multiple required="">
+			<div class="col-md-12">
+				<label for="lname">Price</label>
+				<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
+			</div>
+			<div class="col-md-12">
+				<label for="lname">Attachments</label>
+				<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
+			</div>
 
-					{% for i in category_details %}
-					<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
-					{% endfor %}
-					</select>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<label for="subject">Location</label>
-					<input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
-				</div>
-
-				<div class="col-md-12">
-					<label for="message">Other Details</label>
-					<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
-					</textarea>
-				</div>
-				&nbsp;&nbsp;
-				<div class="row form-group">
-				<div class="form-group text-center"><br><br>
-					<button type="submit" value="Add Deal" class="btn btn-primary">Add Product</button>
+		</div>
+		<div class="col-md-8">
 			
+			<div class="col-md-4 wrapper-class">
+				<label for="subject">Publish</label>
+				<br>
+					<input type="radio" id="radio1" name="publish" value="public" checked="checked">
+  					<label for="radio1">Public</label>
+					<input type="radio" id="radio2" name="publish" value="private">
+					<label for="radio2">Private</label>
+			</div>
+			<div class="col-md-8">
+				<br>
+				[your product or deal will handle by E-bro through private channel]
+			</div>
+
+			<div class="col-md-4 wrapper-class">
+				<label for="subject">Type</label>
+				<br>
+					<input type="radio" id="radio3" name="product_type" value="Single" checked="checked">
+  					<label for="radio3">Single</label>
+					<input type="radio" id="radio4" name="product_type" value="Multiple">
+					<label for="radio4">Multiple</label>
+			</div>
+			<div class="col-md-8">
+				<br>
+				[your product can categorize based on brand name or individual]
+			</div>
+
+			<div class="col-md-8">
+				<label for="subject">Brand Name</label>
+				<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
+			</div>
+			<div class="col-md-4">
+				<label for="subject">Stock</label>
+				<input type="number" name="stock" value="1" id="subject" class="form-control" placeholder="stock">
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+				<label>Select Job Category:</label>
+				<select id="jobcategory" name="category"
+				class="" multiple required="">
+
+				{% for i in category_details %}
+				<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
+				{% endfor %}
+				</select>
 				</div>
-				</div>
+			</div>
+			<div class="col-md-12">
+				<label for="subject">Location</label>
+				<input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
+			</div>
+
+			<div class="col-md-12">
+				<label for="message">Other Details</label>
+				<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
+				</textarea>
+			</div>
+			&nbsp;&nbsp;
+			<div class="row form-group">
+			<div class="form-group text-center"><br><br>
+				<button type="submit" value="Add Deal" class="btn btn-primary">Add Product</button>
+		
+			</div>
 			</div>
 		</div>
-	</form>
+		</form>
+	</div>
+</div>
 
 
 
@@ -189,10 +189,10 @@
 
 	<script>
 		document.getElementById("addbutton").addEventListener("click",function(){
-		  document.querySelector(".product-form").style.display = "flex";
+		  document.querySelector(".additem-form").style.display = "flex";
 		})
-		document.querySelector(".closeproduct").addEventListener("click",function(){
-			document.querySelector(".product-form").style.display = "none";
+		document.querySelector(".closeitem-form").addEventListener("click",function(){
+			document.querySelector(".additem-form").style.display = "none";
 		  })
 		
 	
