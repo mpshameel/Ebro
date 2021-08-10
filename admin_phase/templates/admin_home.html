@@ -13,10 +13,11 @@
 </style>
   
 
+
   
 
 
-  <aside id="colorlib-hero">
+<!--   <aside id="colorlib-hero">
 	<div class="flexslider">
 		<ul class="slides">
 			{% for i in ad_xxxl %}
@@ -34,7 +35,19 @@
 			{% endfor %}	   	
 	  	</ul>
   	</div>
-</aside>
+</aside> -->
+
+<div class="col-md-12">
+	{% for i in ad_xxxl %}
+		{% if i.image != '' %}
+		<div class="col-md-12">
+			<img src="{{i.image.url}}" alt="" class="image-popup-link xxxlimage" style="margin-top: 10px;" />
+		</div>
+		{% endif %}
+	{% endfor %}
+</div>
+
+
 
 
 

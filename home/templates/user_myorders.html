@@ -17,9 +17,9 @@
 
 
 		<div class="container_wideboxes">
-			<div class="col-md-8">
+			<div class="col-md-8 orderwidebox">
 				{% for i in my_orders %}
-				<div class="col-md-4 orderwidebox">
+				<div class="col-md-12">
 					<div class="col-md-3">
 						{% if i.product.picture != '' %}
 	 					<img class="img-responsive order_image" src="{{i.product.picture.url}}" alt="ebro-world.com">
@@ -35,9 +35,10 @@
 					</div>
 					<div class="col-md-7">
 						<div class="desc">
+							<br>
 							<h5 class="h5_style">{{ i.product.product_name }}</h5>
 							<h5><font style="color: #8e9416;">items &nbsp;&nbsp;:&nbsp;{{i.product_count}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price &nbsp;&nbsp;:$&nbsp;&nbsp;{{ i.product.price }}</font></h5>
-							<h4><b>Total &nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{% widthratio i.product_count 1 i.product.price %}</b></h4>
+							<h4><b>Total &nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{{i.count_price}}<!-- {% widthratio i.product_count 1 i.product.price %} --></b></h4>
 							Type&nbsp;{% if i.product.product_type == "Single" %} 
 							  {{ i.product.product_type }}
 							  {% else %}
@@ -48,7 +49,7 @@
 							 <br>
 							{{ i.product.email }}<br>
 							{{ i.product.contact }}<br>
-							{{ i.product.location }}<br>
+							{{ i.product.location.name }}<br>
 							<b>Details :</b><br>
 							<p style="word-break: break-all;line-height: 15px;">{{ i.product.details }}</p><br>
 						</div>
@@ -74,7 +75,7 @@
 				</div>
 				{% endfor %}
 			</div>
-			<div class="col-md-4 widebox">
+			<div class="col-md-4 widebox4">
 				<br>
 				<h2 class="headings">Total</h2><br><br><br>
 				<div class="col-md-12">

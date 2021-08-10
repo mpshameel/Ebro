@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+
+		<title>davsv</title>
+			<link rel="stylesheet" href="chosen.min.css">
+
+			<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+			<script type="text/javascript" src="chosen.jquery.min.js"></script>
+	</head>
+	<body>
+
+
+		<a href="#"><h3 id="addbutton" class="addbutton">+&nbsp;ADD&nbsp;DEAL</h3></a>
+
+		<div class="additem-form">
+			<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeitem-form">
+			<select id="mselect" style="width: 300px;" multiple="">
+				<option>op1</option>
+				<option>op2</option>
+				<option>op3</option>
+				<option>op4</option>
+				<option>op5</option>
+			</select>
+
+		</div>
+
+
+
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#mselect').chosen();
+			});
+		</script>
+	</body>
+
+
+	<script>
+		.additem-form{
+		    transition: opacity 500ms;
+			width: 900px;
+		    height: 940px;
+		    position: absolute;
+		    z-index: 1;
+		    margin: 0px 150px;
+		    padding: 0px 0px;
+		    display: none;
+		    height: auto;  
+		    background-color: #fff; 
+		    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+		    transition: all 0.3s ease-out;
+		}
+
+	</script>
+
+		<script>
+		document.getElementById("addbutton").addEventListener("click",function(){
+		  document.querySelector(".additem-form").style.display = "flex";
+		})
+		document.querySelector(".closeitem-form").addEventListener("click",function(){
+			document.querySelector(".additem-form").style.display = "none";
+		})
+	</script>
+
+
+</html>
+
+
+

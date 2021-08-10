@@ -19,6 +19,7 @@ django-hitcount==1.3.3
 django-online-users==0.3
 django-phonenumber-field==5.2.0
 django-redis==4.12.1
+django-social-share==2.2.1
 gunicorn==20.1.0
 idna==2.10
 itypes==1.2.0

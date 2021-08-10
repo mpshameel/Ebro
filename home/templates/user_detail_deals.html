@@ -26,8 +26,6 @@
                                 :{{ user_deal.deal_type }}
                                 {% else %}
                                 :{{ user_deal.deal_type }}
-                                <br>
-                                <b>Brand Name&nbsp;:{{ user_deal.brand_name }}</b>
                                 {% endif %}
                                 <br>
                         [your product can categorize based on brand name or individual]<br>
@@ -43,7 +41,7 @@
                         <br>
                         <b><font style="font-size: 20px;">{{ user_deal.email }}</font></b><br>
                         <b><font style="font-size: 15px;">{{ user_deal.contact }}</font></b><br>
-                        <b><font style="font-size: 15px;">{{ user_deal.location }}</font></b><br>
+                        <b><font style="font-size: 15px;">{{ user_deal.location.name }}</font></b><br>
                      <p style="word-break: break-all;">Details :<br>{{ user_deal.details }}</p>
 
                      <br><br>
@@ -112,37 +110,11 @@
                      <div class="desc">
                         <h5 class="h5_style">{{ i.deal_name }}</h5><br>
                         <h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
-                        <span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
+                        <!-- <span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br> -->
                         <span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
-                        <span class="cat" style="line-height: 15px;">{{ i.location }}</span>
+                        <span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
                      </div>
                   </a>
-                  <div class="col-12 col-md-8 text-left down">
-                     {% if request.user.is_authenticated %}
-                        <form action="{% url 'deal_to_task' %}" method="POST">
-                           {% csrf_token %}
-                        <input type="hidden" value="{{ i.id }}" name="id_deal">
-                        <button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-                        </form>
-                        {% else %}
-                        <form action="#">
-                        <button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-                        </form>
-                     {% endif %}
-                  </div>
-                  <div class="col-12 col-md-4 text-right">
-                     {% if request.user.is_authenticated %}
-                        <form action="{% url 'deal_to_wish' %}" method="POST">
-                           {% csrf_token %}
-                           <input type="hidden" value="{{ i.id }}" name="id_deal">
-                        <button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-                           </form>
-                           {% else %}
-                           <form action="#">
-                        <button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-                           </form>
-                        {% endif %}
-                  </div>
                </div>
                {% endfor %}
 

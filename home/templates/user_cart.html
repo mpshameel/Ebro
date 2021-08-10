@@ -21,16 +21,15 @@
 
 
 
-
-	<div class="col-md-7">
-		<div class="container_wideboxes">
+<div class="container_wideboxes">
+		<div class="col-md-8">
 			<h2 class="headings">My Bag</h2><br><br>
 			{% for i in user_product_cart %}
-			<div class="col-md-4 cartwidebox blog-post">
+			<div class="col-md-12 cartwidebox blog-post">
 					{% if i.product.picture != '' %}
-						<span class="img" style="background-image: url({{i.product.picture.url}});"></span>
+						<span class="img" style="margin: 10px 10px;background-image: url({{i.product.picture.url}});"></span>
          			{% else %}
-         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
+         				<span class="img" style="margin: 10px 10px; style="background-image: url({% static 'images/assign.png' %});"></span>
          			{% endif %}
 					<div class="desc">
 						<h5 class="h5_style">{{ i.product.product_name }}</h5><br>
@@ -41,13 +40,17 @@
 								<img data-product={{i.product.id}} data-action="add" src="{% static 'images/up-arrow.png' %}"class="update-cart" style="margin-top: -15px;" />
 								<img data-product={{i.product.id}} data-action="remove" src="{% static 'images/down-arrow.png' %}" class="update-cart" style="margin-left: -14px;margin-top: 10px;" /></b></h5>
 							</div>
-							<div class="col-md-3"><h5 style="margin-top: 10px;margin-left: -30px;"><b>Total&nbsp;:&nbsp;$&nbsp;&nbsp;{% widthratio i.quantity 1 i.product.price %}</b></h5></div>
+							<div class="col-md-3"><h5 style="margin-top: 10px;margin-left: -30px;"><b>Total&nbsp;:&nbsp;$&nbsp;&nbsp;
+								{{ i.total_price }}<br>
+								<!-- |floatformat:2 -->
+								
+								</b></h5></div>
 						</div>
 						<span class="cat" style="line-height: 15px;">{{ i.product.brand_name }}</span><br>
 						<span class="cat" style="line-height: 15px;">{{ i.product.username.email }}</span><br>
-						<span class="cat" style="line-height: 15px;">{{ i.product.location }}</span>
+						<span class="cat" style="line-height: 15px;">{{ i.product.location.name }}</span>
 					</div>
-				<div class="col-12 col-md-4 text-right">
+				<div class="col-12 col-md-4">
 					<form action="{% url 'delete_cart' %}" method="POST">
 						{% csrf_token %}
 						<input type="hidden" value="{{ i.id }}" name="id_delete">
@@ -59,66 +62,61 @@
 			{% endfor %}
 
 		</div>					
-	</div>	
+
+		<div class="col-xs-4 mybag_boxes">
+			<div class="">
+			  	<h2 class="headings_small">My Bag</h2><br><br>
+			  	<table  cellspacing="0">
+	      			<tr>
+	      			<center>
+	      			<th width="5%"><center>#</center></th>
+	      	 		<th width="10%"><center></center></th>
+	         		<th width="40%"><center>Product Name</center></th>
+	         		<th width="15%"><center>Price</center></th>
+	        		<th width="10%"><center>x</center></th>
+	         		<th width="20%"><center>Total</center></th>
+	         		</center>
+	      			</tr>
+	      			<br>
+	      			{% for i in user_product_cart %}
+	      			<tr class="">
+	      	 		<td><center>{{ forloop.counter }}</center></td>
+	         		<td><center>
+	         			{% if i.product.picture != '' %}
+	         			<img src="{{i.product.picture.url}}" alt="" width="50" height="50" />
+	         			{% else %}
+	         			<img src="{% static 'images/assign.png' %}" alt="" width="50" height="50"/>
+	         			{% endif %}
+	         			</center>
+	         		</td>
+	         		<td>&nbsp;&nbsp;{{ i.product.product_name }}</td>
+	         		<td><center>{{ i.product.price }}</center></td>
+	         		<td><center>{{i.quantity}}</center></td>
+	         		<td><center>{{ i.total_price }}</center></td>
+	      			</tr>
+	      			{% endfor %}
+	   			</table>
 
 
+				<br><br>
 
+				<h2 class="headings_small">Total</h2><br><br>
+					<div class="col-md-12">
+						<h4 class="btn3 btn3-2">Items
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						:&nbsp;&nbsp;{{cart_count}}</h4><br><br>
+						<h3 class="btn3 btn3-2">Sub-Total
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						:&nbsp;&nbsp;$&nbsp;&nbsp;{{total_price}}</h3><br><br>
+					</div>
+					<form action="#" method="POST">
+						{% csrf_token %}
+	         			<input type="hidden" value="{{ i.id }}" name="id_delete">
+						<a href="checkout" class="btn2 btn2-2 btn2-sep6" style="width: 98%;">Checkout</a>
+	            	</form>
 
-<div class="col-xs-4">
-	<div class="container_wideboxes">
-		<div class="mybag_boxes">
-		  	<h2 class="headings_small">My Bag</h2><br><br>
-		  	<table  cellspacing="0">
-      			<tr>
-      			<center>
-      			<th width="5%"><center>#</center></th>
-      	 		<th width="10%"><center></center></th>
-         		<th width="40%"><center>Product Name</center></th>
-         		<th width="15%"><center>Price</center></th>
-        		<th width="10%"><center>x</center></th>
-         		<th width="20%"><center>Total</center></th>
-         		</center>
-      			</tr>
-      			<br>
-      			{% for i in user_product_cart %}
-      			<tr class="">
-      	 		<td><center>{{ forloop.counter }}</center></td>
-         		<td><center>
-         			{% if i.product.picture != '' %}
-         			<img src="{{i.product.picture.url}}" alt="" width="50" height="50" />
-         			{% else %}
-         			<img src="{% static 'images/assign.png' %}" alt="" width="50" height="50"/>
-         			{% endif %}
-         			</center>
-         		</td>
-         		<td>&nbsp;&nbsp;{{ i.product.product_name }}</td>
-         		<td><center>{{ i.product.price }}</center></td>
-         		<td><center>{{i.quantity}}</center></td>
-         		<td><center>{% widthratio i.quantity 1 i.product.price %}</center></td>
-      			</tr>
-      			{% endfor %}
-   			</table>
-
-
-			<br><br>
-
-			<h2 class="headings_small">Total</h2><br><br>
-				<div class="col-md-12">
-					<h4 class="btn3 btn3-2">Items
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					:&nbsp;&nbsp;{{cart_count}}</h4><br><br>
-					<h3 class="btn3 btn3-2">Sub-Total
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					:&nbsp;&nbsp;$&nbsp;&nbsp;{{total_price}}</h3><br><br>
-				</div>
-				<form action="#" method="POST">
-					{% csrf_token %}
-         			<input type="hidden" value="{{ i.id }}" name="id_delete">
-					<a href="checkout" class="btn2 btn2-2 btn2-sep3" style="width: 98%;">Checkout</a>
-            	</form>
-
-		</div> 
-	</div>	
+			</div> 
+		</div>	
 </div>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 

@@ -14,72 +14,119 @@
   
 
 
-    <div class="container_wideboxes">
-      	<div class="col-md-8 profile_widebox">
+<div class="container_wideboxes">
+  	<div class="col-md-8 profile_widebox">
 
-	        <div class="col-md-4">
-	              <div class="profilepic_box">
-	                {% if detail_user.image != '' %}
-	                   <img src="{{detail_user.image.url}}" id="file-ip-1-preview">
-	                {% else %} 
-	                   <img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
-	                {% endif %}
-	              </div><br><br><br><br><br><br><br><br><br><br><br><br>
-	        </div>
+        <div class="col-md-4">
+        	<div class="col-md-12 profilepic_box">
+            	{% if detail_user.image != '' %}
+               <img src="{{detail_user.image.url}}" id="file-ip-1-preview">
+            	{% else %} 
+               <img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
+            	{% endif %}
+         	</div><br><br><br><br><br><br><br><br><br><br><br><br>
 
-	        <div class="col-md-8">
-	            <div class="desc" style="margin-top: 20px;margin-left: -40px;">
-	            	<div class="col-md-12">
-						{% if detail_user.usertype == "admin" %}
-						{% else %}
-							<form action="{% url 'detail_user' detail_user.id %}" method="POST">
-								{% csrf_token %}
-							<b><font style="font-size: 15px;">
-							User type :
-							<select name="user_type">
-								<option value="free" {% if detail_user.usertype == "free" %} selected="" {% else %} selected="" {% endif %}>Free</option>
-								<option value="premium" {% if detail_user.usertype == "premium" %} selected="" {% endif %}>Premium</option>
+		 	<div class="col-md-12" style="margin-left: -30px;">
+				{% if detail_user.username.is_active == True %}
+					<form action="{% url 'disable_profile' detail_user.id %}" method="POST">
+						{% csrf_token %}
+					<b><font style="font-size: 15px;">
+					Disable Profile :
+					<input type="hidden" name="user_id" value="{{detail_user.username.id}}">
+					</font></b>
+						<br>
+						
+					<button class="btn2 btn4-1 btn2-sep4">Disable</button>
+					</form>
+				{% else %}
+					<form action="{% url 'enable_profile' detail_user.id %}" method="POST">
+						{% csrf_token %}
+					<b><font style="font-size: 15px;">
+					Enable Profile :
+					<input type="hidden" name="user_id" value="{{detail_user.username.id}}">
+					</font></b>
+						<br>
+						
+					<button class="btn2 btn2-2 btn2-sep4">Enable</button>
+					</form>
+				{% endif %}
+			</div>
+        </div>
 
-							</select>
-							</font></b>
-								<br>
-								
-							<button class="btn btn-primary">Update</button>
-							</form>
-						{% endif %}
-					</div>
+        <div class="col-md-8">
+            <div class="desc" style="margin-top: 20px;margin-left: -40px;">
+            	<div class="col-md-12">
+					{% if detail_user.usertype == "admin" %}
+					{% else %}
+						<form action="{% url 'detail_user' detail_user.id %}" method="POST">
+							{% csrf_token %}
+						<b><font style="font-size: 15px;">
+						User type :
+						<select name="user_type">
+							<option value="free" {% if detail_user.usertype == "free" %} selected="" {% else %} selected="" {% endif %}>Free</option>
+							<option value="premium" {% if detail_user.usertype == "premium" %} selected="" {% endif %}>Premium</option>
+
+						</select>
+						</font></b>
+							<br>
+							
+						<button class="btn2 btn2-2 btn2-sep4">Update</button>
+						</form>
+					{% endif %}
+				</div>
+			</div>
 
 
-				  <h5 class="h5_style_big">Username &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.username }}</h5><br>
-	              <h5 class="h5_style_big">First Name &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.first_name }}</h5><br>
-	              <h5 class="h5_style_big">Last Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.last_name }}</h5><br>
-	              <h5 class="h5_style_big">Email Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.email }}</h5><br>
-	              <br>
-	                <div class="col-md-6 h5_profile_style_mobile1">
-	                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.phone }}</h5><br>
-	                  <h5 class="h5_profile_style">Date of Birth&nbsp;:&nbsp;{{ detail_user.dob }}</h5><br>
-	                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.profession }}</h5><br>
-	                  <h5 class="h5_profile_style">Qualification&nbsp;:&nbsp;{{ detail_user.qualification }}</h5><br>
-	                </div>
-	                <div class="col-md-6 h5_profile_style_mobile2">
-	                  <h5 class="h5_profile_style">Phone 2&nbsp;&nbsp;:&nbsp;{{ detail_user.alternative_phone }}</h5><br>
-	                  <h5 class="h5_profile_style">Adhar Id&nbsp;:&nbsp;{{ detail_user.adhar_id }}</h5><br>
-	                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ detail_user.location}}</h5><br>
-	                  <h5 class="h5_profile_style">Hobbies&nbsp;&nbsp;:&nbsp;{{ detail_user.hobbies }}</h5><br>
-	                  <br>
-	                </div>
-	              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 15px;">{{ detail_user.summary }}</p><br>
-	        </div>
 
-      	</div>
+			  <h5 class="h5_style_big">Username &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.username }}</h5><br>
+              <h5 class="h5_style_big">First Name &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.first_name }}</h5><br>
+              <h5 class="h5_style_big">Last Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.last_name }}</h5><br>
+              <h5 class="h5_style_big">Email Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.username.email }}</h5><br>
+              <br>
+                <div class="col-md-6 h5_profile_style_mobile1">
+                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.phone }}</h5><br>
+                  <h5 class="h5_profile_style">Date of Birth&nbsp;:&nbsp;{{ detail_user.dob }}</h5><br>
+                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_user.profession.name }}</h5><br>
+                  <h5 class="h5_profile_style">Qualification&nbsp;:&nbsp;{{ detail_user.qualification }}</h5><br>
+                </div>
+                <div class="col-md-6 h5_profile_style_mobile2">
+                  <h5 class="h5_profile_style">Phone 2&nbsp;&nbsp;:&nbsp;{{ detail_user.alternative_phone }}</h5><br>
+                  <h5 class="h5_profile_style">Adhar Id&nbsp;:&nbsp;{{ detail_user.adhar_id }}</h5><br>
+                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ detail_user.location.name }}</h5><br>
+                  <h5 class="h5_profile_style">Hobbies&nbsp;&nbsp;:&nbsp;{{ detail_user.hobbies }}</h5><br>
+                  <br>
+                </div>
+              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 15px;">{{ detail_user.summary }}</p><br>
+        </div>
+
     </div>
 
+
+
+
+
     <div class="col-md-4 wallet-form">
-    	<br><br>
-      	<div class="col-md-12">
-          <h4 class="btn3 btn3-2">User Wallet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{{detail_user.wallet}}</h4><br><br>
-          <h4 class="btn3 btn3-2">User Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{detail_user.coins}}</h4><br><br>
-      	</div>
+      <br>
+      {% if detail_user.usertype == "admin" %}
+      {% else %}
+        <form action="{% url 'detail_user_addamount' detail_user.id %}" method="POST">
+          {% csrf_token %}
+        <b><font style="font-size: 15px;">
+        Send Money :
+        <input type="number" name="amount" value="0" placeholder="Enter Amount">
+        <input type="hidden" name="user_type" value="{{detail_user.usertype}}">
+        </font></b>
+          <br>
+          
+        <button class="btn2 btn2-2 btn2-sep4">Update</button>
+        </form>
+      {% endif %}
+      
+      <br>
+        <div class="col-md-12">
+          <h4 class="btn3 btn3-2">User Wallet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{{detail_user.wallet}}</h4><br>
+          <h4 class="btn3 btn3-2">User Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{detail_user.coins}}</h4><br>
+        </div>
 
         <div class="row">
             <br><br>
@@ -99,9 +146,56 @@
                      <td width="85%">&nbsp;{{ i.username.username }}</td>
                   {% endfor %}                       
                </table>
-        	</div>
+          </div>
         </div>
+    </div>
 
+
+</div>
+
+
+    <div class="col-md-4 detailuser_sendform">
+
+      <form action="{% url 'admin_personal_notifications' %}" method="POST">
+          {% csrf_token %}
+            <div class="col-md-12">
+              <br>
+              <input type="hidden" name="user_profile_id" value="{{detail_user.id}}">
+              <textarea id="message" cols="25" rows="2" class="form-control" name="personal_notification" placeholder="Send notification to {{ detail_user.username.username }}" value="" required=""></textarea>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group text-center">
+                <button type="submit" value="Send" class="btn btn-primary">Send</button>
+              </div>
+            </div>
+
+            <table class="notifications_list_table" cellspacing="0">
+                <tr class="header" style="font-size: 15px;">
+                  <center>
+                  <th width="5%"><center>#</center></th>
+                  <th width="65%"><center>Notifications</center></th>
+                  <th width="20%"><center>Date</center></th>
+                  <th width="10%"><center>Delete</center></th>
+                  </center>
+                </tr>
+
+                {% for i in personal_notifications_list %}
+                <tr style="font-size: 13px;height: 20px;">
+                  <td><center>{{ forloop.counter }}</center></td></center></td>
+                  <td style="word-break: break-all;">&nbsp;{{ i.messages }}</td>
+                  <td>&nbsp;{{ i.created_at }}</td>
+                  <td>
+                    <form action="{% url 'delete_personal_notifications' %}" method="POST">
+                      {% csrf_token %}
+                      <input type="hidden" value="{{ i.id }}" name="id_delete">
+                      <button>Delete</button>
+                    </form>
+                  </td>
+
+                </tr>
+                {% endfor %}  
+            </table>
+        </form>
     </div>
 
 

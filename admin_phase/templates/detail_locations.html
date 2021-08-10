@@ -1,0 +1,166 @@
+
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+
+
+<style>
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
+
+</style>
+
+
+
+
+
+  <div class="col-md-12 locations_form">
+    <div class="col-md-12 datalist_box">
+      <div class="scrolluserlist">
+
+
+          <div class="col-md-6">
+            <form class="text-center border border-light p-5" action="{% url 'detail_location' detail_location.id %}" method="POST" onsubmit="return check_location()">
+              {% csrf_token %}
+                <p class="h4 mb-4">Add Location</p>
+
+              <!-- Main Categoy-->
+               <div class="d-flex justify-content-around">
+                    
+                <!-- Default inline 1-->
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" checked="checked" value="True" onclick="checkRadio_location(name)" name="main_location_notavailable" class="custom-control-input" id="defaultInline001" >
+                  <label class="custom-control-label" for="defaultInline1">State</label>
+                </div>
+
+                <!-- Default inline 2-->
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" onclick="checkRadio_location(name)" value="False" id="defaultInline002" name="main_location_available">
+                  <label class="custom-control-label" for="defaultInline2">District/Places</label>
+                </div>
+
+<!--                 <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" onclick="checkRadio_profession(name)" value="False" id="defaultInline03" name="sub_profession_available">
+                  <label class="custom-control-label" for="defaultInline2">Micro Sub Profession</label>
+                </div> -->
+                    
+                </div>
+                <!-- Password -->
+                <input type="text" name="name"  class="form-control mb-4" placeholder="Enter Location Name" required="" pattern="[A-Za-z ]{1,30}">
+
+
+                <select id="main_location_selection" name="main_location" class="form-control mb-4" >
+                    <option value="">Select State</option>
+                    {% for location in sub_locations_list %}
+                      <option value="{{ location.id }}">{{ location.name }} &nbsp;&nbsp;&nbsp;{% if location.super_parent == null %}<p class="text-primary">(Country)</p>{% endif %}</option> 
+                    {% endfor %}
+                </select>
+
+
+
+
+<!--                 <select id="sub_profession_selection" name="sub_profession" class="form-control mb-4" >
+                    <option value="">Select Sub Profession</option>
+                    {% for profession in sub_profession_list %}
+                      <option value="{{ profession.id }}">{{ profession.name }}&nbsp;&nbsp;&nbsp;{% if profession.super_parent != null %}<p class="text-primary">(Sub Profession)&nbsp;&nbsp;&nbsp;{{ profession.super_parent_id }}</p>{% endif %}</option> 
+                    {% endfor %}
+                </select> -->
+
+                <div id="error3" style="color: red"></div>
+                <button style="background-color: #59698d;" class="btn btn-primary btn-block" type="submit">Save</button>
+            </form>
+          </div>
+
+          <div class="col-md-6">
+            <table cellspacing="0" style="width: 108%;margin: 0px -15px;">
+              <tr class="header" style="font-size: 15px;">
+                <center>
+                 <th width="5%"><center>#</center></th>
+                 <th width="50%"><center>State</center></th>
+                 <th width="45%"><center>District/Places</center></th>
+                 </center>
+              </tr>
+
+
+              {% for i in sub_locations_list %}
+                <tr style="font-size: 13px;height: 30px;">
+                 <td><center>{{ forloop.counter }}</center></td>
+                  <td>&nbsp;{{ i.name }}</td>
+                  <td>
+                    {% for j in microsub_locations_list %}
+                      {% if j.parent_id == i.id %}
+                      &nbsp;{{ j.name }}<br>
+                      {% endif %}
+                    {% endfor %}
+                  </td>
+                </tr>
+              {% endfor %}  
+            </table>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+    <script type="text/javascript">
+      document.getElementById("main_location_selection").style.visibility = "hidden";
+      var ch;
+    function checkRadio_location(name) {
+        if(name == "main_location_available"){
+            document.getElementById("defaultInline002").checked = true;
+            document.getElementById("defaultInline001").checked = false;
+            console.log('Yes')
+            document.getElementById("main_location_selection").style.visibility = "visible";
+            ch=1;
+
+
+
+        } else if (name == "main_location_notavailable"){
+            document.getElementById("defaultInline001").checked = true;
+            document.getElementById("defaultInline002").checked = false;
+            document.getElementById("main_location_selection").style.visibility = "hidden";
+        }
+    }
+
+    function check_location()
+    {     a=document.getElementById("defaultInline002").value;
+            b=document.getElementById("main_location_selection").value;
+    // alert(ch)
+    if(ch)
+    {
+      // alert("rad")
+      if(b == "")
+    {
+      // alert("not ")
+      document.getElementById("error3").innerHTML="Choose State"; 
+      return false;
+    }else{
+      // alet("sc")
+      return true;
+
+    }
+    }else{
+      // alert("else part")
+      console.log("sdf")
+    }
+
+    }
+    </script>
+
+
+
+
+
+
+
+{% endblock %}

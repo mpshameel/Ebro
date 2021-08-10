@@ -117,7 +117,9 @@
 
 @media screen and (max-width: 768px) {
     .username_mobile {
-        left: 30; } }
+        left: -50; }
+    .person{
+        margin: 0px 0px; } }
 
 
 

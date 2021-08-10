@@ -6,6 +6,7 @@
 
 
 
+
 <style>
    .active_user_page9{
       background-color: #99c2ff;
@@ -14,8 +15,8 @@
 </style>
 
 
-    <div class="container_wideboxes">
-      	<div class="col-md-12 payment_detail_widebox">
+<div class="container_wideboxes">
+      	<div class="col-md-8 payment_detail_widebox">
 
 	        <div class="col-md-4">
 	              <div class="profilepic_box">
@@ -33,42 +34,20 @@
 
 	        <div class="col-md-8">
 	            <div class="desc" style="margin-top: 20px;margin-left: -40px;">
-	            	<div class="col-md-12">
-						<form action="{% url 'admin_orders_edit' detail_order.id %}" method="POST">
-							{% csrf_token %}
-						<b><font style="font-size: 15px;">
-						Delivery Status :
-						<select name="order_status">
-							<option value="ordered" {% if detail_order.status == "ordered" %} selected="" {% else %} selected="" {% endif %}>Ordered</option>
-							<option value="packing" {% if detail_order.status == "packing" %} selected="" {% endif %}>Packing</option>
-							<option value="shipped" {% if detail_order.status == "shipped" %} selected="" {% endif %}>Shipped</option>
-							<option value="on_the_way" {% if detail_order.status == "on_the_way" %} selected="" {% endif %}>On the way</option>
-							<option value="delivered" {% if detail_order.status == "delivered" %} selected="" {% endif %}>Delivered</option>
-						</select>
-						</font></b>
- 						<input type="hidden" value="{{ detail_order.id }}" name="order_id">
- 						<br>
- 						
-    					<b><font style="font-size: 15px;">
-						Delivery Expected in : <input type="number" name="delivery_date"  value="{{ detail_order.delivery_date }}" required>
-						</font></b><br>
-						<button class="btn btn-primary">Update</button>
-    					</form>
-					</div>
 
 					<div class="col-md-12 payment_details_text_mobile">
 				        <b><font style="font-size: 30px;">{{ detail_order.product.product_name }}</font></b><br>
-						Type&nbsp;{% if detail_order.product_type == "Single" %} 
-	 							  :{{ detail_order.product_type }}
+						Type&nbsp;{% if detail_order.product.product_type == "Single" %} 
+	 							  :{{ detail_order.product.product_type }}
 	 							  {% else %}
-	 							  :{{ detail_order.product_type }}
+	 							  :{{ detail_order.product.product_type }}
 	 							  <br>
-	 							  <b>Brand Name&nbsp;:{{ detail_order.brand_name }}</b>
+	 							  <b>Brand Name&nbsp;:{{ detail_order.product.brand_name }}</b>
 	 							  {% endif %}
 	 							  <br>
 	 					[your product can categorize based on brand name or individual]<br>
 	 					<b><font style="font-size: 20px;">$&nbsp;{{ detail_order.product.price }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Qty&nbsp;&nbsp;{{detail_order.product_count}}</font></b><br>
-	 					<b><font style="font-size: 35px;">Total&nbsp;&nbsp;: $&nbsp;&nbsp;{% widthratio detail_order.product_count 1 detail_order.product.price %}</font></b>
+	 					<b><font style="font-size: 35px;">Total&nbsp;&nbsp;: $&nbsp;&nbsp;{{detail_order.count_price}}</font></b>
 	 					<br>
 	 					{% for i in category_details %}
 	                   		{% for j in trade %} 
@@ -80,14 +59,44 @@
 	 					<br>
 	 					<b><font style="font-size: 20px;">{{ detail_order.product.email }}</font></b><br>
 	 					<b><font style="font-size: 15px;">{{ detail_order.product.contact }}</font></b><br>
-	 					<b><font style="font-size: 15px;">{{ detail_order.product.location }}</font></b><br>
+	 					<b><font style="font-size: 15px;">{{ detail_order.product.location.name }}</font></b><br>
 						<p style="word-break: break-all;line-height: 20px;"><b>Details :</b><br>{{ detail_order.product.details }}</p>
 					</div>
 				</div>
 	        </div>
 
       	</div>
-    </div>
+
+      	<div class="col-md-4 delivery_edit_form">
+      		<br>
+			<form action="{% url 'admin_orders_edit' detail_order.id %}" method="POST">
+				{% csrf_token %}
+			<b><font style="font-size: 15px;">
+			Delivery Status :
+			<select name="order_status">
+				<option value="ordered" {% if detail_order.status == "ordered" %} selected="" {% else %} selected="" {% endif %}>Ordered</option>
+				<option value="packing" {% if detail_order.status == "packing" %} selected="" {% endif %}>Packing</option>
+				<option value="shipped" {% if detail_order.status == "shipped" %} selected="" {% endif %}>Shipped</option>
+				<option value="on_the_way" {% if detail_order.status == "on_the_way" %} selected="" {% endif %}>On the way</option>
+				<option value="delivered" {% if detail_order.status == "delivered" %} selected="" {% endif %}>Delivered</option>
+			</select>
+			</font></b>
+				<input type="hidden" value="{{ detail_order.id }}" name="order_id">
+				<br>
+				
+			<b><font style="font-size: 15px;">
+			<br>
+			Delivery Type &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_order.delivery_type }}
+			<br>
+			Payment Type &nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_order.payment_type }}
+			<br><br>
+			Delivery Expected in : <input type="number" name="delivery_date"  value="{{ detail_order.delivery_date }}" required>
+			</font></b><br><br>
+			<button class="btn btn-primary">Update</button>
+			</form>
+		</div>
+
+</div>
 
 
 

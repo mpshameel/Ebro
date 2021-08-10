@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from admin_phase.models import *
@@ -11,8 +11,6 @@ from django.db.models import F
 # from django.utils import timezone
 # from datetime import datetime
 
-
-
 def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
@@ -23,6 +21,8 @@ def updateItem(request):
 
     customer = User.objects.get(id=request.user.id)
     product = products.objects.get(id=productId)
+
+    producttocart = products.objects.get(id=productId)
 
 
     # order, created = Order.objects.get_or_create(username=customer)
@@ -35,10 +35,12 @@ def updateItem(request):
     if product.stock >= 1:
         if action == 'add':
             orderItem.quantity = (orderItem.quantity + 1)
+            orderItem.total_price = (orderItem.total_price + producttocart.price)
             products.objects.filter(id=productId).update(stock=F('stock')-1)
 
         elif action == 'remove':
             orderItem.quantity = (orderItem.quantity - 1)
+            orderItem.total_price = (orderItem.total_price - producttocart.price)
             products.objects.filter(id=productId).update(stock=F('stock')+1)
 
 
@@ -107,8 +109,20 @@ def update_useradcount(request):
 # Create your views here.
 
 
+
+
+
 def user_home(request):
     if request.user.is_authenticated:
+        if 'search_name' in request.GET:
+            product_name = request.GET['search_name']
+            print("---------------------------------------------------------------------------------------------------",product_name)
+
+            user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+            # return redirect('/home/product?search_name=a')
+            # return redirect('product?search_name=')
+            # return render(request,'user_products.html',{'user_products_list':user_products_list})
+            return product(request, user_products_list)
 
         items = product_cart.objects.filter(username=request.user.id)
         cart_count = sum(items.values_list('quantity', flat=True))
@@ -121,9 +135,48 @@ def user_home(request):
         ad_l = ads.objects.filter(adsize="l")
         ad_s = ads.objects.filter(adsize="s")
 
-        context = {'user_profile':user_profile,'cart_count':cart_count,'allads':allads,'ad_xxxl':ad_xxxl,'ad_xxl':ad_xxl,'ad_xl':ad_xl,'ad_l':ad_l,'ad_s':ad_s}
+        
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count
+        items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+        cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+
+        context = {'user_profile':user_profile,'cart_count':cart_count,'allads':allads,'ad_xxxl':ad_xxxl,'ad_xxl':ad_xxl,'ad_xl':ad_xl,'ad_l':ad_l,'ad_s':ad_s,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_home.html',context)
     else:
+        if 'search_name' in request.GET:
+            product_name = request.GET['search_name']
+
+            user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+            return product_unknown(request, user_products_list)
+
         allads = ads.objects.all()
         ad_xxxl = ads.objects.filter(adsize="xxxl")
         ad_xxl = ads.objects.filter(adsize="xxl")
@@ -262,11 +315,93 @@ def premium_signup_payment(request):
     user = User.objects.get(id=request.user.id)
     user_profile = profile.objects.get(username_id=request.user.id)
 
+
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
     items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     cart_count = sum(items.values_list('quantity', flat=True))
-    context = {'user_profile':user_profile,'cart_count':cart_count}
+
+
+    context = {'user_profile':user_profile,'cart_count':cart_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'premium_signup_payment.html',context)
 
+
+
+def premium_signup_payment_upgrade(request):
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+
+    user = User.objects.get(id=request.user.id)
+    user_profile = profile.objects.get(username_id=request.user.id)
+
+
+
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    context = {'user_profile':user_profile,'cart_count':cart_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'premium_signup_payment_upgrade.html',context)
 
 
 def complete_premium_signup_payment(request):
@@ -275,10 +410,40 @@ def complete_premium_signup_payment(request):
     user_payment_premium.coins = "50"
     user_payment_premium.save()
 
-    messages.info(request,'Welcome premium user')
+    messages.info(request,'Welcome Premium User')
     return redirect('user_home')
 
-   
+
+
+
+
+  
+def complete_premium_signup_payment_wallet(request):
+    if request.method == 'POST':
+
+        user_my_profile = profile.objects.get(username_id=request.user.id)
+        my_wallet = float(user_my_profile.wallet)
+        update_premium_amount = float(100)
+
+        if my_wallet >= update_premium_amount:
+            user_payment_premium = profile.objects.get(username_id=request.user.id)
+            user_payment_premium.usertype = "premium"
+            user_payment_premium.coins = "50"
+            user_payment_premium.save()
+
+            user_profile = profile.objects.filter(username_id=request.user.id).update(wallet=F('wallet')-update_premium_amount)
+
+            messages.info(request,'Welcome Premium User')
+            return redirect('profiles')
+        else:
+            messages.info(request,'You dont have enough amount in your wallet,use online payment')
+            return redirect('profiles')
+    else:
+        return redirect('profiles')
+
+
+
+
 
 
 
@@ -299,6 +464,11 @@ def profiles(request):
         hobbies = request.POST['hobbies']
         summary = request.POST['summary']
 
+
+        location_id = locations.objects.get(id=location)
+        profession_id = professions.objects.get(id=profession)
+
+
         user = User.objects.get(id=request.user.id)
         user.first_name = first_name
         user.last_name= last_name
@@ -311,9 +481,9 @@ def profiles(request):
         user_update_profile.alternative_phone = alternative_phone
         user_update_profile.dob = dob
         user_update_profile.adhar_id = adhar_id
-        user_update_profile.profession = profession
+        user_update_profile.profession = profession_id
         user_update_profile.adhar_id = adhar_id
-        user_update_profile.location = location
+        user_update_profile.location = location_id
         user_update_profile.hobbies = hobbies
         user_update_profile.summary = summary
         user_update_profile.save()
@@ -322,16 +492,64 @@ def profiles(request):
         return redirect('profiles')
 
 
-    else:
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
 
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+    else:
         user_address = address.objects.filter(username_id=request.user.id)
         user_profile = profile.objects.get(username_id=request.user.id)
         all_profiles = profile.objects.all()
         print("-----------------------------------------------------------------------------------------------",user_profile.myrefferalid)
         my_refferals = profile.objects.filter(refferalcode=user_profile.myrefferalid)
-        context = {'user_profile':user_profile,'cart_count':cart_count,'user_address':user_address,'all_profiles':all_profiles,'my_refferals':my_refferals}
+
+        location_details = locations.objects.filter(is_deleted=False)
+        profession_details = professions.objects.filter(is_deleted=False)
+
+        main_location_list = locations.objects.filter(is_deleted=False,main_location=True)
+        sub_location_list = locations.objects.filter(is_deleted=False,main_location=False,sub_location=True)
+        microsub_location_list = locations.objects.filter(is_deleted=False,main_location=False,sub_location=False,microsub_location=True)
+
+
+
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count
+        items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+        cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+        context = {'user_profile':user_profile,'user_address':user_address,'all_profiles':all_profiles,'location_details':location_details,'profession_details':profession_details,'main_location_list':main_location_list,'sub_location_list':sub_location_list,'microsub_location_list':microsub_location_list,'my_refferals':my_refferals,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_profile.html',context)
 
 
@@ -359,20 +577,62 @@ def topup_payment(request):
         amount = request.POST['amount']
         
         if User.objects.filter(id=request.user.id,username=username):
-            items = product_cart.objects.filter(username=request.user.id)
-            cart_count = sum(items.values_list('quantity', flat=True))
-
             amount = amount
 
             request.session['amount'] = amount
 
             user_profile = profile.objects.get(username_id=request.user.id)
-            context = {'user_profile':user_profile,'cart_count':cart_count,'amount':amount}
+
+
+
+
+            #daily task list count
+            daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+            daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+            #my ads list count
+            user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+            user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+            user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+            #my orders count
+            items_in_order = orders.objects.filter(username=request.user.id)
+
+            #wishlist count
+            user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+            user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+            user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+            #cart count
+            items = product_cart.objects.filter(username=request.user.id)
+
+
+            #sum of counts variables
+            daily_task_count = daily_deals_list_count + daily_jobs_list_count
+            my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+            order_count = sum(items_in_order.values_list('product_count', flat=True))
+            my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+            cart_count = sum(items.values_list('quantity', flat=True))
+
+
+            context = {'user_profile':user_profile,'amount':amount,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
             return render(request, 'user_topup_payment.html',context)
 
         else:
             messages.info(request,'Invalid credentials')
             return redirect('profiles')
+
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+
     else:
         return redirect('profiles')
 
@@ -389,12 +649,21 @@ def sendmoney(request):
         user_id = request.POST['user_id']
         amount = request.POST['amount']
         
-        user_profile = profile.objects.filter(username_id=user_id).update(wallet=F('wallet')+amount)
+        user_my_profile = profile.objects.get(username_id=request.user.id)
+        my_wallet = float(user_my_profile.wallet)
+        send_amount = float(amount)
 
-        my_wallet = profile.objects.filter(username_id=request.user.id).update(wallet=F('wallet')-amount,coins=F('coins')+10)
+        print(my_wallet,"------------------------------------------------------------------")
+        if my_wallet >= send_amount:
+            user_profile = profile.objects.filter(username_id=user_id).update(wallet=F('wallet')+amount)
 
-        messages.info(request,'Amount sent successfully')
-        return redirect('profiles')
+            my_wallet = profile.objects.filter(username_id=request.user.id).update(wallet=F('wallet')-amount,coins=F('coins')+10)
+
+            messages.info(request,'Amount sent successfully')
+            return redirect('profiles')
+        else:
+            messages.info(request,'You dont have enough money in your wallet')
+            return redirect('profiles')
     else:
         return redirect('profiles')
 
@@ -417,6 +686,84 @@ def voucher_claim(request):
     else:
         return redirect('profiles')
 
+
+
+
+
+def retrieve_money(request):
+    if request.method == 'POST':
+        amount = request.POST['amount']
+
+        user = User.objects.get(id=request.user.id)
+        user_profile = profile.objects.get(username_id=request.user.id)
+
+
+        user_my_profile = profile.objects.get(username_id=request.user.id)
+        my_wallet = float(user_my_profile.wallet)
+        send_amount = float(amount)
+
+        if my_wallet >= send_amount:
+            retrieves(username=user,profile=user_profile,amount=amount).save()
+
+            user_profile = profile.objects.filter(username_id=request.user.id).update(wallet=F('wallet')-amount)
+
+            messages.info(request,'Money Retrieve Requested Successfully')
+            return redirect('profiles')
+        else:
+            messages.info(request,'Enter Amount Less than your wallet amount')
+            return redirect('profiles')
+
+
+
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+
+
+
+    else:
+        user_profile = profile.objects.get(username_id=request.user.id)
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count
+        items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+        cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+
+        context = {'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        return render(request, 'retrieve_money.html',context)
 
 
 
@@ -458,46 +805,135 @@ def add_address(request):
 
 
 def offers(request):
-    if request.user.is_authenticated:
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
 
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
-
-        user_profile = profile.objects.get(username_id=request.user.id)
-        # user = User.objects.get(id=request.user.id)
-        user_products_list = products.objects.filter(publish="public").exclude(offer="0")
-        context = {'user_products_list':user_products_list,'user_profile':user_profile,'cart_count':cart_count}
-        return render(request, 'user_offers.html',context)
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False).exclude(offer="0")
     else:
-        user_products_list = products.objects.filter(publish="public").exclude(offer="0")
-        context = {'user_products_list':user_products_list}
-        return render(request, 'user_offers.html',context)
+        user_products_list = products.objects.filter(publish="public",is_deleted=False).exclude(offer="0")
+
+    user_profile = profile.objects.get(username_id=request.user.id)
+
+    #daily task list count
+    daily_deals_list = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    
+    context = {'user_products_list':user_products_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_offers.html',context)
+    
+
+
+def offers_unknown(request):
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False).exclude(offer="0")
+    else:
+        user_products_list = products.objects.filter(publish="public",is_deleted=False).exclude(offer="0")
+    
+    context = {'user_products_list':user_products_list}
+    return render(request, 'user_offers.html',context)
 
 
 
 def detail_offers(request,id):
-    if request.user.is_authenticated:
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
 
-        user_profile = profile.objects.get(username_id=request.user.id)
-        # user = User.objects.get(id=request.user.id)
-        user_product =  products.objects.get(id=id)
-        user_products_list = products.objects.filter(publish="public").exclude(offer="0")
-
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_product.category.all()
-        context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'cart_count':cart_count,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_offers.html',context)
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False).exclude(offer="0")
     else:
-        user_product =  products.objects.get(id=id)
-        user_products_list = products.objects.filter(publish="public").exclude(offer="0")
+        user_products_list = products.objects.filter(publish="public",is_deleted=False).exclude(offer="0")
 
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_product.category.all()
-        context = {'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_offers.html',context)
-        
+    user_profile = profile.objects.get(username_id=request.user.id)
+    # user = User.objects.get(id=request.user.id)
+    user_product =  products.objects.get(id=id)
+
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_product.category.all()
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_detail_offers.html',context)
+
+
+
+
+def detail_offers_unknown(request,id):
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False).exclude(offer="0")
+    else:
+        user_products_list = products.objects.filter(publish="public",is_deleted=False).exclude(offer="0")
+    # user = User.objects.get(id=request.user.id)
+    user_product =  products.objects.get(id=id)
+
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_product.category.all()
+
+    context = {'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
+    return render(request, 'user_detail_offers.html',context)
+
+
+
 
 
 
@@ -519,7 +955,7 @@ def deal(request):
         # contact = request.POST['contact']
         location = request.POST['location']
         deal_type = request.POST['deal_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
@@ -527,11 +963,13 @@ def deal(request):
 
         user = User.objects.get(id=request.user.id)
         
+        location_id = locations.objects.get(id=location)
+
         pr = profile.objects.get(username_id=request.user.id)
         email = user.email
         contact = pr.phone
 
-        user_deals_add = deals(username=user,publish=publish,deal_name=deal_name,price=price,location=location,deal_type=deal_type,brand_name=brand_name,picture=picture,email=email,contact=contact,details=details)
+        user_deals_add = deals(username=user,publish=publish,deal_name=deal_name,price=price,location=location_id,deal_type=deal_type,picture=picture,email=email,contact=contact,details=details)
         user_deals_add.save()
 
         for i in category:
@@ -548,53 +986,149 @@ def deal(request):
         messages.info(request,'Deal Added')
         return redirect('deal')
 
+    elif 'search_name' in request.GET:
+        deal_name = request.GET['search_name']
+
+        user_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish="public",is_deleted=False)
+
+
+
 
     else:
-        if request.user.is_authenticated:
-            items = product_cart.objects.filter(username=request.user.id)
-            cart_count = sum(items.values_list('quantity', flat=True))
+        user_deals_list = deals.objects.filter(publish="public",is_deleted=False)
 
-            user_profile = profile.objects.get(username_id=request.user.id)
-            # user = User.objects.get(id=request.user.id)
-            user_deals_list = deals.objects.filter(publish="public")
-            category_details = categorys.objects.filter(is_deleted=False)
-            context = {'user_deals_list':user_deals_list,'user_profile':user_profile,'cart_count':cart_count,'category_details':category_details}
-            return render(request, 'user_deals.html',context)
-        else:
-            user_deals_list = deals.objects.filter(publish="public")
-            category_details = categorys.objects.filter(is_deleted=False)
-            context = {'user_deals_list':user_deals_list,'category_details':category_details}
-            return render(request, 'user_deals.html',context)
+    user_profile = profile.objects.get(username_id=request.user.id)
+    # user = User.objects.get(id=request.user.id)
+    
+    category_details = categorys.objects.filter(is_deleted=False)
+    location_details = locations.objects.filter(is_deleted=False)
 
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+    
+
+    context = {'user_deals_list':user_deals_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_deals.html',context)
+
+
+
+def deal_unknown(request):
+    if request.method == 'POST':
+        pass
+
+    elif 'search_name' in request.GET:
+        deal_name = request.GET['search_name']
+
+        user_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish="public",is_deleted=False)
+    else:
+        user_deals_list = deals.objects.filter(publish="public",is_deleted=False)
+    category_details = categorys.objects.filter(is_deleted=False)
+    context = {'user_deals_list':user_deals_list,'category_details':category_details}
+    return render(request, 'user_deals.html',context)
 
 
 
 
 
 def detail_deal(request,id):
-    if request.user.is_authenticated:
+    if request.method == 'POST':
+        pass
 
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
+    elif 'search_name' in request.GET:
+        deal_name = request.GET['search_name']
 
-        user_profile = profile.objects.get(username_id=request.user.id)
-        # user = User.objects.get(id=request.user.id)
-        user_deal =  deals.objects.get(id=id)
-        user_deals_list = deals.objects.filter(publish="public")
-
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_deal.category.all()
-        context = {'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deal':user_deal,'cart_count':cart_count,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_deals.html',context)
+        user_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish="public",is_deleted=False)
     else:
-        user_deal =  deals.objects.get(id=id)
-        user_deals_list = deals.objects.filter(publish="public")
+        user_deals_list = deals.objects.filter(publish="public",is_deleted=False)
 
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_deal.category.all()
-        context = {'user_deals_list':user_deals_list,'user_deal':user_deal,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_deals.html',context)
-        
+    user_profile = profile.objects.get(username_id=request.user.id)
+    # user = User.objects.get(id=request.user.id)
+    user_deal =  deals.objects.get(id=id)
+
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_deal.category.all()
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    context = {'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deal':user_deal,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_detail_deals.html',context)
+
+
+
+def detail_deal_unknown(request,id):
+    if request.method == 'POST':
+        pass
+
+    elif 'search_name' in request.GET:
+        deal_name = request.GET['search_name']
+
+        user_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish="public",is_deleted=False)
+    else:
+        user_deals_list = deals.objects.filter(publish="public",is_deleted=False)
+    user_deal =  deals.objects.get(id=id)
+    
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_deal.category.all()
+
+    context = {'user_deals_list':user_deals_list,'user_deal':user_deal,'category_details':category_details,'trade':trade}
+    return render(request, 'user_detail_deals.html',context)
+
+
+
 
 
 
@@ -609,19 +1143,21 @@ def job(request):
         # contact = request.POST['contact']
         location = request.POST['location']
         job_type = request.POST['job_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
 
         user = User.objects.get(id=request.user.id)
 
+        location_id = locations.objects.get(id=location)
+
         pr = profile.objects.get(username_id=request.user.id)
 
         email = user.email
         contact = pr.phone
         
-        user_jobs_add = jobs(username=user,publish=publish,job_name=job_name,price=price,location=location,job_type=job_type,brand_name=brand_name,email=email,contact=contact,picture=picture,details=details)
+        user_jobs_add = jobs(username=user,publish=publish,job_name=job_name,price=price,location=location_id,job_type=job_type,email=email,contact=contact,picture=picture,details=details)
         user_jobs_add.save()
 
         for i in category:
@@ -638,57 +1174,163 @@ def job(request):
         messages.info(request,'Job Added')
         return redirect('job')
 
+    
+    elif 'search_name' in request.GET:
+        job_name = request.GET['search_name']
+
+        user_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish="public",is_deleted=False)
 
     else:
-        if request.user.is_authenticated:
-            items = product_cart.objects.filter(username=request.user.id)
-            cart_count = sum(items.values_list('quantity', flat=True))
+        user_jobs_list = jobs.objects.filter(publish="public",is_deleted=False)
 
-            user_profile = profile.objects.get(username_id=request.user.id)
-            # user = User.objects.get(id=request.user.id)
-            user_jobs_list = jobs.objects.filter(publish="public")
+    user_profile = profile.objects.get(username_id=request.user.id)
+    # user = User.objects.get(id=request.user.id)
 
-            category_details = categorys.objects.filter(is_deleted=False)
-            context = {'user_jobs_list':user_jobs_list,'user_profile':user_profile,'cart_count':cart_count,'category_details':category_details}
-            return render(request, 'user_jobs.html',context)
-        else:
-            user_jobs_list = jobs.objects.filter(publish="public")
+    category_details = categorys.objects.filter(is_deleted=False)
+    location_details = locations.objects.filter(is_deleted=False)
 
-            category_details = categorys.objects.filter(is_deleted=False)
-            context = {'user_jobs_list':user_jobs_list,'category_details':category_details}
-            return render(request, 'user_jobs.html',context)
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    context = {'user_jobs_list':user_jobs_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_jobs.html',context)
+
+
+
+
+def job_unknown(request):
+    if request.method == 'POST':
+        pass
+
+    elif 'search_name' in request.GET:
+        job_name = request.GET['search_name']
+
+        user_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish="public",is_deleted=False)
+    else:
+        user_jobs_list = jobs.objects.filter(publish="public",is_deleted=False)
+    category_details = categorys.objects.filter(is_deleted=False)
+    context = {'user_jobs_list':user_jobs_list,'category_details':category_details}
+    return render(request, 'user_jobs.html',context)
 
 
 
 
 def detail_job(request,id):
-    if request.user.is_authenticated:
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
+    if request.method == 'POST':
+        pass
 
-        user_profile = profile.objects.get(username_id=request.user.id)
-        # user = User.objects.get(id=request.user.id)
-        user_job =  jobs.objects.get(id=id)
-        user_jobs_list = jobs.objects.filter(publish="public")
+    elif 'search_name' in request.GET:
+        job_name = request.GET['search_name']
 
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_job.category.all()
-        context = {'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_job':user_job,'cart_count':cart_count,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_jobs.html',context)
+        user_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish="public",is_deleted=False)
     else:
-        user_job =  jobs.objects.get(id=id)
-        user_jobs_list = jobs.objects.filter(publish="public")
+        user_jobs_list = jobs.objects.filter(publish="public",is_deleted=False)
 
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_job.category.all()
-        context = {'user_jobs_list':user_jobs_list,'user_job':user_job,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_jobs.html',context)
+    user_profile = profile.objects.get(username_id=request.user.id)
+    # user = User.objects.get(id=request.user.id)
+    user_job =  jobs.objects.get(id=id)
 
-
-
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_job.category.all()
 
 
-def product(request):
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+    context = {'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_job':user_job,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_detail_jobs.html',context)
+    
+
+
+def detail_job_unknown(request,id):
+    if request.method == 'POST':
+        pass
+
+    elif 'search_name' in request.GET:
+        job_name = request.GET['search_name']
+
+        user_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish="public",is_deleted=False)
+    else:
+        user_jobs_list = jobs.objects.filter(publish="public",is_deleted=False)
+    user_job =  jobs.objects.get(id=id)
+    
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_job.category.all()
+
+    context = {'user_jobs_list':user_jobs_list,'user_job':user_job,'category_details':category_details,'trade':trade}
+    return render(request, 'user_detail_jobs.html',context)
+
+
+
+    # else:
+    #     user_job =  jobs.objects.get(id=id)
+    #     user_jobs_list = jobs.objects.filter(publish="public",is_deleted=False)
+
+    #     category_details = categorys.objects.filter(is_deleted=False)
+    #     trade = user_job.category.all()
+    #     context = {'user_jobs_list':user_jobs_list,'user_job':user_job,'category_details':category_details,'trade':trade}
+    #     return render(request, 'user_detail_jobs.html',context)
+
+
+
+
+
+def product(request,user_products_list=''):
     if request.method == 'POST':
         publish = request.POST['publish']
         product_name = request.POST['product_name']
@@ -706,12 +1348,14 @@ def product(request):
 
         user = User.objects.get(id=request.user.id)
 
+        location_id = locations.objects.get(id=location)
+
         pr = profile.objects.get(username_id=request.user.id)
 
         email = user.email
         contact = pr.phone
         
-        user_products_add = products(username=user,publish=publish,product_name=product_name,price=price,oldprice=price,location=location,product_type=product_type,brand_name=brand_name,stock=stock,email=email,contact=contact,picture=picture,details=details)
+        user_products_add = products(username=user,publish=publish,product_name=product_name,price=price,oldprice=price,location=location_id,product_type=product_type,brand_name=brand_name,stock=stock,email=email,contact=contact,picture=picture,details=details)
         user_products_add.save()
 
         for i in category:
@@ -728,51 +1372,143 @@ def product(request):
         messages.info(request,'Product Added')
         return redirect('product')
 
+
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+
     else:
-        if request.user.is_authenticated:
+        user_products_list = products.objects.filter(publish="public",is_deleted=False)
 
-            items = product_cart.objects.filter(username=request.user.id)
-            cart_count = sum(items.values_list('quantity', flat=True))
+    user_profile = profile.objects.get(username_id=request.user.id)
+    # user = User.objects.get(id=request.user.id)
+    category_details = categorys.objects.filter(is_deleted=False)
+    location_details = locations.objects.filter(is_deleted=False)
 
-            user_profile = profile.objects.get(username_id=request.user.id)
-            # user = User.objects.get(id=request.user.id)
-            user_products_list = products.objects.filter(publish="public")
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
 
-            category_details = categorys.objects.filter(is_deleted=False)
-            context = {'user_products_list':user_products_list,'user_profile':user_profile,'cart_count':cart_count,'category_details':category_details}
-            return render(request, 'user_products.html',context)
-        else:
-            user_products_list = products.objects.filter(publish="public")
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
 
-            category_details = categorys.objects.filter(is_deleted=False)
-            context = {'user_products_list':user_products_list,'category_details':category_details}
-            return render(request, 'user_products.html',context)
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+    context = {'user_products_list':user_products_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_products.html',context)
+
+
+
+
+def product_unknown(request,user_products_list=''):
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+    else:
+        user_products_list = products.objects.filter(publish="public",is_deleted=False)
+    
+    context = {'user_products_list':user_products_list}
+    return render(request, 'user_products.html',context)
+
+
+
+
+
 
 
 
 def detail_product(request,id):
-    if request.user.is_authenticated:
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
 
-        user_profile = profile.objects.get(username_id=request.user.id)
-        # user = User.objects.get(id=request.user.id)
-        user_product =  products.objects.get(id=id)
-        user_products_list = products.objects.filter(publish="public")
-
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_product.category.all()
-        context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'cart_count':cart_count,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_products.html',context)
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
     else:
-        user_product =  products.objects.get(id=id)
-        user_products_list = products.objects.filter(publish="public")
+        user_products_list = products.objects.filter(publish="public",is_deleted=False)
 
-        category_details = categorys.objects.filter(is_deleted=False)
-        trade = user_product.category.all()
-        context = {'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
-        return render(request, 'user_detail_products.html',context)
+    user_profile = profile.objects.get(username_id=request.user.id)
+    # user = User.objects.get(id=request.user.id)
+    user_product =  products.objects.get(id=id)
+
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_product.category.all()
+
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+    context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    return render(request, 'user_detail_products.html',context)
+
         
+
+
+def detail_products_unknown(request,id):
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+    else:
+        user_products_list = products.objects.filter(publish="public",is_deleted=False)
+    # user = User.objects.get(id=request.user.id)
+    user_product =  products.objects.get(id=id)
+
+    category_details = categorys.objects.filter(is_deleted=False)
+    trade = user_product.category.all()
+
+    context = {'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
+    return render(request, 'user_detail_products.html',context)
+
 
 
 
@@ -783,15 +1519,58 @@ def detail_product(request,id):
 
 
 def myads(request):
-    items = product_cart.objects.filter(username=request.user.id)
-    cart_count = sum(items.values_list('quantity', flat=True))
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
 
     user = User.objects.get(id=request.user.id)
+
     user_deals_list = deals.objects.filter(username_id=request.user.id)
     user_jobs_list = jobs.objects.filter(username_id=request.user.id)
     user_products_list = products.objects.filter(username_id=request.user.id)
+
     user_profile = profile.objects.get(username_id=request.user.id)
-    context = {'user':user,'user_deals_list':user_deals_list,'user_jobs_list':user_jobs_list,'user_products_list':user_products_list,'user_profile':user_profile,'cart_count':cart_count}
+
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+    context = {'user':user,'user_deals_list':user_deals_list,'user_jobs_list':user_jobs_list,'user_products_list':user_products_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_myads.html',context)
 
 
@@ -799,8 +1578,16 @@ def myads(request):
 
 
 def myorders(request):
-    items = product_cart.objects.filter(username=request.user.id)
-    cart_count = sum(items.values_list('quantity', flat=True))
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
 
     items_in_order = orders.objects.filter(username=request.user.id)
     order_count = sum(items_in_order.values_list('product_count', flat=True))
@@ -816,7 +1603,40 @@ def myorders(request):
     user = User.objects.get(id=request.user.id)
     user_profile = profile.objects.get(username_id=request.user.id)
     my_orders = orders.objects.filter(username_id=request.user.id)
-    context = {'user':user,'user_profile':user_profile,'cart_count':cart_count,'my_orders':my_orders,'order_count':order_count,'total_order_price':total_order_price}
+
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    # items_in_order = orders.objects.filter(username=request.user.id)-----------------
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    # order_count = sum(items_in_order.values_list('product_count', flat=True))-------------------------
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+    context = {'user':user,'user_profile':user_profile,'my_orders':my_orders,'order_count':order_count,'total_order_price':total_order_price,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_myorders.html',context)
 
 
@@ -827,15 +1647,56 @@ def myorders(request):
 
 
 def daily_task(request):
-    items = product_cart.objects.filter(username=request.user.id)
-    cart_count = sum(items.values_list('quantity', flat=True))
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+
+    user_profile = profile.objects.get(username_id=request.user.id)
 
     user = User.objects.get(id=request.user.id)
-    daily_deals_list = assign_deal.objects.filter(username=request.user.id)
-    daily_jobs_list = assign_job.objects.filter(username=request.user.id)
-    # user_products_list = products.objects.filter(username_id=request.user.id)
-    user_profile = profile.objects.get(username_id=request.user.id)
-    context = {'user':user,'daily_deals_list':daily_deals_list,'daily_jobs_list':daily_jobs_list,'user_profile':user_profile,'cart_count':cart_count}
+
+    daily_deals_list = assign_deal.objects.filter(assigns=user_profile.id)
+    daily_jobs_list = assign_job.objects.filter(assigns=user_profile.id)
+
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    context = {'user':user,'daily_deals_list':daily_deals_list,'daily_jobs_list':daily_jobs_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_dailytask.html',context)
 
 
@@ -865,13 +1726,52 @@ def delete_assaigned_job(request):
 
 
 def chats(request):
-    items = product_cart.objects.filter(username=request.user.id)
-    cart_count = sum(items.values_list('quantity', flat=True))
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
 
     user = User.objects.get(id=request.user.id)
     notifications_list = notifications.objects.all()
     user_profile = profile.objects.get(username_id=request.user.id)
-    context = {'user':user,'notifications_list':notifications_list,'user_profile':user_profile,'cart_count':cart_count}
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    context = {'user':user,'notifications_list':notifications_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_chats.html',context)
 
 
@@ -940,10 +1840,13 @@ def detail_view_deals(request,id):
         # contact = request.POST['contact']
         location = request.POST['location']
         deal_type = request.POST['deal_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
+
+
+        location_id = locations.objects.get(id=location)
 
         user_deals_update = deals.objects.get(id=int(id))
         user_deals_update.publish = publish
@@ -951,9 +1854,9 @@ def detail_view_deals(request,id):
         user_deals_update.price = price
         # user_deals_update.email = email
         # user_deals_update.contact = contact
-        user_deals_update.location = location
+        user_deals_update.location = location_id
         user_deals_update.deal_type = deal_type
-        user_deals_update.brand_name = brand_name
+        # user_deals_update.brand_name = brand_name
         user_deals_update.picture = picture
         user_deals_update.details = details
 
@@ -968,10 +1871,19 @@ def detail_view_deals(request,id):
 
         messages.info(request,"Deal Updated")
         return redirect('myads')
-    else:
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
 
+
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+    else:
         user = User.objects.get(id=request.user.id)
         user_deals_list =  deals.objects.get(id=id)
         user_deals_attach_list = deal_attachments.objects.filter(deal_id=id)
@@ -979,7 +1891,39 @@ def detail_view_deals(request,id):
 
         category_details = categorys.objects.filter(is_deleted=False)
         trade = user_deals_list.category.all()
-        context = {'user':user,'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deals_attach_list':user_deals_attach_list,'cart_count':cart_count,'category_details':category_details,'trade':trade}
+
+        location_details = locations.objects.filter(is_deleted=False)
+
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count
+        items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+        cart_count = sum(items.values_list('quantity', flat=True))
+
+        context = {'user':user,'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deals_attach_list':user_deals_attach_list,'category_details':category_details,'location_details':location_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request,'user_deals_edit.html',context)
 
 
@@ -995,10 +1939,13 @@ def detail_view_jobs(request,id):
         # contact = request.POST['contact']
         location = request.POST['location']
         job_type = request.POST['job_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
+
+
+        location_id = locations.objects.get(id=location)
 
         user_jobs_update = jobs.objects.get(id=int(id))
         user_jobs_update.publish = publish
@@ -1006,9 +1953,9 @@ def detail_view_jobs(request,id):
         user_jobs_update.price = price
         # user_jobs_update.email = email
         # user_jobs_update.contact = contact
-        user_jobs_update.location = location
+        user_jobs_update.location = location_id
         user_jobs_update.job_type = job_type
-        user_jobs_update.brand_name = brand_name
+        # user_jobs_update.brand_name = brand_name
         user_jobs_update.picture = picture
         user_jobs_update.details = details
 
@@ -1023,10 +1970,20 @@ def detail_view_jobs(request,id):
 
         messages.info(request,"Job Updated")
         return redirect('myads')
-    else:
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
 
+
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+
+    else:
         user = User.objects.get(id=request.user.id)
         user_jobs_list =  jobs.objects.get(id=id)
         user_jobs_attach_list = job_attachments.objects.filter(job_id=id)
@@ -1034,7 +1991,40 @@ def detail_view_jobs(request,id):
 
         category_details = categorys.objects.filter(is_deleted=False)
         trade = user_jobs_list.category.all()
-        context = {'user':user,'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_jobs_attach_list':user_jobs_attach_list,'cart_count':cart_count,'category_details':category_details,'trade':trade}
+
+        location_details = locations.objects.filter(is_deleted=False)
+
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count
+        items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+        cart_count = sum(items.values_list('quantity', flat=True))
+
+
+        context = {'user':user,'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_jobs_attach_list':user_jobs_attach_list,'category_details':category_details,'location_details':location_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request,'user_jobs_edit.html',context)
         
 
@@ -1115,6 +2105,9 @@ def detail_view_products(request,id):
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
 
+
+        location_id = locations.objects.get(id=location)
+
         user_products_update = products.objects.get(id=int(id))
         user_products_update.publish = publish
         user_products_update.product_name = product_name
@@ -1122,7 +2115,7 @@ def detail_view_products(request,id):
         user_products_update.stock = stock
         # user_products_update.email = email
         # user_products_update.contact = contact
-        user_products_update.location = location
+        user_products_update.location = location_id
         user_products_update.product_type = product_type
         user_products_update.brand_name = brand_name
         user_products_update.picture = picture
@@ -1140,10 +2133,19 @@ def detail_view_products(request,id):
 
         messages.info(request,"Product Updated")
         return redirect('myads')
-    else:
-        items = product_cart.objects.filter(username=request.user.id)
-        cart_count = sum(items.values_list('quantity', flat=True))
 
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+
+    else:
         user = User.objects.get(id=request.user.id)
         user_products_list =  products.objects.get(id=id)
         user_products_attach_list = product_attachments.objects.filter(product_id=id)
@@ -1151,7 +2153,41 @@ def detail_view_products(request,id):
 
         category_details = categorys.objects.filter(is_deleted=False)
         trade = user_products_list.category.all()
-        context = {'user':user,'user_products_list':user_products_list,'user_products_attach_list':user_products_attach_list,'user_profile':user_profile,'cart_count':cart_count,'category_details':category_details,'trade':trade}
+
+        location_details = locations.objects.filter(is_deleted=False)
+
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count
+        items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+        cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+        context = {'user':user,'user_products_list':user_products_list,'user_products_attach_list':user_products_attach_list,'user_profile':user_profile,'category_details':category_details,'trade':trade,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request,'user_products_edit.html',context)
 
 
@@ -1231,19 +2267,66 @@ def delete_product_attachments(request):
 
 
 def wishlist(request):
-    items = product_cart.objects.filter(username=request.user.id)
-    cart_count = sum(items.values_list('quantity', flat=True))
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
 
     user = User.objects.get(id=request.user.id)
     user_profile = profile.objects.get(username_id=request.user.id)
+
     user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id)
     user_job_wishlist = job_wish.objects.filter(username_id=request.user.id)
     user_product_wishlist = product_wish.objects.filter(username_id=request.user.id)
-    context = {'user':user,'user_profile':user_profile,'user_deal_wishlist':user_deal_wishlist,'user_job_wishlist':user_job_wishlist,'user_product_wishlist':user_product_wishlist,'cart_count':cart_count}
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count----------------------different+count to all
+    user_deal_wishlist_count = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist_count = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist_count = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count
+    items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist_count + user_job_wishlist_count + user_product_wishlist_count
+    cart_count = sum(items.values_list('quantity', flat=True))
+
+
+    context = {'user':user,'user_profile':user_profile,'user_deal_wishlist':user_deal_wishlist,'user_job_wishlist':user_job_wishlist,'user_product_wishlist':user_product_wishlist,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request,'user_wishlist.html',context)
 
 
 def cart(request):
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+
+        return product(request, user_products_list)
+
     user = User.objects.get(id=request.user.id)
 
     items = product_cart.objects.filter(username=request.user.id)
@@ -1253,9 +2336,9 @@ def cart(request):
 
     price = 0
     total_price = 0
-    for product in items:
-        count = product.quantity
-        price = count * product.product.price
+    for prd in items:
+        count = prd.quantity
+        price = count * prd.product.price
         total_price += price
     #   print("--------------------------------------------------------------------------------------",product.product.price)
     #   print("--------------------------------------------------------------------------------------",price)
@@ -1266,8 +2349,38 @@ def cart(request):
     user_profile = profile.objects.get(username_id=request.user.id)
     user_product_cart = product_cart.objects.filter(username_id=request.user.id)
 
+    value=0
 
-    context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price}
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count--------------------------------------------------------
+    # items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    # cart_count = sum(items.values_list('quantity', flat=True))----------------------------------------
+
+    context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'value':value,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
     return render(request,'user_cart.html',context)
 
 
@@ -1302,6 +2415,19 @@ def checkout(request):
 
         return redirect('payment')
 
+
+
+    elif 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
+
+
     else:
         user = User.objects.get(id=request.user.id)
 
@@ -1312,9 +2438,9 @@ def checkout(request):
 
         price = 0
         total_price = 0
-        for product in items:
-            count = product.quantity
-            price = count * product.product.price
+        for prd in items:
+            count = prd.quantity
+            price = count * prd.product.price
             total_price += price
         #   print("--------------------------------------------------------------------------------------",product.product.price)
         #   print("--------------------------------------------------------------------------------------",price)
@@ -1326,24 +2452,101 @@ def checkout(request):
         user_product_cart = product_cart.objects.filter(username_id=request.user.id)
         user_address = address.objects.filter(username_id=request.user.id)
 
-        context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_address':user_address}
+
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count--------------------------------------------------------
+        # items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+        # cart_count = sum(items.values_list('quantity', flat=True))----------------------------------------
+
+
+        context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_address':user_address,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
         return render(request,'user_checkout.html',context)
 
 
 
 
 def about_us(request):
-    if request.method == 'POST':
-        pass
+    if request.user.is_authenticated:
+        if 'search_name' in request.GET:
+            product_name = request.GET['search_name']
+            print("---------------------------------------------------------------------------------------------------",product_name)
 
-    else:
+            user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+            # return redirect('/home/product?search_name=a')
+            # return redirect('product?search_name=')
+            # return render(request,'user_products.html',{'user_products_list':user_products_list})
+            return product(request, user_products_list)
+
+
         user = User.objects.get(id=request.user.id)
 
+        user_profile = profile.objects.get(username_id=request.user.id)
+
+
+        #daily task list count
+        daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+        daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+        #my ads list count
+        user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+        user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+        user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+        #my orders count
+        items_in_order = orders.objects.filter(username=request.user.id)
+
+        #wishlist count
+        user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+        user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+        user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+        #cart count
         items = product_cart.objects.filter(username=request.user.id)
+
+
+        #sum of counts variables
+        daily_task_count = daily_deals_list_count + daily_jobs_list_count
+        my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+        order_count = sum(items_in_order.values_list('product_count', flat=True))
+        my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
-        user_profile = profile.objects.get(username_id=request.user.id)
-        context = {'user':user,'user_profile':user_profile,'cart_count':cart_count}
+
+        context = {'user':user,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        return render(request,'user_about_us.html',context)
+    else:
+        if 'search_name' in request.GET:
+            product_name = request.GET['search_name']
+
+            user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+            return product_unknown(request, user_products_list)
+
+
+        context = {}
         return render(request,'user_about_us.html',context)
 
 
@@ -1402,6 +2605,15 @@ def add_address2(request):
 
 
 def payment(request):
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
 
     user = User.objects.get(id=request.user.id)
 
@@ -1412,9 +2624,9 @@ def payment(request):
 
     price = 0
     total_price = 0
-    for product in items:
-        count = product.quantity
-        price = count * product.product.price
+    for prd in items:
+        count = prd.quantity
+        price = count * prd.product.price
         total_price += price
     #   print("--------------------------------------------------------------------------------------",product.product.price)
     #   print("--------------------------------------------------------------------------------------",price)
@@ -1426,7 +2638,38 @@ def payment(request):
     user_product_cart = product_cart.objects.filter(username_id=request.user.id)
     user_delivery_address = delivery_address.objects.get(username_id=request.user.id)
 
-    context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_delivery_address':user_delivery_address}
+
+
+    #daily task list count
+    daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+    daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+    #my ads list count
+    user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+    user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+    user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+    #my orders count
+    items_in_order = orders.objects.filter(username=request.user.id)
+
+    #wishlist count
+    user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+    user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+    user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+    #cart count--------------------------------------------------------
+    # items = product_cart.objects.filter(username=request.user.id)
+
+
+    #sum of counts variables
+    daily_task_count = daily_deals_list_count + daily_jobs_list_count
+    my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+    order_count = sum(items_in_order.values_list('product_count', flat=True))
+    my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+    # cart_count = sum(items.values_list('quantity', flat=True))----------------------------------------
+
+
+    context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_delivery_address':user_delivery_address,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
     return render(request,'user_payment.html',context)
 
 
@@ -1455,8 +2698,18 @@ def ordercomplete(request):
 
 
     for i in items:
-        order_add = orders(username=user,profile=user_profile,product=i.product,product_count=i.quantity,cart_count=cart_count,amount=total_price,product_name=i.product.product_name,price=i.product.price,email=i.product.email,contact=i.product.contact,brand_name=i.product.brand_name,picture=i.product.picture,address=user_delivery_address,first_name=user_delivery_address.address.first_name,last_name=user_delivery_address.address.last_name,country=user_delivery_address.address.country,state=user_delivery_address.address.state,district=user_delivery_address.address.district,postalcode=user_delivery_address.address.postalcode,phone=user_delivery_address.address.phone,alternative_phone=user_delivery_address.address.alternative_phone,address_line_1=user_delivery_address.address.address_line_1,address_line_2=user_delivery_address.address.address_line_2)
+        order_add = orders(username=user,profile=user_profile,product=i.product,product_count=i.quantity,cart_count=cart_count,amount=total_price,product_name=i.product.product_name,price=i.product.price,count_price=i.quantity*i.product.price,email=i.product.email,contact=i.product.contact,brand_name=i.product.brand_name,picture=i.product.picture,delivery_type="user",payment_type="online_payment",address=user_delivery_address,first_name=user_delivery_address.address.first_name,last_name=user_delivery_address.address.last_name,country=user_delivery_address.address.country,state=user_delivery_address.address.state,district=user_delivery_address.address.district,postalcode=user_delivery_address.address.postalcode,phone=user_delivery_address.address.phone,alternative_phone=user_delivery_address.address.alternative_phone,address_line_1=user_delivery_address.address.address_line_1,address_line_2=user_delivery_address.address.address_line_2)
         order_add.save()
+
+        dealer_id = i.product.username.id
+        dealer_profile_id = profile.objects.get(username_id=dealer_id)
+
+        product_count=i.quantity
+        product_price = i.product.price
+
+        total = product_count*product_price
+
+        profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
 
     profile.objects.filter(username_id=request.user.id).update(coins=F('coins')+10)
 
@@ -1489,10 +2742,22 @@ def ordercomplete_wallet(request):
 
         if user_profile.wallet >= total_price:
             for i in items:
-                order_add = orders(username=user,profile=user_profile,product=i.product,product_count=i.quantity,cart_count=cart_count,amount=total_price,product_name=i.product.product_name,price=i.product.price,email=i.product.email,contact=i.product.contact,brand_name=i.product.brand_name,picture=i.product.picture,address=user_delivery_address,first_name=user_delivery_address.address.first_name,last_name=user_delivery_address.address.last_name,country=user_delivery_address.address.country,state=user_delivery_address.address.state,district=user_delivery_address.address.district,postalcode=user_delivery_address.address.postalcode,phone=user_delivery_address.address.phone,alternative_phone=user_delivery_address.address.alternative_phone,address_line_1=user_delivery_address.address.address_line_1,address_line_2=user_delivery_address.address.address_line_2)
+                order_add = orders(username=user,profile=user_profile,product=i.product,product_count=i.quantity,cart_count=cart_count,amount=total_price,product_name=i.product.product_name,price=i.product.price,count_price=i.quantity*i.product.price,email=i.product.email,contact=i.product.contact,brand_name=i.product.brand_name,picture=i.product.picture,delivery_type="user",payment_type="wallet_payment",address=user_delivery_address,first_name=user_delivery_address.address.first_name,last_name=user_delivery_address.address.last_name,country=user_delivery_address.address.country,state=user_delivery_address.address.state,district=user_delivery_address.address.district,postalcode=user_delivery_address.address.postalcode,phone=user_delivery_address.address.phone,alternative_phone=user_delivery_address.address.alternative_phone,address_line_1=user_delivery_address.address.address_line_1,address_line_2=user_delivery_address.address.address_line_2)
                 order_add.save()
 
+                dealer_id = i.product.username.id
+                dealer_profile_id = profile.objects.get(username_id=dealer_id)
+
+                product_count=i.quantity
+                product_price = i.product.price
+
+                total = product_count*product_price
+
+                profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
+
+
             profile.objects.filter(username_id=request.user.id).update(wallet=F('wallet')-total_price,coins=F('coins')+10)
+
             cart_delete = product_cart.objects.filter(username_id=request.user.id)
             cart_delete.delete()
             
@@ -1504,6 +2769,58 @@ def ordercomplete_wallet(request):
     else:
         return redirect('payment')
 
+
+
+
+
+
+
+def ordercomplete_cash_on_delivery(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        user_profile = profile.objects.get(username_id=request.user.id)
+
+        items = product_cart.objects.filter(username=request.user.id)
+        cart_count = sum(items.values_list('quantity', flat=True))
+
+        user_delivery_address = delivery_address.objects.get(username_id=request.user.id)
+        print("-----------------------------------------------------------------------------------------------------------",user_delivery_address,user_delivery_address.address,user_delivery_address.address.first_name)
+
+        price = 0
+        total_price = 0
+        for product in items:
+            count = product.quantity
+            price = count * product.product.price
+            total_price += price
+
+
+        for i in items:
+            order_add = orders(username=user,profile=user_profile,product=i.product,product_count=i.quantity,cart_count=cart_count,amount=total_price,product_name=i.product.product_name,price=i.product.price,count_price=i.quantity*i.product.price,email=i.product.email,contact=i.product.contact,brand_name=i.product.brand_name,picture=i.product.picture,delivery_type="user",payment_type="cash_on_delivery",address=user_delivery_address,first_name=user_delivery_address.address.first_name,last_name=user_delivery_address.address.last_name,country=user_delivery_address.address.country,state=user_delivery_address.address.state,district=user_delivery_address.address.district,postalcode=user_delivery_address.address.postalcode,phone=user_delivery_address.address.phone,alternative_phone=user_delivery_address.address.alternative_phone,address_line_1=user_delivery_address.address.address_line_1,address_line_2=user_delivery_address.address.address_line_2)
+            order_add.save()
+
+            dealer_id = i.product.username.id
+            dealer_profile_id = profile.objects.get(username_id=dealer_id)
+
+            product_count=i.quantity
+            product_price = i.product.price
+
+            total = product_count*product_price
+
+            profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
+
+
+        profile.objects.filter(username_id=request.user.id).update(coins=F('coins')+10)
+
+
+
+        cart_delete = product_cart.objects.filter(username_id=request.user.id)
+        cart_delete.delete()
+        
+        messages.info(request,'Ordered , Cart is Empty') 
+        return redirect('user_home')
+
+    else:
+        return redirect('payment')
 
 
 
@@ -1652,12 +2969,12 @@ def product_to_cart(request):
 
         if producttocart.stock >= 1:
             if product_cart.objects.filter(product=producttocart,username=user).exists():
-                product_cart.objects.filter(product=producttocart,username=user).update(quantity=F('quantity')+1)
+                product_cart.objects.filter(product=producttocart,username=user).update(quantity=F('quantity')+1,total_price=F('total_price')+producttocart.price)
                 products.objects.filter(id=id_product).update(stock=F('stock')-1)
                 messages.info(request,"Product added to Cart")
                 return redirect('product')
             else:
-                product_cart(product=producttocart,username=user).save()
+                product_cart(product=producttocart,username=user,total_price=producttocart.price).save()
                 products.objects.filter(id=id_product).update(stock=F('stock')-1)
                 messages.info(request,"Product added to Cart")
                 return redirect('product')

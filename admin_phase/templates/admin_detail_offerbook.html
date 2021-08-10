@@ -1,0 +1,48 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
+
+</style>
+  
+
+
+<div class="container_wideboxes">
+   <div class="col-md-12 add_ad_form">
+      <br>
+      <form action="{% url 'admin_offerbook_edit' detail_offerbook.id %}" method="POST"  enctype="multipart/form-data">
+         {% csrf_token %}   
+            <div class="col-md-6">
+               <label for="fname">Offer Book Name</label>
+               <input type="text" name="offerbook_name" id="fname" class="form-control" value="{{ detail_offerbook.offerbookname }}" placeholder="{{ detail_offerbook.offerbookname }}">
+            </div>
+            <div class="col-md-3">
+               <label for="fname">Media File</label>
+               <input type="file" name="image" id="fname" class="form-control" placeholder="Your firstname">
+            </div>
+            <div class="col-md-3">
+               <br>
+               <input type="submit" value="Update OfferBook" class="btn btn-primary">
+            </div>
+      </form>
+
+      <div class="col-md-12 ad_list_form">
+		{% if detail_offerbook.image != '' %}
+		<img src="{{detail_offerbook.image.url}}" alt="" width="250" height="250"/>
+		{% else %}
+		<img src="{% static 'images/assign.png' %}" alt="" width="250" height="250"/>
+		{% endif %}
+      </div>
+   </div>
+</div>
+
+ 
+
+
+{% endblock %}

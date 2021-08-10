@@ -153,6 +153,65 @@ def admin_ads_edit(request,id):
 
 
 
+def admin_offerbook(request):
+    if request.method == 'POST':
+        offerbook_name = request.POST['offerbook_name']
+        image = request.FILES.get('image')
+
+
+        user = User.objects.get(id=request.user.id)
+        admin_profile = profile.objects.get(username_id=request.user.id)
+
+        admin_offerbook_add = offerbook(username=user,profile=admin_profile,offerbookname=offerbook_name,image=image)
+        admin_offerbook_add.save()
+
+        messages.info(request,'Offer Book Added')
+        return redirect('admin_userdata')
+
+    else:
+        return redirect('admin_userdata')
+
+
+
+
+def delete_offerbook(request):
+    if request.method == 'POST':
+        id_delete = request.POST.get('id_delete')
+        offerbook_delete = offerbook.objects.get(id=id_delete).delete()
+        messages.info(request,"OfferBook Deleted")
+        return redirect('admin_userdata')
+    else:
+        messages.info(request,"No OfferBook Deleted")
+        return redirect('admin_userdata')
+
+
+
+
+def admin_offerbook_edit(request,id):
+    if request.method == 'POST':
+        offerbook_name = request.POST['offerbook_name']
+        image = request.FILES.get('image')
+
+        detail_offerbook_update = offerbook.objects.get(id=id)
+        detail_offerbook_update.offerbookname = offerbook_name
+        detail_offerbook_update.image = image
+        detail_offerbook_update.save()
+
+        return redirect('admin_userdata')
+    else:
+        detail_offerbook = offerbook.objects.get(id=id)
+        admin_profile = profile.objects.get(username_id=request.user.id)
+        context = {'admin_profile':admin_profile,'detail_offerbook':detail_offerbook}
+        return render(request, 'admin_detail_offerbook.html',context)
+
+
+
+
+
+
+
+
+
 
 
 
@@ -165,8 +224,8 @@ def admin_profile(request):
         alternative_phone = request.POST['alternative_phone']
         dob = request.POST['dob']
         adhar_id = request.POST['adhar_id']
-        profession = request.POST['profession']
-        location = request.POST['location']
+        profession = request.POST.get('profession')
+        location = request.POST.get('location')
         qualification = request.POST['qualification']
         hobbies = request.POST['hobbies']
         summary = request.POST['summary']
@@ -178,13 +237,17 @@ def admin_profile(request):
         # user.username = email
         user.save()
         
+        location_id = locations.objects.get(id=location)
+        profession_id = professions.objects.get(id=profession)
+
+
         admin_update_profile = profile.objects.get(username_id=request.user.id)
         admin_update_profile.phone = phone
         admin_update_profile.alternative_phone = alternative_phone
         admin_update_profile.dob = dob
         admin_update_profile.adhar_id = adhar_id
-        admin_update_profile.profession = profession
-        admin_update_profile.location = location
+        admin_update_profile.profession = profession_id
+        admin_update_profile.location = location_id
         admin_update_profile.qualification = qualification
         admin_update_profile.hobbies = hobbies
         admin_update_profile.summary = summary
@@ -196,7 +259,9 @@ def admin_profile(request):
     else:
         admin_profile = profile.objects.get(username_id=request.user.id)
         my_refferals = profile.objects.filter(refferalcode=admin_profile.myrefferalid)
-        context = {'admin_profile':admin_profile,'my_refferals':my_refferals}
+        location_details = locations.objects.filter(is_deleted=False)
+        profession_details = professions.objects.filter(is_deleted=False)
+        context = {'admin_profile':admin_profile,'my_refferals':my_refferals,'location_details':location_details,'profession_details':profession_details}
         return render(request, 'admin_profile.html',context)
 
 def update_admin_profile_pic(request):
@@ -237,15 +302,17 @@ def admin_deals(request):
         contact = request.POST['contact']
         location = request.POST['location']
         deal_type = request.POST['deal_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
 
 
         user = User.objects.get(id=request.user.id)
+
+        location_id = locations.objects.get(id=location)
         
-        admin_deals_add = deals(username=user,publish=publish,deal_name=deal_name,price=price,email=email,contact=contact,location=location,deal_type=deal_type,brand_name=brand_name,picture=picture,details=details)
+        admin_deals_add = deals(username=user,publish=publish,deal_name=deal_name,price=price,email=email,contact=contact,location=location_id,deal_type=deal_type,picture=picture,details=details)
         admin_deals_add.save()
 
         for i in category:
@@ -266,16 +333,17 @@ def admin_deals(request):
         deal_name = request.GET['deal_name']
         publish = request.GET['publish']
         deal_type = request.GET['deal_type']
-        brand_name = request.GET['brand_name']
+        # brand_name = request.GET['brand_name']
         location = request.GET['location']
-        admin_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish__contains=publish,deal_type__contains=deal_type,brand_name__contains=brand_name,location__contains=location)
+        admin_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish__contains=publish,deal_type__contains=deal_type,location__contains=location)
 
     else:
         admin_deals_list = deals.objects.all()
     admin_profile = profile.objects.get(username_id=request.user.id)
     user = User.objects.get(id=request.user.id)
     category_details = categorys.objects.filter(is_deleted=False)
-    context = {'user':user,'admin_deals_list':admin_deals_list,'admin_profile':admin_profile,'category_details':category_details}
+    location_details = locations.objects.filter(is_deleted=False)
+    context = {'user':user,'admin_deals_list':admin_deals_list,'admin_profile':admin_profile,'category_details':category_details,'location_details':location_details}
     return render(request, 'admin_deals.html',context)
 
 
@@ -301,10 +369,12 @@ def detail_view_admin_deals(request,id):
         contact = request.POST['contact']
         location = request.POST['location']
         deal_type = request.POST['deal_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
+
+        location_id = locations.objects.get(id=location)
 
         admin_deals_list = deals.objects.get(id=int(id))
         admin_deals_list.publish = publish
@@ -312,15 +382,15 @@ def detail_view_admin_deals(request,id):
         admin_deals_list.price = price
         admin_deals_list.email = email
         admin_deals_list.contact = contact
-        admin_deals_list.location = location
+        admin_deals_list.location = location_id
         admin_deals_list.deal_type = deal_type
-        admin_deals_list.brand_name = brand_name
+        # admin_deals_list.brand_name = brand_name
         admin_deals_list.picture = picture
         admin_deals_list.details = details
 
         admin_deals_list.save()
 
-
+        location_id = locations.objects.get(id=location)
         admin_deals_list.category.clear()
         for i in category:
             admin_deals_list.category.add(categorys.objects.get(id=i))
@@ -337,8 +407,32 @@ def detail_view_admin_deals(request,id):
 
         category_details = categorys.objects.filter(is_deleted=False)
         trade = admin_deals_list.category.all()
-        context = {'admin_deals_list':admin_deals_list,'admin_deals_attach_list':admin_deals_attach_list,'admin_profile':admin_profile,'category_details':category_details,'trade':trade}
+        location_details = locations.objects.filter(is_deleted=False)
+        context = {'admin_deals_list':admin_deals_list,'admin_deals_attach_list':admin_deals_attach_list,'admin_profile':admin_profile,'category_details':category_details,'trade':trade,'location_details':location_details}
         return render(request,'admin_deals_edit.html',context)
+
+
+def freeze_admin_deals(request):
+    if request.method == 'POST':
+        id_freeze = request.POST.get('id_freeze')
+        deal_freeze = deals.objects.filter(id=id_freeze).update(is_deleted=True)
+        messages.info(request,"Deal Freezed")
+        return redirect('admin_deals')
+    else:
+        messages.info(request,"No Deal Freezed")
+        return redirect('admin_deals')
+
+def un_freeze_admin_deals(request):
+    if request.method == 'POST':
+        id_freeze = request.POST.get('id_freeze')
+        deal_freeze = deals.objects.filter(id=id_freeze).update(is_deleted=False)
+        messages.info(request,"Deal Un-Freezed")
+        return redirect('admin_deals')
+    else:
+        messages.info(request,"No Deal Un-Freezed")
+        return redirect('admin_deals')
+
+
 
 
 
@@ -397,15 +491,17 @@ def admin_jobs(request):
         contact = request.POST['contact']
         location = request.POST['location']
         job_type = request.POST['job_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
 
 
         user = User.objects.get(id=request.user.id)
+
+        location_id = locations.objects.get(id=location)
         
-        admin_jobs_add = jobs(username=user,publish=publish,job_name=job_name,price=price,email=email,contact=contact,location=location,job_type=job_type,brand_name=brand_name,picture=picture,details=details)
+        admin_jobs_add = jobs(username=user,publish=publish,job_name=job_name,price=price,email=email,contact=contact,location=location_id,job_type=job_type,picture=picture,details=details)
         admin_jobs_add.save()
 
         for i in category:
@@ -418,23 +514,25 @@ def admin_jobs(request):
         for i in attach:
             print("-------------------------------------------------------------",i,job_id)
             job_attachments(job=job_id,attachment=i).save()
-        
+
+        messages.info(request,'Job Added')
         return redirect('admin_jobs')
 
     elif 'job_name' in request.GET:
         job_name = request.GET['job_name']
         publish = request.GET['publish']
         job_type = request.GET['job_type']
-        brand_name = request.GET['brand_name']
+        # brand_name = request.GET['brand_name']
         location = request.GET['location']
-        admin_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish__contains=publish,job_type__contains=job_type,brand_name__contains=brand_name,location__contains=location)
+        admin_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish__contains=publish,job_type__contains=job_type,location__contains=location)
 
     else:
         admin_jobs_list = jobs.objects.all()
     admin_profile = profile.objects.get(username_id=request.user.id)
     user = User.objects.get(id=request.user.id)
     category_details = categorys.objects.filter(is_deleted=False)
-    context = {'user':user,'admin_jobs_list':admin_jobs_list,'admin_profile':admin_profile,'category_details':category_details}
+    location_details = locations.objects.filter(is_deleted=False)
+    context = {'user':user,'admin_jobs_list':admin_jobs_list,'admin_profile':admin_profile,'category_details':category_details,'location_details':location_details}
     return render(request, 'admin_jobs.html',context)
 
 
@@ -465,10 +563,13 @@ def detail_view_admin_jobs(request,id):
         contact = request.POST['contact']
         location = request.POST['location']
         job_type = request.POST['job_type']
-        brand_name = request.POST['brand_name']
+        # brand_name = request.POST['brand_name']
         picture = request.FILES.get('picture')
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
+
+
+        location_id = locations.objects.get(id=location)
 
         admin_jobs_list = jobs.objects.get(id=int(id))
         admin_jobs_list.publish = publish
@@ -476,9 +577,9 @@ def detail_view_admin_jobs(request,id):
         admin_jobs_list.price = price
         admin_jobs_list.email = email
         admin_jobs_list.contact = contact
-        admin_jobs_list.location = location
+        admin_jobs_list.location = location_id
         admin_jobs_list.job_type = job_type
-        admin_jobs_list.brand_name = brand_name
+        # admin_jobs_list.brand_name = brand_name
         admin_jobs_list.picture = picture
         admin_jobs_list.details = details
 
@@ -500,8 +601,32 @@ def detail_view_admin_jobs(request,id):
 
         category_details = categorys.objects.filter(is_deleted=False)
         trade = admin_jobs_list.category.all()
-        context = {'admin_jobs_list':admin_jobs_list,'admin_jobs_attach_list':admin_jobs_attach_list,'admin_profile':admin_profile,'category_details':category_details,'trade':trade}
+        location_details = locations.objects.filter(is_deleted=False)
+        context = {'admin_jobs_list':admin_jobs_list,'admin_jobs_attach_list':admin_jobs_attach_list,'admin_profile':admin_profile,'category_details':category_details,'trade':trade,'location_details':location_details}
         return render(request,'admin_jobs_edit.html',context)
+
+
+
+def freeze_admin_jobs(request):
+    if request.method == 'POST':
+        id_freeze = request.POST.get('id_freeze')
+        job_freeze = jobs.objects.filter(id=id_freeze).update(is_deleted=True)
+        messages.info(request,"Job Freezed")
+        return redirect('admin_jobs')
+    else:
+        messages.info(request,"No Job Freezed")
+        return redirect('admin_jobs')
+
+def un_freeze_admin_jobs(request):
+    if request.method == 'POST':
+        id_freeze = request.POST.get('id_freeze')
+        job_freeze = jobs.objects.filter(id=id_freeze).update(is_deleted=False)
+        messages.info(request,"Job Un-Freezed")
+        return redirect('admin_jobs')
+    else:
+        messages.info(request,"No Job Un-Freezed")
+        return redirect('admin_jobs')
+
 
 
 
@@ -567,8 +692,10 @@ def admin_products(request):
 
 
         user = User.objects.get(id=request.user.id)
+
+        location_id = locations.objects.get(id=location)
         
-        admin_products_add = products(username=user,publish=publish,product_name=product_name,price=price,oldprice=price,stock=stock,email=email,contact=contact,location=location,product_type=product_type,brand_name=brand_name,picture=picture,details=details)
+        admin_products_add = products(username=user,publish=publish,product_name=product_name,price=price,oldprice=price,stock=stock,email=email,contact=contact,location=location_id,product_type=product_type,brand_name=brand_name,picture=picture,details=details)
         admin_products_add.save()
 
 
@@ -598,7 +725,8 @@ def admin_products(request):
     admin_profile = profile.objects.get(username_id=request.user.id)
     user = User.objects.get(id=request.user.id)
     category_details = categorys.objects.filter(is_deleted=False)
-    context = {'user':user,'admin_products_list':admin_products_list,'admin_profile':admin_profile,'category_details':category_details}
+    location_details = locations.objects.filter(is_deleted=False)
+    context = {'user':user,'admin_products_list':admin_products_list,'admin_profile':admin_profile,'category_details':category_details,'location_details':location_details}
     return render(request, 'admin_products.html',context)
 
 
@@ -635,6 +763,9 @@ def detail_view_admin_products(request,id):
         attach = request.FILES.getlist('attachments')
         details = request.POST['details']
 
+
+        location_id = locations.objects.get(id=location)
+
         admin_products_list = products.objects.get(id=int(id))
         admin_products_list.publish = publish
         admin_products_list.product_name = product_name
@@ -643,7 +774,7 @@ def detail_view_admin_products(request,id):
         admin_products_list.stock = stock
         admin_products_list.email = email
         admin_products_list.contact = contact
-        admin_products_list.location = location
+        admin_products_list.location = location_id
         admin_products_list.product_type = product_type
         admin_products_list.brand_name = brand_name
         admin_products_list.picture = picture
@@ -668,8 +799,32 @@ def detail_view_admin_products(request,id):
 
         category_details = categorys.objects.filter(is_deleted=False)
         trade = admin_products_list.category.all()
-        context = {'admin_products_list':admin_products_list,'admin_products_attach_list':admin_products_attach_list,'admin_profile':admin_profile,'category_details':category_details,'trade':trade}
+        location_details = locations.objects.filter(is_deleted=False)
+        context = {'admin_products_list':admin_products_list,'admin_products_attach_list':admin_products_attach_list,'admin_profile':admin_profile,'category_details':category_details,'trade':trade,'location_details':location_details}
         return render(request,'admin_products_edit.html',context)
+
+
+
+
+def freeze_admin_products(request):
+    if request.method == 'POST':
+        id_freeze = request.POST.get('id_freeze')
+        product_freeze = products.objects.filter(id=id_freeze).update(is_deleted=True)
+        messages.info(request,"Product Freezed")
+        return redirect('admin_products')
+    else:
+        messages.info(request,"No Product Freezed")
+        return redirect('admin_products')
+
+def un_freeze_admin_products(request):
+    if request.method == 'POST':
+        id_freeze = request.POST.get('id_freeze')
+        product_freeze = products.objects.filter(id=id_freeze).update(is_deleted=False)
+        messages.info(request,"Product Un-Freezed")
+        return redirect('admin_products')
+    else:
+        messages.info(request,"No Product Un-Freezed")
+        return redirect('admin_products')
 
 
 
@@ -738,9 +893,26 @@ def admin_userdata(request):
         profile_list = profile.objects.all()
     users = User.objects.all()
 
+
+
     CategoryList = categorys.objects.filter(is_deleted=False)
     main_category_list = categorys.objects.filter(is_deleted=False,main_category=True)
-    sub_category_list = categorys.objects.filter(is_deleted=False,main_category=False)
+    sub_category_list = categorys.objects.filter(is_deleted=False,main_category=False,sub_category=True)
+    microsub_category_list = categorys.objects.filter(is_deleted=False,main_category=False,sub_category=False,microsub_category=True)
+
+
+    ProfessionList = professions.objects.filter(is_deleted=False)
+    main_profession_list = professions.objects.filter(is_deleted=False,main_profession=True)
+    sub_profession_list = professions.objects.filter(is_deleted=False,main_profession=False,sub_profession=True)
+    microsub_profession_list = professions.objects.filter(is_deleted=False,main_profession=False,sub_profession=False,microsub_profession=True)
+
+
+
+    LocationList = locations.objects.filter(is_deleted=False)
+    main_location_list = locations.objects.filter(is_deleted=False,main_location=True)
+    sub_location_list = locations.objects.filter(is_deleted=False,main_location=False,sub_location=True)
+    microsub_location_list = locations.objects.filter(is_deleted=False,main_location=False,sub_location=False,microsub_location=True)
+
 
     sub_category_list_count=0
     refferals=0
@@ -783,9 +955,20 @@ def admin_userdata(request):
     admin_profile = profile.objects.get(username_id=request.user.id)
 
 
+    admin_ads_all = ads.objects.all()
 
+    admin_offerbook_all = offerbook.objects.all()
+
+    admin_retrieves_all = retrieves.objects.all()
+
+    admin_profile = profile.objects.get(username_id=request.user.id)
+
+    notifications_list = notifications.objects.all()
+    feedbacks_list = feedbacks.objects.all()
     
-    
+
+
+
     print("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000",online_admins)
     context = {
     'users':users,
@@ -795,6 +978,20 @@ def admin_userdata(request):
     'sub_category_list':sub_category_list,
 
     'sub_category_list_count':sub_category_list_count,
+
+
+    'ProfessionList':ProfessionList,
+    'main_profession_list':main_profession_list,
+    'sub_profession_list':sub_profession_list,
+    'microsub_profession_list':microsub_profession_list,
+
+
+    'LocationList':LocationList,
+    'main_location_list':main_location_list,
+    'sub_location_list':sub_location_list,
+    'microsub_location_list':microsub_location_list,
+
+
 
     'refferals':refferals,
     'profile_list':profile_list,
@@ -828,7 +1025,17 @@ def admin_userdata(request):
     'user_assigned_job':user_assigned_job,
     'total_assigned_job':total_assigned_job,
 
-    'admin_profile':admin_profile
+    'admin_profile':admin_profile,
+
+    'admin_profile':admin_profile,
+    'admin_ads_all':admin_ads_all,
+
+    'admin_offerbook_all':admin_offerbook_all,
+
+    'admin_retrieves_all':admin_retrieves_all,
+
+    'notifications_list':notifications_list,
+    'feedbacks_list':feedbacks_list
     }
 
 
@@ -884,15 +1091,17 @@ def add_category(request):
 
         cate = categorys()
         if main_category == None:
-            parent          = categorys.objects.get(id=sub_category)
-            cate.parent     = parent
+            super_parent         = categorys.objects.get(id=sub_category)
+            cate.super_parent    = super_parent 
             cate.main_category   = False
-        cate.name               = name
+            cate.sub_category    = True
+        cate.name                = name
         cate.save()
         messages.info(request, 'success', extra_tags='success')
         return redirect('admin_userdata')
     else:
         return redirect('admin_userdata')
+
 
 
 
@@ -902,28 +1111,53 @@ def add_category(request):
 
 def detail_category(request,id):
     if request.method == 'POST':
+        name = request.POST['name']
+        main_category = request.POST.get('main_category')
         sub_category = request.POST['sub_category']
 
 
-        exists_check = categorys.objects.filter(name=sub_category).exclude(is_deleted=True)
+        exists_check = categorys.objects.filter(name=name).exclude(is_deleted=True)
         if exists_check:
             messages.info(request, 'Category already exist', extra_tags='exists')
-            return redirect('admin_userdata')
+            return redirect('detail_category',id)
 
         cate = categorys()
-        parent          = categorys.objects.get(id=id)
-        cate.parent     = parent
-        cate.main_category   = False
-        cate.name               = sub_category
-        cate.save()
-        messages.info(request, 'success', extra_tags='success')
-        return redirect('detail_category',id)
+
+        if main_category == None:
+            super_parent             = categorys.objects.get(id=id)
+            parent                   = categorys.objects.get(id=sub_category)
+            cate.super_parent        = super_parent
+            cate.parent              = parent
+            cate.main_category       = False
+            cate.sub_category        = False
+            cate.microsub_category   = True
+            cate.name                = name
+            cate.save()
+
+            messages.info(request, 'success', extra_tags='success')
+            return redirect('detail_category',id)
+
+        else:
+            super_parent             = categorys.objects.get(id=id)
+            cate.super_parent        = super_parent
+            cate.main_category       = False
+            cate.sub_category        = True
+            cate.microsub_category   = False
+            cate.name                = name
+            cate.save()
+
+            messages.info(request, 'success', extra_tags='success')
+            return redirect('detail_category',id)
+
     else:
         detail_category = categorys.objects.get(id=id)
 
-        subcategory_list = categorys.objects.filter(parent_id=id)
+        sub_category_list = categorys.objects.filter(super_parent_id=id,is_deleted=False,main_category=False,sub_category=True)
+
+        microsub_category_list = categorys.objects.filter(super_parent_id=id,is_deleted=False,main_category=False,sub_category=False,microsub_category=True)
+
         admin_profile = profile.objects.get(username_id=request.user.id)
-        context = {'admin_profile':admin_profile,'detail_category':detail_category,'subcategory_list':subcategory_list}
+        context = {'admin_profile':admin_profile,'detail_category':detail_category,'sub_category_list':sub_category_list,'microsub_category_list':microsub_category_list}
         return render(request, 'detail_category.html',context)
 
 
@@ -954,6 +1188,193 @@ def delete_subcategory(request):
     else:
         messages.info(request,"No Sub-Category Deleted")
         return redirect('admin_userdata')
+
+
+
+
+
+
+
+def add_profession(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        main_profession_notavailable = request.POST.get('main_profession_notavailable')
+        main_profession = request.POST['main_profession']
+
+        exists_check = professions.objects.filter(name=name).exclude(is_deleted=True)
+        if exists_check:
+            messages.info(request, 'Profession already exist', extra_tags='exists')
+            return redirect('admin_userdata')
+
+        
+        prof = professions()
+
+        if main_profession_notavailable == None:
+            super_parent         = professions.objects.get(id=main_profession)
+            prof.super_parent    = super_parent
+            prof.main_profession = False
+            prof.sub_profession  = True
+
+        prof.name                = name
+        prof.save()
+
+        messages.info(request, 'success', extra_tags='success')
+        return redirect('admin_userdata')
+    else:
+        return redirect('admin_userdata')
+
+
+# def load_sub_professions(request):
+#     main_profession_id = request.GET.get('main_profession')
+#     sub_professions = professions.objects.filter(super_parent_id=main_profession,is_deleted=False,main_profession=False,sub_profession=True).all() 
+#     return render(request,'admin_userdata.html',{'sub_professions':sub_professions})
+
+
+
+def detail_profession(request,id):
+    if request.method == 'POST':
+        name = request.POST['name']
+        main_profession_notavailable = request.POST.get('main_profession_notavailable')
+        main_profession = request.POST['main_profession']
+
+        exists_check = professions.objects.filter(name=name).exclude(is_deleted=True)
+        if exists_check:
+            messages.info(request, 'Profession already exist', extra_tags='exists')
+            return redirect('detail_profession',id)
+
+        
+        prof = professions()
+
+        if main_profession_notavailable == None:
+            super_parent             = professions.objects.get(id=id)
+            parent                   = professions.objects.get(id=main_profession)
+            prof.super_parent        = super_parent
+            prof.parent              = parent
+            prof.main_profession     = False
+            prof.sub_profession      = False
+            prof.microsub_profession = True
+            prof.name                = name
+            prof.save()
+
+            messages.info(request, 'success', extra_tags='success')
+            return redirect('detail_profession',id)
+
+        else:
+            super_parent             = professions.objects.get(id=id)
+            prof.super_parent        = super_parent
+            prof.main_profession     = False
+            prof.sub_profession      = True
+            prof.microsub_profession = False
+            prof.name                = name
+            prof.save()
+
+            messages.info(request, 'success', extra_tags='success')
+            return redirect('detail_profession',id)
+
+    else:
+        detail_profession = professions.objects.get(id=id)
+
+        sub_professions_list = professions.objects.filter(super_parent_id=id,is_deleted=False,main_profession=False,sub_profession=True)
+
+        microsub_professions_list = professions.objects.filter(super_parent_id=id,is_deleted=False,main_profession=False,sub_profession=False,microsub_profession=True)
+
+        admin_profile = profile.objects.get(username_id=request.user.id)
+        context = {'admin_profile':admin_profile,'detail_profession':detail_profession,'sub_professions_list':sub_professions_list,'microsub_professions_list':microsub_professions_list}
+        return render(request, 'detail_profession.html',context)
+
+
+
+
+
+
+
+
+def add_location(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        main_location_notavailable = request.POST.get('main_location_notavailable')
+        main_location = request.POST['main_location']
+
+        exists_check = locations.objects.filter(name=name).exclude(is_deleted=True)
+        if exists_check:
+            messages.info(request, 'Location already exist', extra_tags='exists')
+            return redirect('admin_userdata')
+
+        
+        loc = locations()
+
+        if main_location_notavailable == None:
+            super_parent         = locations.objects.get(id=main_location)
+            loc.super_parent    = super_parent
+            loc.main_location = False
+            loc.sub_location  = True
+
+        loc.name                = name
+        loc.save()
+
+        messages.info(request, 'success', extra_tags='success')
+        return redirect('admin_userdata')
+    else:
+        return redirect('admin_userdata')
+
+
+def detail_location(request,id):
+    if request.method == 'POST':
+        name = request.POST['name']
+        main_location_notavailable = request.POST.get('main_location_notavailable')
+        main_location = request.POST['main_location']
+
+        exists_check = locations.objects.filter(name=name).exclude(is_deleted=True)
+        if exists_check:
+            messages.info(request, 'Location already exist', extra_tags='exists')
+            return redirect('detail_location',id)
+
+        
+        loc = locations()
+
+        if main_location_notavailable == None:
+            super_parent             = locations.objects.get(id=id)
+            parent                   = locations.objects.get(id=main_location)
+            loc.super_parent         = super_parent
+            loc.parent               = parent
+            loc.main_location        = False
+            loc.sub_location         = False
+            loc.microsub_location    = True
+            loc.name                 = name
+            loc.save()
+
+            messages.info(request, 'success', extra_tags='success')
+            return redirect('detail_location',id)
+
+        else:
+            super_parent             = locations.objects.get(id=id)
+            loc.super_parent         = super_parent
+            loc.main_location        = False
+            loc.sub_location         = True
+            loc.microsub_location    = False
+            loc.name                 = name
+            loc.save()
+
+            messages.info(request, 'success', extra_tags='success')
+            return redirect('detail_location',id)
+
+    else:
+        detail_location = locations.objects.get(id=id)
+
+        sub_locations_list = locations.objects.filter(super_parent_id=id,is_deleted=False,main_location=False,sub_location=True)
+
+        microsub_locations_list = locations.objects.filter(super_parent_id=id,is_deleted=False,main_location=False,sub_location=False,microsub_location=True)
+
+        admin_profile = profile.objects.get(username_id=request.user.id)
+        context = {'admin_profile':admin_profile,'detail_location':detail_location,'sub_locations_list':sub_locations_list,'microsub_locations_list':microsub_locations_list}
+        return render(request, 'detail_locations.html',context)
+
+
+
+
+
+
+
 
 
 
@@ -1081,11 +1502,56 @@ def detail_user(request,id):
 
         admin_profile = profile.objects.get(username_id=request.user.id)
         user_refferals = profile.objects.filter(refferalcode=detail_user.myrefferalid)
-        context = {'admin_profile':admin_profile,'detail_user':detail_user,'user_refferals':user_refferals}
+        personal_notifications_list = personal_notifications.objects.filter(profile=detail_user.id)
+        context = {'admin_profile':admin_profile,'detail_user':detail_user,'user_refferals':user_refferals,'personal_notifications_list':personal_notifications_list}
         return render(request, 'detail_user.html',context)
 
 
 
+def detail_user_addamount(request,id):
+    if request.method == 'POST':
+        amount = request.POST['amount']
+        user_type = request.POST['user_type']
+
+        if user_type == "admin":
+            messages.info(request,'User is a Admin,You dont have a wallet')
+            return redirect('admin_userdata')
+        else:
+            profile.objects.filter(id=id).update(wallet=F('wallet')+amount)
+            messages.info(request,'Amount Added To User Wallet')
+            return redirect('admin_userdata')
+
+    else:
+        return redirect('admin_userdata')
+
+
+
+
+def disable_profile(request,id):   
+    if request.method == 'POST': 
+        user_id = request.POST['user_id']  
+
+        user = User.objects.get(id=user_id)
+        user.is_active = False
+        user.save()
+        messages.success(request, 'Profile successfully disabled.')
+        return redirect('admin_userdata')
+    else:
+        return redirect('admin_userdata')
+
+
+
+def enable_profile(request,id):      
+    if request.method == 'POST': 
+        user_id = request.POST['user_id']  
+
+        user = User.objects.get(id=user_id)
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Profile successfully Enabled.')
+        return redirect('admin_userdata')
+    else:
+        return redirect('admin_userdata')
 
 # def degrade_admin(request,id):
 #     if request.method == 'POST':
@@ -1119,6 +1585,24 @@ def complete_addpremiumuser_payment(request):
 
     messages.info(request,'Premium User Created')
     return redirect('admin_userdata')
+
+
+
+
+
+def detail_retrieves(request,id):
+    if request.method == 'POST':
+        pass
+
+    else:
+        detail_retrieves = retrieves.objects.get(id=id)
+
+        admin_profile = profile.objects.get(username_id=request.user.id)
+        user_refferals = profile.objects.filter(refferalcode=detail_retrieves.profile.myrefferalid)
+        all_orders = orders.objects.all()
+        context = {'admin_profile':admin_profile,'detail_retrieves':detail_retrieves,'user_refferals':user_refferals,'all_orders':all_orders}
+        return render(request, 'detail_retrieves.html',context)
+
 
 
 
@@ -1163,18 +1647,71 @@ def admin_notifications(request):
         user = User.objects.get(id=request.user.id)
         notifications(notification=notification,username=user).save()
         messages.info(request,"Notification Added")
-        return redirect('admin_notifications')
+        return redirect('admin_userdata')
     else:
         total_users =  profile.objects.filter(username__is_superuser=False)
         notifications_list = notifications.objects.all()
         feedbacks_list = feedbacks.objects.all()
         admin_profile = profile.objects.get(username_id=request.user.id)
         context = {'total_users':total_users,'notifications_list':notifications_list,'feedbacks_list':feedbacks_list,'admin_profile':admin_profile}
-        return render(request, 'admin_notification.html',context)
+        return render(request, 'admin_userdata.html',context)
 
 
 
 
+def delete_notifications(request):
+    if request.method == 'POST':
+        id_delete = request.POST.get('id_delete')
+
+        notification = notifications.objects.get(id=id_delete)
+        notification.delete()
+
+        messages.info(request,"Notification Deleted")
+        return redirect('admin_userdata')
+    else:
+        return redirect('admin_userdata')
+
+
+
+
+
+
+
+
+
+
+
+def admin_personal_notifications(request):
+    if request.method == 'POST':
+        personal_notification = request.POST.get('personal_notification')
+        user_profile_id = request.POST.get('user_profile_id')
+
+        user = User.objects.get(id=request.user.id)
+        profile_id = profile.objects.get(id=user_profile_id)
+
+        personal_notifications(messages=personal_notification,username=user,profile=profile_id).save()
+        messages.info(request,"Personal Notification Added")
+        return redirect('admin_userdata')
+    else:
+        return redirect('admin_userdata')
+
+
+
+
+def delete_personal_notifications(request):
+    if request.method == 'POST':
+        id_delete = request.POST.get('id_delete')
+
+        personal_notification = personal_notifications.objects.get(id=id_delete)
+        personal_notification.delete()
+
+        messages.info(request,"Personal Notification Deleted")
+        return redirect('admin_userdata')
+    else:
+        return redirect('admin_userdata')
+
+
+        
 # def admin_orders(request):
 #   all_orders = orders.objects.all()
 #   admin_profile = profile.objects.get(username_id=request.user.id)

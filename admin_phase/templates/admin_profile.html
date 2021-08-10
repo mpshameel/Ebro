@@ -37,19 +37,19 @@
               <h5 class="h5_style_big">Email Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user.email }}</h5><br>
               <br>
                 <div class="col-md-6 h5_profile_style_mobile1">
-                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ admin_profile.phone }}</h5><br>
+                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ admin_profile.phone }}</h5><br>
                   <h5 class="h5_profile_style">Date of Birth&nbsp;:&nbsp;{{ admin_profile.dob }}</h5><br>
-                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ admin_profile.profession }}</h5><br>
+                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ admin_profile.profession.name }}</h5><br>
                   <h5 class="h5_profile_style">Qualification&nbsp;:&nbsp;{{ admin_profile.qualification }}</h5><br>
                 </div>
                 <div class="col-md-6 h5_profile_style_mobile2">
                   <h5 class="h5_profile_style">Phone 2&nbsp;&nbsp;:&nbsp;{{ admin_profile.alternative_phone }}</h5><br>
                   <h5 class="h5_profile_style">Adhar Id&nbsp;:&nbsp;{{ admin_profile.adhar_id }}</h5><br>
-                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ admin_profile.location}}</h5><br>
+                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ admin_profile.location.name}}</h5><br>
                   <h5 class="h5_profile_style">Hobbies&nbsp;&nbsp;:&nbsp;{{ admin_profile.hobbies }}</h5><br>
                   <br>
                 </div>
-              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 15px;">{{ admin_profile.summary }}</p><br>
+              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 20px;">{{ admin_profile.summary }}</p><br>
         </div>
 
       </div>
@@ -81,7 +81,7 @@
 
 
 
-	<div class="col-md-12 col-md-push-3 user_profileedit_form">
+	<div class="col-md-12 col-md-push-3 admin_profileedit_form">
       <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeprofile">
         <form action="{% url 'admin_profile' %}" method="POST">
           {% csrf_token %}
@@ -89,68 +89,78 @@
             <div class="row col-md-12">
                 <div class="col-md-6">
                     <label for="fname">First Name</label>
-                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
+                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="Your firstname" value="{{ user.first_name }}" required="">
                 </div>
                 <div class="col-md-6">
                     <label for="lname">Last Name</label>
-                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
+                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="Your lastname" value="{{ user.last_name }}">
                 </div>
             </div>
       
             <div class="row col-md-12">
                 <div class="col-md-12">
                     <label for="email">Email</label>
-                    <input type="text" name="email" id="email" class="form-control" placeholder="{{ user.email }}" value="{{ user.email }}" disabled>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Your email id" value="{{ user.email }}" disabled>
                 </div>
             </div>
       
             <div class="row col-md-12">
                 <div class="col-md-6">
                     <label for="fname">Phone</label>
-                    <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ admin_profile.phone }}" value="{{ admin_profile.phone }}">
+                    <input type="text" id="fname" name="phone" class="form-control" placeholder="Your phone number" value="{{ admin_profile.phone }}" required="">
                 </div>
                 <div class="col-md-6">
                     <label for="lname">Alternative Phone</label>
-                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ admin_profile.alternative_phone }}" value="{{ admin_profile.alternative_phone }}">
+                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="Secondary phone number" value="{{ admin_profile.alternative_phone }}">
                 </div>
             </div>
 
             <div class="row col-md-12">
                 <div class="col-md-6">
                     <label for="fname">Date of Birth</label>
-                    <input type="text" id="fname" name="dob" class="form-control" placeholder="{{ admin_profile.dob }}" value="{{ admin_profile.dob }}">
+                    <input type="text" id="fname" name="dob" class="form-control" placeholder="Your date of birth" value="{{ admin_profile.dob }}">
                 </div>
                 <div class="col-md-6">
                     <label for="lname">Adhar/Id</label>
-                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="{{ admin_profile.adhar_id }}" value="{{ admin_profile.adhar_id }}">
+                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="Your adhar id" value="{{ admin_profile.adhar_id }}">
                 </div>
             </div>
 
             <div class="row col-md-12">
                 <div class="col-md-6">
                     <label for="fname">Profession</label>
-                    <input type="text" id="fname" name="profession" class="form-control" placeholder="{{ admin_profile.profession }}" value="{{ admin_profile.profession }}">
+                    <select name="profession" class="form-control mb-4" style="width: 90%;">
+                        {% for i in profession_details %}
+                          <option {% if i.id == admin_profile.profession.id %} selected {% endif %} value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                          </option> 
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <label for="lname">Location</label>
-                    <input type="text" id="lname" name="location" class="form-control" placeholder="{{ admin_profile.location }}" value="{{ admin_profile.location }}">
+                    <select name="location" class="form-control mb-4" style="width: 90%;">
+                        {% for i in location_details %}
+                          <option {% if i.id == admin_profile.location.id %} selected {% endif %} value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                          </option> 
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
             <div class="row col-md-12">
               <div class="col-md-6">
                   <label for="fname">Qualification</label>
-                  <input type="text" id="fname" name="qualification" class="form-control" placeholder="{{ admin_profile.qualification }}" value="{{ admin_profile.qualification }}">
+                  <input type="text" id="fname" name="qualification" class="form-control" placeholder="Your qualification" value="{{ admin_profile.qualification }}">
               </div>
               <div class="col-md-6">
                   <label for="lname">Hobbies</label>
-                  <input type="text" id="lname" name="hobbies" class="form-control" placeholder="{{ admin_profile.hobbies }}" value="{{ admin_profile.hobbies }}">
+                  <input type="text" id="lname" name="hobbies" class="form-control" placeholder="Your hobbies" value="{{ admin_profile.hobbies }}">
               </div>
           </div>
           <div class="row col-md-12">
               <div class="col-md-12">
                   <label for="message">Summary/Bio</label>
-                  <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="{{ admin_profile.summary }}" value="">{{ admin_profile.summary }}</textarea>
+                  <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="Say something about you" value="">{{ admin_profile.summary }}</textarea>
               </div>
           </div>
           <div class="form-group">
@@ -268,10 +278,10 @@ file.addEventListner('change', function(){
 
 	<script>
 	document.getElementById("editprofile").addEventListener("click",function(){
-	  document.querySelector(".user_profileedit_form").style.display = "flex";
+	  document.querySelector(".admin_profileedit_form").style.display = "flex";
 	})
 	document.querySelector(".closeprofile").addEventListener("click",function(){
-		document.querySelector(".user_profileedit_form").style.display = "none";
+		document.querySelector(".admin_profileedit_form").style.display = "none";
 	 })
 	
 

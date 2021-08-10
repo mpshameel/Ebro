@@ -21,19 +21,20 @@
 	<div class="form-container sign-up-premium-container">
 		<form action="{% url 'premium_user_signup' %}" class="form_login" method="POST">
 			{% csrf_token %}
+			<b><font style="font-size: 25px;">Premium Sign up</font></b>
 			<div class="social-container">
 				<a href="{% provider_login_url "google" %}" class="social"><i class="fa fa-google"></i></a>
 				<a href="{% provider_login_url "facebook" method="oauth2" %}" class="social"><i class="fa fa-facebook"></i></a>
 				<a href="#" class="social"><i class="fa fa-twitter"></i></a>
 			</div>
 			
-			<input type="text" name="first_name" placeholder="Firstname" / required>
+			<input type="text" name="first_name" placeholder="Firstname" / required="">
 			<input type="text" name="last_name" placeholder="Lastname" />
-			<input type="email" name="email" placeholder="Email" / required>
-			<input type="number" name="phone" placeholder="Phone" / required>
+			<input type="email" name="email" placeholder="Email" / required="">
+			<input type="text" name="phone" placeholder="Phone" / required="">
 			<input type="text" name="refferalcode" placeholder="Refferal Code" />
-			<input type="password" name="password1" placeholder="Password" />
-			<input type="password" name="password2" placeholder="Confirm Password" />
+			<input type="password" name="password1" placeholder="Password" required="" />
+			<input type="password" name="password2" placeholder="Confirm Password" required=""/>
 			<button class="button_login" type="submit">Premium Sign Up</button>
 		</form>
 	</div>
@@ -42,33 +43,34 @@
 	<div class="form-container sign-up-container">
 		<form action="{% url 'user_signup' %}" class="form_login" method="POST">
 			{% csrf_token %}
+			<b><font style="font-size: 30px;">Sign up</font></b>
 			<div class="social-container">
 				<a href="{% provider_login_url "google" %}" class="social"><i class="fa fa-google"></i></a>
 				<a href="{% provider_login_url "facebook" method="js_sdk" %}" class="social"><i class="fa fa-facebook"></i></a>
 				<a href="#" class="social"><i class="fa fa-twitter"></i></a>
 			</div>
-			<input type="text" name="first_name" placeholder="Firstname" / required>
+			<input type="text" name="first_name" placeholder="Firstname" / required="">
 			<input type="text" name="last_name" placeholder="Lastname" />
-			<input type="email" name="email" placeholder="Email" / required>
-			<input type="number" name="phone" placeholder="Phone" / required>
+			<input type="email" name="email" placeholder="Email" / required="">
+			<input type="text" name="phone" placeholder="Phone" / required="">
 			<input type="text" name="refferalcode" placeholder="Refferal Code" />
-			<input type="password" name="password1" placeholder="Password" />
-			<input type="password" name="password2" placeholder="Confirm Password" />
+			<input type="password" name="password1" placeholder="Password" required=""/>
+			<input type="password" name="password2" placeholder="Confirm Password" required=""/>
 			<button class="button_login" type="submit">Sign Up</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
 		<form action="{% url 'user_login' %}" class="form_login" method="POST">
 			{% csrf_token %}
-			<h1>Sign in</h1>
+			 <b><font style="font-size: 30px;">Sign in</font></b>
 			<div class="social-container">
 				<a href="{% provider_login_url "google" %}" class="social"><i class="fa fa-google"></i></a>
 				<a href="{% provider_login_url "facebook" method="js_sdk" %}" class="social"><i class="fa fa-facebook"></i></a>
 				<a href="#" class="social"><i class="fa fa-twitter"></i></a>
 			</div>
 			<span>or use your account</span>
-			<input type="text" name="name" placeholder="Email" / required>
-			<input type="password" name="password" placeholder="Password" / required>
+			<input type="text" name="name" placeholder="Username/email" / required="">
+			<input type="password" name="password" placeholder="Password" / required="">
 			<br>
 			<a href="#">Forgot your password?</a>
 			<br>
@@ -78,18 +80,20 @@
 	<div class="overlay-container">
 		<div class="overlay">
 			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
+				<b><font style="font-size: 25px;">Welcome Back!</font></b>
+				<p>To keep connected with us please login with your personal info.    To keep connected with us please login with your personal infoTo keep connected with us please login with your personal infoTo keep connected with us please login with your personal info</p>
 				<button class="ghost button_login" id="signIn">Sign In</button>
 			</div>
 			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p>Enter your personal details and start journey with Ebro</p>
+				<b><font style="font-size: 25px;">Hello, Friend!</font></b>
+				<p>Enter your personal details and start journey with Ebro-World.  Enter your personal details and start journey with EbroEnter your personal details and start journey with EbroEnter your personal details and start journey with EbroEnter </p>
 				<button class="ghost button_login" id="signUp">Sign Up</button>
-				<br><br><br>
+				<br><br>
 
-				<h1>Premium Users..!</h1>
+				<b><font style="font-size: 25px;">Premium Users..!</font></b>
 				<p>Enter your personal details and start journey with Ebro...
+				We will promote your buissness...   Enter your personal details and start journey with Ebro...
+				We will promote your buissness...Enter your personal details and start journey with Ebro...
 				We will promote your buissness...</p>
 				<button class="ghost button_login" id="signUppremium">Premium Sign up</button>
 			</div>
@@ -113,7 +117,7 @@
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>E-BRO</title>
+	<title>E-BRO World</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
@@ -165,6 +169,11 @@
 	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
 	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
 	<link rel="stylesheet" href="{% static 'css/image_update.css '%}">
+
+
+	<link rel="stylesheet" href="{% static 'css/chosen.min.css '%}">
+
+
 
 
 	
@@ -234,7 +243,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-2">
-						<p class="num">www.yoursitehere.com</p><br>
+						<p class="num">www.ebro-world.com</p><br>
 						<p class="num">Call: +01-123-456</p>
 						<ul class="colorlib-social">
 							<li><a href="#"><i class="icon-twitter"></i></a></li>
@@ -242,11 +251,14 @@
 							<li><a href="#"><i class="icon-linkedin"></i></a></li>
 						</ul>
 					</div>
-					<div class="col-xs-6 align-center">
-						<a href="/home"><img src="{% static 'images/ebro4.png '%}" class="ebro" alt=""></a>
-						
+					<div class="col-xs-8 align-center">
+						<a href="/home"><img src="{% static 'images/ebro6.png '%}" class="ebro" alt=""></a>
+						<form id="myform" class="colorlib-form" style="margin-top: 10px;">
+							<input type="text" name="search_name" placeholder="Search" style="width: 80%;height: 20px;">
+							<img type="submit" id="submit_form" src="{% static 'images/search.jpg' %}" alt="" height="20" width="20" style="border-radius: 50%;position: relative;"/>
+						</form>
 					</div>
-					<div class="col-xs-4 text-right">
+					<div class="col-xs-2 text-right">
 						<ul class="colorlib-social">
 							{% if user.is_authenticated %}
 <!-- 							  	
@@ -255,7 +267,7 @@
 
 								{% if user_profile.image != '' %}
 								<div class="col-xs-4">
-         						<li class="active"><a href="/home/profiles"><img src="{{user_profile.image.url}}"  class="person"/></a></li>
+         						<li class="active"><span><a href="/home/profiles"><img src="{{user_profile.image.url}}"  class="person"/></a></span></li>
 
          						<li class="has-dropdown active"><a href="/home/profiles"><img src="{% static 'images/profile_link.png '%}"  class="profile_link"/></a>
          							<ul class="dropdown">
@@ -265,7 +277,7 @@
 									</ul>
 								</li>
          						</div>
-         						<div class="col-xs-11 username_mobile">
+         						<div class="col-xs-8 username_mobile">
          						<span class="username"><b>{{user_profile.username.username}}
          							<font style="color: whitesmoke;">Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user_profile.coins}}</font><br>
          							<font style="color: whitesmoke;">Wallet&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;{{user_profile.wallet}}</font></b></span>
@@ -273,7 +285,7 @@
 
          						{% else %}
          						<div class="col-xs-4">
-         						<li class="active"><a href="profiles"><img src="{% static 'images/pers1.png '%}"  class="person"></a></li>
+         						<li class="active"><span><a href="/home/profiles"><img src="{% static 'images/pers1.png '%}"  class="person"></a><span></li>
 
          						<li class="has-dropdown active"><a href="profiles"><img src="{% static 'images/profile_link.png '%}"  class="profile_link"/></a>
          							<ul class="dropdown">
@@ -310,24 +322,41 @@
 					</div>
 					<div class="col-xs-14 text-center menu-1">
 						<ul>
+							{% if user.is_authenticated %}
+
+
 							<li class="links_admin_all active_user_page1"><a href="/home">Home</a></li>
 							<li class="links_admin_all active_user_page2"><a href="/home/offers">offers</a></li>
 							<li class="links_admin_all active_user_page3"><a href="/home/deal">Deals</a></li>
 							<li class="links_admin_all active_user_page4"><a href="/home/product">Products</a></li>	
-	
-							{% if user.is_authenticated %}
-							<li class="links_admin_all active_user_page5"><a href="/home/daily_task">Daily Task<span class="count">2</span></a></li>
-							{% endif %}
+							<li class="links_admin_all active_user_page5"><a href="/home/daily_task">Daily Task
+								<span class="count">{{daily_task_count}}</span></a></li>
 							<li class="links_admin_all active_user_page6"><a href="/home/job">Jobs</a></li>	
-							{% if user.is_authenticated %}
-							<li class="links_admin_all active_user_page7"><a href="/home/myads">My Ads</a></li>
-							<li class="links_admin_all active_user_page8"><a href="/home/myorders">My Orders</a></li>
-							<li class="links_admin_all active_user_page9"><a href="/home/wishlist">Wishlist</a></li>
-							<li class="links_admin_all active_user_page10"><a href="/home/cart">Cart</a></li>
+
+							<li class="links_admin_all active_user_page7"><a href="/home/myads">My Ads
+								<span class="count">{{my_ads_count}}</span></a></li>
+							<li class="links_admin_all active_user_page8"><a href="/home/myorders">My Orders
+								<span class="count">{{order_count}}</span></a></li>
+							<li class="links_admin_all active_user_page9"><a href="/home/wishlist">Wishlist
+								<span class="count">{{my_wishlist_count}}</span></a></li>
+							<li class="links_admin_all active_user_page10"><a href="/home/cart">Cart
+								<span class="count">{{cart_count}}</span></a></li>
 							<li class="links_admin_all active_user_page11"><a href="/home/chats">Chats</a></li>
 							<li class="links_admin_all active_user_page12"><a href="/home/about_us">About Us</a></li>
 							<li class="links_admin_all"><a href="/home/user_logout">Logout</a></li>
-							
+
+
+							{% else %}
+
+
+							<li class="links_admin_all active_user_page1"><a href="/home">Home</a></li>
+							<li class="links_admin_all active_user_page2"><a href="/home/offers_unknown">offers</a></li>
+							<li class="links_admin_all active_user_page3"><a href="/home/deal_unknown">Deals</a></li>
+							<li class="links_admin_all active_user_page4"><a href="/home/product_unknown">Products</a></li>
+							<li class="links_admin_all active_user_page6"><a href="/home/job_unknown">Jobs</a></li>
+							<li class="links_admin_all active_user_page12"><a href="/home/about_us">About Us</a></li>
+
+
 							{% endif %}
 						</ul>
 					</div>
@@ -440,8 +469,26 @@
 	<script src="{% static 'js/pro_pic.js '%}"></script>
 
 
-
 	<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+
+
+	<!-- <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js '%}"></script> -->
+	<script type="text/javascript" src="{% static 'js/chosen.jquery.min.js '%}"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#mselect').chosen();
+		});
+	</script>
+
+
+	<script>
+	   $('#submit_form').click(function(){
+	      $('#myform').submit();
+	   });
+	</script>
+
 
   <script>
     document.getElementById("loginpopup").addEventListener("click",function(){

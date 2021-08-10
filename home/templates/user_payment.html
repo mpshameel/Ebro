@@ -26,49 +26,53 @@
 
 
 
-  <div class="col-md-7">
-    <div class="container_wideboxes">
-        <div class="col-md-4 cartwidebox">
-          <br>
-          <h2 class="h5_style">Delivery Address&nbsp;</h2><br><br>
-          <h4 class="h5_profile_style">First Name&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.first_name }}</h4><br>
-          <h4 class="h5_profile_style">Last Name&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.last_name }}</h4><br>
-          <h3 class="h5_profile_style">Country&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.country }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.state }}</h3><br>
-          <h3 class="h5_profile_style">District&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.district }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.postalcode }}</h3><br>
-          <h3 class="h5_profile_style">Phone&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.phone }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone 2&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.alternative_phone }}</h3><br>
-          <h3 class="h5_profile_style">Address Line 1&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.address_line_1 }}</h3><br>
-          <h3 class="h5_profile_style">Address Line 2&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.address_line_2 }}</h3><br><br>
-        </div>
-    </div>          
-  </div>  
-
-
-
   <div class="container_wideboxes">
-      <div class="col-xs-5 user_payment_box">
-       <h2 class="sub_headings">Select Payment Methode:</h2><br><br>
-       <h2 class="sub_headings">Total</h2><br><br>
-            <div class="row col-md-10" style="margin-left: -25px;">
-                <h2 class="btn3 btn3-2">&nbsp;&nbsp;Items
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                :&nbsp;&nbsp;{{cart_count}}</h2>
-                <h2 class="btn3 btn3-2">&nbsp;&nbsp;Sub-Total
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                :&nbsp;&nbsp;$&nbsp;&nbsp;{{total_price}}</h2>
-                <h2 class="btn3 btn3-2">&nbsp;&nbsp;Wallet
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                :&nbsp;&nbsp;$&nbsp;&nbsp;{{user_profile.wallet}}</h2><br><br>
-            </div>
-          <br>
-          <form action="{% url 'ordercomplete_wallet' %}" method="POST">
-           {% csrf_token %}
-           <button href="checkout" class="btn2 btn2-2 btn2-sep3" style="width: 100%;">Pay From Wallet</button>
-          </form>
-          <br>
-          <div id="paypal-button-container" style="height: auto;"></div>
-      </div>
+    <div class="col-md-7 cartwidebox">
+        <br>
+        <h2 class="h5_style">Delivery Address&nbsp;</h2><br><br>
+        <h4 class="h5_profile_style">First Name&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.first_name }}</h4><br>
+        <h4 class="h5_profile_style">Last Name&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.last_name }}</h4><br>
+        <h3 class="h5_profile_style">Country&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.country }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.state }}</h3><br>
+        <h3 class="h5_profile_style">District&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.district }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pin&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.postalcode }}</h3><br>
+        <h3 class="h5_profile_style">Phone&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.phone }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone 2&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.alternative_phone }}</h3><br>
+        <h3 class="h5_profile_style">Address Line 1&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.address_line_1 }}</h3><br>
+        <h3 class="h5_profile_style">Address Line 2&nbsp;&nbsp;:&nbsp;{{ user_delivery_address.address_line_2 }}</h3><br><br>
+    </div>           
+
+    <div class="col-xs-5 user_payment_box">
+     <h2 class="h5_style_big">Select Payment Methode:</h2><br>
+     <h2 class="h5_style_big">Total</h2><br>
+          <div class="row col-md-10" style="margin-left: -25px;">
+              <h2 class="btn3 btn3-2">&nbsp;&nbsp;Items
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              :&nbsp;&nbsp;{{cart_count}}</h2>
+              <h2 class="btn3 btn3-2">&nbsp;&nbsp;Sub-Total
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              :&nbsp;&nbsp;$&nbsp;&nbsp;{{total_price}}</h2>
+              <h2 class="btn3 btn3-2">&nbsp;&nbsp;Wallet
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              :&nbsp;&nbsp;$&nbsp;&nbsp;{{user_profile.wallet}}</h2><br><br>
+          </div>
+
+          <input type="hidden" value="{{ i.product.username_id }}" name="approve_dealer_id">
+          <input type="hidden" value="" name="approve_payment">
+
+        <br>
+        <form action="{% url 'ordercomplete_wallet' %}" method="POST">
+         {% csrf_token %}
+         <button href="checkout" class="btn2 btn2-2 btn2-sep3" style="width: 100%;">Pay&nbsp;From&nbsp;Wallet</button>
+        </form>
+
+        <form action="{% url 'ordercomplete_cash_on_delivery' %}" method="POST">
+         {% csrf_token %}
+         <button href="checkout" class="btn btn-primary btn-block" style="width: 100%;">Cash on Delivery</button>
+        </form>
+
+        <br>
+        <div id="paypal-button-container" style="height: auto;"></div>
+    </div>
   </div>
 
 
@@ -76,50 +80,7 @@
 
     
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
+	
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 

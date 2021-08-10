@@ -16,13 +16,13 @@
   	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-
-<div class="col-md-12">
-	<h2 class="headings">Deals</h2><br><br>
-</div>
 		<div class="container_wideboxes">
+
+			<div class="col-md-12">
+				<h2 class="headings">Deals</h2><br><br>
+			</div>
 			{% for i in daily_deals_list %}
-			<div class="col-md-4 widebox">
+			<div class="col-md-4 widebox2">
 				<a href="#" class="blog-post">
 					{% if i.deal.picture != '' %}
 						<span class="img" style="background-image: url({{i.deal.picture.url}});"></span>
@@ -32,9 +32,9 @@
 					<div class="desc">
 						<h5 class="h5_style">{{ i.deal.deal_name }}</h5><br>
 						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.deal.price }}</b></h4>
-						<span class="cat" style="line-height: 15px;">{{ i.deal.brand_name }}</span><br>
+						<!-- <span class="cat" style="line-height: 15px;">{{ i.deal.brand_name }}</span><br> -->
 						<span class="cat" style="line-height: 15px;">{{ i.deal.username.email }}</span><br>
-						<span class="cat" style="line-height: 15px;">{{ i.deal.location }}</span>
+						<span class="cat" style="line-height: 15px;">{{ i.deal.location.name }}</span>
 					</div>
 				</a>
 				<div class="col-12 col-md-4 text-right">
@@ -56,12 +56,14 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<div class="col-md-12">
-	<h2 class="headings">Jobs</h2><br><br>
-</div>
+
 		<div class="container_wideboxes">
+			
+			<div class="col-md-12">
+				<h2 class="headings">Jobs</h2><br><br>
+			</div>
 			{% for i in daily_jobs_list %}
-			<div class="col-md-4 widebox">
+			<div class="col-md-4 widebox2">
 				<a href="#" class="blog-post">
 					{% if i.job.picture != '' %}
 						<span class="img" style="background-image: url({{i.job.picture.url}});"></span>
@@ -71,9 +73,9 @@
 					<div class="desc">
 						<h5 class="h5_style">{{ i.job.job_name }}</h5><br>
 						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.job.price }}</b></h4>
-						<span class="cat" style="line-height: 15px;">{{ i.job.brand_name }}</span><br>
+						<!-- <span class="cat" style="line-height: 15px;">{{ i.job.brand_name }}</span><br> -->
 						<span class="cat" style="line-height: 15px;">{{ i.job.username.email }}</span><br>
-						<span class="cat" style="line-height: 15px;">{{ i.job.location }}</span>
+						<span class="cat" style="line-height: 15px;">{{ i.job.location.name }}</span>
 					</div>
 				</a>
 				<div class="col-12 col-md-4 text-right">

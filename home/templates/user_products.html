@@ -27,18 +27,18 @@
 
 			<div class="form-field col-md-12 deals-pic-circle">
             	<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
-            	<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
+            	<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
 		        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>      
 		    </div>
 		    <br><br><br><br><br><br><br><br><br>
 
 			<div class="col-md-12">
 				<label for="fname">Product Name</label>
-				<input type="text" name="product_name" id="fname" class="form-control" placeholder="Your firstname">
+				<input type="text" name="product_name" id="fname" class="form-control" placeholder="Your Product Name" required="">
 			</div>
 			<div class="col-md-12">
 				<label for="lname">Price</label>
-				<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
+				<input type="text" name="price" id="lname" class="form-control" placeholder="Your Product Price" required="">
 			</div>
 			<div class="col-md-12">
 				<label for="lname">Attachments</label>
@@ -47,7 +47,7 @@
 
 		</div>
 		<div class="col-md-8">
-			
+			<br>
 			<div class="col-md-4 wrapper-class">
 				<label for="subject">Publish</label>
 				<br>
@@ -58,7 +58,7 @@
 			</div>
 			<div class="col-md-8">
 				<br>
-				[your product or deal will handle by E-bro through private channel]
+				[your product or deal will handle by Ebro-World manually through admin phase in private mode]
 			</div>
 
 			<div class="col-md-4 wrapper-class">
@@ -71,23 +71,21 @@
 			</div>
 			<div class="col-md-8">
 				<br>
-				[your product can categorize based on brand name or individual]
+				[your product can categorize based on brand name or individual by Ebro-World]
 			</div>
 
 			<div class="col-md-8">
 				<label for="subject">Brand Name</label>
-				<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
+				<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your Brand Name">
 			</div>
 			<div class="col-md-4">
 				<label for="subject">Stock</label>
-				<input type="number" name="stock" value="1" id="subject" class="form-control" placeholder="stock">
+				<input type="number" name="stock" value="1" id="subject" class="form-control" placeholder="Product Stock" required="">
 			</div>
 			<div class="col-md-12">
 				<div class="form-group">
-				<label>Select Job Category:</label>
-				<select id="jobcategory" name="category"
-				class="" multiple required="">
-
+				<label>Select Product Category:</label><br>
+				<select id="mselect" name="category" class="form-control" multiple required="">
 				{% for i in category_details %}
 				<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
 				{% endfor %}
@@ -96,12 +94,18 @@
 			</div>
 			<div class="col-md-12">
 				<label for="subject">Location</label>
-				<input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
+				<select name="location" class="form-control mb-4" style="width: 90%;">
+                    <option value="">Select Location</option>
+                    {% for i in location_details %}
+                      <option value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                      </option> 
+                    {% endfor %}
+                </select>
 			</div>
 
 			<div class="col-md-12">
 				<label for="message">Other Details</label>
-				<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
+				<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about the product">
 				</textarea>
 			</div>
 			&nbsp;&nbsp;
@@ -126,7 +130,11 @@
 				<div class="container_wideboxes">
 					{% for i in user_products_list %}
 					<div class="col-md-4 widebox">
+						{% if request.user.is_authenticated %}
 						<a href="{% url 'detail_product' i.id %}" class="blog-post">
+						{% else %}
+						<a href="{% url 'detail_products_unknown' i.id %}" class="blog-post">
+						{% endif %}
 							{% if i.picture != '' %}
 								<span class="img" style="background-image: url({{i.picture.url}});"></span>
 		         			{% else %}
@@ -136,41 +144,17 @@
 								<h5 class="h5_style">{{ i.product_name }}</h5>
 								{% if i.offer != 0 %}
 									<h5><font style="color: #8e9416;">{{ i.offer }}&nbsp;%&nbsp;&nbsp;offer</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;&nbsp;<b style="text-decoration: line-through;">{{ i.oldprice }}</b></h5>
-									<h4><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
+									<h4 style="margin-top: -5px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
 								{% else %}
-									<h4 style="margin-top: 35px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
+									<h5><font style="color: #8e9416;">{{ i.offer }}&nbsp;%&nbsp;&nbsp;offer</font>
+									<h4 style="margin-top: -5px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
 								{% endif %}
-								<span class="cat">{{ i.brand_name }}</span>
+								<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
+								<span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
 								<span class="date" style="color: red;">{% if i.stock <= 0 %}Out of stock{% else %}&nbsp;{% endif %}</span>
 								
 							</div>
 						</a>
-						<div class="col-12 col-md-8 text-left down">
-							{% if request.user.is_authenticated %}
-		 						<form action="{% url 'product_to_cart' %}" method="POST">
-									{% csrf_token %}
-		 						<input type="hidden" value="{{ i.id }}" name="id_product">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
-								</form>
-								{% else %}
-		    					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
-		    					</form>
-							{% endif %}
-						</div>
-						<div class="col-12 col-md-4 text-right">
-							{% if request.user.is_authenticated %}
-								<form action="{% url 'product_to_wish' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_product">
-								<button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-            					</form>
-            					{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-            					</form>
-            				{% endif %}
-						</div>
 					</div>
 					{% endfor %}
 
@@ -189,15 +173,14 @@
 
 	<script>
 		document.getElementById("addbutton").addEventListener("click",function(){
-		  document.querySelector(".additem-form").style.display = "flex";
+		  document.querySelector(".additem-form").style.visibility = "visible";
 		})
 		document.querySelector(".closeitem-form").addEventListener("click",function(){
-			document.querySelector(".additem-form").style.display = "none";
+			document.querySelector(".additem-form").style.visibility = "hidden";
 		  })
 		
 	
 	</script>
-
 
 
 

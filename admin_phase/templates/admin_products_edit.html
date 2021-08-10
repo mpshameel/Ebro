@@ -14,7 +14,77 @@
 
 
 
+
 <div class="container_wideboxes">
+	<div id="colorlib-about">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="about animate-box">
+						<b><font style="font-size: 30px;">{{ admin_products_list.product_name }}</font></b><br>
+						Type&nbsp;{% if admin_products_list.product_type == "Single" %} 
+     							  :{{ admin_products_list.product_type }}
+     							  {% else %}
+     							  :{{ admin_products_list.product_type }}
+     							  <br>
+     							  <b>Brand Name&nbsp;:{{ admin_products_list.brand_name }}</b>
+     							  {% endif %}
+     							  <br>
+     					[your product can categorize based on brand name or individual]<br>
+     					<h4><font style="color: #8e9416;">{{ admin_products_list.offer }}&nbsp;%&nbsp;&nbsp;offer</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;&nbsp;<b style="text-decoration: line-through;">{{ admin_products_list.oldprice }}</b></h4>
+     					<b><font style="font-size: 35px;">$&nbsp;&nbsp;{{ admin_products_list.price }}</font></b>
+     					<br>
+     					{% for i in category_details %}
+                       		{% for j in trade %} 
+                          		{% if i.id == j.id %} 
+                             		{{ j.name }} ,
+                          		{% endif %}
+                       		{% endfor %}
+                    	{% endfor %}
+     					<br>
+     					<b><font style="font-size: 20px;">{{ admin_products_list.email }}</font></b><br>
+     					<b><font style="font-size: 15px;">{{ admin_products_list.contact }}</font></b><br>
+     					<b><font style="font-size: 15px;">{{ admin_products_list.location.name }}</font></b><br>
+						<p style="word-break: break-all;">Details :<br>{{ admin_products_list.details }}</p>
+
+						 <div class="col-md-9">
+	                        <button id="editbutton" class="btn2 btn2-2 btn2-sep4">Edit Product</button>
+	                     </div>
+	                     <div class="col-md-3">
+	                     	{% if admin_products_list.is_deleted %}
+	                     	<form action="{% url 'un_freeze_admin_products' %}" method="POST">
+								{% csrf_token %}
+
+				         	<input type="hidden" value="{{ admin_products_list.id }}" name="id_freeze">
+				         	<button class="btn2 btn2-2 btn2-sep4">UnFreeze</button>
+				            </form>
+	                     	{% else %}
+			         		<form action="{% url 'freeze_admin_products' %}" method="POST">
+								{% csrf_token %}
+
+				         	<input type="hidden" value="{{ admin_products_list.id }}" name="id_freeze">
+				         	<button class="btn4 btn4-1 btn4-sep2">Freeze</button>
+				            </form>
+				            {% endif %}
+	                     </div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					{% if admin_products_list.picture != '' %}
+ 					<img class="img-responsive" src="{{admin_products_list.picture.url}}" alt="ebro-world.com">
+ 					{% else %}
+ 					<img class="img-responsive" src="{% static 'images/img_bg_5.jpg' %}" alt="ebro-world.com">
+ 					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="container_wideboxes edit_admin_form">
   	<div class="col-md-8 edititem_container">
 
 		<form action="{% url 'detail_view_admin_products' admin_products_list.id %}" method="POST" enctype="multipart/form-data">
@@ -35,26 +105,26 @@
 
 			<div class="col-md-12">
 				<label for="fname">Product Name</label>
-				<input type="text" name="product_name" value="{{ admin_products_list.product_name }}" id="fname" class="form-control" placeholder="Your firstname">
+				<input type="text" name="product_name" value="{{ admin_products_list.product_name }}" id="fname" class="form-control" placeholder="Your Product Name" required="">
 			</div>
 
 			<div class="col-md-12">
 				<label for="lname">Price</label>
-				<input type="text" name="price" id="lname" value="{{ admin_products_list.price }}" class="form-control" placeholder="Your lastname">
+				<input type="text" name="price" id="lname" value="{{ admin_products_list.price }}" class="form-control" placeholder="Your Product Price" required="">
 			</div>
 			<div class="col-md-12">
 				<label for="lname">Stock</label>
-				<input type="number" name="stock" id="lname" value="{{ admin_products_list.stock }}" class="form-control" placeholder="Stock">
+				<input type="number" name="stock" id="lname" value="{{ admin_products_list.stock }}" class="form-control" placeholder="Product Stock" required="">
 			</div>
 			<div class="col-md-12">
 				<label for="lname">Attachments</label>
-				<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
+				<input type="file" name="attachments" id="lname" class="form-control" placeholder="Select Product Attachments" multiple=""/>
 			</div>
 			
 		</div>
 		<div class="col-md-8">
-			
-			<div class="col-md-4 wrapper-class">
+			<br>
+			<div class="col-md-5 wrapper-class">
 				<label for="subject">Publish</label>
 				<br>
 					<input type="radio" id="radio1" name="publish" value="public" {% if admin_products_list.publish == "public" %} checked="checked" {% endif %}>
@@ -62,11 +132,11 @@
 					<input type="radio" id="radio2" name="publish" value="private" {% if admin_products_list.publish == "private" %} checked="checked" {% endif %}>
 					<label for="radio2">Private</label>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-7">
 				<br>
-				[your product or deal will handle by E-bro through private channel]
+				[your product or deal will handle by Ebro-World manually through admin phase in private mode]
 			</div>
-			<div class="col-md-4 wrapper-class">
+			<div class="col-md-5 wrapper-class">
 				<label for="subject">Type</label>
 				<br>
 					<input type="radio" id="radio3" name="product_type" value="Single" {% if admin_products_list.product_type == "Single" %} checked="checked" {% endif %}>
@@ -74,24 +144,24 @@
 					<input type="radio" id="radio4" name="product_type" value="Multiple" {% if admin_products_list.product_type == "Multiple" %} checked="checked" {% endif %}>
 					<label for="radio4">Multiple</label>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-7">
 				<br>
-				[your product can categorize based on brand name or individual]
+				[your product can categorize based on brand name or individual by Ebro-World]
 			</div>
 
 			<div class="col-md-6">
 				<label for="subject">Brand Name</label>
-				<input type="text" name="brand_name" id="subject" value="{{ admin_products_list.brand_name }}" class="form-control" placeholder="Your subject of this message">
+				<input type="text" name="brand_name" id="subject" value="{{ admin_products_list.brand_name }}" class="form-control" placeholder="Your Brand Name">
 			</div>
 			<div class="col-md-6">
 				<label for="subject">Contact</label>
-				<input type="text" name="contact" id="subject" value="{{ admin_products_list.contact }}" class="form-control" placeholder="Your subject of this message">
+				<input type="text" name="contact" id="subject" value="{{ admin_products_list.contact }}" class="form-control" placeholder="Your Contact Number" required="">
 		    </div>
 
 			<div class="col-md-12">
 				<div class="form-group">
 				<label>Select Job Category:</label>
-                <select name="category" class="form-control" multiple="">
+                <select id="mselect" name="category" class="form-control" multiple required="">
 					{% for i in category_details %}
 					    <option {% for j in trade %} {% if i.id == j.id %} selected {% endif %} {% endfor %} value="{{ i.id }}">{{ i.name }}</option>
 					{% endfor %}
@@ -100,16 +170,33 @@
 			</div>
 			<div class="col-md-6">
 				<label for="subject">Sort by Location</label>
-				<input type="text" name="location" id="subject" value="{{ admin_products_list.location }}" class="form-control" placeholder="Your subject of this message">
+				<select name="location" class="form-control mb-4" style="width: 90%;">
+                    <option value="{{ admin_products_list.location.id }}">{{ admin_products_list.location.name }}</option>
+                    {% for i in location_details %}
+                      <option value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                      	{% if i.super_parent == null %}
+                      		<p class="text-primary">(Country)
+                      		{% else %}
+                      			{% if i.sub_location == True %}
+                      				(State)
+                      			{% endif %}
+
+                      			{% if i.microsub_location == True %}
+                      				(District/Places)
+                      			{% endif %}
+                      	{% endif %}</p>
+                      </option> 
+                    {% endfor %}
+                </select>
 			</div>
 			<div class="col-md-6">
 				<label for="subject">Email</label>
-				<input type="text" name="email" id="subject" value="{{ admin_products_list.email }}" class="form-control" placeholder="Your subject of this message">
+				<input type="email" name="email" id="subject" value="{{ admin_products_list.email }}" class="form-control" placeholder="Your Email Id" required="">
 		    </div>
 
 			<div class="col-md-12">
 				<label for="message">Other Details</label>
-				<textarea  name="details" value="" id="message" value="{{ admin_products_list.details }}" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ admin_products_list.details }}
+				<textarea  name="details" value="" id="message" value="{{ admin_products_list.details }}" cols="25" rows="2" class="form-control" placeholder="Say something about the product">{{ admin_products_list.details }}
 				</textarea>
 			</div>
 
@@ -138,7 +225,7 @@
 				<div class="col-md-12">
 					<br>
 					<label for="lname">Offer</label>
-						<input type="text" name="offer" id="subject" value="{{ admin_products_list.offer }}" class="form-control" placeholder="Your subject of this message">
+						<input type="text" name="offer" id="subject" value="{{ admin_products_list.offer }}" class="form-control" placeholder="Type offer percentage here" required="">
 					<br>
 				</div>	
 			<div class="row form-group">
@@ -175,5 +262,10 @@
 
 
 
+	<script>
+		document.getElementById("editbutton").addEventListener("click",function(){
+		  document.querySelector(".edit_admin_form").style.visibility = "visible";
+		})
+	</script>
 
 {% endblock %}

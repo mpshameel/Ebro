@@ -16,7 +16,7 @@
 
 
  
-<div class="container_wideboxes">
+<!-- <div class="container_wideboxes">
 	<div class="col-md-4 category_edit_box">
 	    <form action="{% url 'update_category' detail_category.id %}" method="POST" enctype="multipart/form-data">
 	      {% csrf_token %}
@@ -25,69 +25,193 @@
 	        	<h5 class="headings_small">Edit Main Category :</h5>
 	        	<br><br><br>
 	          <label for="fname">Category Name</label>
-	          <input type="text" name="category_name" id="fname" value="{{ detail_category.name }}" class="form-control" placeholder="category name">
+	          <input type="text" name="category_name" id="fname" value="{{ detail_category.name }}" class="form-control" placeholder="Category name" required="">
 	          <input type="hidden" value="{{ detail_category.id }}" name="id_update">
 	        </div>
-	        <br>
 	        <div class="col-md-12">
 		        <div class="form-group text-center"><br>
 		          <button type="submit" value="Update Category" class="btn btn-primary">Update Category</button>
-		        </div>
 		        </div>
 	    	</div>
 	    </form>
 	</div>
 
-	<div class="col-md-7">
-	    <div class="col-md-12 subcategory_edit_box">
-	    	<div class="col-md-12">
+	<div class="col-md-8 subcategory_edit_box">
+    	<div class="col-md-12">
 
-	    		<form action="{% url 'detail_category' detail_category.id %}" method="POST" enctype="multipart/form-data">
-		      		{% csrf_token %}
-			       	<div class="col-md-12">
-			          <label for="fname">Sub-Category Name</label>
-			          <input type="text" name="sub_category" id="fname" class="form-control" placeholder="category name">
-			        </div>
-			        <br>
-			        <div class="form-group text-center">
-			          <button type="submit" value="Add Sub Category" class="btn btn-primary">Add Sub Category</button>
-			        </div>
-			    </form>
-			</div>
+    		<form action="{% url 'detail_category' detail_category.id %}" method="POST" enctype="multipart/form-data">
+	      		{% csrf_token %}
+		       	<div class="col-md-12">
+		          <label for="fname">Sub-Category Name</label>
+		          <input type="text" name="sub_category" id="fname" class="form-control" placeholder="Sub-Category name" required="">
+		        </div>
+		        <br>
+		        <div class="form-group text-center">
+		          <button type="submit" value="Add Sub Category" class="btn btn-primary">Add Sub Category</button>
+		        </div>
+		    </form>
+		</div>
 
-			<div class="col-md-12">
-		        <table cellspacing="0" class="user_list_table">
-		          <tr class="header" style="font-size: 15px;">
-		            <center>
-		             <th width="5%"><center>#</center></th>
-		             <th width="30%"><center>Sub Category</center></th>
-		             <th width="15%"><center>Delete</center></th>
-		             </center>
-		          </tr>
+		<div class="col-md-12">
+	        <table cellspacing="0" class="user_list_table">
+	          <tr class="header" style="font-size: 15px;">
+	            <center>
+	             <th width="5%"><center>#</center></th>
+	             <th width="90%"><center>Sub Category</center></th>
+	             <th width="5%"><center>Delete</center></th>
+	             </center>
+	          </tr>
 
 
-		          {% for i in subcategory_list %}
-		            <tr style="font-size: 13px;">
-			             <td><center>{{ forloop.counter }}</center></td>
-			             <td>&nbsp;{{ i.name }}</td>
-			             <td><center>
-				         	<form action="{% url 'delete_subcategory' %}" method="POST">
-								{% csrf_token %}
+	          {% for i in subcategory_list %}
+	            <tr style="font-size: 13px;">
+		             <td><center>{{ forloop.counter }}</center></td>
+		             <td>&nbsp;{{ i.name }}</td>
+		             <td><center>
+			         	<form action="{% url 'delete_subcategory' %}" method="POST">
+							{% csrf_token %}
 
-				         	<input type="hidden" value="{{ i.id }}" name="id_delete">
-				         	<button>Delete</button>
-				            </form>
-			            </center>
-			         	</td>
-		            </tr>
-		          {% endfor %}  
-		        </table>
-			</div>
-	    </div>
-
+			         	<input type="hidden" value="{{ i.id }}" name="id_delete">
+			         	<button>Delete</button>
+			            </form>
+		            </center>
+		         	</td>
+	            </tr>
+	          {% endfor %}  
+	        </table>
+		</div>
 	</div>
-</div>
 
+</div> -->
+
+
+
+
+
+
+
+  <div class="col-md-12 keywords_form">
+    <div class="col-md-12 datalist_box">
+      <div class="scrolluserlist">
+
+
+          <div class="col-md-6">
+            <form class="text-center border border-light p-5" action="{% url 'detail_category' detail_category.id %}" method="POST" onsubmit="return check()">
+              {% csrf_token %}
+                <p class="h4 mb-4">Add Category</p>
+
+              <!-- Main Categoy-->
+               <div class="d-flex justify-content-around">
+                    
+                <!-- Default inline 1-->
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" checked="checked" value="True" onclick="checkRadio(name)" name="main_category" class="custom-control-input" id="defaultInline1" >
+                  <label class="custom-control-label" for="defaultInline1">Sub Category</label>
+                </div>
+
+                <!-- Default inline 2-->
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" class="custom-control-input" onclick="checkRadio(name)" value="False" id="defaultInline2" name="main_category_availabe">
+                  <label class="custom-control-label" for="defaultInline2">Micro-Sub Category</label>
+                </div>
+                    
+                </div>
+                <!-- Password -->
+                <input type="text" name="name"  class="form-control mb-4" placeholder="Enter category name" required="" pattern="[A-Za-z ]{1,30}">
+                <select id="sub_selection" name="sub_category" class="form-control mb-4" >
+                    <option value="">Select Sub Category</option>
+                    {% for category in sub_category_list %}
+                      <option value="{{ category.id }}">{{ category.name }} &nbsp;&nbsp;&nbsp;{% if category.super_parent == null %}<p class="text-primary">(main category)</p>{% endif %}</option> 
+                    {% endfor %}
+                </select>
+                <div id="error" style="color: red"></div>
+                <button style="background-color: #59698d;" class="btn btn-primary btn-block" type="submit">Save</button>
+            </form>
+          </div>
+
+          <div class="col-md-6">
+            <table cellspacing="0" style="width: 108%;margin: 0px -15px;">
+              <tr class="header" style="font-size: 15px;">
+                <center>
+                 <th width="5%"><center>#</center></th>
+                 <th width="50%"><center>Sub Category</center></th>
+                 <th width="45%"><center>Micro-Sub Category</center></th>
+                 </center>
+              </tr>
+
+
+              {% for i in sub_category_list %}
+                <tr style="font-size: 13px;height: 30px;">
+                 <td><center>{{ forloop.counter }}</center></td>
+                  <td>&nbsp;{{ i.name }}</td>
+                  <td>
+                    {% for j in microsub_category_list %}
+                      {% if j.parent_id == i.id %}
+                      &nbsp;{{ j.name }}<br>
+                      {% endif %}
+                    {% endfor %}
+                  </td>
+                </tr>
+              {% endfor %}  
+            </table>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+      document.getElementById("sub_selection").style.visibility = "hidden";
+      var ch;
+    function checkRadio(name) {
+        if(name == "main_category_availabe"){
+            document.getElementById("defaultInline2").checked = true;
+            document.getElementById("defaultInline1").checked = false;
+            console.log(document.getElementById("defaultInline1").value)
+            console.log('Yes')
+            document.getElementById("sub_selection").style.visibility = "visible";
+            ch=1;
+
+
+
+        } else if (name == "main_category"){
+            document.getElementById("defaultInline1").checked = true;
+            document.getElementById("defaultInline2").checked = false;
+            document.getElementById("sub_selection").style.visibility = "hidden";
+        }
+    }
+
+    function check()
+    {     z=document.getElementById("defaultInline2").value;
+            x=document.getElementById("sub_selection").value;
+    // alert(ch)
+    if(ch)
+    {
+      // alert("rad")
+      if(x == "")
+    {
+      // alert("not ")
+      document.getElementById("error").innerHTML="choose sub category"; 
+      return false;
+    }else{
+      // alet("sc")
+      return true;
+
+    }
+    }else{
+      // alert("else part")
+      console.log("sdf")
+    }
+
+    }
+    </script>
 
 
 

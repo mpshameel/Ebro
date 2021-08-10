@@ -1,405 +1,161 @@
 
+{% extends 'admin dashboard/admin_dashboard.html'%}
 
-<script>
-	{% for i in messages %}
-	alert('{{ i }}');
-	{% endfor %}
-    
-</script>
+{% block content %}
 
 {% load static %}
 
-<!DOCTYPE HTML>
-<html>
-	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>E-BRO</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="" />
-	<meta name="keywords" content="" />
-	<meta name="author" content="" />
-
-  <!-- Facebook and Twitter integration -->
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
-
-	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,700 '%}" rel="stylesheet">
-	<link href="{% static 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700 '%}" rel="stylesheet">
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="{% static 'css/animate.css '%}">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="{% static 'css/icomoon.css '%}">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.css '%}">
-
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="{% static 'css/magnific-popup.css '%}">
-
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="{% static 'css/flexslider.css '%}">
-
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css '%}">
-	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css '%}">
-	
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css '%}">
-	<!-- Flaticons  -->
-	<link rel="stylesheet" href="{% static 'fonts/flaticon/font/flaticon.css '%}">
-
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="{% static 'css/style.css '%}">
-	<link rel="stylesheet" href="{% static 'css/stylepop.css '%}">
-	<link rel="stylesheet" href="{% static 'css/addb.css '%}">
-	<link rel="stylesheet" href="{% static 'css/addb2.css '%}">
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-
-	<!-- Modernizr JS -->
-	<script src="{% static 'js/modernizr-2.6.2.min.js '%}"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
-	</head>
-	<body>
 
 
+<style>
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
 
-	
-
-
-		
-	<div class="colorlib-loader"></div>
-
-	<nav class="colorlib-nav" role="navigation">
-		
-		<div class="top">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-4">
-						<p class="site">www.e-bro.com</p>
-		  <ul class="colorlib-social">
-							<li><a href="#"><i class="icon-twitter"></i></a></li>
-							<li><a href="#"><i class="icon-facebook"></i></a></li>
-							<li><a href="###"><i class="icon-linkedin"></i></a></li>
-							
-						</ul>
-					</div>
-					<div class="col-xs-2">
-						<div><a href="home.html" class="ebro"><img src="{% static 'images/ebro1.png '%}" alt="" width="300" height="70"></a></div>
-					</div>
-					<div class="col-xs-6 text-right">
-						
-						<ul class="colorlib-social">
-							{% if user.is_authenticated %}
-							<li class="active"><a href="admin_profile"><img src="{% static 'images/pers.png '%}" class="person"></a></li>
-							
-							{% else %}
-							<li><a href="#" id="login">Sign in</a></li>
-							<li><a href="#" id="signup">Sign up</a></li>
-							
-							{% endif %}
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-        
-		
-  <div class="bglinks">
-	<div class="row">
-	<div class="container">
-		<div class="col-xs-12 text-right menu-1 linksall">
-		<ul>
-			{% if user.is_authenticated %}
-			<li><a href="/" style="color: cornsilk;">Home</a></li>
-			<li><a href="admin_deals" style="color: cornsilk;">Deals</a></li>
-			<li><a href="admin_jobs" style="color: cornsilk;">Jobs</a></li>
-			<li><a href="admin_products" style="color: cornsilk;">Products</a></li>
-			
-         	
-			
-			<li class="active1"><a href="admin_userdata" style="color: cornsilk;">User Data </a></li>
-			<li><a href="admin_myads" style="color: cornsilk;">My Ads</a></li>
-			<li><a href="logout" style="color: cornsilk;">Logout</a></li>
-			
-			
-			{% endif %}
-		</ul>
-		
-
-		
-
-		</div>
-	</div>
-	</div>
-</div>
-</div>
-</div>			
-</nav>
+</style>
 
 
 
 
-<div class="containter_user_box">
 
-  <div class="col-md-12">
-			<div class="aside animate-box">
-                
-                <form method="post" class="colorlib-form">
-                  <div class="row">
-                   
+<div class="container_wideboxes">
+  <div class="col-md-12 table_userdata">
 
-                    <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="date"></label>
-                          <div class="form-field">
-                            <i class="icon icon-text"></i>
-                           	<div class="user_box1">
-								
+    <div class="col-md-4 table1_userdata">
+        <table cellspacing="0">
+          <tr class="header"> 
+            <th width="20%"></th>
+            <th width="20%"></th>
+            <th width="20%">Online</th>
+            <th width="20%">Offline</th>
+            <th width="20%">Total</th>
+          </tr>
+          <tr>
+            <th rowspan="2" width="20%">Admins</th>
+            <td width="20%">Super</td>
+            <td width="20%"><center>###</center></td>
+            <td width="20%"><center>###</center></td>
+            <td rowspan="2" width="20%"><center>{{ total_admins }}</center></td>
+          </tr>
+          <tr>      
+          <td width="20%">Normal</td>
+          <td width="20%"><center>###</center></td>
+          <td width="20%"><center>###</center></td>
+          <td width="20%"><center></center></td>
+          </tr>
+          <tr>      
+          <th rowspan="2" width="20%">Users</th>
+          <td width="20%">Free</td>
+          <td width="20%"><center>###</center></td>
+          <td width="20%"><center>###</center></td>
+          <td rowspan="2" width="20%"><center>{{ total_users }}</center></td>
+          </tr>
+          <tr>       
+          <td width="20%">Premium</td>
+          <td width="20%"><center>###</center></td>
+          <td width="20%"><center>###</center></td>
+          </tr>
+          <tr>      
+          <td colspan="4" width="20%"></td>
+          <td width="20%"><center><b>{{ total_registrations }}</b></center></td>
+          </tr>
+        </table>
 
-					<table class="table_userdata" cellspacing="0">
-      				<tr class="table_userdata_row">
-      								
-                      <th width="20%"></th>
-                      <th width="20%"></th>
-                      <th width="20%">Online</th>
-                      <th width="20%">Offline</th>
-                      <th width="20%">Total</th>
+    </div>
 
-                    </tr>
+    <div class="col-md-5 table2_userdata">
+        <table cellspacing="0">
+          <tr class="header">
+            <th width="10%"></th>
+            <th width="10%"></th>
+            <th width="20%">Deals</th>
+            <th width="20%">Jobs</th>
+            <th width="20%">Proucts</th>
+          </tr>
+          <tr>
+            <th rowspan="2" width="10%">Admin</th>
+            <td width="10%">Public</td>
+            <td width="20%">&nbsp;{{ public_admin_deals }}</td>
+            <td width="20%">&nbsp;{{ public_admin_jobs }}</td>
+            <td width="20%">&nbsp;{{ public_admin_products }}</td>  
+          </tr>
+          <tr>  
+            <td width="10%">Private</td>
+            <td width="20%">&nbsp;{{ private_admin_deals }}</td>
+            <td width="20%">&nbsp;{{ private_admin_jobs }}</td>
+            <td width="20%">&nbsp;{{ private_admin_products }}</td>  
+          </tr>
+          <tr>
+            <th rowspan="2" width="10%">User</th>
+            <td width="10%">Public</td>
+            <td width="20%">&nbsp;{{ public_user_deals }}</td>
+            <td width="20%">&nbsp;{{ public_user_jobs }}</td>
+            <td width="20%">&nbsp;{{ public_user_products }}</td>     
+          </tr>
+          <tr> 
+            <td width="10%">Private</td>
+            <td width="20%">&nbsp;{{ private_user_deals }}</td>
+            <td width="20%">&nbsp;{{ private_user_jobs }}</td>
+            <td width="20%">&nbsp;{{ private_user_products }}</td>
+          </tr>
+          <tr>  
+            <td width="10%"><b>Total</b></td>
+            <td width="10%"><b></b></td>
+            <td width="20%"><b>&nbsp;{{ total_deals }}</b></td>
+            <td width="20%"><b>&nbsp;{{ total_jobs }}</b></td>
+            <td width="20%"><b>&nbsp;{{ total_products }}</b></td>
+          </tr>
+        </table>
+    </div>
 
-                    <tr class="table_userdata_row">
-                      <th rowspan="2" width="20%">Admins</th>
-                      <td width="20%">Super</td>
-      				  <td width="20%"><center>###</center></td>
-      				  <td width="20%"><center>###</center></td>
-                      <td rowspan="2" width="20%"><center>{{ total_admins }}</center></td>
-			 	
-      				</tr>
+    <div class="col-md-3 table3_userdata">
+        <table cellspacing="0">
+          <tr class="header">
+            <th width="40%"></th>
+            <th width="30%">Deals</th>
+            <th width="30%">Jobs</th>
+          </tr>
+          <tr>   
+            <td width="40%">Admin</td>
+            <td width="30%">&nbsp;{{ admin_assigned_deal }}</td>
+            <td width="30%">&nbsp;{{ admin_assigned_job }}</td>
+          </tr>
+          <tr>
+            <td width="40%">User</td>
+            <td width="30%">&nbsp;{{ user_assigned_deal }}</td>
+            <td width="30%">&nbsp;{{ user_assigned_job }}</td>
+          </tr>
+          <tr>    
+            <th width="40%">Total</th>
+            <td width="30%"><b>&nbsp;{{ total_assigned_deal }}</b></td>
+            <td width="30%"><b>&nbsp;{{ total_assigned_job }}</b></td>  
+          </tr>
+        </table>
+    </div>
 
-      				<tr class="table_userdata_row">
-      								
-
-      				<td width="20%">Normal</td>
-      				<td width="20%"><center>###</center></td>
-      				<td width="20%"><center>###</center></td>
-      				<td width="20%"><center></center></td>
-
-      				</tr>
-
-      				<tr class="table_userdata_row">
-      								
-      				<th rowspan="2" width="20%">Users</th>
-      				<td width="20%">Free</td>
-      				<td width="20%"><center>###</center></td>
-      				<td width="20%"><center>###</center></td>
-      				<td rowspan="2" width="20%"><center>{{ total_users }}</center></td>
-
-      				</tr>
-
-      				<tr class="table_userdata_row">
-      								
-      				<td width="20%">Premium</td>
-      				<td width="20%"><center>###</center></td>
-      				<td width="20%"><center>###</center></td>
-      				
-
-      				</tr>
-      				<tr class="table_userdata_row">
-      								
-      				<td colspan="4" width="20%"></td>
-      				<td width="20%"><center><b>{{ total_registrations }}</b></center></td>
-      				
-
-      				</tr>
-
-                    
-
-      			</table>
-							</div>
-                           </div>
-                        </div>
-                    </div>
-
-                   
-                   
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="date"></label>
-                          <div class="form-field">
-                            <i class="icon icon-text"></i>
-                           	<div class="user_box2">
-								
-
-				<table class="table_userdata" cellspacing="0">
-                      <tr class="table_userdata_row">
-                      
-                      <th width="10%"></th>
-                      <th width="10%"></th>
-                      <th width="20%">Deals</th>
-                      <th width="20%">Jobs</th>
-                      <th width="20%">Proucts</th>
-                      
-
-                      </tr>
-
-                      <tr class="table_userdata_row">
-                      	<th rowspan="2" width="10%"><h3><b>Admin</b></h3></th>
-                      	<th width="10%">Public</th>
-                      	<td width="20%">&nbsp;{{ public_admin_deals }}</td>
-                      	<td width="20%">&nbsp;{{ public_admin_jobs }}</td>
-                      	<td width="20%">&nbsp;{{ public_admin_products }}</td>
-                      	
-                      
-                      </tr>
-                      <tr class="table_userdata_row">
-                      	
-                      	<th width="10%">Private</th>
-                      	<td width="20%">&nbsp;{{ private_admin_deals }}</td>
-                      	<td width="20%">&nbsp;{{ private_admin_jobs }}</td>
-                      	<td width="20%">&nbsp;{{ private_admin_products }}</td>
-                      	
-                      
-                      </tr>
-
-                      <tr class="table_userdata_row">
-                      	<th rowspan="2" width="10%"><h3><b>User</b></h3></th>
-                      	<th width="10%">Public</th>
-                      	<td width="20%">&nbsp;{{ public_user_deals }}</td>
-                      	<td width="20%">&nbsp;{{ public_user_jobs }}</td>
-                      	<td width="20%">&nbsp;{{ public_user_products }}</td>
-                      	
-                      
-                      </tr>
-                      <tr class="table_userdata_row">
-                      	
-                      	<th width="10%">Private</th>
-                      	<td width="20%">&nbsp;{{ private_user_deals }}</td>
-                      	<td width="20%">&nbsp;{{ private_user_jobs }}</td>
-                      	<td width="20%">&nbsp;{{ private_user_products }}</td>
-                     
-                      
-                      </tr>
-                      <tr class="table_userdata_row">
-                      	
-                      	<th width="10%">Total</th>
-                      	<th width="10%"></th>
-                      	<th width="20%">&nbsp;{{ total_deals }}</th>
-                      	<th width="20%">&nbsp;{{ total_jobs }}</th>
-                      	<th width="20%">&nbsp;{{ total_products }}</th>
-                   
-                      
-                      </tr>
-
-                     
-
-                    </table>
-							       </div>
-                           </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="date"></label>
-                          <div class="form-field">
-                            <i class="icon icon-text"></i>
-                            <div class="user_box3">
-                
-
-        <table class="table_userdata" cellspacing="0">
-                      <tr class="table_userdata_row">
-                      
-                      
-                      <th width="40%"></th>
-                      <th width="30%">Deals</th>
-                      <th width="30%">Jobs</th>
-
-                      
-
-                      </tr>
-
-                      <tr class="table_userdata_row">
-                       
-                        <th width="40%">Admin</th>
-                        <td width="30%">&nbsp;{{ admin_assigned_deal }}</td>
-                        <td width="30%">&nbsp;{{ admin_assigned_job }}</td>
-                        
-                        
-                      
-                      </tr>
-                      <tr class="table_userdata_row">
-                        
-                        <th width="40%">User</th>
-                        <td width="30%">&nbsp;{{ user_assigned_deal }}</td>
-                        <td width="30%">&nbsp;{{ user_assigned_job }}</td>
-                        
-                        
-                      
-                      </tr>
-
-                     
-                      <tr class="table_userdata_row">
-                        
-                        <th width="40%">Total</th>
-                        <th width="30%">&nbsp;{{ total_assigned_deal }}</th>
-                        <th width="30%">&nbsp;{{ total_assigned_job }}</th>
-                        
-                   
-                      
-                      </tr>
-
-                     
-
-                    </table>
-                     </div>
-                           </div>
-                        </div>
-                    </div>
-
-
-
-
-                  </div>
-                </form>
-            </div>
-       </div>   
+  </div>
 </div>
 
 
 
 
-	
-      <div class="col-md-14  animate-box" style="margin-left: 10px;width: 98%; font-style:    font-family: 'Antonio', sans-serif;
-   font-family: 'Ubuntu', sans-serif;">
-			<div class="aside animate-box">
-           
-                <form class="colorlib-form">
-                  
 
-                  <div class="row">
-                    <div class="col-md-5">
-                        <div class="form-group">
+
+
+
+
+  
+    <div id="colorlib-reservation">
+      <div class="container_wideboxes">
+        <div class="row">
+          <div class="col-md-12 search-wrap">
+            <form class="colorlib-form">
+                    <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+
                           <label for="date">Who:</label>
-                          <div class="form-field">
+                          <div class="form-field" style="margin-top: -10px;">
                             <i class="icon icon-text"></i>
                             <input name="search" type="textfield" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
                           </div>
@@ -421,181 +177,314 @@
                         </div>
                       </div>
                     </div>
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="date">Where:</label>
-                          <div class="form-field">
+                          <div class="form-field" style="margin-top: -10px;">
                             <i class="icon location"></i>
                             <input type="textfield" name="location" id="date" class="form-control text" placeholder="city,state, or Country">
                           </div>
                         </div>
                       </div>
                       
-                      <div class="col-md-2">
+                      <div class="col-md-2" style="margin-top: -10px;">
                         <button type="submit" name="submit" id="submit"  class="btn btn-primary btn-block">Search</button>
                       </div>        
                     </div>
                   </div>
                 </form>
-            </div>			
-		  </div>
+            </div>      
+      </div>
 
 
 
-   <table class="table-users" cellspacing="0">
-    
-      <tr class="header">
-      	<center>
-      	 <th width="5%"><center>#</center></th>
-         <th width="5%"><center>Profile</center></th>
-         <th width="20%"><center>Email</center></th>
-         <th width="10%"><center>Phone</center></th>
-         <th width="15%"><center>Profession</center></th>
-         <th width="7%"><center>Location</center></th>
-         <th width="5%"><center>Type</center></th>
-         <th width="5%"><center>Edit</center></th>
-         <th width="5%"><center>Delete</center></th>
 
-         
-         </center>
-      </tr>
 
-     
-      {% for i in profile_list %}
-      <tr class="row_height">
-      	 <td><center>{{ forloop.counter }}</center></td>
-         <td><center>
-         	{% if i.image != '' %}
-         	<img src="{{i.image.url}}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% else %}
-         	<img src="{% static 'images/assign.png' %}" alt="" height="50" width="50" style="border-radius: 50%" />
-         	{% endif %}
-         </center></td>
-         <td><center>{{ i.username.username }}</center></td>
-         <td><center>{{ i.phone }}</center></td>
-         <td><center>{{ i.profession }}</center></td>
-         <td><center>{{ i.location }}</center></td>
-         <td><center>{% if i.username.is_superuser == True %}<font color="red"> Admin </font> {% elif i.usertype == "premium" %} Premium User {% else %} Free User {% endif %}</center></td>
-         <td><center><a href="{% url 'detail_view_admin_products' i.id %}">edit</a></center></td>
-         <td><center>
-         	<br>
-         	<form action="{% url 'delete_admin_products' %}" method="POST">
-				    {% csrf_token %}
 
-         	<input type="hidden" value="{{ i.id }}" name="id_delete">
-         	<button>Delete</button>
-            </form>
+
+
+<div class="container_wideboxes">
+  <div class="col-md-4">
+    <div class="col-md-12 category_box">
+
+      <form class="text-center border border-light p-5" action="{% url 'add_category' %}" method="POST" onsubmit="return check()">
+        {% csrf_token %}
+          <p class="h4 mb-4">Add Job Category</p>
+
+        <!-- Main Categoy-->
+         <div class="d-flex justify-content-around">
+              
+          <!-- Default inline 1-->
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" checked="checked" value="True" onclick="checkRadio(name)" name="main_category" class="custom-control-input" id="defaultInline1" >
+            <label class="custom-control-label" for="defaultInline1">Main Category</label>
+          </div>
+
+          <!-- Default inline 2-->
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" onclick="checkRadio(name)" value="False" id="defaultInline2" name="main_category_availabe">
+            <label class="custom-control-label" for="defaultInline2">Sub Category</label>
+          </div>
+              
+          </div>
+          <!-- Password -->
+          <input type="text" name="name"  class="form-control mb-4" placeholder="Enter category name" required="" pattern="[A-Za-z ]{1,30}">
+          <select id="sub_selection" name="sub_category" class="form-control mb-4" >
+              <option value="">select main category</option>
+              {% for category in main_category_list %}
+                <option value="{{ category.id }}">{{ category.name }} &nbsp;&nbsp;&nbsp;{% if category.parent == null %}<p class="text-primary">(main category)</p>{% endif %}</option> 
+              {% endfor %}
+          </select>
+          <div id="error" style="color: red"></div>
+          <button style="background-color: #59698d;" class="btn btn-primary btn-block" type="submit">Save</button>
+      </form>
+
+    </div>
+
+    <div class="col-md-12 category_box">
+      <table cellspacing="0" style="width: 108%;margin: 0px -15px;">
+        <tr class="header" style="font-size: 15px;">
+          <center>
+           <th width="5%"><center>#</center></th>
+           <th width="50%"><center>Category</center></th>
+           <th width="45%"><center>Sub Category</center></th>
+           </center>
+        </tr>
+
+
+        {% for i in main_category_list %}
+          <tr style="font-size: 13px;height: 30px;cursor: pointer;" onclick="location.href='{% url 'detail_category' i.id %}';">
+           <td><center>{{ forloop.counter }}</center></td>
+            <td>&nbsp;{{ i.name }}</td>
+            <td>
+              {% for j in sub_category_list %}
+                {% if j.parent_id == i.id %}
+                &nbsp;{{ j.name }}<br>
+                {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}  
+      </table>
+    </div>
+
+  </div>
+
+  <div class="col-md-8">
+    <div class="col-md-12 userlist_box">
+      <a href="#"><h3 id="addbutton" class="adduser">+&nbsp;Add&nbsp;User</h3></a><br>
+      <div class="scrollit">
+        <table cellspacing="0" class="user_list_table">
+          <tr class="header" style="font-size: 15px;">
+            <center>
+             <th width="2%"><center>#</center></th>
+             <th width="2%"><center></center></th>
+             <th width="25%"><center>Username</center></th>
+             <th width="20%" class="none"><center>Phone</center></th>
+             <th width="15%" class="none"><center>Profession</center></th>
+             <th width="10%" class="none"><center>Location</center></th>
+             <th width="11%" class="none"><center>Type</center></th>
+             <th width="5%" class="none"><center>Refferals</center></th>
+             <th width="5%"><center>Wallet</center></th>
+             <th width="5%"><center>Coins</center></th>
              </center>
-         </td>
+          </tr>
+
+
+          {% for i in profile_list %}
+            <tr style="font-size: 13px;cursor: pointer;" onclick="location.href='{% url 'detail_user' i.id %}';">
+             <td><center>{{ forloop.counter }}</center></td>
+             <td><center>
+              {% if i.image != '' %}
+              <img src="{{i.image.url}}" alt="" height="30" width="30"/>
+              {% else %}
+              <img src="{% static 'images/assign.png' %}" alt="" height="30" width="30"/>
+              {% endif %}
+             </center></td>
+             <td>&nbsp;{{ i.username.username }}</td>
+             <td class="none">&nbsp;{{ i.phone }}</td>
+             <td class="none"><center>{{ i.profession }}</center></td>
+             <td class="none">&nbsp;{{ i.location }}</td>
+             <td class="none"><center>{% if i.username.is_superuser == True %}<font color="red"> Admin </font> {% elif i.usertype == "premium" %} Premium User {% else %} Free User {% endif %}</center></td>
+             <td class="none"><center>{{ i.myrefferalcount }}</center></td>
+             <td><center>{{ i.wallet }}</center></td>
+             <td><center>{{ i.coins }}</center></td>
+            </tr>
+          {% endfor %}  
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="container_wideboxes">
+  <div class="col-md-12 adduser-form">
+     <form action="{% url 'add_user' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      <div class="col-md-4">
+        <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeuser">
+
+        <div class="form-field col-md-12 deals-pic-circle">
+          <img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
+          <input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+          <label for="file-ip-1" id="uploadBtn">Choose Photo</label>        
+        </div>
+        <br><br><br><br><br><br><br><br><br><br>
+
+          <div class="col-md-12">
+            <label for="fname">First Name</label>
+            <input type="text" name="first_name" id="fname" class="form-control" placeholder="Your firstname" required="">
+          </div>
+          <div class="col-md-12">
+            <label for="lname">Last Name</label>
+            <input type="text" name="last_name" id="lname" class="form-control" placeholder="Your lastname">
+          </div>
+          <div class="col-md-12">
+            <label for="lname">Email</label>
+            <input type="email" name="email" id="lname" class="form-control" placeholder="Your email id" required="">
+          </div>
+          <div class="col-md-12">
+            <label for="lname">Phone number</label>
+            <input type="text" name="phone" id="lname" class="form-control" placeholder="Your phone number" required="">
+          </div>
+          <div class="col-md-12">
+            <label for="lname">Refferal Code</label>
+            <input type="text" name="refferalcode" id="lname" class="form-control" placeholder="reffereal code">
+          </div>
+          <div class="col-md-12">
+            <label for="lname">Password</label>
+            <input type="password" name="password1" id="lname" class="form-control" placeholder="Your password" required="">
+          </div>
+          <div class="col-md-12">
+            <label for="lname">Confirm Passwordr</label>
+            <input type="password" name="password2" id="lname" class="form-control" placeholder="Confirm your password" required="">
+          </div>
+      </div>
+      <div class="col-md-8">
+          <br>
+          <div class="col-md-12">
+            <label for="subject">Type</label>
+          </div>
+          <div class="col-md-12">
+            <input type="radio" name="user_type" value="free" checked="checked">Free User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="user_type" value="premium">Premium User&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" name="user_type" value="admin">Admin
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Alternative Phone</label>
+            <input type="text" name="alternative_phone" id="subject" class="form-control" placeholder="Secondary phone number">
+          </div>
+          <div class="col-md-12">
+            <label for="email">Date of Birth</label>
+            <input type="text" name="dob" id="email" class="form-control" placeholder="Your date of birth">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Adhar Id</label>
+            <input type="text" name="adhar_id" id="subject" class="form-control" placeholder="Your adhar id">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Profession</label>
+            <input type="text" name="profession" id="subject" class="form-control" placeholder="Your profession/job">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Location</label>
+            <input type="text" name="location" id="subject" class="form-control" placeholder="Your location">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Qualification</label>
+            <input type="text" name="qualification" id="subject" class="form-control" placeholder="Your qualification">
+          </div>
+          <div class="col-md-12">
+            <label for="subject">Hobbies</label>
+            <input type="text" name="hobbies" id="subject" class="form-control" placeholder="Your hobbies">
+          </div>
+
+          <div class="col-md-12">
+            <label for="message">Summary/Bio</label>
+            <textarea  name="summary" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about you">
+            </textarea>
+          </div>
+          &nbsp;&nbsp;
+          <div class="row form-group">
+          <div class="form-group text-center"><br><br>
+            <button type="submit" value="Add Deal" class="btn btn-primary">Add User</button>
         
-         
-      </tr>
-      {% endfor %}
+          </div>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>
 
-      
-   </table>
-
-
-
-
+    
 
 
 
-		
-		
-		<footer id="colorlib-footer" role="contentinfo">
-			<div class="container">
-				<div class="row row-pb-md">
-					<div class="col-md-3 colorlib-widget">
-						<h4>E-BRO</h4>
-						<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
-						<p>
-							<ul class="colorlib-social-icons">
-								<li><a href="#"><i class="icon-twitter"></i></a></li>
-								<li><a href="#"><i class="icon-facebook"></i></a></li>
-								<li><a href="#"><i class="icon-linkedin"></i></a></li>
-								<li><a href="#"><i class="icon-dribbble"></i></a></li>
-							</ul>
-						</p>
-					</div>
-					<div class="col-md-3 colorlib-widget">
-						<h4>Quick Links</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="/" style="color: cornsilk;">Home</a></li>
-								<li><a href="admin_deals">Deals</a></li>
-								<li><a href="admin_jobs">Jobs</a></li>
-								<li><a href="admin_products">Products</a></li>
-								<li><a href="profile.html">Profile</a></li>
-							
-								<li><a href="admin_userdata">User Data </a></li>
-								<li><a href="admin_myads">My Ads</a></li>
-								<li><a href="login.html">Logout</a></li>
-								
-							
-							</ul>
-						</p>
-					</div>
-					<div class="col-md-3">
-						<h4>Recents News & Updates</h4>
-						<ul class="colorlib-footer-links">
-							<li><a href="#">The Ultimate Packing List For Female Travelers</a></li>
-							<li><a href="#">How These 5 People Found The Path to Their Dream Trip</a></li>
-							<li><a href="#">A Definitive Guide to the Best Dining and Drinking Venues in the City</a></li>
-						</ul>
-					</div>
-
-					<div class="col-md-3 col-md-push-1">
-						<h4>Contact Information</h4>
-						<ul class="colorlib-footer-links">
-							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-							<li><a href="http://luxehotel.com">luxehotel.com</a></li>
-						</ul>
-					</div>
-				</div>
-				
-			</div>
-		</footer>
-	</div>
-	
-
-	<div class="gototop js-top">
-		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
-	</div>
-
-
-       
-
-
-	
-	
-	<!-- jQuery -->
-	<script src="{% static 'js/jquery.min.js '%}"></script>
-	<!-- jQuery Easing -->
-	<script src="{% static 'js/jquery.easing.1.3.js '%}"></script>
-	<!-- Bootstrap -->
-	<script src="{% static 'js/bootstrap.min.js '%}"></script>
-	<!-- Waypoints -->
-	<script src="{% static 'js/jquery.waypoints.min.js '%}"></script>
-	<!-- Flexslider -->
-	<script src="{% static 'js/jquery.flexslider-min.js '%}"></script>
-	<!-- Owl carousel -->
-	<script src="{% static 'js/owl.carousel.min.js '%}"></script>
-	<!-- Magnific Popup -->
-	<script src="{% static 'js/jquery.magnific-popup.min.js '%}"></script>
-	<script src="{% static 'js/magnific-popup-options.js '%}"></script>
-	<!-- Date Picker -->
-	<script src="{% static 'js/bootstrap-datepicker.js '%}"></script>
-	<!-- Main -->
-	<script src="{% static 'js/main.js '%}"></script>
-
-  
-
-	</body>
-</html>
+    <script>
+    document.getElementById("addbutton").addEventListener("click",function(){
+      document.querySelector(".adduser-form").style.display = "flex";
+    })
+    document.querySelector(".closeuser").addEventListener("click",function(){
+      document.querySelector(".adduser-form").style.display = "none";
+     })
+    </script>
 
 
 
+    <script type="text/javascript">
+      document.getElementById("sub_selection").style.visibility = "hidden";
+      var ch;
+    function checkRadio(name) {
+        if(name == "main_category_availabe"){
+            document.getElementById("defaultInline2").checked = true;
+            document.getElementById("defaultInline1").checked = false;
+            console.log(document.getElementById("defaultInline1").value)
+            console.log('Yes')
+            document.getElementById("sub_selection").style.visibility = "visible";
+            ch=1;
 
+
+
+        } else if (name == "main_category"){
+            document.getElementById("defaultInline1").checked = true;
+            document.getElementById("defaultInline2").checked = false;
+            document.getElementById("sub_selection").style.visibility = "hidden";
+        }
+    }
+
+    function check()
+    {     z=document.getElementById("defaultInline2").value;
+            x=document.getElementById("sub_selection").value;
+    // alert(ch)
+    if(ch)
+    {
+      // alert("rad")
+      if(x == "")
+    {
+      // alert("not ")
+      document.getElementById("error").innerHTML="choose sub category"; 
+      return false;
+    }else{
+      // alet("sc")
+      return true;
+
+    }
+    }else{
+      // alert("else part")
+      console.log("sdf")
+    }
+
+    }
+    </script>
+
+
+
+{% endblock %}

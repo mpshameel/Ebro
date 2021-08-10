@@ -1,0 +1,83 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+	
+
+
+
+
+
+    <div class="container_wideboxes">
+		<div class="col-xs-5 user_payment_box">
+         <h2 class="sub_headings">Select Payment Methode:</h2><br><br>
+				<div class="row col-md-10" style="margin-left: -25px;">
+					<h2 class="sub_headings">&nbsp;&nbsp;Total
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    :&nbsp;&nbsp;$&nbsp;&nbsp;100.00</h2><br><br><br><br>
+
+				</div>
+            <br>
+            <form action="{% url 'complete_premium_signup_payment_wallet' %}" method="POST">
+             {% csrf_token %}
+             <button href="checkout" class="btn2 btn2-2 btn2-sep3" style="width: 100%;">Pay&nbsp;From&nbsp;Wallet</button>
+            </form>
+            
+            <div id="paypal-button-container" style="height: auto;"></div>
+		</div>
+
+	</div> 
+
+
+
+
+
+<script src="https://www.paypal.com/sdk/js?client-id=AQdQhGUrIJcXkKG6zTEByoFMgengiCqBmne1vf_aokXSkqM8IF-SCPmJ2cCqV7xdVbztz1E5MkRzZKUU&currency=USD&disable-funding=credit"></script>
+
+<script>
+
+
+
+
+
+        var total_premium = '100'
+
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+         style: {
+                color:  'blue',
+                shape:  'rect',
+                label:  'pay',
+                height: 40
+            },
+
+
+            // Set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: total_premium
+                        }
+                    }]
+                });
+            },
+
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    // Show a success message to the buyer
+                    window.location.href = "{% url 'complete_premium_signup_payment' %}";
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                });
+            }
+
+
+        }).render('#paypal-button-container');
+    </script>
+
+
+
+{% endblock %}

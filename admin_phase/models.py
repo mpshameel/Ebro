@@ -1,6 +1,66 @@
 from django.db import models
+
+from django.utils import timezone
+import datetime
+
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
+
+
+
+
+
+
+class professions(models.Model):
+    name                = models.CharField(max_length=200)
+    slug                = models.SlugField(max_length=200, null=True, blank=True)
+    main_profession     = models.BooleanField(default=True, blank=True, null=True)
+    sub_profession      = models.BooleanField(default=False, blank=True, null=True)
+    microsub_profession = models.BooleanField(default=False, blank=True, null=True)
+    super_parent        = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='children')
+    parent              = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='micro_children')
+    domain_name         = models.CharField(max_length=200, default='www.bichatravels.com')
+    status              = models.BooleanField(default=True, blank=False, null=False)
+    is_deleted          = models.BooleanField(default=False, blank=False, null=False)
+    created_at          = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    updated_at          = models.DateTimeField(auto_now=True, blank=False, null=False)
+
+
+
+
+class locations(models.Model):
+    name                = models.CharField(max_length=200)
+    slug                = models.SlugField(max_length=200, null=True, blank=True)
+    main_location       = models.BooleanField(default=True, blank=True, null=True)
+    sub_location        = models.BooleanField(default=False, blank=True, null=True)
+    microsub_location   = models.BooleanField(default=False, blank=True, null=True)
+    super_parent        = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='children')
+    parent              = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='micro_children')
+    domain_name         = models.CharField(max_length=200, default='www.bichatravels.com')
+    status              = models.BooleanField(default=True, blank=False, null=False)
+    is_deleted          = models.BooleanField(default=False, blank=False, null=False)
+    created_at          = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    updated_at          = models.DateTimeField(auto_now=True, blank=False, null=False)
+
+
+
+class categorys(models.Model):
+    name                = models.CharField(max_length=200)
+    slug                = models.SlugField(max_length=200, null=True, blank=True)
+    main_category       = models.BooleanField(default=True, blank=True, null=True)
+    sub_category        = models.BooleanField(default=False, blank=True, null=True)
+    microsub_category   = models.BooleanField(default=False, blank=True, null=True)
+    super_parent        = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='children')
+    parent              = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='micro_children')
+    domain_name         = models.CharField(max_length=200, default='www.bichatravels.com')
+    status              = models.BooleanField(default=True, blank=False, null=False)
+    is_deleted          = models.BooleanField(default=False, blank=False, null=False)
+    created_at          = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    updated_at          = models.DateTimeField(auto_now=True, blank=False, null=False)
+
+
+
+
 
 # Create your models here.
 class profile(models.Model):
@@ -8,21 +68,33 @@ class profile(models.Model):
     phone = models.BigIntegerField(null=True,blank=True,default='0000000000',editable=True)
     # PhoneNumberField(null=False, blank=False,default='0000000000',editable=True,unique=False)
     # models.BigIntegerField(null=True,blank=True,default='0000000000',editable=True)
-    alternative_phone = models.BigIntegerField(null=True,blank=True)
-    dob = models.CharField(max_length=100,null=True,blank=True)
-    adhar_id = models.CharField(max_length=100,null=True,blank=True)
-    qualification = models.CharField(max_length=100,null=True,blank=True)
-    hobbies = models.CharField(max_length=100,null=True,blank=True)
-    summary = models.CharField(max_length=500,null=True,blank=True)
+    alternative_phone = models.CharField(max_length=100,null=False,blank=True)
+    dob = models.CharField(max_length=100,null=False,blank=True)
+    adhar_id = models.CharField(max_length=100,null=False,blank=True)
+    qualification = models.CharField(max_length=100,null=False,blank=True)
+    hobbies = models.CharField(max_length=100,null=False,blank=True)
+    summary = models.CharField(max_length=500,null=False,blank=True)
     image = models.ImageField(upload_to='profile-pic',null=True,blank=True)
     refferalcode = models.CharField(max_length=100,null=True,blank=True)
     usertype = models.CharField(max_length=100,null=False,blank=True)
-    profession = models.CharField(max_length=100,null=False,blank=True)
-    location = models.CharField(max_length=100,null=False,blank=True)
+    profession = models.ForeignKey(professions,on_delete=models.CASCADE,null=True,blank=True)
+    location = models.ForeignKey(locations,on_delete=models.CASCADE,null=True,blank=True)
     wallet = models.FloatField(null=True,blank=True,default='0',editable=True)
     coins = models.BigIntegerField(null=True,blank=True,default='0',editable=True)
     myrefferalid = models.CharField(max_length=100,null=False,blank=True,editable=True)
     myrefferalcount = models.BigIntegerField(null=True,blank=True,default='0',editable=True)
+
+
+
+
+
+
+
+
+
+
+# 
+
 
 
 
@@ -42,18 +114,9 @@ class subcategory(models.Model):
 
 
 
-class categorys(models.Model):
-    name                = models.CharField(max_length=200)
-    slug                = models.SlugField(max_length=200, null=True, blank=True)
-    main_category       = models.BooleanField(default=True, blank=True, null=True)
-    parent              = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True ,related_name='children')
-    domain_name         = models.CharField(max_length=200, default='www.bichatravels.com')
-    status              = models.BooleanField(default=True, blank=False, null=False)
-    is_deleted          = models.BooleanField(default=False, blank=False, null=False)
-    created_at          = models.DateTimeField(auto_now_add=True,blank=False, null=False)
-    updated_at          = models.DateTimeField(auto_now=True, blank=False, null=False)
 
 
+# 
 
 
 class ads(models.Model):
@@ -73,6 +136,15 @@ class adclicks(models.Model):
 
 
 
+class offerbook(models.Model):
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(profile,on_delete=models.CASCADE)
+    offerbookname = models.CharField(max_length=100,null=False,blank=True)
+    image = models.ImageField(upload_to='ads/ads_pic',null=True,blank=True)
+
+
+
+
 
 
 
@@ -86,7 +158,7 @@ class address(models.Model):
     district = models.CharField(max_length=100,null=True,blank=True)
     postalcode = models.BigIntegerField(null=True,blank=True)
     phone = models.BigIntegerField(null=True,blank=True)
-    alternative_phone = models.BigIntegerField(null=True,blank=True)
+    alternative_phone = models.CharField(max_length=100,null=False,blank=True)
     address_line_1 = models.CharField(max_length=300,null=True,blank=True)
     address_line_2 = models.CharField(max_length=300,null=True,blank=True)
 
@@ -102,7 +174,7 @@ class delivery_address(models.Model):
     district = models.CharField(max_length=100,null=True,blank=True)
     postalcode = models.BigIntegerField(null=True,blank=True)
     phone = models.BigIntegerField(null=True,blank=True)
-    alternative_phone = models.BigIntegerField(null=True,blank=True)
+    alternative_phone = models.CharField(max_length=100,null=False,blank=True)
     address_line_1 = models.CharField(max_length=300,null=True,blank=True)
     address_line_2 = models.CharField(max_length=300,null=True,blank=True)
 
@@ -121,12 +193,19 @@ class deals(models.Model):
     category = models.ManyToManyField(categorys)
     email = models.CharField(max_length=100,null=True,blank=True)
     contact = models.BigIntegerField(null=True,blank=True)
-    location = models.CharField(max_length=100,null=True,blank=True)
+    location = models.ForeignKey(locations,on_delete=models.CASCADE,null=True,blank=True)
     deal_type = models.CharField(max_length=100,null=True,blank=True)
     brand_name = models.CharField(max_length=100,null=True,blank=True)
     picture = models.ImageField(upload_to='deals/deals_pic',null=True,blank=True)
     # attachments = models.FileField(upload_to='deals/deals_attachments',null=True,blank=True)
     details = models.CharField(max_length=500,null=True,blank=True)
+
+    is_deleted = models.BooleanField(default=False,blank=False,null=False,editable=True)
+    # created_on = models.DateField(auto_now=True)
+    # created_at          = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    # updated_at          = models.DateTimeField(auto_now=True, blank=False, null=False)
+
+
 
 class deal_attachments(models.Model):
     deal = models.ForeignKey(deals,on_delete=models.CASCADE)
@@ -160,12 +239,14 @@ class jobs(models.Model):
     category = models.ManyToManyField(categorys)
     email = models.CharField(max_length=100,null=True,blank=True)
     contact = models.BigIntegerField(null=True,blank=True)
-    location = models.CharField(max_length=100,null=True,blank=True)
+    location = models.ForeignKey(locations,on_delete=models.CASCADE,null=True,blank=True)
     job_type = models.CharField(max_length=100,null=True,blank=True)
     brand_name = models.CharField(max_length=100,null=True,blank=True)
     picture = models.ImageField(upload_to='jobs/jobs_pic',null=True,blank=True)
     # attachments = models.FileField(upload_to='deals/deals_attachments',null=True,blank=True)
     details = models.CharField(max_length=500,null=True,blank=True)
+
+    is_deleted = models.BooleanField(default=False,blank=False,null=False,editable=True)
 
 class job_attachments(models.Model):
     job = models.ForeignKey(jobs,on_delete=models.CASCADE)
@@ -193,7 +274,7 @@ class products(models.Model):
     category = models.ManyToManyField(categorys)
     email = models.CharField(max_length=100,null=True,blank=True)
     contact = models.BigIntegerField(null=True,blank=True)
-    location = models.CharField(max_length=100,null=True,blank=True)
+    location = models.ForeignKey(locations,on_delete=models.CASCADE,null=True,blank=True)
     product_type = models.CharField(max_length=100,null=True,blank=True)
     brand_name = models.CharField(max_length=100,null=True,blank=True)
     picture = models.ImageField(upload_to='products/products_pic',null=True,blank=True)
@@ -203,7 +284,8 @@ class products(models.Model):
     offer = models.BigIntegerField(null=True,blank=True,default='0',editable=True)
     oldprice = models.FloatField(null=True,blank=True,editable=True)
 
-
+    is_deleted = models.BooleanField(default=False,blank=False,null=False,editable=True)
+    
     class Meta:
         ordering=['location']
 
@@ -233,6 +315,10 @@ class product_cart(models.Model):
     product = models.ForeignKey(products,on_delete=models.CASCADE)
     username = models.ForeignKey(User,on_delete=models.CASCADE)
     quantity = models.BigIntegerField(null=True,blank=True,default='1',editable=True)
+    total_price = models.FloatField(null=True,blank=True)
+
+
+
 
 # class Order(models.Model):
 #     customer = models.ForeignKey(products,on_delete=models.CASCADE)
@@ -248,6 +334,17 @@ class product_cart(models.Model):
 class notifications(models.Model):
     username = models.ForeignKey(User,on_delete=models.CASCADE)
     notification = models.CharField(max_length=500,null=True,blank=True)
+    
+
+
+class personal_notifications(models.Model):
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(profile,on_delete=models.CASCADE)
+    messages = models.CharField(max_length=500,null=True,blank=True)
+    is_deleted = models.BooleanField(default=False, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    updated_at = models.DateTimeField(auto_now=True, blank=False, null=False)
+
 
 
 class feedbacks(models.Model):
@@ -257,6 +354,13 @@ class feedbacks(models.Model):
 
 
 
+class retrieves(models.Model):
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(profile,on_delete=models.CASCADE)
+    amount = models.FloatField(null=True,blank=True)
+    is_deleted = models.BooleanField(default=False, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    updated_at = models.DateTimeField(auto_now=True, blank=False, null=False) 
 
 
 
@@ -281,10 +385,13 @@ class orders(models.Model):
 
     delivery_date = models.IntegerField(null=True,blank=True,default="10")
 
-    # created = models.DateTimeField(auto_now_add=True)
+    delivery_type = models.CharField(max_length=100,null=True,blank=True)
+    payment_type = models.CharField(max_length=100,null=True,blank=True)
+
 
     product_name = models.CharField(max_length=100,null=True,blank=True)
-    price = models.BigIntegerField(null=True,blank=True)
+    price = models.FloatField(null=True,blank=True)
+    count_price = models.FloatField(null=True,blank=True)
     email = models.CharField(max_length=100,null=True,blank=True)
     contact = models.BigIntegerField(null=True,blank=True)
     brand_name = models.CharField(max_length=100,null=True,blank=True)
@@ -298,7 +405,7 @@ class orders(models.Model):
     district = models.CharField(max_length=100,null=True,blank=True)
     postalcode = models.BigIntegerField(null=True,blank=True)
     phone = models.BigIntegerField(null=True,blank=True)
-    alternative_phone = models.BigIntegerField(null=True,blank=True)
+    alternative_phone = models.CharField(max_length=100,null=False,blank=True)
     address_line_1 = models.CharField(max_length=300,null=True,blank=True)
     address_line_2 = models.CharField(max_length=300,null=True,blank=True)
 

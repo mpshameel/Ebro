@@ -1,0 +1,157 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+
+<style>
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
+
+</style>
+  
+
+
+<div class="container_wideboxes">
+  	<div class="col-md-8 profile_widebox">
+
+        <div class="col-md-4">
+        	<div class="col-md-12 profilepic_box">
+            	{% if detail_retrieves.profile.image != '' %}
+               <img src="{{detail_retrieves.profile.image.url}}" id="file-ip-1-preview">
+            	{% else %} 
+               <img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">
+            	{% endif %}
+         	</div><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+
+        <div class="col-md-8">
+          <br>
+			  <h5 class="h5_style_big">Username &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.username.username }}</h5><br>
+              <h5 class="h5_style_big">First Name &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.username.first_name }}</h5><br>
+              <h5 class="h5_style_big">Last Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.username.last_name }}</h5><br>
+              <h5 class="h5_style_big">Email Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.username.email }}</h5><br>
+              <br>
+                <div class="col-md-6 h5_profile_style_mobile1">
+                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.profile.phone }}</h5><br>
+                  <h5 class="h5_profile_style">Date of Birth&nbsp;:&nbsp;{{ detail_retrieves.profile.dob }}</h5><br>
+                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.profile.profession.name }}</h5><br>
+                  <h5 class="h5_profile_style">Qualification&nbsp;:&nbsp;{{ detail_retrieves.profile.qualification }}</h5><br>
+                </div>
+                <div class="col-md-6 h5_profile_style_mobile2">
+                  <h5 class="h5_profile_style">Phone 2&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.profile.alternative_phone }}</h5><br>
+                  <h5 class="h5_profile_style">Adhar Id&nbsp;:&nbsp;{{ detail_retrieves.profile.adhar_id }}</h5><br>
+                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ detail_retrieves.profile.location.name }}</h5><br>
+                  <h5 class="h5_profile_style">Hobbies&nbsp;&nbsp;:&nbsp;{{ detail_retrieves.profile.hobbies }}</h5><br>
+                  <br>
+                </div>
+              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 15px;">{{ detail_retrieves.profile.summary }}</p><br>
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="col-md-4 wallet-form">      
+      <br>
+        <div class="col-md-12">
+          <h4 class="btn3 btn3-2">User Wallet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{{detail_retrieves.profile.wallet}}</h4><br>
+          <h4 class="btn3 btn3-2">User Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{detail_retrieves.profile.coins}}</h4><br>
+        </div>
+
+        <div class="row">
+            <br><br>
+          <div class="col-md-12">
+            <h4 class="sub_headings">&nbsp;&nbsp;User Refferals</h4><br><br>
+                <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
+                  {% for i in user_refferals %}
+                    <tr style="font-size: 13px;">
+                     <td width="5%"><center>{{ forloop.counter }}</center></td>
+                     <td width="10%"><center>
+                      {% if i.profile.image != '' %}
+                      <img src="{{i.profile.image.url}}" alt="" height="50" width="50"/>
+                      {% else %}
+                      <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
+                      {% endif %}
+                     </center></td>
+                     <td width="85%">&nbsp;{{ i.username.username }}</td>
+                  {% endfor %}                       
+               </table>
+          </div>
+        </div>
+    </div>
+
+
+
+
+       <div class="col-md-12 myads_list_box">
+      <div class="scrollit_payments">
+         <table cellspacing="0" class="payments_list_table">
+             <tr class="header" style="font-size: 15px;">
+               <center>
+                <th width="2%"><center>#</center></th>
+                <th width="5%"><center></center></th>
+                <th width="20%"><center>Product Name</center></th>
+                <th width="20%"><center>Buyer</center></th>
+                <th width="5%" class="none"><center>Status</center></th>
+                <th width="15%" class="none"><center>Dealer</center></th>
+<!--                 <th width="5%" class="none"><center>Payment Status</center></th> -->
+<!--                 <th width="5%"><center>Action</center></th> -->
+                <th width="3%"><center>X</center></th>
+                <th width="5%"><center>Price</center></th>
+                <th width="5%"><center>Total</center></th>
+                <th width="10%"><center>Cart Total</center></th>
+                </center>
+             </tr>
+
+
+            {% for i in all_orders %}
+              {% if i.product.username.username == detail_retrieves.username.username %}
+
+                <tr style="font-size: 13px;cursor: pointer;" onclick="location.href='{% url 'admin_orders_edit' i.id %}';">
+                   <td><center>{{ forloop.counter }}</center></td>
+                   <td><center>
+                    {% if i.product.picture != '' %}
+                    <img src="{{i.product.picture.url}}" alt="" height="30" width="30"/>
+                    {% else %}
+                    <img src="{% static 'images/assign.png' %}" alt="" height="30" width="30"/>
+                    {% endif %}
+                   </center></td>
+                   <td>&nbsp;{{ i.product.product_name }}</td>
+                   <td>&nbsp;{{ i.username.username }}</td>
+                   <td class="none" style="color: red;"><center>{{ i.status }}</center></td>
+                   <td class="none">&nbsp;{{ i.product.username.username }}</td>
+<!--                    <td class="none" style="color: red;"><center>{{ i.payment_status }}</center></td> -->
+<!--                    <td><center>
+                        <input type="hidden" value="{{ i.id }}" name="approve_payment_id">
+                        <input type="hidden" value="{{ i.product.username_id }}" name="approve_dealer_id">
+                        <input type="hidden" value="{% widthratio i.product_count 1 i.product.price %}" name="approve_payment">
+                        {% if i.payment_status == "pending" %}
+                        <button class="btn4 btn4-1">Approve</button>
+                        {% endif %}
+                     </center></td> -->
+                   <td class="text-right">{{ i.product_count }}</td>
+                   <td class="text-right">{{ i.product.price }}</td>
+                   <td class="text-right">{{i.count_price}}</td>
+                   <td class="text-right">{{ i.amount }}</td>
+                </tr>
+              {% endif %}
+
+
+            {% endfor %}  
+         </table>
+      </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

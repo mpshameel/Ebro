@@ -17,12 +17,14 @@
   	
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<div class="col-md-12">
-	<h2 class="headings">Deals</h2><br><br>
-</div>
+
 		<div class="container_wideboxes">
+
+			<div class="col-md-12">
+				<h2 class="headings">Deals</h2><br><br>
+			</div>
 			{% for i in user_deals_list %}
-			<div class="col-md-4 widebox">
+			<div class="col-md-4 widebox2">
 				<a href="{% url 'detail_view_deals' i.id %}" class="blog-post">
 					{% if i.picture != '' %}
 						<span class="img" style="background-image: url({{i.picture.url}});"></span>
@@ -32,9 +34,9 @@
 					<div class="desc">
 						<h5 class="h5_style">{{ i.deal_name }}</h5><br>
 						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
-						<span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
+						<!-- <span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br> -->
 						<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
-						<span class="cat" style="line-height: 15px;">{{ i.location }}</span>
+						<span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
 					</div>
 				</a>
 
@@ -62,12 +64,14 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<div class="col-md-12">
-	<h2 class="headings">Jobs</h2><br><br>
-</div>
+
 		<div class="container_wideboxes">
+
+			<div class="col-md-12">
+				<h2 class="headings">Jobs</h2><br><br>
+			</div>
 			{% for i in user_jobs_list %}
-			<div class="col-md-4 widebox">
+			<div class="col-md-4 widebox2">
 				<a href="{% url 'detail_view_jobs' i.id %}" class="blog-post">
 					{% if i.picture != '' %}
 						<span class="img" style="background-image: url({{i.picture.url}});"></span>
@@ -77,9 +81,9 @@
 					<div class="desc">
 						<h5 class="h5_style">{{ i.job_name }}</h5><br>
 						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
-						<span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
+						<!-- <span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br> -->
 						<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
-						<span class="cat" style="line-height: 15px;">{{ i.location }}</span>
+						<span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
 					</div>
 				</a>
 				<div class="col-12 col-md-4 text-right">
@@ -99,13 +103,15 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<div class="col-md-12">
-	<h2 class="headings">Products</h2><br><br>
-</div>
+
 
 		<div class="container_wideboxes">
+
+			<div class="col-md-12">
+				<h2 class="headings">Products</h2><br><br>
+			</div>
 			{% for i in user_products_list %}
-			<div class="col-md-4 widebox">
+			<div class="col-md-4 widebox2">
 				<a href="{% url 'detail_view_products' i.id %}" class="blog-post">
 					{% if i.picture != '' %}
 						<span class="img" style="background-image: url({{i.picture.url}});"></span>
@@ -117,7 +123,7 @@
 						<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
 						<span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
 						<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
-						<span class="cat" style="line-height: 15px;">{{ i.location }}</span>
+						<span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
 					</div>
 				</a>
 				<div class="col-12 col-md-4 text-right">

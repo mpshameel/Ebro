@@ -81,6 +81,7 @@ h1, h2, h3, h4, h5, h6, figure {
   .colorlib-nav .top {
     display: block;
     background: linear-gradient(to right, #478af5 0%, #ed4758 80%);
+    /*background:#000436;*/
     padding: .8em 0; }
     @media screen and (max-width: 768px) {
     .colorlib-nav .top {
@@ -446,9 +447,9 @@ h1, h2, h3, h4, h5, h6, figure {
     display: block;
     margin-top: -6.66em;
     z-index: 9;
-    margin: 20px 0px;
+    margin: 5px 0px;
     background: #302939;
-    padding: 0px 10px 0px 10px; }
+    padding: 0px 10px -50px 10px; }
 
     @media screen and (max-width: 768px) {
     #colorlib-reservation .search-wrap {
@@ -460,7 +461,7 @@ h1, h2, h3, h4, h5, h6, figure {
   color: white; }
 
 .colorlib-form .form-control {
-  height: 30px;
+  height: 10px;
   -webkit-box-shadow: none;
   box-shadow: none;
   font-size: 16px;
@@ -513,8 +514,10 @@ h1, h2, h3, h4, h5, h6, figure {
   resize: vertical; }
 
 .colorlib-form .btn-block {
-  margin-top: 28px;
-  padding: 12px !important; }
+  /*margin-top: 28px;*/
+  /*padding: 12px !important;*/
+  margin-top: 30px;
+  padding: 2px !important; }
 
 .services .icon {
   margin: 0 auto;
@@ -893,6 +896,7 @@ article {
       font-size: 13px;
       color: #b3b3b3; }
   .blog-post .img {
+    /*margin: 15px 0;*/
     position: absolute;
     top: 0;
     left: 0;

@@ -1,0 +1,35 @@
+{% extends 'user dashboard/user_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+
+
+
+<div class="container_wideboxes">
+    <div class="col-xs-5 user_payment_box">
+     <h2 class="sub_headings">Confirm Payment Request:</h2><br><br>
+            <div class="row col-md-10" style="margin-left: -25px;">
+            	<br><br>
+                <h2 class="sub_headings">&nbsp;&nbsp;Wallet
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                :&nbsp;&nbsp;$&nbsp;&nbsp;{{user_profile.wallet}}</h2><br><br>
+                <div class="col-md-12">
+          		<form action="{% url 'retrieve_money' %}" method="POST">
+		           {% csrf_token %}
+	              Amount:<input type="text" name="amount" id="get_amount" class="form-control" value="" placeholder="Type Retrieve Amount" required="">
+	              <br>
+	            </div>
+	            
+		           <button href="checkout" class="btn2 btn2-2 btn2-sep4" style="width: 100%;">Request</button>
+		        </form>
+
+            </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

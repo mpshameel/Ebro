@@ -35,11 +35,11 @@
 
 			<div class="col-md-12">
 				<label for="fname">Job Name</label>
-				<input type="text" name="job_name" id="fname" class="form-control" placeholder="Your firstname">
+				<input type="text" name="job_name" id="fname" class="form-control" placeholder="Your Job Name" required="">
 			</div>
 			<div class="col-md-12">
-				<label for="lname">Price</label>
-				<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
+				<label for="lname">Salary</label>
+				<input type="text" name="price" id="lname" value="0" class="form-control" placeholder="Your Job Salary">
 			</div>
 			<div class="col-md-12">
 				<label for="lname">Attachments</label>
@@ -48,7 +48,7 @@
 
 		</div>
 		<div class="col-md-8">
-
+			<br>
 			<div class="col-md-4 wrapper-class">
 				<label for="subject">Publish</label>
 				<br>
@@ -59,7 +59,7 @@
 			</div>
 			<div class="col-md-8">
 				<br>
-				[your product or deal will handle by E-bro through private channel]
+				[your product or job will handle by Ebro-World manually through admin phase in private mode]
 			</div>
 
 			<div class="col-md-4 wrapper-class">
@@ -72,19 +72,17 @@
 			</div>
 			<div class="col-md-8">
 				<br>
-				[your product can categorize based on brand name or individual]
+				[your job can categorize based on brand name or individual by Ebro-World]
 			</div>
-
-			<div class="col-md-12">
+			<br>
+<!-- 			<div class="col-md-12">
 				<label for="subject">Brand Name</label>
-				<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
-			</div>
+				<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your Brand Name">
+			</div> -->
 			<div class="col-md-12">
 				<div class="form-group">
-				<label>Select Job Category:</label>
-				<select id="jobcategory" name="category"
-				class="" multiple required="">
-
+				<label>Select Job Category:</label><br>
+				<select  id="mselect" name="category" class="form-control" multiple required="">
 				{% for i in category_details %}
 				<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
 				{% endfor %}
@@ -93,12 +91,18 @@
 			</div>
 			<div class="col-md-12">
 				<label for="subject">Location</label>
-					<input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
+				<select name="location" class="form-control mb-4" style="width: 90%;">
+                    <option value="">Select Location</option>
+                    {% for i in location_details %}
+                      <option value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                      </option> 
+                    {% endfor %}
+                </select>
 			</div>
 
 			<div class="col-md-12">
 				<label for="message">Other Details</label>
-					<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
+					<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about the job">
 					</textarea>
 			</div>
 			&nbsp;&nbsp;
@@ -121,7 +125,11 @@
 				<div class="container_wideboxes">
 					{% for i in user_jobs_list %}
 					<div class="col-md-4 widebox">
+						{% if request.user.is_authenticated %}
 						<a href="{% url 'detail_job' i.id %}" class="blog-post">
+						{% else %}
+						<a href="{% url 'detail_job_unknown' i.id %}" class="blog-post">
+						{% endif %}
 							{% if i.picture != '' %}
 								<span class="img" style="background-image: url({{i.picture.url}});"></span>
 		         			{% else %}
@@ -130,37 +138,11 @@
 							<div class="desc">
 								<h5 class="h5_style">{{ i.job_name }}</h5><br>
 								<h4 style="margin-top: 10px;"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
-								<span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br>
+								<!-- <span class="cat" style="line-height: 15px;">{{ i.brand_name }}</span><br> -->
 								<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
-								<span class="cat" style="line-height: 15px;">{{ i.location }}</span>
+								<span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
 							</div>
 						</a>
-						<div class="col-12 col-md-8 text-left down">
-							{% if request.user.is_authenticated %}
-		 						<form action="{% url 'job_to_task' %}" method="POST">
-									{% csrf_token %}
-		 						<input type="hidden" value="{{ i.id }}" name="id_job">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-								</form>
-								{% else %}
-		    					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Task</button>
-		    					</form>
-							{% endif %}
-						</div>
-						<div class="col-12 col-md-4 text-right">
-							{% if request.user.is_authenticated %}
-								<form action="{% url 'job_to_wish' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_job">
-								<button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-            					</form>
-            					{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-            					</form>
-            				{% endif %}
-						</div>
 					</div>
 					{% endfor %}
 
@@ -181,14 +163,18 @@
 	
 	<script>
 		document.getElementById("addbutton").addEventListener("click",function(){
-		  document.querySelector(".additem-form").style.display = "flex";
+		  document.querySelector(".additem-form").style.visibility = "visible";
 		})
 		document.querySelector(".closeitem-form").addEventListener("click",function(){
-			document.querySelector(".additem-form").style.display = "none";
+			document.querySelector(".additem-form").style.visibility = "hidden";
 		 })
 		
 	
 	</script>
+
+
+
+
 
 
 {% endblock %}

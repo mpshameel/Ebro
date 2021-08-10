@@ -32,7 +32,11 @@ urlpatterns = [
 	path('premium_user_signup', premium_user_signup, name='premium_user_signup'),
 	
 	path('premium_signup_payment', premium_signup_payment, name='premium_signup_payment'),
+	path('premium_signup_payment_upgrade', premium_signup_payment_upgrade, name='premium_signup_payment_upgrade'),
+	
 	path('complete_premium_signup_payment', complete_premium_signup_payment, name='complete_premium_signup_payment'),
+	path('complete_premium_signup_payment_wallet', complete_premium_signup_payment_wallet, name='complete_premium_signup_payment_wallet'),
+	
 	
 
 	#user profile,profile pic update,add address
@@ -43,6 +47,8 @@ urlpatterns = [
 	path('topupcomplete', topupcomplete, name='topupcomplete'),
 	path('sendmoney', sendmoney, name='sendmoney'),
 	path('voucher_claim', voucher_claim, name='voucher_claim'),
+	path('retrieve_money', retrieve_money, name='retrieve_money'),
+	
 	
 
 
@@ -51,16 +57,24 @@ urlpatterns = [
 	
 	
 	path('offers', offers, name='offers'),
+	path('offers_unknown', offers_unknown, name='offers_unknown'),
+	
 	path('detail_offers<int:id>/', detail_offers, name='detail_offers'),
+	path('detail_offers_unknown<int:id>/', detail_offers_unknown, name='detail_offers_unknown'),
+	
 
 	#user deals
 	path('deal', deal, name='deal'),
 
+	path('deal_unknown', deal_unknown, name='deal_unknown'),
+
 	#user jobs
 	path('job', job, name='job'),
+	path('job_unknown', job_unknown, name='job_unknown'),
 
 	#user products
 	path('product', product, name='product'),
+	path('product_unknown', product_unknown, name='product_unknown'),
 
 	#user myads
 	path('myads', myads, name='myads'),
@@ -86,8 +100,14 @@ urlpatterns = [
 
 	#detailviews--deals,jobs,products
 	path('detail_view_deals<int:id>/', detail_view_deals, name='detail_view_deals'),
+	path('detail_deal_unknown<int:id>/', detail_deal_unknown, name='detail_deal_unknown'),
+	
 	path('detail_view_jobs<int:id>/', detail_view_jobs, name='detail_view_jobs'),
+	path('detail_job_unknown<int:id>/', detail_job_unknown, name='detail_job_unknown'),
+	
 	path('detail_view_products<int:id>/', detail_view_products, name='detail_view_products'),
+	path('detail_products_unknown<int:id>/', detail_products_unknown, name='detail_products_unknown'),
+
 	
 	path('user_update_product_offer<int:id>/', user_update_product_offer, name='user_update_product_offer'),
 
@@ -121,6 +141,8 @@ urlpatterns = [
 
 	path('ordercomplete', ordercomplete, name='ordercomplete'),
 	path('ordercomplete_wallet', ordercomplete_wallet, name='ordercomplete_wallet'),
+	path('ordercomplete_cash_on_delivery', ordercomplete_cash_on_delivery, name='ordercomplete_cash_on_delivery'),
+	
 	
 
 	#about us

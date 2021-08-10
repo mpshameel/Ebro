@@ -4,6 +4,14 @@
 
 {% load static %}
 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js" integrity="sha512-whWyZS4LtoXu4LzFJbHIgL9Cr7Sf2+KyeEAGumtXN+8U234v1R89monfd9PLYnC0TNBArmPnkFOVo8ShuMpZaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 <style>
    .active_user_page13{
       background-color: #99c2ff;
@@ -15,7 +23,99 @@
 </style>
 
 
-    <div class="container_wideboxes">
+  <div class="container_wideboxes">
+
+    <div class="col-md-12 col-md-push-3 user_profileedit_form">
+      <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeprofile">
+        <form action="{% url 'profiles' %}" method="POST">
+          {% csrf_token %}
+          <br><br>
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">First Name</label>
+                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="Your First Name" value="{{ user.first_name }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Last Name</label>
+                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="Your Last Name" value="{{ user.last_name }}">
+                </div>
+            </div>
+      
+            <div class="row col-md-12">
+                <div class="col-md-12">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" class="form-control" placeholder="Your Email Id" value="{{ user.email }}" disabled>
+                </div>
+            </div>
+      
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">Phone</label>
+                    <input type="text" id="fname" name="phone" class="form-control" placeholder="Your Contact Number" value="{{ user_profile.phone }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Alternative Phone</label>
+                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="Your Secondary Phone Number" value="{{ user_profile.alternative_phone }}">
+                </div>
+            </div>
+
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">Date of Birth</label>
+                    <input type="text" id="fname" name="dob" class="form-control" placeholder="Your Date of Birth" value="{{ user_profile.dob }}">
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Adhar/Id</label>
+                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="Your Adhar Id" value="{{ user_profile.adhar_id }}">
+                </div>
+            </div>
+
+            <div class="row col-md-12">
+                <div class="col-md-6">
+                    <label for="fname">Profession</label>
+                    <select name="profession" class="form-control mb-4" style="width: 90%;">
+                        {% for i in profession_details %}
+                          <option {% if i.id == user_profile.profession.id %} selected {% endif %} value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                          </option> 
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="lname">Location</label>
+                    <select name="location" class="form-control mb-4" style="width: 90%;">
+                        {% for i in location_details %}
+                          <option {% if i.id == user_profile.location.id %} selected {% endif %} value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                          </option> 
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="row col-md-12">
+              <div class="col-md-6">
+                  <label for="fname">Qualification</label>
+                  <input type="text" id="fname" name="qualification" class="form-control" placeholder="Your Qualification" value="{{ user_profile.qualification }}">
+              </div>
+              <div class="col-md-6">
+                  <label for="lname">Hobbies</label>
+                  <input type="text" id="lname" name="hobbies" class="form-control" placeholder="Your Hobbies" value="{{ user_profile.hobbies }}">
+              </div>
+          </div>
+          <div class="row col-md-12">
+              <div class="col-md-12">
+                  <label for="message">Summary/Bio</label>
+                  <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="Say something about you..." value="">{{ user_profile.summary }}</textarea>
+              </div>
+          </div>
+          <div class="form-group">
+              <input type="submit" value="Update Profile" class="btn btn-primary">
+          </div>
+        </form>
+    </div>
+
+
+
+
       <div class="col-md-8 profile_widebox">
 
         <div class="col-md-4">
@@ -42,98 +142,108 @@
               <h5 class="h5_style_big">First Name &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user.first_name }}</h5><br>
               <h5 class="h5_style_big">Last Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user.last_name }}</h5><br>
               <h5 class="h5_style_big">Email Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user.email }}</h5><br>
+              <h5 class="h5_style_big">Refferal Id &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user_profile.myrefferalid }}</h5><br>
               <br>
                 <div class="col-md-6 h5_profile_style_mobile1">
-                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user_profile.phone }}</h5><br>
+                  <h5 class="h5_profile_style">Phone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user_profile.phone }}</h5><br>
                   <h5 class="h5_profile_style">Date of Birth&nbsp;:&nbsp;{{ user_profile.dob }}</h5><br>
-                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user_profile.profession }}</h5><br>
+                  <h5 class="h5_profile_style">Profession&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;{{ user_profile.profession.name }}</h5><br>
                   <h5 class="h5_profile_style">Qualification&nbsp;:&nbsp;{{ user_profile.qualification }}</h5><br>
                 </div>
                 <div class="col-md-6 h5_profile_style_mobile2">
                   <h5 class="h5_profile_style">Phone 2&nbsp;&nbsp;:&nbsp;{{ user_profile.alternative_phone }}</h5><br>
                   <h5 class="h5_profile_style">Adhar Id&nbsp;:&nbsp;{{ user_profile.adhar_id }}</h5><br>
-                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ user_profile.location}}</h5><br>
+                  <h5 class="h5_profile_style">Location&nbsp;:&nbsp;{{ user_profile.location.name }}</h5><br>
                   <h5 class="h5_profile_style">Hobbies&nbsp;&nbsp;:&nbsp;{{ user_profile.hobbies }}</h5><br>
                   <br>
                 </div>
-              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 15px;">{{ user_profile.summary }}</p><br>
+              <h5 class="h5_style_big">Summary/Bio&nbsp;:&nbsp;</h5><p class="h5_style_big_p" style="word-break: break-all;line-height: 20px;">{{ user_profile.summary }}</p><br>
         </div>
-
       </div>
-    </div>
 
-    <div class="col-md-4 wallet-form">
-      <br>
-      {% if user_profile.usertype == "free" %}
-      <form action="{% url 'premium_signup_payment' %}" method="POST">
-        {% csrf_token %}
-        <button class="btn2 btn2-2 btn2-sep4">Upgrade&nbsp;to&nbsp;Premium&nbsp;Account</button>
-      </form>
-      {% endif %}
-      <div class="col-md-12">
-          <h4 class="btn3 btn3-2">My Wallet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{{user_profile.wallet}}</h4><br><br>
-          <h4 class="btn3 btn3-2">My Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{user_profile.coins}}</h4><br><br>
-      </div>
-        {% if user_profile.coins >= 100 %}
-        <form action="{% url 'voucher_claim' %}" method="POST">
+  </div>
+
+
+
+
+
+
+
+
+  <div class="container_wideboxes">
+      <div class="col-md-4 wallet-form">
+        <br>
+        {% if user_profile.usertype == "free" %}
+        <form action="{% url 'premium_signup_payment_upgrade' %}" method="POST">
           {% csrf_token %}
-          <input type="hidden" name="coins" class="form-control" value="{{user_profile.coins}}">
-          <div class="row col-md-14">
-            <button class="btn5 btn5-1 btn5-sep" id="sendmoney" style="width: 98%;">Voucher Claim</button>
-          </div>
+          <button class="btn2 btn2-2 btn2-sep4">Upgrade&nbsp;to&nbsp;Premium&nbsp;Account</button>
         </form>
         {% endif %}
-
-        <div class="col-md-12" style="margin-left: -20px;">
-          <div class="col-md-6">
-            <a href="#" id="topup" class="btn2 btn2-2 btn2-sep4"><center>Recharge</center></a>
-          </div>
-          <div class="col-md-6">
-            <a href="#" id="retrieve" class="btn2 btn2-2 btn2-sep4"><center>Retrieve</center></a>
-          </div>
+        <div class="col-md-12">
+            <h4 class="btn3 btn3-2">My Wallet&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;$&nbsp;&nbsp;{{user_profile.wallet}}</h4><br><br>
+            <h4 class="btn3 btn3-2">My Coins&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;{{user_profile.coins}}</h4><br><br>
         </div>
-        <div class="row col-md-12">
-          <button class="btn5 btn5-1 btn5-sep" id="sendmoney" style="width: 98%;">Send Money</button>
-        </div>
-        <div class="row topup_form">
-          <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closetopup">
-          <form action="{% url 'topup_payment' %}" method="POST">
+          {% if user_profile.coins >= 100 %}
+          <form action="{% url 'voucher_claim' %}" method="POST">
             {% csrf_token %}
-            <br><br>
-          <div class="col-md-12">
-            Username:<input type="text" name="username" id="get_amount" class="form-control" value="{{request.user.username}}" required>
-            Amount:<input type="text" name="amount" id="get_amount" class="form-control" value="" required>
-          </div>
-          <br><br>
-          <div class="col-md-12">
-            <button class="btn2 btn2-2 btn2-sep5"><center>Top&nbsp;up</center></button>
-          </div>
+            <input type="hidden" name="coins" class="form-control" value="{{user_profile.coins}}">
+            <div class="row col-md-14">
+              <button class="btn5 btn5-1 btn5-sep" id="sendmoney" style="width: 98%;">Voucher Claim</button>
+            </div>
           </form>
+          {% endif %}
 
-        </div>
+          <div class="col-md-12" style="margin-left: -20px;">
+            <div class="col-md-6">
+              <a href="#" id="topup" class="btn2 btn2-2 btn2-sep4"><center>Recharge</center></a>
+            </div>
+            <div class="col-md-6">
+              <a href="{% url 'retrieve_money' %}" id="retrieve" class="btn2 btn2-2 btn2-sep4"><center>Retrieve</center></a>
+            </div>
+          </div>
+          <div class="row col-md-12">
+            <button class="btn5 btn5-1 btn5-sep" id="sendmoney" style="width: 98%;">Send Money</button>
+          </div>
+          <div class="row topup_form">
+            <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closetopup">
+            <form action="{% url 'topup_payment' %}" method="POST">
+              {% csrf_token %}
+              <br><br>
+              <div class="col-md-12">
+                Username:<input type="text" name="username" id="get_amount" class="form-control" value="{{request.user.username}}" placeholder="{{request.user.username}}" required="">
+                Amount:<input type="text" name="amount" id="get_amount" class="form-control" value="" placeholder="Recharge/Top-up Amount" required="">
+              </div>
+              <br><br>
+              <div class="col-md-12">
+                <button class="btn2 btn2-2 btn2-sep5"><center>Top&nbsp;up</center></button>
+              </div>
+            </form>
 
-        <div class="row">
-            <br><br>
-          <div class="col-md-12">
-            <h4 class="sub_headings">&nbsp;&nbsp;My Refferals</h4><br><br>
-                <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
-                  {% for i in my_refferals %}
-                    <tr style="font-size: 13px;">
-                     <td width="5%"><center>{{ forloop.counter }}</center></td>
-                     <td width="10%"><center>
-                      {% if i.image != '' %}
-                      <img src="{{i.image.url}}" alt="" height="50" width="50"/>
-                      {% else %}
-                      <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
-                      {% endif %}
-                     </center></td>
-                     <td width="85%">&nbsp;{{ i.username.username }}</td>
-                  {% endfor %}                       
-               </table>
+          </div>
+
+          <div class="row">
+              <br><br>
+            <div class="col-md-12">
+              <h4 class="sub_headings">&nbsp;&nbsp;My Refferals</h4><br><br>
+                  <table class="table-users" cellspacing="0" style="margin-left: -10px;width: 105%;">
+                    {% for i in my_refferals %}
+                      <tr style="font-size: 13px;">
+                       <td width="5%"><center>{{ forloop.counter }}</center></td>
+                       <td width="10%"><center>
+                        {% if i.image != '' %}
+                        <img src="{{i.image.url}}" alt="" height="50" width="50"/>
+                        {% else %}
+                        <img src="{% static 'images/assign.png' %}" alt="" height="50" width="50"/>
+                        {% endif %}
+                       </center></td>
+                       <td width="85%">&nbsp;{{ i.username.username }}</td>
+                    {% endfor %}                       
+                 </table>
+            </div>
+
           </div>
 
         </div>
-
       </div>
     </div>
 
@@ -141,85 +251,6 @@
 
 
 
-
-
-    <div class="col-md-12 col-md-push-3 user_profileedit_form">
-      <img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeprofile">
-        <form action="{% url 'profiles' %}" method="POST">
-          {% csrf_token %}
-          <br><br>
-            <div class="row col-md-12">
-                <div class="col-md-6">
-                    <label for="fname">First Name</label>
-                    <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
-                </div>
-                <div class="col-md-6">
-                    <label for="lname">Last Name</label>
-                    <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
-                </div>
-            </div>
-      
-            <div class="row col-md-12">
-                <div class="col-md-12">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" id="email" class="form-control" placeholder="{{ user.email }}" value="{{ user.email }}" disabled>
-                </div>
-            </div>
-      
-            <div class="row col-md-12">
-                <div class="col-md-6">
-                    <label for="fname">Phone</label>
-                    <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ user_profile.phone }}" value="{{ user_profile.phone }}">
-                </div>
-                <div class="col-md-6">
-                    <label for="lname">Alternative Phone</label>
-                    <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ user_profile.alternative_phone }}" value="{{ user_profile.alternative_phone }}">
-                </div>
-            </div>
-
-            <div class="row col-md-12">
-                <div class="col-md-6">
-                    <label for="fname">Date of Birth</label>
-                    <input type="text" id="fname" name="dob" class="form-control" placeholder="{{ user_profile.dob }}" value="{{ user_profile.dob }}">
-                </div>
-                <div class="col-md-6">
-                    <label for="lname">Adhar/Id</label>
-                    <input type="text" id="lname" name="adhar_id" class="form-control" placeholder="{{ user_profile.adhar_id }}" value="{{ user_profile.adhar_id }}">
-                </div>
-            </div>
-
-            <div class="row col-md-12">
-                <div class="col-md-6">
-                    <label for="fname">Profession</label>
-                    <input type="text" id="fname" name="profession" class="form-control" placeholder="{{ user_profile.profession }}" value="{{ user_profile.profession }}">
-                </div>
-                <div class="col-md-6">
-                    <label for="lname">Location</label>
-                    <input type="text" id="lname" name="location" class="form-control" placeholder="{{ user_profile.location }}" value="{{ user_profile.location }}">
-                </div>
-            </div>
-
-            <div class="row col-md-12">
-              <div class="col-md-6">
-                  <label for="fname">Qualification</label>
-                  <input type="text" id="fname" name="qualification" class="form-control" placeholder="{{ user_profile.qualification }}" value="{{ user_profile.qualification }}">
-              </div>
-              <div class="col-md-6">
-                  <label for="lname">Hobbies</label>
-                  <input type="text" id="lname" name="hobbies" class="form-control" placeholder="{{ user_profile.hobbies }}" value="{{ user_profile.hobbies }}">
-              </div>
-          </div>
-          <div class="row col-md-12">
-              <div class="col-md-12">
-                  <label for="message">Summary/Bio</label>
-                  <textarea id="message" cols="25" rows="4" class="form-control" name="summary" placeholder="{{ user_profile.summary }}" value="">{{ user_profile.summary }}</textarea>
-              </div>
-          </div>
-          <div class="form-group">
-              <input type="submit" value="Update Profile" class="btn btn-primary">
-          </div>
-        </form>
-      </div>
 
 
 
@@ -311,7 +342,7 @@
 
 
 
-
+   <div class="container_wideboxes">
       <div class="col-md-4 address_widebox">
 
             <div class="col-md-12 col-md-push-3 user_address_form">
@@ -322,53 +353,68 @@
                   <div class="row">
                       <div class="col-md-6">
                           <label for="fname">First Name</label>
-                          <input type="text" name="first_name" id="fname" class="form-control" placeholder="{{ user.first_name }}" value="{{ user.first_name }}">
+                          <input type="text" name="first_name" id="fname" class="form-control" placeholder="Your First Name" value="{{ user.first_name }}" required="">
                       </div>
                       <div class="col-md-6">
                           <label for="lname">Last Name</label>
-                          <input type="text" name="last_name" id="lname" class="form-control" placeholder="{{ user.last_name }}" value="{{ user.last_name }}">
+                          <input type="text" name="last_name" id="lname" class="form-control" placeholder="Your Last Name" value="{{ user.last_name }}">
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-6">
                           <label for="fname">Country</label>
-                          <input type="text" id="fname" name="country" class="form-control" placeholder="" value="">
+                          <select id="country" name="country" class="form-control mb-4" style="width: 90%;" required="">
+                              {% for i in main_location_list %}
+                                <option value="{{ i.name }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                                </option> 
+                              {% endfor %}
+                          </select>
                       </div>
                       <div class="col-md-6">
                           <label for="lname">State</label>
-                          <input type="text" id="lname" name="state" class="form-control" placeholder="" value="">
+                          <select id="state" name="state" class="form-control mb-4" style="width: 90%;" required="">
+                              {% for i in sub_location_list %}
+                                <option value="{{ i.name }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                                </option> 
+                              {% endfor %}
+                          </select>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-6">
                           <label for="fname">District</label>
-                          <input type="text" id="fname" name="district" class="form-control" placeholder="" value="">
+                          <select name="district" class="form-control mb-4" style="width: 90%;" required="">
+                              {% for i in microsub_location_list %}
+                                <option value="{{ i.name }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                                </option> 
+                              {% endfor %}
+                          </select>
                       </div>
                       <div class="col-md-6">
                           <label for="lname">Postal Code</label>
-                          <input type="text" id="lname" name="postalcode" class="form-control" placeholder="" value="">
+                          <input type="text" id="lname" name="postalcode" class="form-control" placeholder="Select Postal Code" value="" required="">
                       </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-6">
                           <label for="fname">Phone</label>
-                          <input type="text" id="fname" name="phone" class="form-control" placeholder="{{ user_profile.phone }}" value="{{ user_profile.phone }}">
+                          <input type="text" id="fname" name="phone" class="form-control" placeholder="Your Contact Number" value="{{ user_profile.phone }}" required="">
                       </div>
                       <div class="col-md-6">
                           <label for="lname">Alternative Phone</label>
-                          <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="{{ user_profile.alternative_phone }}" value="{{ user_profile.alternative_phone }}">
+                          <input type="text" id="lname" name="alternative_phone" class="form-control" placeholder="Your Secondary Phone Number" value="{{ user_profile.alternative_phone }}">
                       </div>
                   </div>
 
                   <div class="row">
                       <div class="col-md-12">
                           <label for="fname">Address Line 1</label>
-                          <input type="text" id="fname" name="address_line_1" class="form-control" placeholder="" value="">
+                          <input type="text" id="fname" name="address_line_1" class="form-control" placeholder="Your Address Line 1" value="" required="">
                       </div>
                       <div class="col-md-12">
                           <label for="lname">Address Line 2</label>
-                          <input type="text" id="lname" name="address_line_2" class="form-control" placeholder="" value="">
+                          <input type="text" id="lname" name="address_line_2" class="form-control" placeholder="Your Address Line 2" value="">
                       </div>
                   </div>
                   <br>
@@ -395,6 +441,8 @@
           <h3 class="h5_profile_style">Address Line 2&nbsp;&nbsp;:&nbsp;{{ i.address_line_2 }}</h3><br><br>
         {% endfor %}
       </div>
+
+  </div>
 
 
 
@@ -572,6 +620,37 @@ file.addEventListner('change', function(){
       
     
     </script>
+
+
+
+
+<!--   <script>
+    $(document).ready(function()
+    {
+      var $select1=$('#country'),
+          $select2=$('#state'),
+          $options=$select2.find('option');
+          $select1.on('change',function()
+          {
+            $select2.html($options.filter('[value="'+this.value+'"]'));
+            ("option[value='" + data.id + "']")
+          }).trigger('change');
+    });
+  </script>
+
+  <script>
+    $(document).ready(function()
+    {
+      $("#country").select2({
+
+      });
+      $("state").select2({
+        
+      });
+    });
+  </script> -->
+
+
 
 
 {% endblock %}

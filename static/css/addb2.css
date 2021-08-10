@@ -66,8 +66,8 @@
       display: flex;
     }.colorlib-nav .top .person {
         position: absolute;
-        top: -10;
-        left: 50;
+        top: 5;
+        left: 100;
         display: block;
         width: 50px;
         height: 50px;
@@ -996,6 +996,28 @@ td{
 
 
 
+
+/* Icon separator */
+.btn2-sep_small {
+    padding: 5px 5px 5px 25px;
+    margin-left: -20px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .btn2-sep_small {
+        margin-top: -50px;
+        margin-left: -20px;
+        padding: 5px 5px 5px 25px; }
+    .down_small {
+        margin-top: 80px; } }
+
+
+
+
+
+
+
 .btn2-sep2 {
     /*padding: 10px 10px 10px 10px;*/
     padding: 10px 10px 10px 45px;
@@ -1022,13 +1044,19 @@ td{
 @media screen and (max-width: 768px) {
     .btn2-sep3 {
         margin-top: -10px;
-        padding: 5px 135px 5px 135px; } }
+        padding: 5px 135px 5px 100px; } }
 
 
 .btn2-sep4 {
     /*padding: 10px 10px 10px 10px;*/
     padding: 5px 20px 5px 20px;
 }
+
+@media screen and (max-width: 768px) {
+    .btn2-sep4 {
+        margin-top: -10px;
+        padding: 5px 5px 5px 15px; } }
+
 
 
 
@@ -1041,6 +1069,15 @@ td{
 
 
 
+.btn2-sep6 {
+    /*padding: 10px 10px 10px 10px;*/
+    padding: 10px 150px 10px 135px;
+
+}
+@media screen and (max-width: 768px) {
+    .btn2-sep6 {
+        margin-top: -10px;
+        padding: 5px 135px 5px 120px; } }
 
 
 
@@ -1081,7 +1118,6 @@ td{
 
 
 
-
 /* Button 2 */
 .btn2-2 {
     background: #2ecc71;
@@ -1112,6 +1148,51 @@ td{
         margin-top: -7px;
         width: 20px;
         font-size: 100%; } }
+
+
+
+
+
+
+
+
+
+
+.btn2-2_small {
+    background: #2ecc71;
+    color: #fff;
+}
+
+.btn2-2_small:hover {
+    background: #27ae60;
+}
+
+.btn2-2_small:active {
+    background: #27ae60;
+    top: 2px;
+}
+
+
+
+.btn2-2_small:before {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    line-height: 3;
+    font-size: 100%;
+    width: 20px;
+    margin-top: -7px;
+}
+
+@media screen and (max-width: 768px) {
+    .btn2-2_small:before {
+        margin-top: -7px;
+        width: 20px;
+        font-size: 100%; } }
+
+
+
 
 
 
@@ -1260,6 +1341,28 @@ td{
     padding: 10px 10px 10px 45px;
     margin-left: -20px;
 }
+
+
+
+.btn4-sep2 {
+    /*padding: 10px 10px 10px 10px;*/
+    padding: 5px 20px 5px 20px;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+    .btn4-sep2 {
+        margin-top: -45px;
+        margin-left: 250px;
+        padding: 5px 5px 5px 10px; }
+    .down {
+        margin-top: 80px; } }
+
+
+
+
 
 
 @media screen and (max-width: 768px) {

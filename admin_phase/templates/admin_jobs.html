@@ -32,20 +32,20 @@
 
 				<div class="col-md-12">
 					<label for="fname">Job Name</label>
-					<input type="text" name="job_name" id="fname" class="form-control" placeholder="Your firstname">
+					<input type="text" name="job_name" id="fname" class="form-control" placeholder="Your Job Name" required="">
 				</div>
 				<div class="col-md-12">
-					<label for="lname">Price</label>
-					<input type="text" name="price" id="lname" class="form-control" placeholder="Your lastname">
+					<label for="lname">Salary</label>
+					<input type="text" name="price" id="lname" value="0" class="form-control" placeholder="Your Job Salary">
 				</div>
 				<div class="col-md-12">
 					<label for="lname">Attachments</label>
-					<input type="file" name="attachments" id="lname" class="form-control" placeholder="Your lastname" multiple=""/>
+					<input type="file" name="attachments" id="lname" class="form-control" placeholder="Select Job Attachments" multiple=""/>
 				</div>
 				
 			</div>
 			<div class="col-md-8">
-				
+				<br>
 				<div class="col-md-4 wrapper-class">
 					<label for="subject">Publish</label>
 					<br>
@@ -56,7 +56,7 @@
 				</div>
 				<div class="col-md-8">
 					<br>
-					[your product or deal will handle by E-bro through private channel]
+					[your product or job will handle by Ebro-World manually through admin phase in private mode]
 				</div>
 
 				<div class="col-md-4 wrapper-class">
@@ -69,21 +69,21 @@
 				</div>
 				<div class="col-md-8">
 					<br>
-					[your product can categorize based on brand name or individual]
+					[your job can categorize based on brand name or individual by Ebro-World]
 				</div>
 
-				<div class="col-md-6">
+<!-- 				<div class="col-md-6">
 					<label for="subject">Brand Name</label>
-					<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your subject of this message">
-				</div>
-				<div class="col-md-6">
+					<input type="text" name="brand_name" id="subject" class="form-control" placeholder="Your Brand Name">
+				</div> -->
+				<div class="col-md-12">
 					<label for="subject">Email</label>
-					<input type="text" name="email" id="subject" class="form-control" placeholder="Your subject of this message">
+					<input type="email" name="email" id="subject" class="form-control" placeholder="Your Email Id" required="">
 			    </div>
 				<div class="col-md-12">
 					<div class="form-group">
-					<label>Select Job Category:</label>
-					<select id="jobcategory" name="category" class="" multiple required="">
+					<label>Select Job Category:</label><br>
+					<select id="mselect" name="category" class="form-control" multiple required="">
 
 						{% for i in category_details %}
 						<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
@@ -93,17 +93,34 @@
 				</div>
 				<div class="col-md-6">
 					<label for="subject">Location</label>
-					<input type="text" name="location" id="subject" class="form-control" placeholder="Your subject of this message">
+					<select name="location" class="form-control mb-4" style="width: 90%;">
+	                    <option value="">Select Location</option>
+	                    {% for i in location_details %}
+	                      <option value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+	                      	{% if i.super_parent == null %}
+	                      		<p class="text-primary">(Country)
+	                      		{% else %}
+	                      			{% if i.sub_location == True %}
+	                      				(State)
+	                      			{% endif %}
+
+	                      			{% if i.microsub_location == True %}
+	                      				(District/Places)
+	                      			{% endif %}
+	                      	{% endif %}</p>
+	                      </option> 
+	                    {% endfor %}
+	                </select>
 				</div>
 
 			    <div class="col-md-6">
 					<label for="subject">Contact</label>
-					<input type="text" name="contact" id="subject" class="form-control" placeholder="Your subject of this message">
+					<input type="text" name="contact" id="subject" class="form-control" placeholder="Your Contact Number" required="">
 			    </div>
 
 				<div class="col-md-12">
 					<label for="message">Other Details</label>
-					<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">
+					<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about the job">
 					</textarea>
 				</div>
 				&nbsp;&nbsp;
@@ -127,14 +144,13 @@
 			<div class="container_wideboxes">
 				<div class="row">
 					<div class="col-md-12 search-wrap">
-						<br>
 						<form class="colorlib-form">
 		              	<div class="row">
-		                <div class="col-md-2">
+		                <div class="col-md-3">
 		                  <div class="form-group">
 
                           <label for="date">What:</label>
-                          <div class="form-field">
+                          <div class="form-field" style="margin-top: -10px;">
                             <i class="icon icon-text"></i>
                             <input name="job_name" type="textfield" value="" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
                           </div>
@@ -147,9 +163,9 @@
                           <div class="form-field">
                             <i class="icon icon-arrow-down3"></i>
                           	<select name="publish" id="people" class="form-control">
-                            <option value="">------------</option>
-                            <option value="public">Public</option>
-                            <option value="private">Private</option>
+                            <option value="" style="color: #000;">------------</option>
+                            <option value="public" style="color: #000;">Public</option>
+                            <option value="private" style="color: #000;">Private</option>
                           	</select>
                           </div>
                         </div>
@@ -161,34 +177,26 @@
                           <div class="form-field">
                             <i class="icon icon-arrow-down3"></i>
                           	<select name="job_type" id="people" class="form-control">
-                            <option value="">------------</option>
-                            <option value="Single">Single</option>
-                            <option value="Multiple">Multiple</option>
+                            <option value="" style="color: #000;">------------</option>
+                            <option value="Single" style="color: #000;">Single</option>
+                            <option value="Multiple" style="color: #000;">Multiple</option>
                           	</select>
                           </div>
                         </div>
                       </div>
                       
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <label for="date">Brand Name:</label>
-                          <div class="form-field">
-                            <i class="icon icon-text"></i>
-                            <input name="brand_name" type="textfield" value="" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
+
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="date">Where:</label>
-                          <div class="form-field">
+                          <div class="form-field" style="margin-top: -10px;">
                             <i class="icon location"></i>
                             <input type="textfield" name="location" value="" id="date" class="form-control text" placeholder="city,state, or Country">
                           </div>
                         </div>
                       </div>
                       
-                      <div class="col-md-2">
+                      <div class="col-md-2" style="margin-top: -10px;">
                         <button type="submit" name="submit" id="submit"  class="btn btn-primary btn-block">Search</button>
                       </div>        
                     </div>
@@ -272,16 +280,19 @@
 
 	<script>
 		document.getElementById("addbutton").addEventListener("click",function(){
-		  document.querySelector(".additem-form").style.display = "flex";
+		  document.querySelector(".additem-form").style.visibility = "visible";
+
 		})
 		document.querySelector(".closeitem-form").addEventListener("click",function(){
-			document.querySelector(".additem-form").style.display = "none";
-		  })
-		
+		document.querySelector(".additem-form").style.visibility = "hidden";
+		})
 	
 	</script>
 
 
+
+
 {% endblock %}	
+
 
 

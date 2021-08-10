@@ -31,19 +31,19 @@
      			{% else %}
      			<img src="{% static 'images/assign.png' %}"id="file-ip-1-preview" />
      			{% endif %}
-     			<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required>
+     			<input type="file" name="picture" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required="">
 		        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>      
 		    </div>
 		    <br><br><br><br><br><br><br><br><br>
 
 			<div class="col-md-12">
 				<label for="fname">Deal Name</label>
-				<input type="text" name="deal_name" id="fname" value="{{ user_deals_list.deal_name }}" class="form-control" placeholder="Your firstname">
+				<input type="text" name="deal_name" id="fname" value="{{ user_deals_list.deal_name }}" class="form-control" placeholder="Your Deal Name" required="">
 			</div>
 
 			<div class="col-md-12">
 				<label for="lname">Price</label>
-				<input type="text" name="price" id="lname"  value="{{ user_deals_list.price }}" class="form-control" placeholder="Your lastname">
+				<input type="text" name="price" id="lname"  value="{{ user_deals_list.price }}" class="form-control" placeholder="Your Deal Price" required="">
 			</div>
 			<div class="col-md-12">
 				<label for="lname">Attachments</label>
@@ -52,8 +52,8 @@
 			
 		</div>
 		<div class="col-md-8">
-			
-			<div class="col-md-4 wrapper-class">
+			<br>
+			<div class="col-md-5 wrapper-class">
 				<label for="subject">Publish</label>
 				<br>
 					<input type="radio" id="radio1" name="publish" value="public" {% if user_deals_list.publish == "public" %} checked="checked" {% endif %}>
@@ -61,12 +61,12 @@
 					<input type="radio" id="radio2" name="publish" value="private" {% if user_deals_list.publish == "private" %} checked="checked" {% endif %}>
 					<label for="radio2">Private</label>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-7">
 				<br>
-				[your product or deal will handle by E-bro through private channel]
+				[your product or deal will handle by Ebro-World manually through admin phase in private mode]
 			</div>
 
-			<div class="col-md-4 wrapper-class">
+			<div class="col-md-5 wrapper-class">
 				<label for="subject">Type</label>
 				<br>
 					<input type="radio" id="radio3" name="deal_type" value="Single" {% if user_deals_list.deal_type == "Single" %} checked="checked" {% endif %}>
@@ -74,20 +74,20 @@
 					<input type="radio" id="radio4" name="deal_type" value="Multiple" {% if user_deals_list.deal_type == "Multiple" %} checked="checked" {% endif %}>
 					<label for="radio4">Multiple</label>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-7">
 				<br>
-				[your product can categorize based on brand name or individual]
+				[your product can categorize based on brand name or individual by Ebro-World]
 			</div>
-
-			<div class="col-md-12">
+			<br>
+<!-- 			<div class="col-md-12">
 				<label for="subject">Brand Name</label>
-				<input type="text" name="brand_name" id="subject" value="{{ user_deals_list.brand_name }}"  class="form-control" placeholder="Your subject of this message">
-			</div>
+				<input type="text" name="brand_name" id="subject" value="{{ user_deals_list.brand_name }}"  class="form-control" placeholder="Your Brand Name">
+			</div> -->
 
 			<div class="col-md-12">
 				<div class="form-group">
 				<label>Select Job Category:</label>
-				<select name="category" class="form-control" multiple="">
+				<select id="mselect" name="category" class="form-control" multiple required="">
 				{% for i in category_details %}
 				    <option {% for j in trade %} {% if i.id == j.id %} selected {% endif %} {% endfor %} value="{{ i.id }}">{{ i.name }}</option>
 				{% endfor %}
@@ -96,12 +96,18 @@
 			</div>
 			<div class="col-md-12">
 				<label for="subject">Sort by Location</label>
-				<input type="text" name="location" id="subject" value="{{ user_deals_list.location }}" class="form-control" placeholder="Your subject of this message">
+				<select name="location" class="form-control mb-4" style="width: 90%;">
+                    <option value="{{ user_deals_list.location.id }}">{{ user_deals_list.location.name }}</option>
+                    {% for i in location_details %}
+                      <option value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                      </option> 
+                    {% endfor %}
+                </select>
 			</div>
 
 			<div class="col-md-12">
 				<label for="message">Other Details</label>
-				<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about us">{{ user_deals_list.details }}
+				<textarea  name="details" value="" id="message" cols="25" rows="2" class="form-control" placeholder="Say something about the deal">{{ user_deals_list.details }}
 				</textarea>
 			</div>
 

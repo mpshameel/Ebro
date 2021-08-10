@@ -43,7 +43,7 @@
          					<br>
          					<b><font style="font-size: 20px;">{{ user_product.email }}</font></b><br>
          					<b><font style="font-size: 15px;">{{ user_product.contact }}</font></b><br>
-         					<b><font style="font-size: 15px;">{{ user_product.location }}</font></b><br>
+         					<b><font style="font-size: 15px;">{{ user_product.location.name }}</font></b><br>
 							<p style="word-break: break-all;">Details :<br>{{ user_product.details }}</p>
 
 							<br><br>
@@ -113,37 +113,14 @@
 								<h5 class="h5_style">{{ i.product_name }}</h5>
 								<h5><font style="color: #8e9416;">{{ i.offer }}&nbsp;%&nbsp;&nbsp;offer</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;&nbsp;<b style="text-decoration: line-through;">{{ i.oldprice }}</b></h5>
 								<h4><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
-								<span class="cat">{{ i.brand_name }}</span>
+
+								<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
+								<span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
 								<span class="date" style="color: red;">{% if i.stock <= 0 %}Out of stock{% else %}&nbsp;{% endif %}</span>
+
 								
 							</div>
 						</a>
-						<div class="col-12 col-md-8 text-left down">
-							{% if request.user.is_authenticated %}
-		 						<form action="{% url 'product_to_cart' %}" method="POST">
-									{% csrf_token %}
-		 						<input type="hidden" value="{{ i.id }}" name="id_product">
-								<button class="btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
-								</form>
-								{% else %}
-		    					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-2 btn2-sep icon-cart">Add To Cart</button>
-		    					</form>
-							{% endif %}
-						</div>
-						<div class="col-12 col-md-4 text-right">
-							{% if request.user.is_authenticated %}
-								<form action="{% url 'product_to_wish' %}" method="POST">
-									{% csrf_token %}
-         						<input type="hidden" value="{{ i.id }}" name="id_product">
-								<button data-product={{i.id}} data-action="add" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-            					</form>
-            					{% else %}
-            					<form action="#">
-								<button id="loginpopup" class="update-cart btn2 btn2-1 btn2-sep2 icon-heart">Like</button>
-            					</form>
-            				{% endif %}
-						</div>
 					</div>
 					{% endfor %}
 

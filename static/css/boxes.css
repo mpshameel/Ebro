@@ -1,15 +1,57 @@
 
 .container_wideboxes{
-    margin-left: 30px;
-    width: 98%;
+/*    margin: 0px 0px 0px 20px;
+    width: 98%;*/
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.container_wideboxes:before, .container_wideboxes:after {
+  content: " ";
+  display: table;
+}
+.container_wideboxes:after {
+  clear: both;
+}
+@media (min-width: 768px) {
+  .container_wideboxes {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container_wideboxes {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container_wideboxes {
+    width: 1300px;
+  }
+}
+
+.container_wideboxes-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.container_wideboxes-fluid:before, .container_wideboxes-fluid:after {
+  content: " ";
+  display: table;
+}
+.container_wideboxes-fluid:after {
+  clear: both;
 }
 
 
 
 
+
 .widebox{
-	width: 420px;
-    height: auto;
+	width: 400px;
+    height: 120px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
     margin: 5px 5px;
 }
@@ -17,13 +59,59 @@
 
 @media screen and (max-width: 768px) {
     .widebox {
-    margin-left: -20px;
-    width: 370px; } }
+    width: 350px; } }
+
+
+
+
+
+.widebox2{
+    width: 400px;
+    height: 160px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin: 5px 5px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .widebox2 {
+    width: 350px; } }
+
+
+
+.widebox3{
+    width: 400px;
+    height: 160px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin: 5px 5px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .widebox3 {
+    width: 350px;
+    height: 180px; } }
+
+
+.widebox4{
+    width: 400px;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin: 5px 5px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .widebox4 {
+    width: 350px; } }
+
+
+
 
 
 @media screen and (max-width: 768px) {
     .img {
-    	margin-top: 20px; }}
+    	margin-top: 5px; }}
 
 .detail_widebox{
 	width: 900px;
@@ -123,7 +211,7 @@
 
 @media screen and (max-width: 768px) {
     .orderwidebox {
-    margin-left: -20px;
+    margin-left: 5px;
     width: 370px; } }
 
 
@@ -160,7 +248,7 @@
 
 
 .cartwidebox{
-	width: 740px;
+	width: 640px;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
     margin: 5px 5px;
@@ -169,13 +257,27 @@
 
 @media screen and (max-width: 768px) {
     .cartwidebox {
-    margin-left: -20px;
+    margin-left: -10px;
     width: 370px; } }
 
 
 
 .mybag_boxes{
-	width: 450px;
+	width: 420px;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin: 5px -50px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .mybag_boxes {
+    margin-left: 5px;
+    width: 370px; } }
+
+
+.mybag_boxes2{
+    width: 420px;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
     margin: 5px 5px;
@@ -183,9 +285,11 @@
 
 
 @media screen and (max-width: 768px) {
-    .mybag_boxes {
-    margin-left: -20px;
+    .mybag_boxes2 {
+    margin-left: 5px;
     width: 370px; } }
+
+
 
 
 
@@ -193,7 +297,7 @@
     .mobile_feedback {
      width: 370px;}
     .mobile_notifications{
-    	margin-left: -40px;
+    	margin-left: -20px;
     	width: 450px; } }
 
 
@@ -201,16 +305,17 @@
 
 
 .profile_widebox{
-	width: 900px;
+	width: 850px;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
     margin: 25px 0px;
+    border-radius: 25px;
 }
 
 
 @media screen and (max-width: 768px) {
     .profile_widebox {
-    margin-left: -20px;
+    margin: 5px;
     width: 370px; } }
 
 
@@ -312,7 +417,7 @@
 .edit_profile_button{
     cursor: pointer;
     align-items: center;
-    right: -500px;
+    right: -450px;
     top: 5px;
     position: relative;
 
@@ -324,13 +429,30 @@
 
 
 
+.admin_profileedit_form{
+    width: 700px;
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background: #fff;
+    margin: 5px -150px;
+    display: none;
+    z-index: 99;
+}
+
+@media screen and (max-width: 768px) {
+    .admin_profileedit_form {
+    width: 370px;
+    margin: -1000px 20px; } }
+
+
+    
+
 .user_profileedit_form{
 	width: 700px;
     position: absolute;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background: #fff;
-    margin-left: -50px;
-    margin-top: 25px;
+    margin: 5px -150px;
     display: none;
     z-index: 99;
 }
@@ -338,8 +460,21 @@
 @media screen and (max-width: 768px) {
     .user_profileedit_form {
     width: 370px;
-    margin-left: 15px;
-    margin-top: -1000px; } }
+    margin: 350px 20px; } }
+
+
+
+
+.detailuser_sendform{
+    height: auto;
+    width: 800px;
+    margin: 25px 25px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .detailuser_sendform {
+    margin-left: -5px; } }
 
 
 
@@ -347,14 +482,17 @@
 .wallet-form{
     height: auto;
     width: 370px;
-    margin-left: 20px;
-    margin-top: 20px;
+    margin: 25px 25px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 25px;
 }
 
 @media screen and (max-width: 768px) {
     .wallet-form {
-    margin-left: -20px; } }
+    margin-left: -5px; } }
+
+
+
 
 
 
@@ -441,10 +579,11 @@ td{
 
 
 .address_widebox{
-	width: 900px;
+	width: 850px;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
-    margin: 5px 25px;
+    margin: 5px 5px;
+    border-radius: 25px;
 }
 
 
@@ -495,13 +634,14 @@ td{
     margin-left: 20px;*/
 /*    width: 40%;*/
 /*    height: auto;*/
+    margin: 50px;
     display: none;
 }
 
 @media screen and (max-width: 768px) {
     .user_address_form {
     width: 370px; 
-    margin-top: 10px;} }
+    margin: 30px 0px;} }
 
 
 .closeaddress{
@@ -522,7 +662,8 @@ td{
 
 @media screen and (max-width: 768px) {
     .user_payment_box {
-    width: 370px; } }
+    width: 370px;
+    margin-left: -10px; } }
 
 
 
@@ -538,6 +679,7 @@ td{
     color: #189aa1;
     font-weight: 100;
     position: absolute;
+    transition: all 0.3s ease-out;
 
 }
 .addbutton:hover{
@@ -628,17 +770,33 @@ td{
 
 
 .additem-form{
+    transition: opacity 500ms;
 	width: 900px;
     height: 940px;
     position: absolute;
     z-index: 99;
     margin: 0px 150px;
     padding: 0px 0px;
-    display: none;
+    visibility: hidden;
     height: auto;  
     background-color: #fff; 
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    transition: all 0.3s ease-out;
 }
+
+
+
+
+
+.additem-form select{
+    width: 300px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .additem-form select {
+    width: 300px; } }
+
 
 .closeitem-form{
     cursor: pointer;
@@ -664,7 +822,7 @@ td{
 @media screen and (max-width: 768px) {
     .additem-form {
     width: 350px;
-    margin: 5px -15px; } }
+    margin: 5px 5px; } }
 
 
 
@@ -685,17 +843,16 @@ td{
 
 
 .edititem_container{
-	width: 900px;
+	width: 800px;
     height: auto;
     background: #fff;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
-    margin: 25px 0px;
+    margin: 25px 5px;
 }
 
 
 @media screen and (max-width: 768px) {
     .edititem_container {
-    margin-left: -20px;
     width: 370px; } }
 
 
@@ -711,7 +868,7 @@ td{
 
 @media screen and (max-width: 768px) {
     .offeredit_form {
-    margin-left: -20px; } }
+    margin: 0px 5px; } }
 
 
 
@@ -719,16 +876,25 @@ td{
 .attachment_form{
     height: auto;
     width: 370px;
-    margin-left: 20px;
-    margin-top: 20px;
+    margin: 25px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 @media screen and (max-width: 768px) {
     .attachment_form {
-    margin-left: -20px; } }
+     margin: 0px 5px;} }
 
 
+
+.xxxlimage{
+    height: 400px;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .xxxlimage {
+    height: 250px;
+    width: 370px; } }
 
 
 
@@ -812,12 +978,12 @@ td{
 
 .deal_list_form{
 	width: 100%;
-	margin: -10px 40px;
+	margin: -10px 20px;
 }
 
 @media screen and (max-width: 768px) {
 	.deal_list_form{
-	margin: -10px -30px;
+	margin: -10px -10px;
 	height: auto;
     width: 370px;
 	}
@@ -961,7 +1127,7 @@ td{
 
 .adduser-form{
 	width: 900px;
-    height: 940px;
+    height: auto;
     position: absolute;
     z-index: 99;
     margin: 0px 150px;
@@ -1029,7 +1195,7 @@ td{
 
 
 .subcategory_edit_box{
-	width: 98%;
+	width: 800px;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
     margin: 5px 5px;
@@ -1094,10 +1260,10 @@ td{
 
 
 .payment_detail_widebox{
-	width: 900px;
+	width: 800px;
     height: auto;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
-    margin: 25px 150px;
+    margin: 5px 5px;
 }
 
 
@@ -1107,6 +1273,22 @@ td{
     width: 370px; }
     .payment_details_text_mobile{
 	margin: 0px 15px; } }
+
+
+
+.delivery_edit_form{
+    height: auto;
+    width: 370px;
+    margin: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .delivery_edit_form {
+     margin: 0px 5px;} }
+
+
+
 
 
 
@@ -1152,6 +1334,57 @@ td{
     width: 370px; } }
 
 
+
+
+
+.datalist_box{
+    width: 100%;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin: 5px 5px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .datalist_box {
+   margin: 0px -10px;
+    width: 370px; } }
+
+
+
+.scrolluserlist {
+    overflow:scroll;
+    height:470px;
+}
+
+
+
+
+.databuttons_box{
+    width: 100%;
+    height: auto;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin: 5px 5px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .databuttons_box {
+    margin-left: -10px;
+    width: 370px; } }
+
+
+
+
+
+
+
+
+/*###############################################################################*/
+/*admin phase*/
+.edit_admin_form{
+    visibility: hidden;
+}
 
 
 

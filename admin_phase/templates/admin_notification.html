@@ -19,7 +19,7 @@
 
 
 <div class="container_wideboxes">
-	<div class="col-md-5">
+	<div class="col-md-4">
 	    <div class="col-md-12 notifications_box">
 		 	<form action="{% url 'admin_notifications' %}" method="POST">
 		      {% csrf_token %}
@@ -27,13 +27,12 @@
 		        	<br>
 		        	<h5 class="headings_small">Add Notifications :</h5>
 		        	<br><br><br>
-		          <textarea id="message" cols="25" rows="4" class="form-control" name="notification" placeholder="Send notification to users" value=""></textarea>
+		          <textarea id="message" cols="25" rows="4" class="form-control" name="notification" placeholder="Send notification to users" value="" required=""></textarea>
 		        </div>
 		        <br>
 		        <div class="col-md-12">
 			        <div class="form-group text-center"><br>
 			          <button type="submit" value="Send" class="btn btn-primary">Send</button>
-			        </div>
 			        </div>
 		    	</div>
 		    </form>
@@ -58,7 +57,7 @@
 	    </div>
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<div class="col-md-12 feedbackslist_box">
 		  <div class="scrollit">
 		    <table cellspacing="0">

@@ -1,0 +1,55 @@
+#daily task list count
+daily_deals_list_count = assign_deal.objects.filter(assigns=user_profile.id).count()
+daily_jobs_list_count = assign_job.objects.filter(assigns=user_profile.id).count()
+
+#my ads list count
+user_deals_list_count = deals.objects.filter(username_id=request.user.id).count()
+user_jobs_list_count = jobs.objects.filter(username_id=request.user.id).count()
+user_products_list_count = products.objects.filter(username_id=request.user.id).count()
+
+#my orders count
+items_in_order = orders.objects.filter(username=request.user.id)
+
+#wishlist count
+user_deal_wishlist = deal_wish.objects.filter(username_id=request.user.id).count()
+user_job_wishlist = job_wish.objects.filter(username_id=request.user.id).count()
+user_product_wishlist = product_wish.objects.filter(username_id=request.user.id).count()
+
+#cart count
+items = product_cart.objects.filter(username=request.user.id)
+
+
+#sum of counts variables
+daily_task_count = daily_deals_list_count + daily_jobs_list_count
+my_ads_count = user_deals_list_count + user_jobs_list_count + user_products_list_count
+order_count = sum(items_in_order.values_list('product_count', flat=True))
+my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
+cart_count = sum(items.values_list('quantity', flat=True))
+
+
+
+,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count
+
+
+
+cart page change product to prd
+    price = 0
+    total_price = 0
+    for product in items:
+        count = product.quantity
+        price = count * product.product.price
+        total_price += price
+checkout & payment page also change product to prd
+
+
+
+
+    if 'search_name' in request.GET:
+        product_name = request.GET['search_name']
+        print("---------------------------------------------------------------------------------------------------",product_name)
+
+        user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
+        # return redirect('/home/product?search_name=a')
+        # return redirect('product?search_name=')
+        # return render(request,'user_products.html',{'user_products_list':user_products_list})
+        return product(request, user_products_list)
