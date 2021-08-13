@@ -51,6 +51,7 @@
 				 			{{ request.build_absolute_uri }}<br>
 				 			{{ title }}<br>
 				 			{{ share_string }}<br>
+				 			<button id="share_button">share fb</button>
 
 				 			<a href='http://www.facebook.com/sharer.php?s={{ request.build_absolute_uri }}&
 							p[title]=TITLE+sdvsfvsfv&
@@ -200,7 +201,20 @@
 
 
 
-
+<script>
+	$('#share_button').bind('click', function(e){
+        e.preventDefault();
+        var title = '{{user_product.product_name}}';
+        var im_url = 'url_to_image';
+        var facebook_appID = '2887151581496584'
+        url = "https://www.facebook.com/dialog/feed?app_id="+ 2887151581496584 +    "&link=" + encodeURIComponent("{{ request.build_absolute_uri }}")+ 
+                    "&name=" + encodeURIComponent(title) + 
+                    "&caption=" + encodeURIComponent('Ebro-World') + 
+                    "&description=" + encodeURIComponent('DESCRIPTION') + 
+                    "&redirect_uri=https://www.facebook.com";
+        window.open(url);
+    });
+</script>
 
 
 
