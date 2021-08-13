@@ -7,8 +7,7 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-import cloudinary
-from cloudinary.models import CloudinaryField
+
 
 
 
