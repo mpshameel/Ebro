@@ -83,6 +83,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
 							<b><font style="font-size: 30px;">{{ user_product.product_name }}</font></b><br>
 							Type&nbsp;{% if user_product.product_type == "Single" %} 
          							  :{{ user_product.product_type }}
@@ -204,13 +213,14 @@
 <script>
 	$('#share_button').bind('click', function(e){
         e.preventDefault();
-        var title = '{{user_product.product_name}}';
-        var im_url = 'url_to_image';
+        var title = '{{ user_product.product_name }}';
+        var im_url = '{{user_product.picture.url}}';
         var facebook_appID = '2887151581496584'
         url = "https://www.facebook.com/dialog/feed?app_id="+ 2887151581496584 +    "&link=" + encodeURIComponent("{{ request.build_absolute_uri }}")+ 
                     "&name=" + encodeURIComponent(title) + 
                     "&caption=" + encodeURIComponent('Ebro-World') + 
-                    "&description=" + encodeURIComponent('DESCRIPTION') + 
+                    "&description=" + encodeURIComponent('{{ user_product.price }}') + 
+                    "&picture=" + encodeURIComponent("http://www.THEPAGE.com" +im_url) +
                     "&redirect_uri=https://www.facebook.com";
         window.open(url);
     });

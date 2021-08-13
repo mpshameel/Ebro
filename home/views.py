@@ -1,4 +1,5 @@
 from urllib.parse import quote
+# from django.shortcuts import get_object_or_404
 
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.models import User, auth
@@ -21,7 +22,7 @@ def post_detail(request, slug=None):
     instance = get_or_object_or_404(Post, slug=slug)
     share_string = quote_plus(instance.content)
     context = {
-        "title": instance.product_name,
+        "title": instance.title,
         "instance": instance,
         "share_string": share_string,
     }
@@ -1455,15 +1456,7 @@ def product_unknown(request,user_products_list=''):
 
 
 
-def post_detail(request, slug=None):
-    instance = get_or_object_or_404(Post, slug=slug)
-    share_string = quote_plus(instance.content)
-    context = {
-        "title": instance.product_name,
-        "instance": instance,
-        "share_string": share_string,
-    }
-    return render(request, 'user_detail_products.html',context)
+
 
 
 
@@ -1474,8 +1467,6 @@ def detail_product(request,id):
         user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
     else:
         user_products_list = products.objects.filter(publish="public",is_deleted=False)
-
-
 
     user_profile = profile.objects.get(username_id=request.user.id)
     # user = User.objects.get(id=request.user.id)
@@ -1515,7 +1506,7 @@ def detail_product(request,id):
     cart_count = sum(items.values_list('quantity', flat=True))
 
 
-
+    
 
 
 
