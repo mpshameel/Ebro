@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
@@ -10,6 +12,23 @@ from django.db.models import F
 # import datetime
 # from django.utils import timezone
 # from datetime import datetime
+
+
+
+
+
+# def post_detail(request, slug=None):
+#     instance = get_or_object_or_404(Post, slug=slug)
+#     share_string = quote_plus(instance.content)
+#     context = {
+#         "title": instance.title,
+#         "instance": instance,
+#         "share_string": share_string,
+#     }
+#     return render(request, 'user_detail_products.html',context)
+
+
+
 
 def updateItem(request):
     data = json.loads(request.body)
@@ -1486,8 +1505,12 @@ def detail_product(request,id):
     cart_count = sum(items.values_list('quantity', flat=True))
 
 
+    
+    share_string = user_product.product_name
 
-    context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+
+
+    context = {"share_string": share_string,'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_detail_products.html',context)
 
         
