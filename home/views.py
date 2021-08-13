@@ -1,7 +1,7 @@
-from urllib.parse import quote
+from urllib.parse import quote_plus
 # from django.shortcuts import get_object_or_404
 
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect, get_object_or_404,HttpResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from admin_phase.models import *
@@ -18,15 +18,15 @@ from django.db.models import F
 
 
 
-# def post_detail(request, slug=None):
-#     instance = get_or_object_or_404(Post, slug=slug)
-#     share_string = quote_plus(instance.content)
-#     context = {
-#         "title": instance.title,
-#         "instance": instance,
-#         "share_string": share_string,
-#     }
-#     return render(request, 'user_detail_products.html',context)
+def post_detail(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
+    share_string = quote_plus(instance.content)
+    context = {
+        "title": instance.title,
+        "instance": instance,
+        "share_string": share_string,
+    }
+    return render(request, 'user_detail_products.html',context)
 
 
 
@@ -1468,6 +1468,10 @@ def detail_product(request,id):
     else:
         user_products_list = products.objects.filter(publish="public",is_deleted=False)
 
+
+
+
+
     user_profile = profile.objects.get(username_id=request.user.id)
     # user = User.objects.get(id=request.user.id)
     user_product =  products.objects.get(id=id)
@@ -1506,12 +1510,13 @@ def detail_product(request,id):
     cart_count = sum(items.values_list('quantity', flat=True))
 
 
-    
+    instance = get_object_or_404(products, id=id)
+    share_string = quote_plus(instance.product_name)
 
 
 
 
-    context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {"title": instance.product_name,"instance": instance,"share_string": share_string,'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_detail_products.html',context)
 
         

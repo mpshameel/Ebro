@@ -17,6 +17,31 @@
    }
 </style>
   
+<div class="share-btn-container">
+	<a href="#" class="facebook-btn">
+		<i class="fab fa-facebook"></i>
+	</a>
+
+	<a href="#" class="twitter-btn">
+		<i class="fab fa-twitter"></i>
+	</a>
+
+	<a href="#" class="linkedin-btn">
+		<i class="fab fa-linkedin"></i>
+	</a>
+
+<!-- 	<a href="#" class="pinterest-btn">
+		<i class="fab fa-pinterest"></i>
+	</a> -->
+	
+	<a href="#" class="whatsapp-btn">
+		<i class="fab fa-whatsapp"></i>
+	</a>
+</div>
+
+
+
+
 
 		<div id="colorlib-about">
 			<div class="container">
@@ -54,8 +79,8 @@
 				 			<button id="share_button">share fb</button>
 
 				 			<a href='http://www.facebook.com/sharer.php?s={{ request.build_absolute_uri }}&
-							p[title]=TITLE+sdvsfvsfv&
-							p[summary]=asfcbadujvnjadnvosdvnsvdjndvu&
+							p[title]={{ title }}&
+							p[summary]={{ title }}&
 							p[url]=http://{{ request.META.HTTP_HOST }}{{ request.path }}&
 							p[images][0]=http://whatever.com/media/img/img_facebook.jpg' 
 							target="_blank">
@@ -83,7 +108,7 @@
 
 
 
-							<iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2F127.0.0.1%3A8000%2Fhome%2Fdetail_product64%2F&layout=button_count&size=large&appId=594578434562117&width=88&height=28" width="88" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+
 
 
 
@@ -210,7 +235,7 @@
 
 
 
-<!-- <script>
+<script>
 	$('#share_button').bind('click', function(e){
         e.preventDefault();
         var title = '{{ user_product.product_name }}';
@@ -225,7 +250,7 @@
         window.open(url);
     });
 </script>
- -->
+
 
 
 
