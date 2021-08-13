@@ -40,6 +40,7 @@
 							{% post_to_twitter "New Song: {{object.title}}.check it out!" object_or_url "Post to twitter" %}
 							{% post_to_facebook "New Song: {{user_product.product_name}} check it out!" object_or_url "Post to facebooks" %}
 				 			<a href="http://www.facebook.com/sharer/sharer.php?u=https://erbrooooo.herokuapp.com{{ request.get_full_path|urlencode }}">fb</a>
+				 			{% post_to_facebook object_or_url "Post to facebooks" %}
 
 
 							<b><font style="font-size: 30px;">{{ user_product.product_name }}</font></b><br>
