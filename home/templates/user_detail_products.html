@@ -49,14 +49,24 @@
 
 
 				 			{{ request.build_absolute_uri }}<br>
+				 			{{ title }}<br>
 				 			{{ share_string }}<br>
+
+				 			<a href='http://www.facebook.com/sharer.php?s={{ request.build_absolute_uri }}&
+							p[title]=TITLE+sdvsfvsfv&
+							p[summary]=asfcbadujvnjadnvosdvnsvdjndvu&
+							p[url]=http://{{ request.META.HTTP_HOST }}{{ request.path }}&
+							p[images][0]=http://whatever.com/media/img/img_facebook.jpg' 
+							target="_blank">
+							<img src="{{STATIC_URL}}img/ico_facebook_small.png" title="Facebook" alt="Facebook" ></a>
+
 
 
 				 			<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
 							Share on Facebook
 							</a><br>
 
-							<a href="https://twitter.com/home?status={{ share_string }}%20{{ request.build_absolute_uri }}">
+							<a href="https://twitter.com/home?status=HI%20this%20is%20from%20Ebro%20World..live%20smart%20life..%20{{ request.build_absolute_uri }}">
 							Share on Twitter
 							</a><br>
 

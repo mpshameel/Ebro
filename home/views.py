@@ -17,15 +17,15 @@ from django.db.models import F
 
 
 
-# def post_detail(request, slug=None):
-#     instance = get_or_object_or_404(Post, slug=slug)
-#     share_string = quote_plus(instance.content)
-#     context = {
-#         "title": instance.title,
-#         "instance": instance,
-#         "share_string": share_string,
-#     }
-#     return render(request, 'user_detail_products.html',context)
+def post_detail(request, slug=None):
+    instance = get_or_object_or_404(Post, slug=slug)
+    share_string = quote_plus(instance.content)
+    context = {
+        "title": instance.product_name,
+        "instance": instance,
+        "share_string": share_string,
+    }
+    return render(request, 'user_detail_products.html',context)
 
 
 
@@ -1455,7 +1455,15 @@ def product_unknown(request,user_products_list=''):
 
 
 
-
+def post_detail(request, slug=None):
+    instance = get_or_object_or_404(Post, slug=slug)
+    share_string = quote_plus(instance.content)
+    context = {
+        "title": instance.product_name,
+        "instance": instance,
+        "share_string": share_string,
+    }
+    return render(request, 'user_detail_products.html',context)
 
 
 
@@ -1466,6 +1474,8 @@ def detail_product(request,id):
         user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
     else:
         user_products_list = products.objects.filter(publish="public",is_deleted=False)
+
+
 
     user_profile = profile.objects.get(username_id=request.user.id)
     # user = User.objects.get(id=request.user.id)
@@ -1505,12 +1515,12 @@ def detail_product(request,id):
     cart_count = sum(items.values_list('quantity', flat=True))
 
 
-    
-    share_string = user_product.product_name
 
 
 
-    context = {"share_string": share_string,'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+
+
+    context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_detail_products.html',context)
 
         
