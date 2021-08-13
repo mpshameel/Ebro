@@ -18,15 +18,15 @@ from django.db.models import F
 
 
 
-def post_detail(request, slug=None):
-    instance = get_or_object_or_404(Post, slug=slug)
-    share_string = quote_plus(instance.content)
-    context = {
-        "title": instance.title,
-        "instance": instance,
-        "share_string": share_string,
-    }
-    return render(request, 'user_detail_products.html',context)
+# def post_detail(request, slug=None):
+#     instance = get_or_object_or_404(Post, slug=slug)
+#     share_string = quote_plus(instance.content)
+#     context = {
+#         "title": instance.title,
+#         "instance": instance,
+#         "share_string": share_string,
+#     }
+#     return render(request, 'user_detail_products.html',context)
 
 
 
