@@ -779,6 +779,33 @@ td{
 
 
 
+.links_admin_login{
+    background: none;
+    padding: 0px 2px;
+    font-size: 25px;
+
+    font-family: 'Abril Fatface', cursive;
+    font-family: 'Do Hyeon', sans-serif;
+    font-family: 'Staatliches', cursive;
+    /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 20px;*/
+/*    font-family: "montserrat";*/
+/*    font-weight: 1000;
+    font-family: 'Courier New', bold monospace;*/
+/*    font-family: Georgia, 'Times New Roman', Times, serif;"*/
+
+    cursor: pointer;
+    margin: 1px;
+    transition: 0.8s;
+    position: relative;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 768px) {
+    .links_admin_login {
+        font-size: 1px; } }
+
+
 
 
 .links_admin_all{

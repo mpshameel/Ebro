@@ -1,6 +1,6 @@
 .login-form{
     width: 650px;
-    height: 450px;
+    height: auto;
     position: absolute;
     z-index: 99;
     background: #ffffff;
@@ -18,7 +18,7 @@
     .login-form {
     margin-left: 10px;
     width: 370px;
-    height: 450px; } }
+    height: auto; } }
 
 
 
@@ -52,7 +52,7 @@
     .signup-form {
     margin-left: 10px;
     width: 370px;
-    height: 650px; } }
+    height: auto; } }
 
 
 .signup-otp{
