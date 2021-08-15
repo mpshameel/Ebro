@@ -128,11 +128,9 @@
 				<div class="container_wideboxes">
 					{% for i in user_deals_list %}
 					<div class="col-md-4 widebox">
-						{% if request.user.is_authenticated %}
+
 						<a href="{% url 'detail_deal' i.id %}" class="blog-post">
-						{% else %}
-						<a href="{% url 'detail_deal_unknown' i.id %}" class="blog-post">
-						{% endif %}
+
 							{% if i.picture != '' %}
 								<span class="img" style="background-image: url({{i.picture.url}});"></span>
 		         			{% else %}
