@@ -257,7 +257,7 @@
 					<div class="col-xs-8 align-center">
 						<a href="/home"><img src="{% static 'images/ebro6.png '%}" class="ebro" alt=""></a>
 						<form id="myform" class="colorlib-form" style="margin-top: 10px;">
-							<input type="text" name="search_name" placeholder="Search" style="width: 80%;height: 20px;">
+							<input type="text" name="search_name" placeholder="Search" class="ebro_earch" style="height: 20px;">
 							<img type="submit" id="submit_form" src="{% static 'images/search.jpg' %}" alt="" height="20" width="20" style="border-radius: 50%;position: relative;"/>
 						</form>
 					</div>
@@ -400,15 +400,17 @@
 								{% if user.is_authenticated %}
 								<li class="active_user_smallpage5"><a href="/home/daily_task">Daily Task</a></li>
 								{% endif %}
-								{% if user.is_authenticated %}
 								<li class="active_user_smallpage6"><a href="/home/job">Jobs</a></li>
+								{% if user.is_authenticated %}
 								<li class="active_user_smallpage7"><a href="/home/myads">My Ads</a></li>
 								<li class="active_user_smallpage8"><a href="/home/myorders">My Orders</a></li>
 								<li class="active_user_smallpage9"><a href="/home/wishlist">Wishlist</a></li>
 								<li class="active_user_smallpage10"><a href="/home/cart">Cart</a></li>
 								<li class="active_user_smallpage11"><a href="/home/chats">Chats</a></li>
-								<li class="active_user_smallpage13"><a href="/home/profiles">Profiles</a></li>
+								<li class="active_user_smallpage13"><a href="/home/profiles">Profile</a></li>
+								{% endif %}
 								<li class="active_user_smallpage12"><a href="/home/about_us">About Us</a></li>
+								{% if user.is_authenticated %}	
 								<li><a href="user_logout">Logout</a></li>
 								{% endif %}
 								

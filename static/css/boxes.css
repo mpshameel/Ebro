@@ -212,7 +212,7 @@
 @media screen and (max-width: 768px) {
     .orderwidebox {
     margin-left: 5px;
-    width: 370px; } }
+    width: 350px; } }
 
 
 
@@ -258,7 +258,7 @@
 @media screen and (max-width: 768px) {
     .cartwidebox {
     margin-left: -10px;
-    width: 370px; } }
+    width: 350px; } }
 
 
 
@@ -273,7 +273,7 @@
 @media screen and (max-width: 768px) {
     .mybag_boxes {
     margin-left: 5px;
-    width: 370px; } }
+    width: 350px; } }
 
 
 .mybag_boxes2{
@@ -287,7 +287,7 @@
 @media screen and (max-width: 768px) {
     .mybag_boxes2 {
     margin-left: 5px;
-    width: 370px; } }
+    width: 350px; } }
 
 
 
@@ -295,10 +295,10 @@
 
 @media screen and (max-width: 768px) {
     .mobile_feedback {
-     width: 370px;}
+     width: 350px;}
     .mobile_notifications{
     	margin-left: -20px;
-    	width: 450px; } }
+    	width: 350px; } }
 
 
 
@@ -316,7 +316,7 @@
 @media screen and (max-width: 768px) {
     .profile_widebox {
     margin: 5px;
-    width: 370px; } }
+    width: 350px; } }
 
 
 .profilepic_box{
@@ -460,7 +460,7 @@
 @media screen and (max-width: 768px) {
     .user_profileedit_form {
     width: 370px;
-    margin: 350px 20px; } }
+    margin: 350px 5px; } }
 
 
 
@@ -489,7 +489,8 @@
 
 @media screen and (max-width: 768px) {
     .wallet-form {
-    margin-left: -5px; } }
+    margin-left: -5px;
+    width: 350px; } }
 
 
 
@@ -516,8 +517,8 @@
 
 @media screen and (max-width: 768px) {
     .sendmoney_form {
-    width: 370px;
-    margin-left: 10px;
+    width: 350px;
+    margin-left: 25px;
     margin-top: -140px; }
     .sendmoney_form_inner{
     width: 340px; }
@@ -590,7 +591,7 @@ td{
 @media screen and (max-width: 768px) {
     .address_widebox {
     margin-left: 15px;
-    width: 370px; } }
+    width: 350px; } }
 
 
 
@@ -662,7 +663,7 @@ td{
 
 @media screen and (max-width: 768px) {
     .user_payment_box {
-    width: 370px;
+    width: 350px;
     margin-left: -10px; } }
 
 
@@ -690,10 +691,11 @@ td{
 @media screen and (max-width: 768px) {
     .addbutton {
     font-size: 15px;
-    margin: -20px 25px;
-    width: 370px; }
+    margin: -15px 25px;
+    width: 370px;
+    height: 150px; }
     .addbutton:hover{
-	transform: scale(1.1);} }
+	transform: scale(1.05);} }
 
 
 
@@ -853,7 +855,7 @@ td{
 
 @media screen and (max-width: 768px) {
     .edititem_container {
-    width: 370px; } }
+    width: 350px; } }
 
 
 
@@ -868,6 +870,7 @@ td{
 
 @media screen and (max-width: 768px) {
     .offeredit_form {
+    width: 350px;
     margin: 0px 5px; } }
 
 
@@ -882,6 +885,7 @@ td{
 
 @media screen and (max-width: 768px) {
     .attachment_form {
+    width: 350px;
      margin: 0px 5px;} }
 
 

@@ -96,6 +96,10 @@
 }
 
 
+.ebro_earch{
+    width: 80%;
+    
+}
 
 .username{
     position: absolute;
@@ -117,9 +121,13 @@
 
 @media screen and (max-width: 768px) {
     .username_mobile {
-        left: -50; }
+        left: 10; }
     .person{
-        margin: 0px 0px; } }
+        margin: 0px 0px 0px -30px; }
+    .ebro_earch{
+        width: 80%; 
+        height: 20px;
+        margin: 0px 0px 0px -90px; } }
 
 
 
