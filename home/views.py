@@ -2848,7 +2848,7 @@ def ordercomplete(request):
 
         total = product_count*product_price
 
-        profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
+        # profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
 
     profile.objects.filter(username_id=request.user.id).update(coins=F('coins')+10)
 
@@ -2892,7 +2892,7 @@ def ordercomplete_wallet(request):
 
                 total = product_count*product_price
 
-                profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
+                # profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
 
 
             profile.objects.filter(username_id=request.user.id).update(wallet=F('wallet')-total_price,coins=F('coins')+10)
@@ -2945,7 +2945,7 @@ def ordercomplete_cash_on_delivery(request):
 
             total = product_count*product_price
 
-            profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
+            # profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
 
 
         profile.objects.filter(username_id=request.user.id).update(coins=F('coins')+10)
