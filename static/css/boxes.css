@@ -459,7 +459,7 @@
 
 @media screen and (max-width: 768px) {
     .user_profileedit_form {
-    width: 370px;
+    width: 350px;
     margin: 350px 5px; } }
 
 
@@ -590,7 +590,7 @@ td{
 
 @media screen and (max-width: 768px) {
     .address_widebox {
-    margin-left: 15px;
+    margin-left: 10px;
     width: 350px; } }
 
 
