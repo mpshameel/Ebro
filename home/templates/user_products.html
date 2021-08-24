@@ -33,11 +33,11 @@
 		    <br><br><br><br><br><br><br><br><br>
 
 			<div class="col-md-12">
-				<label for="fname">Product Name</label>
+				<label for="fname"><font style="color: red;">*</font>Product Name</label>
 				<input type="text" name="product_name" id="fname" class="form-control" placeholder="Your Product Name" required="">
 			</div>
 			<div class="col-md-12">
-				<label for="lname">Price</label>
+				<label for="lname"><font style="color: red;">*</font>Price</label>
 				<input type="text" name="price" id="lname" class="form-control" placeholder="Your Product Price" required="">
 			</div>
 			<div class="col-md-12">
@@ -84,7 +84,7 @@
 			</div>
 			<div class="col-md-12">
 				<div class="form-group">
-				<label>Select Product Category:</label><br>
+				<label><font style="color: red;">*</font>Select Product Category:</label><br>
 				<select id="mselect" name="category" class="form-control" multiple required="">
 				{% for i in category_details %}
 				<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
@@ -93,7 +93,7 @@
 				</div>
 			</div>
 			<div class="col-md-12">
-				<label for="subject">Location</label>
+				<label for="subject"><font style="color: red;">*</font>Location</label>
 				<select name="location" class="form-control mb-4" style="width: 90%;">
                     <option value="">Select Location</option>
                     {% for i in location_details %}

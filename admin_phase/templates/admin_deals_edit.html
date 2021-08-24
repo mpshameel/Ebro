@@ -53,7 +53,7 @@
 							{% csrf_token %}
 
 			         	<input type="hidden" value="{{ admin_deals_list.id }}" name="id_freeze">
-			         	<button class="btn2 btn2-2 btn2-sep4">UnFreeze</button>
+			         	<button class="btn2 btn2-2 btn2-sep7">UnFreeze</button>
 			            </form>
                      	{% else %}
 		         		<form action="{% url 'freeze_admin_deals' %}" method="POST">

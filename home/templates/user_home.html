@@ -43,7 +43,7 @@
 	{% for i in ad_xxxl %}
 		{% if i.image != '' %}
 		<div class="col-md-12">
-			<img src="{{i.image.url}}" alt="" class="image-popup-link xxxlimage" style="margin-top: 10px;" />
+			<img src="{{i.image.url}}" data-product={{i.id}} data-action="add"  alt="" class="ad-count image-popup-link xxxlimage" style="margin-top: 10px;" />
 		</div>
 		{% endif %}
 	{% endfor %}

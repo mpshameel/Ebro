@@ -1,0 +1,79 @@
+
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+
+
+<style>
+   .active_user_page11{
+      background-color: #99c2ff;
+   }
+
+</style>
+
+
+
+
+
+
+<br>
+
+<div class="container_wideboxes">
+	<div class="col-md-12 deal_list_form">   
+	    <table cellspacing="0">
+
+	      <tr class="header">
+	      	<center>
+	      	 <th width="5%"><center>#</center></th>
+	         <th width="10%"><center>First Name</center></th>
+	         <th width="10%"><center>Last Name</center></th>
+	         <th width="15%" class="none"><center>Email</center></th>
+	         <th width="10%" class="none"><center>Phone</center></th>
+	         <th width="5%" class="none"><center>Position</center></th>
+	         <th width="5%" class="none"><center>Profession</center></th>
+	         <th width="10%" class="none"><center>Location</center></th>
+	         <th width="25%"><center>Message/Bio</center></th>
+	         <th width="5%" class="none"><center>Delete</center></th>
+	         
+	         </center>
+	      </tr>
+
+
+	      {% for i in careers_list %}
+	      <tr style="font-size: 13px;height: 20px;cursor: pointer;">
+	      	 <td><center>{{ forloop.counter }}</center></td>
+	         <td>&nbsp;{{ i.first_name }}{% if user_profile.username_id != ''%}<br>{{ i.username.username }} {% endif %}</td>
+	         <td>&nbsp;{{ i.last_name }}{% if user_profile.profile_id != ''%}<br>{{ i.profile.username }} {% endif %}</td>
+	         <td class="none">&nbsp;{{ i.email }}</td>
+	         <td class="none">&nbsp;{{ i.phone }}</td>
+	         <td class="none">&nbsp;{{ i.position }}</td>
+	         <td class="none"><center>{{ i.profession }}</center></td>
+	         <td class="none"><center>{{ i.location }}</center></td>
+	         <td class="none"><center>{{ i.message }}</center></td>
+	         <td><center>
+	         	<form action="{% url 'admin_careers_requests' %}" method="POST">
+					{% csrf_token %}
+
+	         	<input type="hidden" value="{{ i.id }}" name="delete_careers_requests_id">
+	         	<button>Delete</button>
+	            </form>
+	             </center>
+	         </td>
+
+
+
+	      </tr>
+	      {% endfor %}  
+	    </table>
+	</div>
+</div>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br><br>
+
+
+
+{% endblock %}

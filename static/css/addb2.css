@@ -1079,6 +1079,7 @@ td{
 .btn2-sep4 {
     /*padding: 10px 10px 10px 10px;*/
     padding: 5px 20px 5px 20px;
+
 }
 
 @media screen and (max-width: 768px) {
@@ -1086,7 +1087,11 @@ td{
         margin-top: -10px;
         padding: 5px 5px 5px 15px; } }
 
-
+@media screen and (max-width: 768px) {
+    .btn2-sep7 {
+        margin-top: -40px;
+        margin-left: 200px;
+        padding: 5px 5px 5px 15px; } }
 
 
 
@@ -1103,6 +1108,13 @@ td{
     padding: 10px 150px 10px 135px;
 
 }
+
+.btn2-sep7 {
+    /*padding: 10px 10px 10px 10px;*/
+    padding: 5px 20px 5px 20px;
+
+}
+
 @media screen and (max-width: 768px) {
     .btn2-sep6 {
         margin-top: -10px;
@@ -1384,7 +1396,7 @@ td{
 @media screen and (max-width: 768px) {
     .btn4-sep2 {
         margin-top: -45px;
-        margin-left: 250px;
+        margin-left: 220px;
         padding: 5px 5px 5px 10px; }
     .down {
         margin-top: 80px; } }

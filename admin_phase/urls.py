@@ -118,6 +118,9 @@ urlpatterns = [
 	path('delete_notifications', delete_notifications, name='delete_notifications'),
 	path('admin_personal_notifications', admin_personal_notifications, name='admin_personal_notifications'),
 	path('delete_personal_notifications', delete_personal_notifications, name='delete_personal_notifications'),
+
+	path('admin_personal_notification_group', admin_personal_notification_group, name='admin_personal_notification_group'),
+	# path('delete_personal_notification_group', delete_personal_notification_group, name='delete_personal_notification_group'),
 	
 
 
@@ -128,6 +131,11 @@ urlpatterns = [
 	#approve payments
 	path('admin_payments', admin_payments, name='admin_payments'),
 	
+
+	path('admin_careers_requests', admin_careers_requests, name='admin_careers_requests'),
+	# path('delete_careers_requests', delete_careers_requests, name='delete_careers_requests'),
+	path('admin_invests_requests', admin_invests_requests, name='admin_invests_requests'),
+	# path('delete_invests_requests', delete_invests_requests, name='delete_invests_requests'),
 
 	
 	#logout

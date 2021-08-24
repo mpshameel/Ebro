@@ -1,0 +1,161 @@
+{% extends 'admin dashboard/admin_dashboard.html'%}
+
+{% block content %}
+
+{% load static %}
+
+<style>
+   .active_user_page6{
+      background-color: #99c2ff;
+   }
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="col-md-12 userdetails_form">
+    <div class="col-md-12 datalist_box">
+      <div class="scrolluserlist">
+
+            <div id="colorlib-reservation">
+              <div class="row">
+                  <div class="col-md-12 search-wrap">
+                    <form class="colorlib-form">
+                        <div class="row">
+                        <div class="col-md-4">
+                          <div class="form-group">
+
+                              <label for="date">Who:</label>
+                              <div class="form-field" style="margin-top: -10px;">
+                                <i class="icon icon-text"></i>
+                                <input name="search" type="textfield" id="date" class="form-control text" placeholder="username,first name,tittle,etc">
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-2">
+                          <div class="form-group">
+                            <label for="adults">Type:</label>
+                            <div class="form-field">
+                              <i class="icon icon-arrow-down3"></i>
+                              <select name="user_type" id="people" class="form-control">
+                                <option value="" style="color: #000;">------------</option>
+                                <option value="free" style="color: #000;">Free User</option>
+                                <option value="premium" style="color: #000;">Premium User</option>
+                                <option value="" style="color: #000;">Admin</option>
+                                <option value="" style="color: #000;">Super Admin</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="date">Where:</label>
+                              <div class="form-field" style="margin-top: -10px;">
+                                <i class="icon location"></i>
+                                <input type="textfield" name="location" id="date" class="form-control text" placeholder="city,state, or Country">
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-2" style="margin-top: -10px;">
+                            <button type="submit" name="submit" id="submit"  class="btn btn-primary btn-block">Search</button>
+                          </div>        
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+              </div>
+
+
+
+            
+
+
+              
+            <div class="col-md-12">
+            	<form action="{% url 'admin_personal_notification_group' %}" method="POST">
+              		{% csrf_token %}
+	              	<div class="col-md-12">
+	                  <br>
+	                  <textarea id="message" cols="25" rows="2" class="form-control" name="personal_notification" placeholder="Send notification to users" value="" required=""></textarea>
+	                </div>
+	                <div class="col-md-12">
+	                  <div class="form-group text-center">
+	                    <button type="submit" value="Send" class="btn btn-primary">Send</button>
+	                  </div>
+	              </div>
+            	
+
+            	<button type="button" onclick="select_all()">Select All</button>
+            	<button type="button" onclick="deselect_all()">De-Select All</button>
+                <table cellspacing="0" class="user_list_table">
+                
+                  <tr class="header" style="font-size: 15px;">
+                    <center>
+                    <th width="5%"><center></center></th>
+                     <th width="5%"><center>#</center></th>
+                     <th width="5%"><center></center></th>
+                     <th width="25%"><center>Username</center></th>
+                     <th width="15%" class="none"><center>Phone</center></th>
+                     <th width="15%" class="none"><center>Profession</center></th>
+                     <th width="15%" class="none"><center>Location</center></th>
+                     <th width="15%" class="none"><center>Type</center></th>
+                     </center>
+                  </tr>
+
+
+                  {% for i in profile_list %}
+                    <tr style="font-size: 13px;cursor: pointer;">
+
+                     <td><input type="checkbox" id="vehicle1" name="user_profile_id" value="{{ i.id }}" style="width: 20px;"></td>
+                     
+                     <td><center>{{ forloop.counter }}</center></td>
+                     <td><center>
+                      {% if i.image != '' %}
+                      <img src="{{i.image.url}}" alt="" height="30" width="30"/>
+                      {% else %}
+                      <img src="{% static 'images/assign.png' %}" alt="" height="30" width="30"/>
+                      {% endif %}
+                     </center></td>
+                     <td>&nbsp;{{ i.username.username }}</td>
+                     <td class="none">&nbsp;{{ i.phone }}</td>
+                     <td class="none"><center>{{ i.profession.name }}</center></td>
+                     <td class="none">&nbsp;{{ i.location.name }}</td>
+                     <td class="none"><center>{% if i.username.is_superuser == True %}<font color="red"> Admin </font> {% elif i.usertype == "premium" %} Premium User {% else %} Free User {% endif %}</center></td>
+
+                    </tr>
+                  {% endfor %} 
+                </table>
+                </form>
+            </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<script>
+	  function select_all()  {
+	     $('input[type=checkbox]').prop('checked', true);
+	  }
+</script>
+
+<script>
+	 function deselect_all()  {
+     	$('input[type=checkbox]').prop('checked', false);
+     }
+</script>
+{% endblock %}

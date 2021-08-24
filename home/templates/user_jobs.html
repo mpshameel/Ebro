@@ -34,11 +34,11 @@
 		    <br><br><br><br><br><br><br><br><br>
 
 			<div class="col-md-12">
-				<label for="fname">Job Name</label>
+				<label for="fname"><font style="color: red;">*</font>Job Name</label>
 				<input type="text" name="job_name" id="fname" class="form-control" placeholder="Your Job Name" required="">
 			</div>
 			<div class="col-md-12">
-				<label for="lname">Salary</label>
+				<label for="lname"><font style="color: red;">*</font>Salary</label>
 				<input type="text" name="price" id="lname" value="0" class="form-control" placeholder="Your Job Salary">
 			</div>
 			<div class="col-md-12">
@@ -81,7 +81,7 @@
 			</div> -->
 			<div class="col-md-12">
 				<div class="form-group">
-				<label>Select Job Category:</label><br>
+				<label><font style="color: red;">*</font>Select Job Category:</label><br>
 				<select  id="mselect" name="category" class="form-control" multiple required="">
 				{% for i in category_details %}
 				<option id="jobcategory_value" value="{{i.id}}">{{i.name}}</option>
@@ -90,7 +90,7 @@
 				</div>
 			</div>
 			<div class="col-md-12">
-				<label for="subject">Location</label>
+				<label for="subject"><font style="color: red;">*</font>Location</label>
 				<select name="location" class="form-control mb-4" style="width: 90%;">
                     <option value="">Select Location</option>
                     {% for i in location_details %}

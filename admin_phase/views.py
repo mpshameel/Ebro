@@ -335,7 +335,7 @@ def admin_deals(request):
         deal_type = request.GET['deal_type']
         # brand_name = request.GET['brand_name']
         location = request.GET['location']
-        admin_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish__contains=publish,deal_type__contains=deal_type,location__contains=location)
+        admin_deals_list = deals.objects.filter(deal_name__contains=deal_name,publish__contains=publish,deal_type__contains=deal_type,location__name__contains=location)
 
     else:
         admin_deals_list = deals.objects.all()
@@ -524,7 +524,7 @@ def admin_jobs(request):
         job_type = request.GET['job_type']
         # brand_name = request.GET['brand_name']
         location = request.GET['location']
-        admin_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish__contains=publish,job_type__contains=job_type,location__contains=location)
+        admin_jobs_list = jobs.objects.filter(job_name__contains=job_name,publish__contains=publish,job_type__contains=job_type,location__name__contains=location)
 
     else:
         admin_jobs_list = jobs.objects.all()
@@ -718,7 +718,7 @@ def admin_products(request):
         product_type = request.GET['product_type']
         brand_name = request.GET['brand_name']
         location = request.GET['location']
-        admin_products_list = products.objects.filter(product_name__contains=product_name,publish__contains=publish,product_type__contains=product_type,brand_name__contains=brand_name,location__contains=location)
+        admin_products_list = products.objects.filter(product_name__contains=product_name,publish__contains=publish,product_type__contains=product_type,brand_name__contains=brand_name,location__name__contains=location)
 
     else:
         admin_products_list = products.objects.all()
@@ -887,7 +887,7 @@ def admin_userdata(request):
         searched = request.GET['search']
         user_type = request.GET['user_type']
         location = request.GET['location']
-        profile_list = profile.objects.filter(username__first_name__contains=searched,usertype__contains=user_type,location__contains=location)
+        profile_list = profile.objects.filter(username__first_name__contains=searched,usertype__contains=user_type,location__name__contains=location)
 
     else:
         profile_list = profile.objects.all()
@@ -1407,6 +1407,10 @@ def add_user(request):
 
 
         if password1 == password2:
+
+            profession_id = professions.objects.get(id=profession)
+            location_id = locations.objects.get(id=location)
+
             if User.objects.filter(email=email).exists():
                 messages.info(request,"Email already exist")
                 return redirect('admin_userdata')
@@ -1416,7 +1420,7 @@ def add_user(request):
 
                 userid = str(user.id)
 
-                pr = profile(username=user,phone=phone,image=picture,refferalcode=refferalcode,myrefferalid="EBWD"+userid,alternative_phone=alternative_phone,usertype="free",dob=dob,adhar_id=adhar_id,profession=profession,location=location,qualification=qualification,hobbies=hobbies,summary=summary).save()
+                pr = profile(username=user,phone=phone,image=picture,refferalcode=refferalcode,myrefferalid="EBWD"+userid,alternative_phone=alternative_phone,usertype="free",dob=dob,adhar_id=adhar_id,profession=profession_id,location=location_id,qualification=qualification,hobbies=hobbies,summary=summary).save()
 
                 profile_list = profile.objects.all()
                 for i in profile_list:
@@ -1434,7 +1438,7 @@ def add_user(request):
 
                 userid = str(user.id)
 
-                pr = profile(username=user,phone=phone,image=picture,refferalcode=refferalcode,myrefferalid="EBWD"+userid,alternative_phone=alternative_phone,usertype=user_type,dob=dob,adhar_id=adhar_id,profession=profession,location=location,qualification=qualification,hobbies=hobbies,summary=summary).save()
+                pr = profile(username=user,phone=phone,image=picture,refferalcode=refferalcode,myrefferalid="EBWD"+userid,alternative_phone=alternative_phone,usertype=user_type,dob=dob,adhar_id=adhar_id,profession=profession_id,location=location_id,qualification=qualification,hobbies=hobbies,summary=summary).save()
 
                 profile_list = profile.objects.all()
                 for i in profile_list:
@@ -1449,7 +1453,7 @@ def add_user(request):
 
                 userid = str(user.id)
                 
-                pr = profile(username=user,phone=phone,image=picture,refferalcode=refferalcode,myrefferalid="EBWD"+userid,alternative_phone=alternative_phone,usertype=user_type,dob=dob,adhar_id=adhar_id,profession=profession,location=location,qualification=qualification,hobbies=hobbies,summary=summary).save()
+                pr = profile(username=user,phone=phone,image=picture,refferalcode=refferalcode,myrefferalid="EBWD"+userid,alternative_phone=alternative_phone,usertype=user_type,dob=dob,adhar_id=adhar_id,profession=profession_id,location=location_id,qualification=qualification,hobbies=hobbies,summary=summary).save()
 
                 profile_list = profile.objects.all()
                 for i in profile_list:
@@ -1649,12 +1653,15 @@ def admin_notifications(request):
         messages.info(request,"Notification Added")
         return redirect('admin_userdata')
     else:
-        total_users =  profile.objects.filter(username__is_superuser=False)
-        notifications_list = notifications.objects.all()
-        feedbacks_list = feedbacks.objects.all()
-        admin_profile = profile.objects.get(username_id=request.user.id)
-        context = {'total_users':total_users,'notifications_list':notifications_list,'feedbacks_list':feedbacks_list,'admin_profile':admin_profile}
-        return render(request, 'admin_userdata.html',context)
+        return redirect('admin_userdata')
+
+        
+        # total_users =  profile.objects.filter(username__is_superuser=False)
+        # notifications_list = notifications.objects.all()
+        # feedbacks_list = feedbacks.objects.all()
+        # admin_profile = profile.objects.get(username_id=request.user.id)
+        # context = {'total_users':total_users,'notifications_list':notifications_list,'feedbacks_list':feedbacks_list,'admin_profile':admin_profile}
+        # return render(request, 'admin_userdata.html',context)
 
 
 
@@ -1710,6 +1717,51 @@ def delete_personal_notifications(request):
     else:
         return redirect('admin_userdata')
 
+
+
+
+
+def admin_personal_notification_group(request):
+    if request.method == 'POST':
+        personal_notification = request.POST.get('personal_notification')
+        user_profile_id = request.POST.getlist('user_profile_id')
+
+        
+        user = User.objects.get(id=request.user.id)
+
+        for i in user_profile_id:
+            profile_id = profile.objects.get(id=i)
+            personal_notifications(messages=personal_notification,username=user,profile=profile_id).save()
+
+        messages.info(request,"Personal Notifications Added")
+        return redirect('admin_personal_notification_group')
+
+    elif 'search' in request.GET:
+        searched = request.GET['search']
+        user_type = request.GET['user_type']
+        location = request.GET['location']
+        profile_list = profile.objects.filter(username__first_name__contains=searched,usertype__contains=user_type,location__name__contains=location)
+
+
+    else:
+        profile_list = profile.objects.all()
+    admin_profile = profile.objects.get(username_id=request.user.id)
+    context = {'admin_profile':admin_profile,'profile_list':profile_list}
+    return render(request, 'admin_notification_group.html',context)
+
+
+
+# def delete_personal_notification_group(request):
+#     if request.method == 'POST':
+#         id_delete = request.POST.get('id_delete')
+
+#         personal_notification = personal_notifications.objects.get(id=id_delete)
+#         personal_notification.delete()
+
+#         messages.info(request,"Personal Notification Deleted")
+#         return redirect('admin_userdata')
+#     else:
+#         return redirect('admin_userdata')
 
         
 # def admin_orders(request):
@@ -1811,6 +1863,41 @@ def admin_payments(request):
 #       return render(request,'admin_products_edit.html',context)
 
 
+
+
+def admin_careers_requests(request):
+    if request.method == 'POST':
+        delete_careers_requests_id = request.POST['delete_careers_requests_id']
+
+        career_request = careers.objects.get(id=delete_careers_requests_id)
+        career_request.delete()
+
+        messages.info(request,"Career Request Deleted")
+        return redirect('admin_careers_requests')
+
+    else:
+        careers_list = careers.objects.all()
+        admin_profile = profile.objects.get(username_id=request.user.id)
+        context = {'admin_profile':admin_profile,'careers_list':careers_list}
+        return render(request, 'admin_careers.html',context)
+
+
+
+def admin_invests_requests(request):
+    if request.method == 'POST':
+        delete_invests_requests_id = request.POST['delete_invests_requests_id']
+
+        invest_request = invests.objects.get(id=delete_invests_requests_id)
+        invest_request.delete()
+
+        messages.info(request,"Invest Request Deleted")
+        return redirect('admin_invests_requests')
+
+    else:
+        invests_list = invests.objects.all()
+        admin_profile = profile.objects.get(username_id=request.user.id)
+        context = {'admin_profile':admin_profile,'invests_list':invests_list}
+        return render(request, 'admin_invests.html',context)
 
 
 

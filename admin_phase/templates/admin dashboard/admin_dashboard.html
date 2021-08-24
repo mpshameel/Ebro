@@ -116,8 +116,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-xs-2">
-						<p class="num">www.ebro-world.com</p><br>
-						<p class="num">Call: +01-123-456</p>
+						<p class="mailto:ebroworldebro@gmail.com">ebroworldebro@gmail.com</p><br>
+						<p class="num">Call: +97433285047</p>
 						<ul class="colorlib-social">
 							<li><a href="#"><i class="icon-twitter"></i></a></li>
 							<li><a href="#"><i class="icon-facebook"></i></a></li>
@@ -135,12 +135,11 @@
 
 									{% if admin_profile.image != '' %}
 									<div class="col-xs-4">
-	         						<li class="active"><span><a href="/admin_profile"><img src="{{admin_profile.image.url}}"  class="person"/></a></span></li>
-
-	         						<li class="has-dropdown active"><a href="/admin_profile"><img src="{% static 'images/profile_link.png '%}"  class="profile_link"/></a>
+	         						
+	         						<span><li class="has-dropdown active"><a href="/admin_profile"><img src="{{admin_profile.image.url}}"  class="person_admin"/></a></span>
 	         							<ul class="dropdown">
-											<li><a href="#">Profile</a></li>
-											<li><a href="#">Logout</a></li>
+											<li><a href="/admin_profile">Profile</a></li>
+											<li><a href="/logout">Logout</a></li>
 
 										</ul>
 									</li>
@@ -152,12 +151,12 @@
 
 	         						{% else %}
 	         						<div class="col-xs-4">
-	         						<li class="active"><span><a href="/admin_profile"><img src="{% static 'images/pers1.png '%}"  class="person"></a></span></li>
+	         						
 
-	         						<li class="has-dropdown active"><a href="/admin_profile"><img src="{% static 'images/profile_link.png '%}"  class="profile_link"/></a>
+	         						<span><li class="has-dropdown active"><a href="/admin_profile"><img src="{% static 'images/pers1.png '%}"  class="person_admin"></a></span>
 	         							<ul class="dropdown">
-											<li><a href="#">Profile</a></li>
-											<li><a href="#">Logout</a></li>
+											<li><a href="/admin_profile">Profile</a></li>
+											<li><a href="/logout">Logout</a></li>
 
 										</ul>
 									</li>
@@ -205,6 +204,14 @@
 						<!-- 			<li class="links_admin_all active_user_page8"><a href="/admin_orders">Orders</a></li> -->
 									<li class="links_admin_all active_user_page9"><a href="/admin_payments">Orders</a></li>
 									<li class="links_admin_all active_user_page10"><a href="/admin_assigns">Assigns</a></li>
+
+									<li class="links_admin_all active_user_page11 has-dropdown">
+										<a href="/admin_careers_requests">Requests</a>
+										<ul class="dropdown">
+											<li class="links_admin_all active_user_page11"><a href="/admin_careers_requests">Career Requests</a></li>
+											<li class="links_admin_all active_user_page11"><a href="/admin_invests_requests">Invest Requests</a></li>
+										</ul>
+									</li>
 									<!-- <li class="links_admin_all active_user_page11"><a href="/admin_notifications">Notifications</a></li> -->
 									<li class="links_admin_all"><a href="/logout">Logout</a></li>
 							

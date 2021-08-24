@@ -185,10 +185,10 @@ def user_home(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
 
-
-        context = {'user_profile':user_profile,'cart_count':cart_count,'allads':allads,'ad_xxxl':ad_xxxl,'ad_xxl':ad_xxl,'ad_xl':ad_xl,'ad_l':ad_l,'ad_s':ad_s,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'user_profile':user_profile,'cart_count':cart_count,'notifications_list':notifications_list,'allads':allads,'ad_xxxl':ad_xxxl,'ad_xxl':ad_xxl,'ad_xl':ad_xl,'ad_l':ad_l,'ad_s':ad_s,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_home.html',context)
     else:
         if 'search_name' in request.GET:
@@ -203,7 +203,10 @@ def user_home(request):
         ad_xl = ads.objects.filter(adsize="xl")
         ad_l = ads.objects.filter(adsize="l")
         ad_s = ads.objects.filter(adsize="s")
-        context = {'allads':allads,'ad_xxxl':ad_xxxl,'ad_xxl':ad_xxl,'ad_xl':ad_xl,'ad_l':ad_l,'ad_s':ad_s}
+        notifications_list = notifications.objects.all()
+        profession_details = professions.objects.filter(is_deleted=False)
+
+        context = {'profession_details':profession_details,'notifications_list':notifications_list,'allads':allads,'ad_xxxl':ad_xxxl,'ad_xxl':ad_xxl,'ad_xl':ad_xl,'ad_l':ad_l,'ad_s':ad_s}
         return render(request, 'user_home.html',context)
 
 
@@ -232,7 +235,10 @@ def user_login(request):
 def user_signup(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
+        # last_name = request.POST['last_name']
+
+        profession = request.POST['profession']
+
         email = request.POST['email']
         phone = request.POST['phone']
         refferalcode = request.POST['refferalcode']
@@ -246,12 +252,14 @@ def user_signup(request):
                 messages.info(request,"Email already exist")
                 return redirect('user_home')
             else:
-                user=User.objects.create_user(first_name=first_name,last_name=last_name,username=email,email=email,password=password1)
+                user=User.objects.create_user(first_name=first_name,last_name=first_name,username=email,email=email,password=password1)
                 user.save()
 
                 userid = str(user.id)
 
-                pr = profile(username=user,phone=phone,refferalcode=refferalcode,usertype="free",myrefferalid="EBWD"+userid,coins="25").save()
+                profession_id = professions.objects.get(id=profession)
+
+                pr = profile(username=user,phone=phone,profession=profession_id,refferalcode=refferalcode,usertype="free",myrefferalid="EBWD"+userid,coins="25").save()
 
                 profile_list = profile.objects.all()
                 for i in profile_list:
@@ -259,8 +267,14 @@ def user_signup(request):
                         profile_list_refferal = profile.objects.filter(myrefferalid=refferalcode).update(myrefferalcount=F('myrefferalcount')+1)
 
 
-                messages.info(request,"Registered Successfully")
-                return redirect('user_home')
+                if user is not None:
+                    # auth.login(request,user)
+                    auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                    messages.info(request,"Registered Successfully")
+                    return redirect('user_home')
+                    
+                # messages.info(request,"Registered Successfully")
+                # return redirect('user_home')
 
         else:
             messages.info(request,'Password not matching')
@@ -287,7 +301,10 @@ def register_social(request):
 def premium_user_signup(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
+        # last_name = request.POST['last_name']
+
+        profession = request.POST['profession']
+
         email = request.POST['email']
         phone = request.POST['phone']
         refferalcode = request.POST['refferalcode']
@@ -301,12 +318,14 @@ def premium_user_signup(request):
                 messages.info(request,"Email already exist")
                 return redirect('user_home')
             else:
-                user=User.objects.create_user(first_name=first_name,last_name=last_name,username=email,email=email,password=password1)
+                user=User.objects.create_user(first_name=first_name,last_name=first_name,username=email,email=email,password=password1)
                 user.save()
 
                 userid = str(user.id)
 
-                pr = profile(username=user,phone=phone,refferalcode=refferalcode,usertype="free",myrefferalid="EBWD"+userid,coins="25").save()
+                profession_id = professions.objects.get(id=profession)
+
+                pr = profile(username=user,phone=phone,profession=profession_id,refferalcode=refferalcode,usertype="free",myrefferalid="EBWD"+userid,coins="25").save()
 
                 profile_list = profile.objects.all()
                 for i in profile_list:
@@ -366,8 +385,9 @@ def premium_signup_payment(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     cart_count = sum(items.values_list('quantity', flat=True))
 
+    notifications_list = notifications.objects.all()
 
-    context = {'user_profile':user_profile,'cart_count':cart_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {'notifications_list':notifications_list,'user_profile':user_profile,'cart_count':cart_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'premium_signup_payment.html',context)
 
 
@@ -419,8 +439,9 @@ def premium_signup_payment_upgrade(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     cart_count = sum(items.values_list('quantity', flat=True))
 
+    notifications_list = notifications.objects.all()
 
-    context = {'user_profile':user_profile,'cart_count':cart_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {'notifications_list':notifications_list,'user_profile':user_profile,'cart_count':cart_count,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'premium_signup_payment_upgrade.html',context)
 
 
@@ -567,8 +588,9 @@ def profiles(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-        context = {'user_profile':user_profile,'user_address':user_address,'all_profiles':all_profiles,'location_details':location_details,'profession_details':profession_details,'main_location_list':main_location_list,'sub_location_list':sub_location_list,'microsub_location_list':microsub_location_list,'my_refferals':my_refferals,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_profile':user_profile,'user_address':user_address,'all_profiles':all_profiles,'location_details':location_details,'profession_details':profession_details,'main_location_list':main_location_list,'sub_location_list':sub_location_list,'microsub_location_list':microsub_location_list,'my_refferals':my_refferals,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_profile.html',context)
 
 
@@ -633,8 +655,9 @@ def topup_payment(request):
             my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
             cart_count = sum(items.values_list('quantity', flat=True))
 
+            notifications_list = notifications.objects.all()
 
-            context = {'user_profile':user_profile,'amount':amount,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+            context = {'notifications_list':notifications_list,'user_profile':user_profile,'amount':amount,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
             return render(request, 'user_topup_payment.html',context)
 
         else:
@@ -778,10 +801,9 @@ def retrieve_money(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-
-
-        context = {'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'retrieve_money.html',context)
 
 
@@ -866,9 +888,13 @@ def offers(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
+        offerbook_all = offerbook.objects.all()
+        # offer_num = 0
+        # offer_max_num = 3
         
-        context = {'user_products_list':user_products_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'offerbook_all':offerbook_all,'notifications_list':notifications_list,'user_products_list':user_products_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_offers.html',context)
     else:
         if 'search_name' in request.GET:
@@ -877,8 +903,10 @@ def offers(request):
             user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False).exclude(offer="0")
         else:
             user_products_list = products.objects.filter(publish="public",is_deleted=False).exclude(offer="0")
-        
-        context = {'user_products_list':user_products_list}
+
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_products_list':user_products_list}
         return render(request, 'user_offers.html',context)
 
 
@@ -939,8 +967,9 @@ def detail_offers(request,id):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-        context = {'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_detail_offers.html',context)
     else:
         if 'search_name' in request.GET:
@@ -955,7 +984,9 @@ def detail_offers(request,id):
         category_details = categorys.objects.filter(is_deleted=False)
         trade = user_product.category.all()
 
-        context = {'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
         return render(request, 'user_detail_offers.html',context)
 
 
@@ -982,7 +1013,29 @@ def detail_offers_unknown(request,id):
 
 
 
+def user_offerbook(request):
+    if request.method == 'POST':
+        offerbook_name = request.POST['offerbook_name']
+        price = request.POST['price']
+        image = request.FILES.get('image')
 
+
+        user = User.objects.get(id=request.user.id)
+        user_profile = profile.objects.get(username_id=request.user.id)
+
+        if user_profile.usertype == "premium":
+            user_offerbook_add = offerbook(username=user,profile=user_profile,offerbookname=offerbook_name,image=image,price=price)
+            user_offerbook_add.save()
+
+            messages.info(request,'Offer Book Added')
+            return redirect('offers')
+        else:
+            messages.info(request,'You are not a Premium user,Upgrade your account to add offerbooks')
+            return redirect('offers')
+
+    else:
+        messages.info(request,'Offer Not Book Added')
+        return redirect('offers')
 
 
 
@@ -1077,8 +1130,9 @@ def deal(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
         
+        notifications_list = notifications.objects.all()
 
-        context = {'user_deals_list':user_deals_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_deals_list':user_deals_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_deals.html',context)
     else:
         if request.method == 'POST':
@@ -1091,7 +1145,10 @@ def deal(request):
         else:
             user_deals_list = deals.objects.filter(publish="public",is_deleted=False)
         category_details = categorys.objects.filter(is_deleted=False)
-        context = {'user_deals_list':user_deals_list,'category_details':category_details}
+
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_deals_list':user_deals_list,'category_details':category_details}
         return render(request, 'user_deals.html',context)
 
 
@@ -1162,8 +1219,9 @@ def detail_deal(request,id):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-        context = {'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deal':user_deal,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deal':user_deal,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_detail_deals.html',context)
     else:
         if request.method == 'POST':
@@ -1180,7 +1238,9 @@ def detail_deal(request,id):
         category_details = categorys.objects.filter(is_deleted=False)
         trade = user_deal.category.all()
 
-        context = {'user_deals_list':user_deals_list,'user_deal':user_deal,'category_details':category_details,'trade':trade}
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_deals_list':user_deals_list,'user_deal':user_deal,'category_details':category_details,'trade':trade}
         return render(request, 'user_detail_deals.html',context)
 
 
@@ -1294,8 +1354,9 @@ def job(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-        context = {'user_jobs_list':user_jobs_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_jobs_list':user_jobs_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_jobs.html',context)
     else:
         if request.method == 'POST':
@@ -1308,7 +1369,10 @@ def job(request):
         else:
             user_jobs_list = jobs.objects.filter(publish="public",is_deleted=False)
         category_details = categorys.objects.filter(is_deleted=False)
-        context = {'user_jobs_list':user_jobs_list,'category_details':category_details}
+
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_jobs_list':user_jobs_list,'category_details':category_details}
         return render(request, 'user_jobs.html',context)
 
 
@@ -1378,9 +1442,9 @@ def detail_job(request,id):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-
-        context = {'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_job':user_job,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_job':user_job,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_detail_jobs.html',context)
 
     else:
@@ -1398,7 +1462,9 @@ def detail_job(request,id):
         category_details = categorys.objects.filter(is_deleted=False)
         trade = user_job.category.all()
 
-        context = {'user_jobs_list':user_jobs_list,'user_job':user_job,'category_details':category_details,'trade':trade}
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_jobs_list':user_jobs_list,'user_job':user_job,'category_details':category_details,'trade':trade}
         return render(request, 'user_detail_jobs.html',context)
 
 
@@ -1520,9 +1586,9 @@ def product(request,user_products_list=''):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-
-        context = {'user_products_list':user_products_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user_products_list':user_products_list,'user_profile':user_profile,'category_details':category_details,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_products.html',context)
     else:
         if 'search_name' in request.GET:
@@ -1532,7 +1598,9 @@ def product(request,user_products_list=''):
         else:
             user_products_list = products.objects.filter(publish="public",is_deleted=False)
         
-        context = {'user_products_list':user_products_list}
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_products_list':user_products_list}
         return render(request, 'user_products.html',context)
 
 
@@ -1610,10 +1678,10 @@ def detail_product(request,id):
         instance = get_object_or_404(products, id=id)
         share_string = quote_plus(instance.product_name)
 
+        notifications_list = notifications.objects.all()
 
 
-
-        context = {"title": instance.product_name,"instance": instance,"share_string": share_string,'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,"title": instance.product_name,"instance": instance,"share_string": share_string,'user_products_list':user_products_list,'user_profile':user_profile,'user_product':user_product,'category_details':category_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request, 'user_detail_products.html',context)
     else:
         if 'search_name' in request.GET:
@@ -1628,7 +1696,9 @@ def detail_product(request,id):
         category_details = categorys.objects.filter(is_deleted=False)
         trade = user_product.category.all()
 
-        context = {'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user_products_list':user_products_list,'user_product':user_product,'category_details':category_details,'trade':trade}
         return render(request, 'user_detail_products.html',context)
 
 
@@ -1707,9 +1777,9 @@ def myads(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     cart_count = sum(items.values_list('quantity', flat=True))
 
+    notifications_list = notifications.objects.all()
 
-
-    context = {'user':user,'user_deals_list':user_deals_list,'user_jobs_list':user_jobs_list,'user_products_list':user_products_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {'notifications_list':notifications_list,'user':user,'user_deals_list':user_deals_list,'user_jobs_list':user_jobs_list,'user_products_list':user_products_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_myads.html',context)
 
 
@@ -1773,9 +1843,9 @@ def myorders(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     cart_count = sum(items.values_list('quantity', flat=True))
 
+    notifications_list = notifications.objects.all()
 
-
-    context = {'user':user,'user_profile':user_profile,'my_orders':my_orders,'order_count':order_count,'total_order_price':total_order_price,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {'notifications_list':notifications_list,'user':user,'user_profile':user_profile,'my_orders':my_orders,'order_count':order_count,'total_order_price':total_order_price,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_myorders.html',context)
 
 
@@ -1834,8 +1904,9 @@ def daily_task(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     cart_count = sum(items.values_list('quantity', flat=True))
 
+    notifications_list = notifications.objects.all()
 
-    context = {'user':user,'daily_deals_list':daily_deals_list,'daily_jobs_list':daily_jobs_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {'notifications_list':notifications_list,'user':user,'daily_deals_list':daily_deals_list,'daily_jobs_list':daily_jobs_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_dailytask.html',context)
 
 
@@ -1877,8 +1948,11 @@ def chats(request):
 
 
     user = User.objects.get(id=request.user.id)
-    notifications_list = notifications.objects.all()
     user_profile = profile.objects.get(username_id=request.user.id)
+
+    notifications_list = notifications.objects.all()
+    personal_notifications_list = personal_notifications.objects.filter(profile_id=user_profile)
+
 
 
     #daily task list count
@@ -1909,21 +1983,32 @@ def chats(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     cart_count = sum(items.values_list('quantity', flat=True))
 
+    notifications_list = notifications.objects.all()
 
-    context = {'user':user,'notifications_list':notifications_list,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {'notifications_list':notifications_list,'user':user,'notifications_list':notifications_list,'user_profile':user_profile,'personal_notifications_list':personal_notifications_list,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request, 'user_chats.html',context)
+
+
+
+
+
 
 
 def feedback(request):
     if request.method == 'POST':
         feedback = request.POST.get('feedback')
 
-        user = profile.objects.get(username_id=request.user.id)
-        feedbacks(feedback=feedback,username=user).save()
-        messages.info(request,"Feedback Added")
-        return redirect('chats')
+        if request.user.is_authenticated:
+            user = profile.objects.get(username_id=request.user.id)
+            feedbacks(feedback=feedback,username=user).save()
+            messages.info(request,"Feedback Added")
+            return redirect('about_us')
+        else:
+            feedbacks(feedback=feedback).save()
+            messages.info(request,"Feedback Added")
+            return redirect('about_us')
     else:
-        return redirect('chats')
+        return redirect('about_us')
 
 
 
@@ -2062,7 +2147,9 @@ def detail_view_deals(request,id):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
-        context = {'user':user,'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deals_attach_list':user_deals_attach_list,'category_details':category_details,'location_details':location_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'user':user,'user_deals_list':user_deals_list,'user_profile':user_profile,'user_deals_attach_list':user_deals_attach_list,'category_details':category_details,'location_details':location_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request,'user_deals_edit.html',context)
 
 
@@ -2162,8 +2249,9 @@ def detail_view_jobs(request,id):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-        context = {'user':user,'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_jobs_attach_list':user_jobs_attach_list,'category_details':category_details,'location_details':location_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user':user,'user_jobs_list':user_jobs_list,'user_profile':user_profile,'user_jobs_attach_list':user_jobs_attach_list,'category_details':category_details,'location_details':location_details,'trade':trade,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request,'user_jobs_edit.html',context)
         
 
@@ -2324,11 +2412,37 @@ def detail_view_products(request,id):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-
-        context = {'user':user,'user_products_list':user_products_list,'user_products_attach_list':user_products_attach_list,'user_profile':user_profile,'category_details':category_details,'trade':trade,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user':user,'user_products_list':user_products_list,'user_products_attach_list':user_products_attach_list,'user_profile':user_profile,'category_details':category_details,'trade':trade,'location_details':location_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request,'user_products_edit.html',context)
 
+
+
+
+
+# def user_update_product_offer(request,id):
+#     if request.method == 'POST':
+#         offer = request.POST['offer']
+
+
+
+#         user_products_list = products.objects.get(id=int(id))
+#         user_products_list.offer = offer
+
+#         oldprice = user_products_list.oldprice
+#         offer = float(offer)
+#         percentage = oldprice * offer / 100
+#         price = oldprice-percentage
+        
+#         user_products_list.price = price
+#         user_products_list.save()
+
+#         messages.info(request,"Offer added")
+#         return redirect('myads')
+#     else:
+#         messages.info(request,"No offer added")
+#         return redirect('myads')
 
 
 
@@ -2337,22 +2451,106 @@ def user_update_product_offer(request,id):
     if request.method == 'POST':
         offer = request.POST['offer']
 
-        user_products_list = products.objects.get(id=int(id))
-        user_products_list.offer = offer
+        if offer == "0":
+            if offerbook.objects.filter(product_id = id).exists():
 
-        oldprice = user_products_list.oldprice
-        offer = float(offer)
-        percentage = oldprice * offer / 100
-        price = oldprice-percentage
-        
-        user_products_list.price = price
-        user_products_list.save()
+                user_products_list = products.objects.get(id=int(id))
+                user_products_list.offer = offer
 
-        messages.info(request,"Offer added")
-        return redirect('myads')
+                oldprice = user_products_list.oldprice
+                offer = float(offer)
+                percentage = oldprice * offer / 100
+                price = oldprice-percentage
+                
+                user_products_list.price = price
+                user_products_list.save()
+
+
+                user_offerbook_list = offerbook.objects.get(product_id=int(id))
+                user_products_list.delete()
+
+                messages.info(request,"Offer added")
+                return redirect('myads')
+            else:
+                user_products_list = products.objects.get(id=int(id))
+                user_products_list.offer = offer
+
+                oldprice = user_products_list.oldprice
+                offer = float(offer)
+                percentage = oldprice * offer / 100
+                price = oldprice-percentage
+                
+                user_products_list.price = price
+                user_products_list.save()
+
+                ####offerbook add
+                user = User.objects.get(id=request.user.id)
+                user_profile = profile.objects.get(username_id=request.user.id)
+                offerbookname = user_products_list.product_name
+                image = user_products_list.picture
+
+                # offerbook(username=user,profile=user_profile,offerbookname=offerbookname,image=image,product_id=id,price=price).save()
+                
+
+                messages.info(request,"Offer added")
+                return redirect('myads')
+        else:
+            if offerbook.objects.filter(product_id = id).exists():
+
+                user_products_list = products.objects.get(id=int(id))
+                user_products_list.offer = offer
+
+                oldprice = user_products_list.oldprice
+                offer = float(offer)
+                percentage = oldprice * offer / 100
+                price = oldprice-percentage
+                
+                user_products_list.price = price
+                user_products_list.save()
+
+                ####offerbook add
+                user = User.objects.get(id=request.user.id)
+                user_profile = profile.objects.get(username_id=request.user.id)
+                offerbookname = user_products_list.product_name
+                image = user_products_list.picture
+
+                user_offerbook_list = offerbook.objects.get(product_id=int(id))
+                user_offerbook_list.user = user
+                user_offerbook_list.profile = user_profile
+                user_offerbook_list.offerbookname = offerbookname
+                user_offerbook_list.image = image
+                user_offerbook_list.product = user_products_list
+                user_offerbook_list.price = price
+                user_offerbook_list.save()
+
+                messages.info(request,"Offer added")
+                return redirect('myads')
+            else:
+                user_products_list = products.objects.get(id=int(id))
+                user_products_list.offer = offer
+
+                oldprice = user_products_list.oldprice
+                offer = float(offer)
+                percentage = oldprice * offer / 100
+                price = oldprice-percentage
+                
+                user_products_list.price = price
+                user_products_list.save()
+
+                ####offerbook add
+                user = User.objects.get(id=request.user.id)
+                user_profile = profile.objects.get(username_id=request.user.id)
+                offerbookname = user_products_list.product_name
+                image = user_products_list.picture
+
+                offerbook(username=user,profile=user_profile,offerbookname=offerbookname,image=image,product_id=id,price=price).save()
+
+                messages.info(request,"Offer added")
+                return redirect('myads')
     else:
         messages.info(request,"No offer added")
         return redirect('myads')
+
 
 
 
@@ -2453,8 +2651,9 @@ def wishlist(request):
     my_wishlist_count = user_deal_wishlist_count + user_job_wishlist_count + user_product_wishlist_count
     cart_count = sum(items.values_list('quantity', flat=True))
 
+    notifications_list = notifications.objects.all()
 
-    context = {'user':user,'user_profile':user_profile,'user_deal_wishlist':user_deal_wishlist,'user_job_wishlist':user_job_wishlist,'user_product_wishlist':user_product_wishlist,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+    context = {'notifications_list':notifications_list,'user':user,'user_profile':user_profile,'user_deal_wishlist':user_deal_wishlist,'user_job_wishlist':user_job_wishlist,'user_product_wishlist':user_product_wishlist,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
     return render(request,'user_wishlist.html',context)
 
 
@@ -2519,7 +2718,9 @@ def cart(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     # cart_count = sum(items.values_list('quantity', flat=True))----------------------------------------
 
-    context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'value':value,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
+    notifications_list = notifications.objects.all()
+
+    context = {'notifications_list':notifications_list,'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'value':value,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
     return render(request,'user_cart.html',context)
 
 
@@ -2621,8 +2822,9 @@ def checkout(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         # cart_count = sum(items.values_list('quantity', flat=True))----------------------------------------
 
+        notifications_list = notifications.objects.all()
 
-        context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_address':user_address,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
+        context = {'notifications_list':notifications_list,'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_address':user_address,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
         return render(request,'user_checkout.html',context)
 
 
@@ -2644,6 +2846,9 @@ def about_us(request):
         user = User.objects.get(id=request.user.id)
 
         user_profile = profile.objects.get(username_id=request.user.id)
+
+        location_details = locations.objects.filter(is_deleted=False)
+        profession_details = professions.objects.filter(is_deleted=False)
 
 
         #daily task list count
@@ -2674,8 +2879,9 @@ def about_us(request):
         my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
         cart_count = sum(items.values_list('quantity', flat=True))
 
+        notifications_list = notifications.objects.all()
 
-        context = {'user':user,'user_profile':user_profile,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
+        context = {'notifications_list':notifications_list,'user':user,'user_profile':user_profile,'location_details':location_details,'profession_details':profession_details,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count,'cart_count':cart_count}
         return render(request,'user_about_us.html',context)
     else:
         if 'search_name' in request.GET:
@@ -2684,8 +2890,12 @@ def about_us(request):
             user_products_list = products.objects.filter(product_name__contains=product_name,publish="public",is_deleted=False)
             return product_unknown(request, user_products_list)
 
+        location_details = locations.objects.filter(is_deleted=False)
+        profession_details = professions.objects.filter(is_deleted=False)
 
-        context = {}
+        notifications_list = notifications.objects.all()
+
+        context = {'notifications_list':notifications_list,'location_details':location_details,'profession_details':profession_details}
         return render(request,'user_about_us.html',context)
 
 
@@ -2807,8 +3017,9 @@ def payment(request):
     my_wishlist_count = user_deal_wishlist + user_job_wishlist + user_product_wishlist
     # cart_count = sum(items.values_list('quantity', flat=True))----------------------------------------
 
+    notifications_list = notifications.objects.all()
 
-    context = {'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_delivery_address':user_delivery_address,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
+    context = {'notifications_list':notifications_list,'user':user,'user_profile':user_profile,'user_product_cart':user_product_cart,'cart_count':cart_count,'total_price':total_price,'user_delivery_address':user_delivery_address,'daily_task_count':daily_task_count,'my_ads_count':my_ads_count,'order_count':order_count,'my_wishlist_count':my_wishlist_count}
     return render(request,'user_payment.html',context)
 
 
@@ -2849,6 +3060,12 @@ def ordercomplete(request):
         total = product_count*product_price
 
         # profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
+        if personal_notifications.objects.filter(profile=dealer_profile_id).exists():
+            ordered_message_dealer = personal_notifications(profile=dealer_profile_id, messages="your product was buyed by some one,your payment will credit in 3 days was under process.")
+            ordered_message_dealer.save()
+        else:
+            ordered_message_dealer = personal_notifications(profile=dealer_profile_id, messages="your product was buyed by some one,your payment will credit in 3 days was under process.")
+            ordered_message_dealer.save()
 
     profile.objects.filter(username_id=request.user.id).update(coins=F('coins')+10)
 
@@ -2893,7 +3110,12 @@ def ordercomplete_wallet(request):
                 total = product_count*product_price
 
                 # profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
-
+                if personal_notifications.objects.filter(profile=dealer_profile_id).exists():
+                    ordered_message_dealer = personal_notifications(profile=dealer_profile_id, messages="your product was buyed by some one,your payment will credit in 3 days was under process.")
+                    ordered_message_dealer.save()
+                else:
+                    ordered_message_dealer = personal_notifications(profile=dealer_profile_id, messages="your product was buyed by some one,your payment will credit in 3 days was under process.")
+                    ordered_message_dealer.save()
 
             profile.objects.filter(username_id=request.user.id).update(wallet=F('wallet')-total_price,coins=F('coins')+10)
 
@@ -2946,7 +3168,12 @@ def ordercomplete_cash_on_delivery(request):
             total = product_count*product_price
 
             # profile.objects.filter(username_id=dealer_id).update(wallet=F('wallet')+total)
-
+            if personal_notifications.objects.filter(profile=dealer_profile_id).exists():
+                ordered_message_dealer = personal_notifications(profile=dealer_profile_id, messages="your product was buyed by some one,your payment will credit in 3 days was under process.")
+                ordered_message_dealer.save()
+            else:
+                ordered_message_dealer = personal_notifications(profile=dealer_profile_id, messages="your product was buyed by some one,your payment will credit in 3 days was under process.")
+                ordered_message_dealer.save()
 
         profile.objects.filter(username_id=request.user.id).update(coins=F('coins')+10)
 
@@ -3124,6 +3351,66 @@ def product_to_cart(request):
     else:
         messages.info(request,"Not added to Cart")
         return redirect('product')
+
+
+
+
+def add_careers(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        profession = request.POST['profession']
+        location = request.POST['location']
+        position = request.POST['position']
+        message = request.POST['message']
+
+
+        if request.user.is_authenticated:
+            user = User.objects.get(id=request.user.id)
+            user_profile = profile.objects.get(username_id=request.user.id)
+            careers(username=user,profile=user_profile,first_name=first_name,last_name=last_name,email=email,phone=phone,profession=profession,location=location,position=position,message=message).save()
+            messages.info(request,"Resonse added to Database")
+            return redirect('about_us')
+
+        else:
+            careers(first_name=first_name,last_name=last_name,email=email,phone=phone,profession=profession,location=location,position=position,message=message).save()
+            messages.info(request,"Resonse added to Database")
+            return redirect('about_us')
+    else:
+        messages.info(request,"Requeste Not Send")
+        return redirect('about_us')
+
+
+
+
+def add_invest(request):
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        profession = request.POST['profession']
+        location = request.POST['location']
+        amount = request.POST['amount']
+        message = request.POST['message']
+
+
+        if request.user.is_authenticated:
+            user = User.objects.get(id=request.user.id)
+            user_profile = profile.objects.get(username_id=request.user.id)
+            invests(username=user,profile=user_profile,first_name=first_name,last_name=last_name,email=email,phone=phone,profession=profession,location=location,invest_amount=amount,message=message).save()
+            messages.info(request,"Resonse added to Database")
+            return redirect('about_us')
+
+        else:
+            invests(first_name=first_name,last_name=last_name,email=email,phone=phone,profession=profession,location=location,invest_amount=amount,message=message).save()
+            messages.info(request,"Resonse added to Database")
+            return redirect('about_us')
+    else:
+        messages.info(request,"Requeste Not Send")
+        return redirect('about_us')
 
 
 

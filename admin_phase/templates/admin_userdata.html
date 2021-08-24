@@ -30,12 +30,16 @@
         <button id="professions" class="btn5 btn5-1 btn5-sep btn-block">PROFESSIONS</button>
         <button id="locations" class="btn5 btn5-1 btn5-sep btn-block">LOCATIONS</button>
         <button id="announcement" class="btn5 btn5-1 btn5-sep btn-block">ANNOUNCEMENTS</button>
+        <form action="{% url 'admin_personal_notification_group'%}" method="GET">
+          {% csrf_token %}
+        <button id="" class="btn5 btn5-1 btn5-sep btn-block">NOTIFICATIONS</button>
+        </form>
         <button id="feedbacks" class="btn5 btn5-1 btn5-sep btn-block">FEEDBACKS</button>
         <br>
       </div>
   </div>
 
-  <div class="col-md-9 datachart_form">
+  <div class="col-md-9 datachart_form" style="margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -157,7 +161,7 @@
 
 
 
-  <div class="col-md-9 admanagement_form" style="display: none;">
+  <div class="col-md-9 admanagement_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
            <div class="col-md-12">
@@ -247,7 +251,7 @@
 
 
 
-  <div class="col-md-9 offerbook_form" style="display: none;">
+  <div class="col-md-9 offerbook_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
            <div class="col-md-12">
@@ -323,7 +327,7 @@
 
 
 
-  <div class="col-md-9 userdetails_form" style="display: none;">
+  <div class="col-md-9 userdetails_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -420,7 +424,7 @@
                     </tr>
                   {% endfor %}  
                 </table>
-              </div>
+            </div>
 
       </div>
     </div>
@@ -496,11 +500,21 @@
           </div>
           <div class="col-md-12">
             <label for="subject">Profession</label>
-            <input type="text" name="profession" id="subject" class="form-control" placeholder="Your profession/job">
+            <select name="profession" class="form-control mb-4" style="width: 90%;" required="">
+                {% for i in ProfessionList %}
+                  <option value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                  </option> 
+                {% endfor %}
+            </select>
           </div>
           <div class="col-md-12">
             <label for="subject">Location</label>
-            <input type="text" name="location" id="subject" class="form-control" placeholder="Your location">
+            <select name="location" class="form-control mb-4" style="width: 90%;" required="">
+                {% for i in LocationList %}
+                  <option value="{{ i.id }}">{{ i.name }} &nbsp;&nbsp;&nbsp;
+                  </option> 
+                {% endfor %}
+            </select>
           </div>
           <div class="col-md-12">
             <label for="subject">Qualification</label>
@@ -534,7 +548,7 @@
 
 
 
-  <div class="col-md-9 payments_form" style="display: none;">
+  <div class="col-md-9 payments_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -589,7 +603,7 @@
 
 
 
-  <div class="col-md-9 keywords_form" style="display: none;">
+  <div class="col-md-9 keywords_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -672,7 +686,7 @@
 
 
 
-  <div class="col-md-9 professions_form" style="display: none;">
+  <div class="col-md-9 professions_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -768,7 +782,7 @@
 
 
 
-  <div class="col-md-9 locations_form" style="display: none;">
+  <div class="col-md-9 locations_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -874,7 +888,7 @@
 
 
 
-  <div class="col-md-9 announcement_form" style="display: none;">
+  <div class="col-md-9 announcement_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -893,6 +907,7 @@
             </form>
 
 
+
             <table class="notifications_list_table" cellspacing="0">
                 <tr class="header" style="font-size: 15px;">
                   <center>
@@ -907,7 +922,7 @@
                 <tr style="font-size: 13px;height: 20px;">
                   <td><center>{{ forloop.counter }}</center></td></center></td>
                   <td style="word-break: break-all;">&nbsp;{{ i.notification }}</td>
-                  <td>&nbsp;Date</td>
+                  <td>&nbsp;{{i.created_at}}</td>
                   <td>
                     <form action="{% url 'delete_notifications' %}" method="POST">
                       {% csrf_token %}
@@ -933,7 +948,7 @@
 
 
 
-  <div class="col-md-9 feedbacks_form" style="display: none;">
+  <div class="col-md-9 feedbacks_form" style="display: none;margin-left: -15px;">
     <div class="col-md-12 datalist_box">
       <div class="scrolluserlist">
 
@@ -961,7 +976,7 @@
                  </center></td>
                  <td>&nbsp;{{ i.username.username.first_name }}</td>
                  <td style="word-break: break-all;">&nbsp;{{ i.feedback }}</td>
-                 <td><center>Date</center></td>
+                 <td><center>{{i.created_at}}</center></td>
                 </tr>
               {% endfor %}  
             </table>

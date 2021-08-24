@@ -62,6 +62,8 @@ urlpatterns = [
 	path('detail_offers<int:id>/', detail_offers, name='detail_offers'),
 	path('detail_offers_unknown<int:id>/', detail_offers_unknown, name='detail_offers_unknown'),
 	
+	#user offerbook
+	path('user_offerbook', user_offerbook, name='user_offerbook'),
 
 	#user deals
 	path('deal', deal, name='deal'),
@@ -161,8 +163,12 @@ urlpatterns = [
 	path('product_to_cart', product_to_cart, name='product_to_cart'),
 
 
-	
 
+	#about us page--add career request, invest request
+	path('add_careers', add_careers, name='add_careers'),
+	path('add_invest', add_invest, name='add_invest'),
+
+	
 	#logout
 	path('user_logout', user_logout, name='user_logout'),
 

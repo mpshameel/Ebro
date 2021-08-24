@@ -139,11 +139,8 @@ class adclicks(models.Model):
 
 
 
-class offerbook(models.Model):
-    username = models.ForeignKey(User,on_delete=models.CASCADE)
-    profile = models.ForeignKey(profile,on_delete=models.CASCADE)
-    offerbookname = models.CharField(max_length=100,null=False,blank=True)
-    image = models.ImageField(upload_to='ads/ads_pic',null=True,blank=True)
+
+
 
 
 
@@ -336,6 +333,17 @@ class product_cart(models.Model):
 
 
 
+class offerbook(models.Model):
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    profile = models.ForeignKey(profile,on_delete=models.CASCADE)
+    offerbookname = models.CharField(max_length=100,null=False,blank=True)
+    image = models.ImageField(upload_to='ads/ads_pic',null=True,blank=True)
+    product = models.ForeignKey(products,on_delete=models.CASCADE,null=True,blank=True)
+    price = models.FloatField(null=True,blank=True)
+
+
+
+
 
 
 
@@ -343,12 +351,14 @@ class product_cart(models.Model):
 class notifications(models.Model):
     username = models.ForeignKey(User,on_delete=models.CASCADE)
     notification = models.CharField(max_length=500,null=True,blank=True)
-    
+    is_deleted = models.BooleanField(default=False, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    updated_at = models.DateTimeField(auto_now=True, blank=False, null=False)
 
 
 class personal_notifications(models.Model):
-    username = models.ForeignKey(User,on_delete=models.CASCADE)
-    profile = models.ForeignKey(profile,on_delete=models.CASCADE)
+    username = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    profile = models.ForeignKey(profile,on_delete=models.CASCADE,null=True,blank=True)
     messages = models.CharField(max_length=500,null=True,blank=True)
     is_deleted = models.BooleanField(default=False, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True,blank=False, null=False)
@@ -357,9 +367,11 @@ class personal_notifications(models.Model):
 
 
 class feedbacks(models.Model):
-    username = models.ForeignKey(profile,on_delete=models.CASCADE)
+    username = models.ForeignKey(profile,on_delete=models.CASCADE,blank=True, null=True)
     feedback = models.CharField(max_length=500,null=True,blank=True)
-
+    is_deleted = models.BooleanField(default=False, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True,blank=False, null=False)
+    updated_at = models.DateTimeField(auto_now=True, blank=False, null=False)
 
 
 
@@ -424,7 +436,30 @@ class orders(models.Model):
 
 
 
+class careers(models.Model):
+    username = models.ForeignKey(User,on_delete=models.CASCADE,blank=True, null=True )
+    profile = models.ForeignKey(profile,on_delete=models.CASCADE,blank=True, null=True )
+    first_name = models.CharField(max_length=100,null=False,blank=True)
+    last_name = models.CharField(max_length=100,null=False,blank=True)
+    email = models.CharField(max_length=100,null=False,blank=True)
+    phone = models.CharField(max_length=100,null=False,blank=True)
+    position = models.CharField(max_length=100,null=False,blank=True)
+    profession = models.CharField(max_length=100,null=False,blank=True)
+    location = models.CharField(max_length=100,null=False,blank=True)
+    message = models.CharField(max_length=500,null=False,blank=True)
 
+
+class invests(models.Model):
+    username = models.ForeignKey(User,on_delete=models.CASCADE,blank=True, null=True )
+    profile = models.ForeignKey(profile,on_delete=models.CASCADE,blank=True, null=True )
+    first_name = models.CharField(max_length=100,null=False,blank=True)
+    last_name = models.CharField(max_length=100,null=False,blank=True)
+    email = models.CharField(max_length=100,null=False,blank=True)
+    phone = models.CharField(max_length=100,null=False,blank=True)
+    invest_amount = models.CharField(max_length=100,null=False,blank=True)
+    profession = models.CharField(max_length=100,null=False,blank=True)
+    location = models.CharField(max_length=100,null=False,blank=True)
+    message = models.CharField(max_length=500,null=False,blank=True)
 
 # class LoggedUser(models.Model):
 #     user = models.ForeignKey(User, primary_key=True)

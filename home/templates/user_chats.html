@@ -18,50 +18,45 @@
 
 
 <div class="container_wideboxes">
-   <div class="col-md-3 mobile_feedback">
-         <div class=" animate-box ">
-            <form action="{% url 'feedback' %}" method="POST" enctype="multipart/form-data">
-               {% csrf_token %}
-               <div class="row form-group">
-                  <div class="col-md-12">
-                     <br>
-                     <label for="message" class="sub_headings">Feedbacks</label>
-                     <br><br>
-                     <textarea  name="feedback" value="" id="message" cols="25" rows="4" class="form-control" placeholder="Feedbacks to the admin" required="">
-                     </textarea>
-                  </div>   
-                  
-               </div>
-               
-               <div class="row form-group">
-                  <div class="col-md-12">
-                  <div class="form-group text-center">
-                     <input type="submit" value="Send" class="btn btn-primary">
-                  </div>
-                  </div>
-               </div>
-            </form>
-
-         </div>
-   </div>
 
 
-   <div class="col-md-9 mobile_notifications">
+<!--             <table class="table-users" cellspacing="0" style="width: 100%;">
+               <tr class="header">
+               <center>
+               <th width="5%"><center>#</center></th>
+               <th width="75%"><center>Notifications</center></th>
+               <th width="20%"><center>Date</center></th>
+               </center>
+               </tr>
+
+               {% for i in personal_notifications_list %}
+               <tr class="row_height">
+               <td><center>{{ forloop.counter }}</center></td></center></td>
+               <td><p style="word-break: break-all;">{{ i.messages }}</p></td>
+               <td><center>{{ i.created_at }}</center></td>
+         
+               </tr>
+               {% endfor %}
+            </table> -->
+
+
+
+   <div class="col-md-12 mobile_notifications">
    		<div class=" animate-box ">
    			 <table class="table-users" cellspacing="0" style="width: 100%;">
          			<tr class="header">
          			<center>
          		 	<th width="5%"><center>#</center></th>
-            		<th width="85%"><center>Notifications</center></th>
-            		<th width="10%"><center>Date</center></th>
+            		<th width="75%"><center>Notification</center></th>
+            		<th width="20%"><center>Date</center></th>
             		</center>
          			</tr>
 
-         			{% for i in notifications_list %}
+         			{% for i in personal_notifications_list %}
          			<tr class="row_height">
          	 		<td><center>{{ forloop.counter }}</center></td></center></td>
-            		<td><p style="word-break: break-all;">{{ i.notification }}</p></td>
-            		<td><center>Date</center></td>
+            		<td><p style="word-break: break-all;">{{ i.messages }}</p></td>
+            		<td><center>{{ i.created_at }}</center></td>
            	
          			</tr>
          			{% endfor %}

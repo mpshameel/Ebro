@@ -14,42 +14,125 @@
 	}
 </style>
 
-				<div class="container_wideboxes">
-					{% for i in user_products_list %}
-					<div class="col-md-4 widebox">
-						
-						<a href="{% url 'detail_offers' i.id %}" class="blog-post">
 
-							{% if i.picture != '' %}
-								<span class="img" style="background-image: url({{i.picture.url}});"></span>
-		         			{% else %}
-		         				<span class="img" style="background-image: url({% static 'images/assign.png' %});"></span>
-		         			{% endif %}
-							<div class="desc">
-								<h5 class="h5_style">{{ i.product_name }}</h5>
-								<h5><font style="color: #8e9416;">{{ i.offer }}&nbsp;%&nbsp;&nbsp;offer</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;&nbsp;<b style="text-decoration: line-through;">{{ i.oldprice }}</b></h5>
-								<h4><b>$&nbsp;&nbsp;{{ i.price }}</b></h4>
 
-								<span class="cat" style="line-height: 15px;">{{ i.username.email }}</span><br>
-								<span class="cat" style="line-height: 15px;">{{ i.location.name }}</span>
-								<span class="date" style="color: red;">{% if i.stock <= 0 %}Out of stock{% else %}&nbsp;{% endif %}</span>
-								
-							</div>
-						</a>
-					</div>
-					{% endfor %}
 
-				</div>					
+
+
+	{% if user.is_authenticated %}
+		{% if user_profile.usertype == "premium" %}
+		<a href="#"><h3 id="addbutton" class="addbutton">+&nbsp;ADD&nbsp;OFFERBOOK</h3></a>
+		{% endif %}
+	{% endif %}
+
+<div class="container_wideboxes">
+	<div class="col-md-12 additem-form">
+		<form action="{% url 'user_offerbook' %}" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="col-md-4">
+			<img src="{% static 'images/close.png '%}" alt="" height="30" width="20" class="closeitem-form">
+
+			<div class="form-field col-md-12 deals-pic-circle">
+            	<img src="{% static 'images/menu-9.jpg '%}" id="file-ip-1-preview">   
+            	<input type="file" name="image" id="file-ip-1" accept="image/*" onchange="showPreview(event);" required="">
+		        <label for="file-ip-1" id="uploadBtn">Choose Photo</label>      
+		    </div>
+		    <br><br><br><br><br><br><br><br><br>
+
+
+
+		</div>
+		<div class="col-md-8">
+			<br>
+			<div class="col-md-12">
+				<label for="fname"><font style="color: red;">*</font>Offerbook Name</label>
+				<input type="text" name="offerbook_name" id="fname" class="form-control" placeholder="Your Offer-book Name" required="">
+			</div>
+			<div class="col-md-12">
+				<label for="lname">Price</label>
+				<input type="text" name="price" id="lname" class="form-control" placeholder="Your Offerbook Price" required="">
+			</div>
+
+			&nbsp;&nbsp;
+			<div class="row form-group">
+			<div class="form-group text-center"><br><br>
+				<button type="submit" value="Add Deal" class="btn btn-primary">Add Offer-book</button>
+		
+			</div>
+			</div>
+		</div>
+		</form>
+	</div>
+
+
+
+	{% for i in offerbook_all %}
+	<div class="col-md-4 widebox_vertical">
+
+		{% if i.product_id != null %}
+		<a href="{% url 'detail_offers' i.product_id %}" class="blog-post">
+			{% if i.product.picture != '' %}
+				<span class="img_withid" style="background-image: url({{i.product.picture.url}});"></span>
+ 			{% else %}
+ 				<span class="img_withid" style="background-image: url({% static 'images/assign.png' %});"></span>
+ 			{% endif %}
+			<div class="desc_with_id">
+				<h5 class="h5_style">{{ i.product.product_name }}</h5>
+				<h5><font style="color: #8e9416;">{{ i.product.offer }}&nbsp;%&nbsp;&nbsp;offer</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$&nbsp;&nbsp;<b style="text-decoration: line-through;">{{ i.product.oldprice }}</b></h5>
+				<h4><b>$&nbsp;&nbsp;{{ i.product.price }}</b></h4>
+
+				<span class="cat" style="line-height: 15px;">{{ i.product.username.email }}</span><br>
+				<span class="cat" style="line-height: 15px;">{{ i.product.location.name }}</span>
+				<span class="date" style="color: red;">{% if i.product.stock <= 0 %}Out of stock{% else %}&nbsp;{% endif %}</span>
+				
+			</div>
+		</a>
+
+
+		{% else %}
+
+		<a href="#" class="blog-post">
+			{% if i.image != '' %}
+				<span class="img_withoutid" style="background-image: url({{i.image.url}});"></span>
+ 			{% else %}
+ 				<span class="img_withoutid" style="background-image: url({% static 'images/assign.png' %});"></span>
+ 			{% endif %}
+			<div class="desc_without_id">
+				<h5 class="h5_style">{{ i.offerbookname }}</h5>
+				{% if i.price != null %}
+				<br>
+				<!-- <h4 class="h5_style"><b>$&nbsp;&nbsp;{{ i.price }}</b></h4> -->
+				{% else %}
+				{% endif %}
+				
+			</div>
+		</a>
+
+		<a href="#" class="blog-post">
+		{% endif %}
+
+	</div>
+	{% endfor %}
+
+</div>					
 		
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	
-		
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-
+	<script>
+		document.getElementById("addbutton").addEventListener("click",function(){
+		  document.querySelector(".additem-form").style.visibility = "visible";
+		})
+		document.querySelector(".closeitem-form").addEventListener("click",function(){
+			document.querySelector(".additem-form").style.visibility = "hidden";
+		  })
+		
+	
+	</script>
 
 
 

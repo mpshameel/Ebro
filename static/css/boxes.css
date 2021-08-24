@@ -123,8 +123,25 @@
 
 
 
+.widebox_vertical{
+    width: 300px;
+    height: 300px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    margin: 5px 5px;
+}
 
 
+@media screen and (max-width: 768px) {
+    .widebox_vertical {
+    display:inline;
+    float:left;
+    width: 200px; } }
+
+/*.img_offer_id{
+    width: 100px;
+    height: 100px;
+}
+*/
 
 
 
@@ -315,7 +332,7 @@
 
 @media screen and (max-width: 768px) {
     .profile_widebox {
-    margin: 5px;
+    margin: 5px -5px;
     width: 350px; } }
 
 
@@ -434,15 +451,15 @@
     position: absolute;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     background: #fff;
-    margin: 5px -150px;
+    margin: 20px -150px;
     display: none;
     z-index: 99;
 }
 
 @media screen and (max-width: 768px) {
     .admin_profileedit_form {
-    width: 370px;
-    margin: -1000px 20px; } }
+    width: 350px;
+    margin: -950px -5px; } }
 
 
     
@@ -474,7 +491,8 @@
 
 @media screen and (max-width: 768px) {
     .detailuser_sendform {
-    margin-left: -5px; } }
+    margin-left: 10px; 
+    width: 350px; } }
 
 
 
@@ -969,7 +987,7 @@ td{
 
 
 .ad_list_form{
-	margin: 10px -10px;
+	margin: 10px 10px;
 }
 
 @media screen and (max-width: 768px) {
@@ -1156,8 +1174,8 @@ td{
 
 @media screen and (max-width: 768px) {
     .adduser-form {
-    width: 370px;
-    margin: -525px -10px; } }
+    width: 350px;
+    margin: -525px 0px; } }
 
 
 
@@ -1234,7 +1252,7 @@ td{
 
 @media screen and (max-width: 768px) {
     .myads_list_box {
-    margin: 10px -25px;
+    margin: 10px -10px;
     width: 370px; } }
 
 
@@ -1273,8 +1291,8 @@ td{
 
 @media screen and (max-width: 768px) {
     .payment_detail_widebox {
-    margin-left: -20px;
-    width: 370px; }
+    margin-left: 0px;
+    width: 350px; }
     .payment_details_text_mobile{
 	margin: 0px 15px; } }
 
@@ -1289,7 +1307,8 @@ td{
 
 @media screen and (max-width: 768px) {
     .delivery_edit_form {
-     margin: 0px 5px;} }
+     margin: 0px 0px;
+     width: 350px;} }
 
 
 
@@ -1318,8 +1337,8 @@ td{
 
 @media screen and (max-width: 768px) {
     .notifications_list_table {
-    margin-left: -25px;
-    width: 370px; } }
+    margin-left: -15px;
+    width: 350px; } }
 
 
 
@@ -1351,8 +1370,8 @@ td{
 
 @media screen and (max-width: 768px) {
     .datalist_box {
-   margin: 0px -10px;
-    width: 370px; } }
+    margin: 0px 0px;
+    width: 350px; } }
 
 
 
@@ -1374,12 +1393,15 @@ td{
 
 @media screen and (max-width: 768px) {
     .databuttons_box {
-    margin-left: -10px;
-    width: 370px; } }
+    margin-left: -15px;
+    width: 350px; } }
 
 
 
 
+.checkbox-wrapper {
+  white-space: nowrap;
+}
 
 
 
