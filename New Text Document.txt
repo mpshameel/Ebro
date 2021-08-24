@@ -1,0 +1,222 @@
+all pushed
+some changes 
+buttons removed
+buttons only in detail view
+
+
+mpshameel.pythonanywhere.com
+
+http://codewithsteps.herokuapp.com/part/6827faac-21aa-4757-80f7-6d215ef6f8b3/
+
+https://github.com/akjasim/codeband-django-heroku
+
+https://github.com/codingforentrepreneurs/Guides/blob/master/all/social_share_links.md
+
+
+DEBUG = True
+{% providers_media_js %}
+js_sdk
+oauth2
+
+
+
+
+client id:   AQdQhGUrIJcXkKG6zTEByoFMgengiCqBmne1vf_aokXSkqM8IF-SCPmJ2cCqV7xdVbztz1E5MkRzZKUU
+
+secret key:  EGUQ87ZFWfWombae14bM0eJ2sN3B8MwTjAHosXH4Vd2UthGERNTBBjsq-G8TytX_aDVtAMVagVJNRKa-
+
+
+
+
+
+google signin
+client id:  586272134707-ubmtg6q846gs0d7c1k6rj3cloan53r54.apps.googleusercontent.com
+secret key: 76vcLotWMPZPlMdQrPipcbzR
+
+ <a class="btn btn-success" id="WatsSendApi" href="https://api.whatsapp.com/send?phone=0000&text=@WatsMSG">
+    <b class="text-black" style="font-size:small"> whatsapp </b><i class="fa fa-whatsapp" style="color:white"></i> </a>
+
+
+
+ <script>
+                                        $("#WatsSendApi").click(function () {
+                                            var StringMSG;
+                                            StringMSG=("Ineed : ");
+                                            StringMSG += (" Item Name : ");
+                                            StringMSG +='@item.ITName' ;
+                                            StringMSG += (" Count: ");
+                                            StringMSG += $('#TXTCount').val();
+                                            StringMSG += (" Price: ");
+                                            StringMSG += '@item.ITPrice';
+                                            StringMSG += (" Total: ");
+                                            StringMSG += $('#TXTTOTal').val();
+                                            alert(StringMSG);
+                                            this.href = this.href.replace("xxx", StringMSG);
+                                        });
+                                    </script>
+
+
+
+
+	<meta name="google-signin-client_id" content="586272134707-ubmtg6q846gs0d7c1k6rj3cloan53r54.apps.googleusercontent.com">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="{% static 'js/signinjs '%}"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+
+
+------------------------------------------------------------------------------
+category   3
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/zh-TW.min.js" integrity="sha512-whWyZS4LtoXu4LzFJbHIgL9Cr7Sf2+KyeEAGumtXN+8U234v1R89monfd9PLYnC0TNBArmPnkFOVo8ShuMpZaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <script>
+    $(document).ready(function()
+    {
+      var $select1=$('#main_profession_selection'),
+          $select2=$('#sub_profession_selection'),
+          $options=$select2.find('option');
+          $select1.on('change',function()
+          {
+            $select2.html($options.filter('[value="'+this.value+'"]'));
+          }).trigger('change');
+    });
+  </script>
+
+  <script>
+    $(document).ready(function()
+    {
+      $("#main_profession_selection").select2({
+
+      });
+      $("sub_profession_selection").select2({
+        
+      });
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 							<a href="https://www.facebook.com/sharer/sharer.php?u=http://CodingForEntrepreneurs.com/">
+							Facebook
+							</a>
+
+							<a href="https://twitter.com/home?status=I'm%20going%20to%20learn%20to%20Code...%20Come%20build%20an%20web%20apsp%20with%20me!%20%23CFE%20and%20@justinmitchel%20http://codingforentrepreneurs.com/">
+							Twitter
+							</a>
+
+							<a href='https://plus.google.com/share?url=http://codingforentrepreneurs.com'>Google+</a>
+
+							<a href="https://www.linkedin.com/shareArticle?mini=true&url=http://swiftforentrepreneurs.com/&title=Be%20first%20%7C%20Join%20Swift%20for%20Entrepreneurs&summary=Swift%20for%20Entrepreneurs%20is%20a%20project-based%20programming%20course%20for%20non-technical%20founders.%20We'll%20learn%20how%20to%20build%20iOS%20apps%20from%20scratch%20using%20Apple's%20new%20programming%20language:%20Swift.%20Be%20first%20and%20learn%20with%20me!&source=http://swiftforentrepreneurs.com/">
+							Linkedin
+							</a> -->
+
+							{% post_to_twitter "New Song: {{object.title}}.check it out!" object_or_url "Post to twitter" %}
+							{% post_to_facebook "New Song: {{user_product.product_name}} check it out!" object_or_url "Post to facebooks" %}
+				 			<a href="http://www.facebook.com/sharer/sharer.php?u=https://erbrooooo.herokuapp.com{{ request.get_full_path|urlencode }}">fb</a>
+				 			{% post_to_facebook object_or_url "Post to facebooks" %}
+
+
+
+
+				 			ffffffffffffffffff<br>
+
+
+				 			{{ request.build_absolute_uri }}<br>
+				 			{{ title }}<br>
+				 			{{ share_string }}<br>
+				 			<button id="share_button">share fb</button>
+
+				 			<a href='http://www.facebook.com/sharer.php?s={{ request.build_absolute_uri }}&
+							p[title]={{ title }}&
+							p[summary]={{ title }}&
+							p[url]=http://{{ request.META.HTTP_HOST }}{{ request.path }}&
+							p[images][0]=http://whatever.com/media/img/img_facebook.jpg' 
+							target="_blank">
+							<img src="{{STATIC_URL}}img/facebook.png" title="Facebook" alt="Facebook" ></a>
+
+
+
+				 			<a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+							Share on Facebook
+							</a><br>
+
+							<a href="https://twitter.com/home?status=HI%20this%20is%20from%20Ebro%20World..live%20smart%20life..%20{{ request.build_absolute_uri }}">
+							Share on Twitter
+							</a><br>
+
+
+							<a href='https://plus.google.com/share?url={{ request.build_absolute_uri }}'>Share on Google+</a><br>
+
+
+
+							<a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title=Be%20first%20%7C%20Join%20Swift%20for%20Entrepreneurs&summary=Swift%20for%20Entrepreneurs%20is%20a%20project-based%20programming%20course%20for%20non-technical%20founders.%20We'll%20learn%20how%20to%20build%20iOS%20apps%20from%20scratch%20using%20Apple's%20new%20programming%20language:%20Swift.%20Be%20first%20and%20learn%20with%20me!&source={{ request.build_absolute_uri }}">
+							Share on Linkedin
+							</a><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script>
+	$('#share_button').bind('click', function(e){
+        e.preventDefault();
+        var title = '{{ user_product.product_name }}';
+        var im_url = '{{user_product.picture.url}}';
+        var facebook_appID = '2887151581496584'
+        url = "https://www.facebook.com/dialog/feed?app_id="+ 2887151581496584 +    "&link=" + encodeURIComponent("{{ request.build_absolute_uri }}")+ 
+                    "&name=" + encodeURIComponent(title) + 
+                    "&caption=" + encodeURIComponent('Ebro-World') + 
+                    "&description=" + encodeURIComponent('{{ user_product.price }}') + 
+                    "&picture=" + encodeURIComponent("http://www.THEPAGE.com" +im_url) +
+                    "&redirect_uri=https://www.facebook.com";
+        window.open(url);
+    });
+</script> -->
